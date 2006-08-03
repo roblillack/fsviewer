@@ -1,0 +1,39 @@
+README 19991006:
+- Changed Window Maker requirements to v0.61.1 only (GT)
+- Generalised installation instructions i.e. changed FSViewer.app-0.2.1 to 
+  FSViewer.app-0.2.4 (GT)
+- Note about upgrading specifically relates to 0.2.0 or less. (GC)
+- Added note about modifications made to timestampwidget (GC)
+- Added "Many Thanks to Georges" for doc work :) (GC)
+
+
+README:
+
+- last sentence in description removed
+- list mode added in features
+- wmaker 0.60 added in requirements
+- Amiga added in platforms for version 0.2.1 (version number modified)
+- version number changed in installation (0.2.3 instead of 0.2.1)
+- compilation option for 8bits displays added in installation
+- first sentence in documentation modified
+- key bindings removed
+- mouse clicks removed
+- shelf related removed
+- inspector removed
+- magic files removed
+- DND removed
+- mounting devices removed
+- file settings removed
+- preferences removed
+- french translation added in copyright
+
+DOCUMENTATION:
+
+- almost everything in installation removed
+- difference between copying and moving added in drag and drop
+- attributes added in attributes inspector
+- shortcuts and examples added in exec inspector
+- magic files added 
+- as a result, TOC has to be corrected
+- links to images removed
+- Preferences Window part modified

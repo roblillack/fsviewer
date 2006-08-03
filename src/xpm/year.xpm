@@ -1,0 +1,10 @@
+/* XPM */
+static char * year_xpm[] = {
+"42 5 2 1",
+".	c None",
+"a	c #000000",
+".aaa.aaaa.aaa...aa.aaaa.aaa.aaaa.aaa..aaa.",
+"a...aa...a...a.a.a.a...a.......aa...aa...a",
+"a...aa.aa.aaa.a..a..aa.aaaa...a..aaa..aaaa",
+"a...aaa......aaaaaa...aa...a.a..a...a....a",
+".aaa.aaaaaaaa....a.aaa..aaa.a....aaa..aaa."};

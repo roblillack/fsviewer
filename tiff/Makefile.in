@@ -1,0 +1,325 @@
+# Makefile.in generated automatically by automake 1.5 from Makefile.am.
+
+# Copyright 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001
+# Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+@SET_MAKE@
+
+# Copyright (C) 2002 Guido Scholz <guido.scholz@bayernline.de>
+#  
+# This file is free software; as a special exception the author gives
+# unlimited permission to copy and/or distribute it, with or without 
+# modifications, as long as this notice is preserved.
+# 
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+INSTALL_HEADER = $(INSTALL_DATA)
+transform = @program_transform_name@
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+host_alias = @host_alias@
+host_triplet = @host@
+AMTAR = @AMTAR@
+AWK = @AWK@
+BUILD_INCLUDED_LIBINTL = @BUILD_INCLUDED_LIBINTL@
+CATOBJEXT = @CATOBJEXT@
+CC = @CC@
+DATADIRNAME = @DATADIRNAME@
+DEPDIR = @DEPDIR@
+EXEEXT = @EXEEXT@
+GENCAT = @GENCAT@
+GET_WRASTER_FLAGS = @GET_WRASTER_FLAGS@
+GLIBC21 = @GLIBC21@
+GMSGFMT = @GMSGFMT@
+HAVE_LIB = @HAVE_LIB@
+INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+INSTOBJEXT = @INSTOBJEXT@
+INTLBISON = @INTLBISON@
+INTLLIBS = @INTLLIBS@
+INTLOBJS = @INTLOBJS@
+INTL_LIBTOOL_SUFFIX_PREFIX = @INTL_LIBTOOL_SUFFIX_PREFIX@
+LIB = @LIB@
+LIBICONV = @LIBICONV@
+LIBINTL = @LIBINTL@
+LOCALEDIR = @LOCALEDIR@
+LTLIB = @LTLIB@
+LTLIBICONV = @LTLIBICONV@
+LTLIBINTL = @LTLIBINTL@
+MKINSTALLDIRS = @MKINSTALLDIRS@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+POSUB = @POSUB@
+RANLIB = @RANLIB@
+USE_INCLUDED_LIBINTL = @USE_INCLUDED_LIBINTL@
+USE_NLS = @USE_NLS@
+VERSION = @VERSION@
+am__include = @am__include@
+am__quote = @am__quote@
+fsviewerdir = @fsviewerdir@
+install_sh = @install_sh@
+
+tiffdatadir = $(fsviewerdir)/tiff
+
+tiffdata_DATA = FSViewer.tif \
+	exec-link.tif \
+	file-dot-a.tif \
+	file-dot-aiff.tif \
+	file-dot-au.tif \
+	file-dot-avi.tif \
+	file-dot-bz2.tif \
+	file-dot-c.tif \
+	file-dot-cc.tif \
+	file-dot-class.tif \
+	file-dot-conf.tif \
+	file-dot-core.tif \
+	file-dot-cpp.tif \
+	file-dot-dat.tif \
+	file-dot-deb.tif \
+	file-dot-eps.tif \
+	file-dot-f90.tif \
+	file-dot-fig.tif \
+	file-dot-for.tif \
+	file-dot-gif.tif \
+	file-dot-gz.tif \
+	file-dot-h.tif \
+	file-dot-html.tif \
+	file-dot-jar.tif \
+	file-dot-java.tif \
+	file-dot-jpg.tif \
+	file-dot-m.tif \
+	file-dot-mov.tif \
+	file-dot-mp3.tif \
+	file-dot-mpg.tif \
+	file-dot-o.tif \
+	file-dot-pdf.tif \
+	file-dot-pedro.tif \
+	file-dot-pl.tif \
+	file-dot-png.tif \
+	file-dot-ps.tif \
+	file-dot-py.tif \
+	file-dot-rc.tif \
+	file-dot-rpm.tif \
+	file-dot-sh.tif \
+	file-dot-shar.tif \
+	file-dot-so.tif \
+	file-dot-tar.tif \
+	file-dot-tcl.tif \
+	file-dot-tex.tif \
+	file-dot-texi.tif \
+	file-dot-tga.tif \
+	file-dot-tif.tif \
+	file-dot-txt.tif \
+	file-dot-wav.tif \
+	file-dot-xbm.tif \
+	file-dot-xcf.tif \
+	file-dot-xpm.tif \
+	file-dot-zip.tif \
+	file-executable.tif \
+	file-generic-gnustep.tif \
+	file-generic-text.tif \
+	file-link.tif \
+	file-makefile.tif \
+	file-plain.tif \
+	file-readme.tif \
+	folder-link.tif \
+	folder.tif \
+	fullfolder.tif \
+	generic-coding.tif \
+	generic-conf.tif \
+	generic-config.tif \
+	generic-library.tif \
+	generic-sound.tif \
+	generic-text.tif \
+	home.tif \
+	mycomputer.tif \
+	neighbour.tif
+
+
+EXTRA_DIST = $(tiffdata_DATA)
+subdir = tiff
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/src/config.h
+CONFIG_CLEAN_FILES =
+DIST_SOURCES =
+DATA = $(tiffdata_DATA)
+
+DIST_COMMON = Makefile.am Makefile.in
+all: all-am
+
+.SUFFIXES:
+$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
+	cd $(top_srcdir) && \
+	  $(AUTOMAKE) --gnu  tiff/Makefile
+Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_HEADERS= CONFIG_LINKS= \
+	  CONFIG_FILES=$(subdir)/$@ $(SHELL) ./config.status
+uninstall-info-am:
+install-tiffdataDATA: $(tiffdata_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(tiffdatadir)
+	@list='$(tiffdata_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " $(INSTALL_DATA) $$d$$p $(DESTDIR)$(tiffdatadir)/$$f"; \
+	  $(INSTALL_DATA) $$d$$p $(DESTDIR)$(tiffdatadir)/$$f; \
+	done
+
+uninstall-tiffdataDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(tiffdata_DATA)'; for p in $$list; do \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f $(DESTDIR)$(tiffdatadir)/$$f"; \
+	  rm -f $(DESTDIR)$(tiffdatadir)/$$f; \
+	done
+tags: TAGS
+TAGS:
+
+
+DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+
+top_distdir = ..
+distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  if test -f $$file; then d=.; else d=$(srcdir); fi; \
+	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \
+	  if test "$$dir" != "$$file" && test "$$dir" != "."; then \
+	    $(mkinstalldirs) "$(distdir)/$$dir"; \
+	  fi; \
+	  if test -d $$d/$$file; then \
+	    cp -pR $$d/$$file $(distdir) \
+	    || exit 1; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || cp -p $$d/$$file $(distdir)/$$file \
+	    || exit 1; \
+	  fi; \
+	done
+check-am: all-am
+check: check-am
+all-am: Makefile $(DATA)
+
+installdirs:
+	$(mkinstalldirs) $(DESTDIR)$(tiffdatadir)
+
+install: install-am
+install-exec: install-exec-am
+install-data: install-data-am
+uninstall: uninstall-am
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+
+installcheck: installcheck-am
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
+	  `test -z '$(STRIP)' || \
+	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES) stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+	@echo "This command is intended for maintainers to use"
+	@echo "it deletes files that may require special tools to rebuild."
+clean: clean-am
+
+clean-am: clean-generic mostlyclean-am
+
+distclean: distclean-am
+
+distclean-am: clean-am distclean-generic
+
+dvi: dvi-am
+
+dvi-am:
+
+info: info-am
+
+info-am:
+
+install-data-am: install-tiffdataDATA
+
+install-exec-am:
+
+install-info: install-info-am
+
+install-man:
+
+installcheck-am:
+
+maintainer-clean: maintainer-clean-am
+
+maintainer-clean-am: distclean-am maintainer-clean-generic
+
+mostlyclean: mostlyclean-am
+
+mostlyclean-am: mostlyclean-generic
+
+uninstall-am: uninstall-info-am uninstall-tiffdataDATA
+
+.PHONY: all all-am check check-am clean clean-generic distclean \
+	distclean-generic distdir dvi dvi-am info info-am install \
+	install-am install-data install-data-am install-exec \
+	install-exec-am install-info install-info-am install-man \
+	install-strip install-tiffdataDATA installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic uninstall uninstall-am \
+	uninstall-info-am uninstall-tiffdataDATA
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

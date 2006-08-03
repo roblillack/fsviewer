@@ -1,0 +1,223 @@
+FSViewer.app
+
+George Clernon
+
+6 Octobre 1999
+
+Description
+
+FSViewer.app est un gestionnaire de fichiers librement inspiré de celui
+du NeXT. C'est un essai, un passe-temps, un amusement avec un peu de sérieux tout de même!
+
+1 Introduction
+
+FSViewer est un gestionnaire de fichiers à l'aspect similaire à celui du gestionnaire
+du NeXT. Il est écrit en C et utilise les caractéristiques de la bibliothèque WINGs.
+C'est un projet évolutif dont le but est de créer un gestionnaire de fichiers
+facile à utiliser.
+Ce document donne un aperçu des différents composants de l'application.
+
+2 Installation
+
+FSViewer.app est disponible à l'adresse http://www.csn.ul.ie/~clernong/download/.
+La dernière version est FSViewer.app-0.2.4. Les icônes associés à l'application
+sont disponibles au même endroit(icons.tar.gz). 
+Décompressez l'archive FSViewer.app-0.2.4.tar.gz 
+Vous trouverez plus ample information sur l'installation dans le fichier README.
+
+3 Fenêtres
+
+La fenêtre primaire se compose de deux parties, l'étagère et la fenêtre de navigation.
+L'étagère est une zone où placer des répertoires ou des fichiers, alors que la fenêtre
+de navigation présente le chemin graphique et les colonnes de navigation. 
+Lorsque la fenêtre est redimensionnée le nombre de colonnes de la fenêtre de navigation
+change en conséquence. 
+
+3.1 L'étagère
+
+L'étagère est une zone où placer fichiers et répertoires. Elle offre un accès rapide aux
+objets choisis par l'utilisateur. Cliquer sur un objet l'ouvre ou l'exécute en fonction de
+son type.
+Elle peut aussi être utilisée comme zone de stockage temporaire, pratique pour copier des
+objets. Pour ajouter un objet dans l'étagère, déplacez-le du chemin graphique vers l'étagère.
+Pour supprimer un objet de l'étagère, faites un Control-clic sur l'objet. Pour redimensionner
+l'étagère tirez le gadget (la petite boule) vers le haut ou vers le bas.
+
+3.2 La fenêtre de navigation
+
+Cette fenêtre présente le chemin graphique et les colonnes de navigation.
+
+3.2.1 Le chemin graphique
+
+Le chemin graphique représente le chemin courant sous forme d'icônes. 
+L'objet sélectionné est en surbrillance et peut être visualisé/exécuté par un double-clic.
+Les objets affichés peuvent bénéficier du glisser/déposer. 
+
+3.2.2 La fenêtre de navigation
+
+La fenêtre de navigation affiche en colonnes le contenu de chaque répertoire
+ce qui détermine le chemin courant. Un répertoire est indiqué par une flèche
+affichée à la droite de l'objet d'une ligne. Cliquer sur un répertoire affiche
+son contenu dans la colonne suivante et l'objet est ajouté au chemin graphique.
+Double-cliquer sur un fichier l'ouvre ou l'exécute.
+Le contenu de la fenêtre de navigation peut être filtré et trié. 
+
+4 Menus
+
+Les menus sont "flottants".Il n'y a qu'un seul menu pour toutes les fenêtres ouvertes de FSViewer.
+Les rubriques de menu correspondent aux actions possibles dans le gestionnaire.
+Tous les raccourcis clavier réclament une combinaison de touches avec la touche Meta.
+Par exemple, si le raccourci est un 'a', la combinaison sera Meta-a, si c'est un 'A',
+il faudra utiliser Meta-Shift-a.
+Si le clavier n'a pas de touche Meta, la touche Alt sera utilisée en remplacement.
+
+5 Glisser et déposer
+
+Le Glisser/déposer est basé sur Offix DND. Cela permet le
+glisser/déposer dans l'application et lui permet de communiquer avec les
+programmes utilisant Offix DND. Les objets peuvent être glissés de l'étagère/du chemin
+graphique et déposés dans le dock/le clip.
+Glisser un objet vers un dossier le déplace dans ce dossier.
+Glisser en appuyant sur la touche Shift permet de copier l'objet.
+
+6 La fenêtre Preférences
+
+Cette fenêtre autorise la configuration de différents aspects du programme.
+Elle permet de ne pas avoir à saisir manuellement le fichier de configuration par défaut.
+N'oubliez pas de lancer "chdef" avant de l'utiliser.
+Trois choix sont disponibles: variables, apps et types de fichier et disques.
+
+6.1 Variables
+
+Dans cette fenêtre, il est possible de définir les images par défaut (home, dossiers...),
+les "exec" par défaut basés sur les "magic files" (pour le texte, les images, les fichiers ps...),
+et les caractéristiques d'affichage (largeur des colonnes, ordre de tri...).
+
+6.2 Apps et types de fichier
+
+Les applications peuvent être sélectionnées dans la liste ou ajoutées en les recherchant grâce
+à la fenêtre de navigation.(bouton "browse")
+Cela permet de les lancer depuis FSViewer.
+La partie droite de cette fenêtre affiche les types de fichier définis dans le fichier de configuration
+par défaut.
+Selon le type de fichier, vous pouvez modifier l'éditeur ou l'afficheur correspondants.
+Vous pouvez enlever des articles des listes à l'aide du bouton "remove" (évident!).
+
+6.3 Disques
+
+C'est le lieu pour ajouter des médias amovibles dans le menu de FSViewer.
+Le nom du média (ex. CDROM) doit être écrit dans le champ nom, ainsi que le point de montage
+(ex. /mnt/cdrom) et le périphérique (ex. /dev/scd0).
+Les commandes correspondantes sont sur la partie droite et doivent être remplies par
+mount %s, umount %s, eject %s comme indiqué dans le paragraphe "fichier de configuration" par défaut
+à la fin de ce document.
+
+7 La fenêtre Inspecteur
+
+L'Inspecteur affiche les différentes caractéristiques de l'objet sélectionné pour ce qui concerne
+son icône, son afficheur/éditeur par défaut et ses attributs.
+
+7.1 L'Inspecteur des Attributs
+
+Cette fenêtre affiche certains attributs de l'objet sélectionné
+(les permissions de fichier, la date de dernière modification, la taille du fichier,
+le propriétaire et le groupe).
+Elle permet également à l'utilisateur de changer les modes de fichier.
+
+7.2 L'Inspecteur d'Icône
+
+Il permet à l'utilisateur de changer l'icône affiché pour un nom de fichier/une extension.
+Le contenu de la liste des chemins d'icône généré par WPrefs.app et le chemin de ressources
+(défini dans la fenêtre Préférences) y sont affichés. Si un icône est changé dans cette fenêtre,
+l'icône affiché dans la fenêtre de navigation sera mis à jour à la prochaine sélection de l'objet.
+
+7.3 L'Inspecteur d'Afficheur
+
+Il présente l'afficheur par défaut pour l'objet sélectionné.
+Il permet aussi de choisir l'afficheur à partir d'une liste prédéfinie ou à l'utilisateur
+de taper directement son choix.
+Cliquer sur l'icône ouvre l'objet sélectionné.
+
+7.4 L'Inspecteur d'Editeur
+
+Il affiche l'éditeur par défaut de l'objet sélectionné.
+Il permet aussi de choisir l'éditeur à partir d'une liste prédéfinie ou à l'utilisateur
+de taper directement son choix.
+Cliquer sur l'icône édite l'objet sélectionné.
+
+7.5 L'inspecteur d'Executable 
+
+Cet Inspecteur définit la commande à exécuter quand un programme est lancé.
+Cette fenêtre n'est accessible que si le fichier est exécutable. Trois variables
+sont proposées. %p pour le chemin courant, %f pour le nom de fichier courant
+et %s pour le nom de fichier devant être passé en argument au programme.
+Par exemple, si vous avez sélectionné /usr/bin/xemacs:
+
+	%p = /usr/bin/
+	%f = xemacs
+
+Et une commande possible serait:
+	%p%f %s
+qui se traduit par:
+	/usr/bin/xemacs %s
+
+Tout fichier ayant xemacs comme afficheur/éditeur par défaut utilisera cette commande
+où %s sera remplacé par le chemin complet et le nom de fichier.
+
+8 Magic files (fichiers magiques!)
+
+Le support de "magic file" est rudimentaire, c'est-à-dire que l'application
+essaie de reconnaître le type de fichier si celui-ci est inconnu. Elle "agit"
+en fonction du type de fichier. 3 cas peuvent se présenter:
+	1) S'il s'agit d'un fichier ascii, xedit est lancé.
+	2) S'il s'agit d'une image, xv est lancé.
+	3) S'il s'agit d'un fichier ps, ghostview est lancé.
+
+Pour modifier ces définitions, éditez le fichier de configuration par défaut.
+
+9 Fichier de configuration par défaut
+
+Le fichier de configuration par défaut se trouve normalement dans ~/GNUstep/Defaults/
+mais l'application s'appuie sur la bibliothèque WINGs pour trouver le fichier. Le fichier 
+est facile à éditer manuellement même s'il est prévu que la fenêtre Préférences soit améliorée
+afin de permettre l'édition depuis l'application.
+Vous trouverez ci-dessous des exemples pour une extension de fichier, un exécutable et un disque.
+
+Une extension de fichier a trois entrées: afficheur, éditeur, icône.
+Les champs afficheur/éditeur représentent les commandes pour visualiser ou éditer le fichier
+et le champ icône est le nom du pixmap à afficher.
+
+.html = { viewer = "netscape -remote %s"; 
+
+editor = "xemacs %s"; 
+
+icon = "file-dot-html"; }; 
+
+Un fichier exécutable a deux entrées: exec et icône.
+Le champ exec définit la commande d'exécution et le champ icône indique
+le pixmap à afficher.
+
+lyx = {exec = "lyx %s";icon = "/usr/share/pixmaps/tiff/typewriter.tif";};
+
+L'entrée disque permet à l'utilisateur de définir les disques pouvant être "montés",
+"démontés" et éjectés à partir du menu.
+Chaque disque a trois entrées associées: une chaîne de caractères, un point de
+montage et un nom de périphérique.
+La chaîne correspond au texte qui apparaît dans le menu.
+Le point de montage correspond à l'argument passé en paramètre aux commandes
+"mount" et "unmount".
+Le nom de périphérique est passé à la commande d'éjection.
+Les chaînes de caractères correspondant aux commandes "mount", "unmount" et
+"eject" sont également définies à cet endroit.
+Actuellement les commandes sont seulement exécutées, il n'y a pas de message
+vous informant de leur échec ou de leur réussite.
+Cela devrait changer dans le futur.
+
+DISKS = { devices = ((CDROM, "/cdrom", "/dev/hdc"), (Zip, "/dosz",
+"/dev/sda4")); 
+
+mount = "mount %s"; 
+
+umount = "umount %s"; 
+
+eject = "eject %s"; };

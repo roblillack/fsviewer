@@ -1,0 +1,155 @@
+FSViewer.app
+Copyright (c) 1998 George Clernon <clernong@tinet.ie>
+
+Description
+===========
+FSViewer est un gestionnaire de fichiers à la NeXT pour Window Maker. La visualisation
+actuellement supportée est en mode navigation et en mode liste. Il a été écrit en C en utilisant la 
+bibliothèque WINGs.
+
+Caractéristiques
+================
+Mode navigation, mode liste, glisser-déposer et gestion de fichiers. Toutes les autres
+caractéristiques doivent encore être développées.
+
+Nécessaire
+==========
+o Window Maker v0.61.1 Si vous utilisez une version antérieure de Window Maker je sais
+que FSViewer a un problème, envoyez-moi un "mail" si vous voulez savoir comment le résoudre!
+o libProplist 0.9.1.Si vous avez installé Window Maker 0.61.1, vous devriez l'avoir.
+o GCC.
+
+Plate-formes
+============
+La version 0.1.1 a été compilée avec succés sur Redhat 5.2 Intel, et Amiga (RH 5.1), 
+SuSE (version inconnue) et Slackware 3.6.
+La version 0.2.1 a été compilée avec succés sur Redhat 5.2 et 6.0 Intel, et Amiga (RH 5.1).
+
+Installation
+============
+gunzip et untar FSViewer.app-x.y.z.tar.gz
+[prompt]$> tar zxvf FSViewer.app-x.y.z.tar.gz 
+ou
+[prompt]$> gunzip FSViewer.app-x.y.z.tar.gz
+[prompt]$> tar -xvf FSViewer.app-x.y.z.tar
+ensuite
+[prompt]$> cd FSViewer.app-x.y.z.
+[prompt]$> ./configure
+[prompt]$> make
+si le make aboutit, se "loger" root et
+[prompt]$> make install
+ou 
+[prompt]$> make install-strip
+revenez en mode utilisateur 
+
+L'exécutable FSViewer (FSViewer) est maintenant dans /usr/local/GNUstep/Apps/FSViewer.app
+
+Copiez maintenant icons.tar.gz dans le répertoire d'installation, par défaut
+/usr/local/GNUstep/Apps/FSViewer.app et
+ 
+[prompt]$> tar zxvf icons.tar.gz 
+ou
+[prompt]$> gunzip icons.tar.gz
+[prompt]$> tar -xvf icons.tar
+
+Si vous voulez accéder aux icônes déjà installés et que vous souhaitiez utiliser leur
+nom directement, c'est-à-dire sans chemin ou extension, vous devez définir ICONDIR
+dans le fichier de configuration par défaut et les fichiers doivent se trouver dans leur
+propre répertoire. Ainsi, pour les fichiers xpm, la structure correspond à
+/un/chemin/spécifié/dans/ICONDIR/xpm et pour les fichiers tiff /un/chemin/spécifié/dans/ICONDIR/tiff.
+
+Si vous utilisez LinuxPPC/R4, vous devrez choisir l'option --with-extralibs
+par exemple:
+
+./configure --with-extralibs="-lXt -lICE -lSM"
+
+Slackware peut nécessiter quelque chose du style:
+
+./configure --with-extralibs="-lwraster -lgif"
+
+(Quelqu'un pourrait-il confirmer que les exemples ci-dessus fonctionnent?)
+
+Pour ceux qui ont un affichage en 8 bits, comme l'Amiga par exemple, il existe
+une option de compilation --enable-clk qui, définie sur "no" (--enable-clk=no),
+désactive l'icône de l'horloge dans l'inspecteur d'attributs.
+
+Si vous ne pouvez pas vous "loger" en tant que root, utilisez alors
+--prefix=/un/répertoire/dans lequel/vous pouvez/écrire dans les arguments de ./configure.
+Par exemple:
+
+[prompt]$> ./configure --prefix=/home/users/clernong/local
+[prompt]$> make
+[prompt]$> make install
+ou 
+[prompt]$> make install-strip
+
+L'exécutable FSViewer est maintenant dans /home/users/clernong/local/GNUstep/Apps/FSViewer.app
+
+S'il s'agit d'une première installation, lancez simplement l'application à partir
+du shell. Un fichier de configuration par défaut sera crée automatiquement.
+
+S'il s'agit d'une EVOLUTION (FSViewer < 0.2.0), sauvegardez le fichier de configuration 
+qui est dans ~/GNUstep/Defaults et depuis le répertoire de compilation, positionnez-vous dans defs (cd defs) 
+et tapez la commande chdef. Cette étape est nécessaire à la mise à jour du fichier de configuration. 
+Vous pouvez maintenant lancer l'application. 
+
+Documentation
+=============
+La documentation est fournie dans l'archive (en anglais et français).
+Une fois tout installé, lancez FSViewer. Vous devriez pouvoir
+vous déplacer dans l'arborescence des répertoires. L'interface est divisée en 3 parties.
+L'étagère est une zone où placer les répertoires et fichiers les plus fréquemment utilisés.
+Le chemin graphique représente le chemin sélectionné et les colonnes de
+navigation listent le contenu des répertoires du chemin sélectionné. Icônes/Actions/Evènements
+peuvent être définis dans la fenêtre Inspector.
+
+TODO
+====
+Il reste beaucoup à faire. Ce qui suit est une version condensée de la liste TODO 
+de mon bloc-notes.
+
+o Possibilité d'annulation de modification dans la fenêtre Inspecteur (support partiel).
+o Support du recycleur.
+o Mise en place d'une fenêtre de recherche. Elle existe mais devrait offrir plus de possibilités à l'utilisateur.
+o Améliorer la convivialité de l'application.
+o Ajouter une fenêtre offrant un moyen rapide de définir les applications correspondant à un type de fichier.
+o Modifier l'apparence du curseur pendant les périodes "occupées".
+o Ajouter un support permettant le déplacement dans les colonnes à l'aide du clavier.
+o Fournir une interface pour PGP afin de crypter les fichiers depuis FSViewer.
+o Mise en place de nouveaux modes de visualisation.
+o Mise en place d'une fenêtre de préférences plus complète.
+
+Copyright
+=========
+FSViewer est "copyrighted" par George Clernon 1998/1999 et il est fourni sous licence
+GNU General Public License. Lisez le fichier COPYING pour connaître les termes de la licence complète.
+
+Le code de la fenêtre principale, le code de libProplist, le navigateur et beaucoup d'autres choses sont
+basées sur WPrefs.app et la bibliothèque WINGs qui sont Copyright (c) 1998 Alfredo K. Kojima
+<kojima@windowmaker.org> et sont sous licence GNU General Public License.
+
+Une grosse partie du code relatif à X et de la structure générale est basée sur du code
+"copyrighted" par Redback Development Pty Ltd et sous licence GNU General Public License.
+
+Le code de manipulation de fichiers et de "magic files" est basé et repris sur
+Files-2.4f sous licence GNU General Public License.
+
+La bibliothèque regexp incluse dans la distribution pour utilisation avec le code "magic files"
+est "copyrighted" par University of Toronto. Lire le fichier README dans src/regexp pour
+plus de détails sur le mode de licence.
+
+Le code timestampWidget est disponible auprès de widget bazaar à:
+http://rive.boxybutgood.com. Auteur Charles Gamble <gambcl@cogamble.demon.co.uk> 
+et le code original est de Michael J. Mitchell <mitch@gw2.redback.com.au>.
+Les modifications permettant la compilation sous Window Maker 0.61 sont de George Clernon.
+
+Le travail artistique original crée pour FSViewer.app ne peut être distribué sans la distribution
+FSViewer.app. Le travail artistique comprend les icônes des dossiers, de my-computer et de
+FSViewer.app. Un grand merci à Marco van Hylckama Vlieg <fatal@global.uibk.ac.at>
+pour avoir fourni tout ce travail artistique en faveur de FSViewer.app.
+
+La documentation en français est de Georges Tarbouriech <gete@wanadoo.fr>
+
+Contact
+=======
+Envoyez vos commentaires et rapports de "bug" à clernong@tinet.ie

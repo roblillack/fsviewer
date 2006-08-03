@@ -1,0 +1,35 @@
+0	mode&0xF000	0x4000			DIR
+>0	lmode&0xF000	0xA000			LNK
+0	mode&0777	^0111			EXEC
+>0	lmode&0xF000	0xA000			LNK
+0	short		0x1F9D			COMPRESS
+0	short		0x1F8B			GZIP
+0	string		<MakerFile		FRAME
+0	string		<MIFFile		FRAME
+0	string		<MML			FRAME
+0	long		0x59A66A95		RAS
+0	string		P1			PBM
+0	string		P2			PGM
+0	string		P3			PPM
+0	string		P4			PBM
+0	string		P5			PGM
+0	string		P6			PPM
+0	short		0x4D4D			TIFF
+0	short		0x4949			TIFF
+0	string		GIF87a			GIF
+0	string		GIF89a			GIF
+0	long		0xFFD8FFE0		JPG
+0	long		0xFFD8FFEE		JPG
+0	long		0x01666370		PCF
+0	string		STARTFONT\ 2.1		BDF
+0	string		From			MAIL
+0	string		#FIG			FIG
+0	string		#XFM			XFM
+0	string		<HTML>			HTML
+0	string		/*\ XPM\ */		XPM
+0	regexp		\
+^#define[\ \t]+[^\ \t]+_width[\ \t]+[0-9]+	XBM
+0	regexp&512	(^|\n)\\.SH\ NAME	MAN
+0	regexp&512	\
+(^|\n)begin[\ \t]+[0-7][0-7][0-7]		UUENC
+0	string		%!			PS

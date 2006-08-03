@@ -1,0 +1,20 @@
+# List of source files containing translatable strings.
+# (in alphabetical order)
+src/attribsInspector.c
+src/editInspector.c
+src/exeInspector.c
+src/extnInspector.c
+src/files.c
+src/FSBrowser.c
+src/FSFileView.c
+src/FSFinder.c
+src/FSInspector.c
+src/FSMCList.c
+src/FSMenu.c
+src/FSPanel.c
+src/FSPrefs.c
+src/FSUtils.c
+src/FSViewer.c
+src/iconInspector.c
+# src/timestampWidget.c
+src/viewInspector.c

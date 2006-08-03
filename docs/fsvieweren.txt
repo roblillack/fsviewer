@@ -1,0 +1,218 @@
+FSViewer.app
+
+George Clernon
+
+6 October 1999
+
+Abstract
+
+FSViewer.app is a file manager based loosely on the NeXT File Viewer.
+It is an experiment, a hobby, a bit of fun with a smidgeen of seriousness!
+
+1 Introduction
+
+FSViewer is a file viewer which has a look similar to that of the NeXT
+FileViewer. It is written in C and utilises the WINGs widget set.
+It is an evolving project that aims to create an easy to use file
+manager. This document will outline the various components of the
+application.
+
+2 Installation
+
+FSViewer.app is available from http://www.csn.ul.ie/~clernong/download/.
+The latest version is FSViewer.app-0.2.4. Icons associated with the
+app are also available here (icons.tar.gz). gunzip and untar FSViewer.app-0.2.4.tar.gz 
+More on installation in the README file.
+
+3 Windows
+
+The primary window is made up of two sections, the shelf and the browser
+window. The shelf is a placeholder, while the browser window contains
+the path view and browser pane. When the window is resized the number
+of columns in the browser window will change accordingly. 
+
+3.1 The Shelf
+
+The shelf is a placeholder for files and directories. It provides quick
+access to user defined items. Single clicking on an item will open
+or execute it depending on the item type. It can be also used as a
+temporary storage space, useful when copying items. To add an item
+into the shelf, just drag it from the pathview and drop it on the
+shelf. to remove an item, Control-Mouseclick on the item. To resize
+the shelf drag the dimple up or down.
+
+3.2 The Browser Window
+
+This window contains the pathview and the browser pane.
+
+3.2.1 The Pathview
+
+The pathview represents the current path in a graphical display. The
+selected item is highlighted and can be viewed/executed by double
+clicking on it. The displayed items can be used in drag and drop actions. 
+
+3.2.2 The Browser Pane
+
+The browser pane displays in columns the contents of each directory
+that makes up the current path. A directory is indicated by an arrow
+displayed on the right of a row item. Clicking on a directory will
+cause the browser to display its contents in the next column and the
+item will be added to the pathview. Double-clicking on a file will
+open/execute it. The browser pane contents can be filtered and sorted. 
+
+4 Menus
+
+The menus ``float'' around the desktop. There is only one menu for
+all FSViewer windows that are open. The menu items are modelled on
+the entries in the File Viewer. All accelerator keys require the Meta
+key to be pressed at the same time. For example if the menu accelerator
+is 'a', the key combination to be pressed is Meta-a, if it were 'A',
+Meta-Shift-a would have to be pressed. If the keyboard does not have
+a Meta key, the Alt key should be used instead.
+
+5 Drag and Drop
+
+The Drag aNd Drop (DND) implementation is based on OffiX DND. This
+allows the use of DND within the app and also provides the app with
+the ability to interact with programs that use OffiX DND. It allows
+items to be dragged from the shelf/pathview and dropped onto the dock/clip. 
+Dragging to a folder causes the item to be moved into
+that folder. Pressing the Shift key while dragging will cause the item to be
+copied.
+
+6 Preferences Window
+
+This window allows for the configuration of different aspects of the
+program. It prevents you from filling by hand the default file.
+Don't forget to run "chdef" before using it.
+Three choices are available: variables, apps and file types and disks.
+
+6.1 Variables
+
+In this window it's possible to define default images (home, folders...),
+default "exec" relying on magic files (for text, images, ps files...),
+and display features (column width, sort order...)
+
+6.2 Apps and file types
+
+Here the apps can be selected within the array or browsed to be added to the list.
+(browse button)
+This allows to launch them from FSViewer.
+The right part of this window displays the file types defined in the default file.
+According to the file type you can modify the corresponding editor or viewer.
+You can remove items from the lists using the "remove" button (obvious!). 
+
+6.3 Disks
+
+This is the place where adding removable media in FSViewer menu.
+The media name (ie. CDROM) has to be written in the name field, so does the
+mount point (ie. /mnt/cdrom) and the device (ie. /dev/scd0).
+Corresponding commands are on the right part and have to be filled with
+mount %s, umount %s, eject %s like indicated in the "defaults file" part at the end
+of this document.
+
+7 Inspector Window
+
+The inspector displays various different attributes of the currently
+selected item including the items icon, default viewer/editor and
+file system attributes.
+
+7.1 Attributes Inspector
+
+This window display certain file system attributes of the selected
+item (the file permissions, the last changed date,file size, owner and group). 
+It also allows the user to change the file modes.
+
+7.2 Icon Inspector
+
+This allows the user to change the icon displayed for a file name/extension.
+The contents of the Icon Path list created by WPrefs.app and the resource
+path (set in the preferences window) are displayed here. If an icon
+is changed here, the icon displayed in the browser window will be
+updated the next time the item is selected.
+
+7.3 Viewer Inspector
+
+This displays the default viewer for the current selection. It also
+allows the viewer to be set from a predefined list or a user entry.
+Clicking on the button icon will open the selection.
+
+7.4 Editor Inspector
+
+This displays the default editor for the current selection. It also
+allows the editor to be set from a predefined list or a user entry.
+Clicking on the button icon will edit the selection.
+
+7.5 Executable Inspector
+
+This inspector sets the command to be executed when the program is
+run. 
+This panel is only accessible when the file is executable. Three shortcuts 
+have been provided. %p for the current path, %f for the current filename and 
+%s for the filename to be passed as an arg to the program. For example if 
+/usr/bin/xemacs was selected:
+
+	%p = /usr/bin/
+	%f = xemacs
+
+And a possible command could be:
+	%p%f %s
+which translates to
+	/usr/bin/xemacs %s
+
+Any file that has xemacs as it's default viewer/editor will use this command
+where %s is replaced with the full path and filename.
+
+8 Magic Files
+
+There is a rudimentary magic file support i.e. the app will try to 
+figure out what type the file is if it is unknown. It will then do something
+based on the file type. There are 3 cases:
+	1) If it is ascii, xedit is started.
+	2) If it is an image, xv is started.
+	3) If it is a ps file, ghostview is started.
+
+To change these settings, edit the defaults file.
+
+9 Defaults File
+
+The application's defaults file in normally in ~/GNUstep/Defaults/
+but the app relies on the WINGs library to find the file. The file
+is easy to edit by hand though the preferences window will be expanded
+to provide editing via the app. Listed below are example snippets
+for a file extension, a file executable and a disk entry.
+
+A file extension has three entries: viewer, editor, icon. The viewer/editor
+entries are commands to open edit the file and the icon is the name
+of pixmap to display. 
+
+.html = { viewer = "netscape -remote %s"; 
+
+editor = "xemacs %s"; 
+
+icon = "file-dot-html"; }; 
+
+A file executable has two entries: exec and icon. The exec entry defines
+the executable string to run and the icon indicates the pixmap to
+display. 
+
+lyx = {exec = "lyx %s";icon = "/usr/share/pixmaps/tiff/typewriter.tif";};
+
+The disks entry allows the user to define which disks can be mounted,
+unmounted and ejected from the Disks menu. Each disk will have 3 entries
+associated with it: string name, mount point and device name. The
+string name is the text that will appear in the menu. The mount point
+is the argument that is passed to the mount and unmount commands.
+The device name is passed to the eject command. The mount, unmount
+and eject command strings are also set here. Currently the commands
+are just executed, no feed back is available on whether they succeeded
+or not. This should change in the future.
+
+DISKS = { devices = ((CDROM, "/cdrom", "/dev/hdc"), (Zip, "/dosz",
+"/dev/sda4")); 
+
+mount = "mount %s"; 
+
+umount = "umount %s"; 
+
+eject = "eject %s"; };

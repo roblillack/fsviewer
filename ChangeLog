@@ -1,0 +1,268 @@
+FSViewer.app-0.2.5 (20021215)
+-----------------------------
+	o All lists in preferencs panel and inspector panel are sorted
+ 	  in alphabetical order.
+	o Added a russian (ru) translation.
+	o Changed gettext DOMAIN from "FSViewer.app" to "FSViewer".
+	o Removed dependency from "proplist-compat.h".
+	o Comment out <sys/rlist.h> in FSUtils.c for FreeBSD 4.6.
+	o Revised the german (de) translation (now more "NeXTish").
+	o Changes in attribute inspector panel:
+	  - Link label now changes color (black/darkgrey)
+	  - File size is displayed in Bytes/KB/MB
+	o A selection change in file viewer lists now updates the
+	  inspector panel.
+
+
+FSViewer.app-0.2.4 (20021110)
+-----------------------------
+	o Some administrative changes to remove the dist-bzip2 target
+	  due to my configuration mess with autotools.
+	o Removed double entries for file extensions in prop.c and
+	  sorted them in alphabetical order.
+	o Implementation of i18n support (gettext).
+	o Added a german (de) translation.
+	o Much work on the inspector panel, e.g.:
+	  - link targets are shown
+	  - long label texts are (mostly) wraped
+	  - some rearrangements to make label dimensions
+	    fit (dynamically) to translated texts
+	  - undo for changes to file attributes is implemented
+	o Text in legal panel is wraped.
+	o Reintroduced (lost) images for home and neighbour.
+	o Icons in panels are now painted with
+	  WMCreateBlendedPixmapFromFile, which removes the dithering
+	  shade around icons and solves errors with the home icon.
+
+
+FSViewer.app-0.2.3f (20021025)
+-----------------------------
+	o Crashfix in FSPrefs.c, now respecting NULL pointers to
+	  property list dictionary entries.
+
+
+FSViewer.app-0.2.3e (20021009)
+-----------------------------
+	o Changes in FSViewer.c to handle wrong values of XPOS, YPOS,
+	  WSIZE and HSIZE without crash when read from property list.
+	o Some administrative changes to make the FSViewer package
+ 	  distributable as bzip2 file.
+	o Substitution of some broken pixmaps.
+
+
+FSViewer.app-0.2.3d (20020225)
+-----------------------------
+	o Removed FSVERSION in FSViewer.h, changed FSPanel.c,
+          FSViewer.c and configure.in to use VERSION defined in
+          configure.in.
+        o Integrated xpm and tiff directories with containing icons.
+        o Fixed bug in prop.c which crashes FSViewer writing the user
+	  default database.
+
+
+FSViewer.app-0.2.3c (20020107)
+-----------------------------
+	o Fixed bug in FSUtils.c (was complained by gcc 2.96.0).
+
+
+FSViewer.app-0.2.3b (20020105)
+-----------------------------
+	o Made adaptation to WindowMaker 0.80.0.
+        o Removed libPropList dependency.
+
+
+FSViewer.app-0.2.3 (19991010)
+-----------------------------
+	o Changed MAXINT to INT_MAX for NetBSD v1.3.2
+	o Added Preferences Window
+	o Fixed bug in FSGetStringForName, if the returned
+	  value is NULL, wstrdup is not called.
+	o Fixed bug in FSCreatePixmapWithBacking*** when 
+	  image is bigger than backing.
+	o Created Icon Selection Dialog.
+	o Updated Icon Inspector to reflect look of Icon Selection
+	  Dialog.
+	o Set window level for some dialogues.
+	o Updated Edit|View Inspectors to save the extn into the EXTN
+	  defaults file entry.
+	o Modified chdefs to make the latest changes the necessary
+ 	  changes to the defaults file.
+	o Added DisplayMCListPixmap variable to turn on/off display
+	  of pixmaps indicating file/directory. The list runs better with
+	  it off!
+	o Add check for empty clientData in paintItem of FSMCList.
+	
+	
+FSViewer.app-0.2.2 (19990731)
+-----------------------------
+	o Added icons for files and directories in list view
+	o Plugged a few memory leaks found by Electric Fence
+	o Insertion/Deletion of files now updates all views
+	o Changed the configure script to use get-wraster-flags,
+	  this will hopefully fix most "can't find library" problems
+	o Changed listview parsing method.
+	o Applied a patch by Igor Roboul to FSViewer.c and iconInspector.c 
+	
+	
+FSViewer.app-0.2.1 (19990622)
+-----------------------------
+	o FSViewer now compiles with WM 0.60
+	o Added a preliminary list view. This is really for v0.3.0 but I left
+	  it in anyway.
+	o FSGetStringFor*** now returns a duplicated string.
+	o wmallocing memory with (Disk) instead of (Disk *)
+	o Fixed icon naming problem when the icon changes but the popup
+	  doesn't
+	
+	
+FSViewer.app-0.2.0 (19990519)
+-----------------------------
+	o Added dialog to prompt for settings with respect to unknown
+	  file types.
+	o Added app specific alert panel.
+	o Added in fallback condition that if the creation of an icon fails
+	  it defaults to the file_plain xpm.
+	o Automagically generate a defaults file if one doesn't exist.
+	o Rewrote proplist code to use WMUserDefaults
+	o Reorganised app/file extension association. The extension now
+	  has a viewer/editor exec string associated with it.
+	o Inspector panels resized, they look better now :)
+ 	o Removed Extension Inpector Panel.
+	o Fixed bug wrt adding to shelf from column 0.
+	o Shelf item background momentarily changes when clicked.
+	o "/" cannot be added to the shelf.
+	o Implemented basic preferences window.
+	o Sort file view by ascending or descending and by files first, 
+	  directories first or all jumbled up!
+	o Modified the backing pixmap for the shelf and the scrollview.
+	  A 64x64 pixmap is combined with the original pixmap. This allows
+	  buttons to be used as the widget holder for the icons in the
+	  scrollview.
+	o The browser (kinda) mimics the NeXT movements i.e. it only scrolls
+	  the browser if a file/folder is selected that is outside the current
+	  columns. 
+	o Added FSFileButton widget to provide shaped background and DnD 
+	  related stuff.
+	o Rewrote shelf to use FSFileButton widget
+	o Updated FSBrowser to reflect changes in the WINGs library
+	o Implemented Path View using frames and file buttons
+	o Fleshed out the main menu and populated some options
+	o Added in platform specific #defines for memory and disk calculations
+	o Added in DnD support. OffiX library ported by Igor Roboul.
+	o Added in code to change the cursor in the Dnd code and removed the
+	  root drop checks
+	o Modified the main menu to accept only Alt+key_press or 
+	  Meta+key_press depending on keyboard setup.
+	o Created PathView widget based on wbrowser. It provides better 
+	  support for window/column resizing.
+	o Free the FSFileInfo list after populating the browser. This should 
+	  plug a memory leak. 
+	o Provided the ability to resize the columns
+	o Added double click to browser items
+	o Added tooltip like view to the FSFileButton widget. Popups when the 
+	  text is to wide for the button.
+	o Added Update Viewer menu call.
+	o Browser can now be updated based on file action (copy/delete etc.)
+	o Added in xmodifier code from WPRefs/WM to provide correct Alt|Meta
+	  key support.
+	o Added chdef to change the old defaults file to the new format.
+	o Added option to disable the timestamp from the Inspector Window.
+	o Added support for formats (besides XPM and TIFF) supported by wmlib.
+	  Need to uncomment the code in FSUtils to use.
+	o Added in front end to find and locate. Uses hardcoded defaults for
+	  the moment, this will change in the next rev.
+	o Now pass executable name to WMInitialiseApplication instead of full
+	  pathname.
+	o chdef now includes update for ROOT icon entry.
+	o Changed chdef to actually insert the umount command into the 
+	  defaults file, instead of just creating it. 
+	o Added check for -lkvm for FreeBSD.
+	o Added #include <fcntl.h> in FSUtils.h for FreeBSD.
+	o Modified the regexp.h to just include string.h.
+	o Removed all "extern char *strchr();" from regexp.c
+	o Added "WMSynchronizeUserDefaults" to InitFilesDB so that the app does
+	  not need to be restarted on the first run. I really need to read the
+	  sources more clearly!
+	o Exes now don't need an entry in the defaults file. If you can 
+	  execute them, they will be executed!
+	o Fixed bug in FSUtils where hostname is overwritten with disk size 
+	  when Info panel is opened.
+	o Added option to configure script to allow extra libs, that are not
+	  looked for, be added.
+	o Definitely removed all "extern char*" from reg*.c :)
+	o Fixed bugs in Memory calculation for SunOS, needed to scale
+	  the total and change some logic.
+	
+	
+FSViewer.app-0.1.1 (19990223)
+-----------------------------
+	o Commented out FSDisk related code in FSUtils.c, should fix
+	  some multi-platform compilation problems.
+	o Added a patch to automatically detect HOME dir.
+	o Fixed a bug that crashes the app if the inital path contains a
+	  long path component.
+	o Zombie process are now cleaned up.
+	o Fixed WMJustified bug (should be WAJustified) in inspector.c and 
+	  iconInspector.c
+	o Implemented Revert in attributes inspector.
+	o Initial launch path is now the users home dir.
+	o Now checks return value of getpwuid and getgrgid calls in 
+	  attribsInspector.c, used to seg fault if either group or user
+	  was unknown.
+	o Disabled hiding of app via 'h' key, leaving it up to Window Maker 
+	  and changed the quit key from 'q' to '^q' to prevent accidents :).
+	o Added in a "Console" menu option under the "Tools" menu. It launches
+	  an xterm at the current directory.
+	o The window and miniwindow icon titles are set with the current 
+	  selection.
+	o Added in rudimentary magic files support. This allows certain kinds
+	  of unknown files to be viewed. 
+	o Fixed bug wrt to displaying/hiding dot files.
+	o Added in file filtering.
+	
+	
+FSViewer.app-0.1.0 (19990201)
+-----------------------------
+	o Reorganised the initialisation of the app.
+	o Multiple Windows can be opened.
+	o Display hidden files.
+	o Permissions can be set from attributes inspector.
+	o Icons can be set for extensions from File Extension
+	  inspector.
+	o Added legal panel.
+	o Added info panel (broke app for other platforms though).
+	o Tidied up code for file browsing to easily add other
+	  views.
+	o In the process of moving odds and ends to FSUtils.c
+	o Rewrote the scrollview code that displays the current path.
+	o The window(s) can be resized in both width and height.
+	o Using nodename from utsname struct as the hostname.
+	o Using timestampWidget instead of timestamp in attribsInspector 
+	  as it can display the year.
+	o Updated the configure script to take into account datadir value
+	  when generating the FSViewer default file.
+	o Added in Cut, Copy, Paste, Rename, Delete and Link.
+	o Inspector window now updates automatically if it is open.
+	o Added in the shelf.
+	o Added new file/directory creation.
+	o Before launching an app, the pwd is changed to the selected dir.
+	o Added in the Tools submenu and moved the Inspector there.
+	o Created icons and src sub directories.
+ 	
+
+FSViewer.app-0.0.2 (19981217)
+-----------------------------
+	o Added in more checks to the configure script.
+	o Replaced basename with GetNameFromPathname. 
+	o Using strrchr instead of rindex.
+	o Searches the Window Maker defaults domain for IconPath
+	  instead of PixmapPath
+	o Using "/" if environment variable HOSTNAME is not set.
+	o Added command line option to start FSViewer at a specified 
+	  path.
+	  
+
+FSViewer 19981212
+-----------------
+	This is the first release.
+
