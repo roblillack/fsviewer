@@ -30,6 +30,7 @@
 #include <kvm.h>
 #include <limits.h>
 #include <osreldate.h>
+#include <sys/param.h>
 #include <sys/conf.h>
 #include <sys/dkstat.h>
 /* #include <sys/rlist.h> */
