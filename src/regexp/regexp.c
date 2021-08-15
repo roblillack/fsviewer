@@ -23,7 +23,7 @@
  * regular-expression syntax might require a total rethink.
  */
 #include <stdio.h>
-/* #include <stdlib.h> */
+#include <stdlib.h>
 #include "regexp.h"
 #include "regmagic.h"
 

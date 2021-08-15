@@ -45,5 +45,6 @@ void        FSScrollBrowserToColumn(FSBrowser *bPtr, int column,
 				    Bool updateScroller);
 void        FSSetBrowserRelief(FSBrowser *bPtr, WMReliefType relief);
 void        FSSetBrowserDisplayFileCol(FSBrowser *bPtr, unsigned int display);
+void		FSSetBrowserHasScroller(FSBrowser *bPtr, int hasScroller);
 
 #endif

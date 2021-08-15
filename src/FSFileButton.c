@@ -688,7 +688,7 @@ createTextView(W_Screen *scr, char *text, int width, int len)
     W_View *view = NULL;
 
     if(!text)
-	return;
+	return NULL;
 
     view = W_CreateTopView(scr);
     view->attribFlags |= CWOverrideRedirect|CWSaveUnder;

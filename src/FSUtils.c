@@ -23,6 +23,12 @@
 #include <wraster.h>
 #include <X11/cursorfont.h>
 
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#else
+typedef unsigned long ulong;
+#endif
+
 /* change this to your OS */
 /* #define __Linux__ */
 
@@ -37,7 +43,6 @@
 #include <sys/time.h>
 #include <sys/vmmeter.h>
 #include <fcntl.h>
-typedef unsigned long ulong;
 #endif /* __FreeBSD__ */
 
 #if defined(__SunOS__)
@@ -56,6 +61,7 @@ typedef unsigned long ulong;
 #include "FSUtils.h"
 #include "FSPanel.h"
 #include "DnD.h"
+#include "misc.h"
 #include "xpm/file_plain.xpm"
 #include "xpm/backing2.xpm"
 #include "xpm/transparent.xpm"
@@ -1193,7 +1199,7 @@ FSGetDNDType(FileInfo *fileInfo)
     char *pathname = NULL;
 
     if(fileInfo == NULL)
-	return;
+	return 0;
     
     switch (fileInfo->fileType)
     {

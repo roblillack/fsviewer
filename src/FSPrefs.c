@@ -3,6 +3,7 @@
 #include <WINGs/WINGsP.h>
 
 #include "FSViewer.h"
+#include "FSFileView.h"
 #include "FSUtils.h"
 #include "FSPanel.h"
 #include "FSPrefs.h"

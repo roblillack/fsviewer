@@ -16,6 +16,8 @@ unsigned int DndDragButtons(XEvent *event);
 
 int DndHandleDragging(WMWidget *w, XEvent *event, WMPixmap *pixmap);
 
+void DndRegisterDragWidget (WMWidget *w, WMEventProc * handler, void *data);
+
 #define DndNotDnd       -1
 #define DndUnknown      0
 #define DndRawData      1

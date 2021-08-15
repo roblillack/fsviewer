@@ -748,7 +748,7 @@ FSRunAppInputPanel(FSViewer *app, FileInfo *fileInfo, char *title)
 {
     char *result = NULL;
 
-    if (!(appInput = FSCreateAppInputPanel(app, fileInfo, title))) { return; }
+    if (!(appInput = FSCreateAppInputPanel(app, fileInfo, title))) { return NULL; }
     
     WMMapWidget(appInput->win);
 
@@ -1205,7 +1205,7 @@ FSRunAlertPanel(FSViewer *app,
 
     if( !(alertPanel = FSCreateAlertPanel(app, title, msg, 
 					  defaultButton, alternateButton, 
-					  otherButton) ) ) {return;}
+					  otherButton) ) ) {return 0;}
 
     WMMapWidget(alertPanel->win);
 
@@ -1392,10 +1392,10 @@ FSRunSelectIconPanel(WMWindow *owner, char *title, char *str)
     char *imgStr = NULL;
 
     if(selIcon)
-	return;
+	return NULL;
 
     if (!(selIcon = FSCreateSelectIconPanel(owner, title, str))) 
-	return;
+	return NULL;
     
     WMMapWidget(selIcon->win);
     

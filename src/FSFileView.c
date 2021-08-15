@@ -16,6 +16,7 @@
 #include "FSFileButton.h"
 #include "FSViewer.h"
 #include "FSFileView.h"
+#include "FSMenu.h"
 #include "DnD.h"
 #include "FSUtils.h"
 

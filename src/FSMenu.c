@@ -8,8 +8,10 @@
 #include "FSFileView.h"
 #include "FSMenu.h"
 #include "FSPanel.h"
+#include "FSPrefs.h"
 #include "FSUtils.h"
 #include "FSFinder.h"
+#include "misc.h"
 
 
 static void fsSetViewerMode(FSViewer *fsViewer, FSFileViewType mode);

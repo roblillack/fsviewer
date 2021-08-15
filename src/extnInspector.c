@@ -229,7 +229,7 @@ storeData(_Panel *panel)
 
     if(numRows > 0)
 	WMWritePropListToFile(filesDB,
-	  wdefaultspathfordomain("FSViewer"), True);
+	  wdefaultspathfordomain("FSViewer"));
 
    if(extn)
 	free(extn);

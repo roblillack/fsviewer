@@ -8,6 +8,7 @@
 #include <WINGs/WINGs.h>
 #include <X11/Xlocale.h>
 #include <X11/keysym.h>
+#include <X11/Xresource.h>
 #include <unistd.h> /* for access() */
 
 #include "FSViewer.h"

@@ -374,7 +374,7 @@ main(int argc, char **argv)
 	SetIntegerForKey(0, "DisplayMCListPixmap");
 	
 	WMWritePropListToFile(filesDB,
-                wdefaultspathfordomain("FSViewer"), True);
+                wdefaultspathfordomain("FSViewer"));
 	result = 0;
     }	    
     else

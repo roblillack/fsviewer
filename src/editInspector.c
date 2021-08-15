@@ -2,6 +2,7 @@
 
 #include "FSViewer.h"
 #include "FSUtils.h"
+#include "misc.h"
 
 /* for: scr->normalFont */
 #include <WINGs/WINGsP.h> 

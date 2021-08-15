@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 1996 César Crusius
+   Copyright (C) 1996 CÃ©sar Crusius
    Copyright (C) 1999 Igor Roboul - WINGs adaptation
 
    This file is part of the DND Library.  This library is free
@@ -21,7 +21,6 @@
 #include <X11/cursorfont.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <values.h>
 
 #include "DnD.h"
 

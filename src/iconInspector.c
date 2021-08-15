@@ -1,6 +1,7 @@
 /* iconInspector.c */
 
 #include "FSViewer.h"
+#include "FSFileView.h"
 #include "FSUtils.h"
 
 #define WIDTH               272
@@ -193,7 +194,8 @@ buttonClick(WMWidget *self, void *data)
     {
 	storeData(panel);
 	WMSetButtonEnabled(panel->revertBtn, True);
-	FSUpdateFileViewPath(FSGetFSViewerCurrentView(panel->app));
+        // TODO: WTF??
+        // FSUpdateFileViewPath(FSGetFSViewerCurrentView(panel->app));
     }
     else {
       WMRunAlertPanel(panel->scr, NULL,

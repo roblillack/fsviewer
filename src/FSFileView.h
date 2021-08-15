@@ -1,6 +1,9 @@
 #ifndef _FSFILEVIEW_H_
 #define _FSFILEVIEW_H_
 
+#include "filebrowser.h"
+#include "FSFileButton.h"
+
 typedef enum _FSFileViewType
 {
         Browser,

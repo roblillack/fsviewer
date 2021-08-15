@@ -29,4 +29,14 @@ void FSHelpCB(FSViewer *fsViewer, int item, Time time);
 void FSCloseWindowCB(FSViewer *fsViewer, int item, Time time);
 void FSUpdateViewCB(FSViewer *fsViewer, int item, Time time);
 
+void FSBrowseCB(FSViewer *fsViewer, int item, Time time);
+void FSDeleteCB(FSViewer *fsViewer, int item, Time time);
+void FSDotFilesCB(FSViewer *fsViewer, int item, Time time);
+void FSIconCB(FSViewer *fsViewer, int item, Time time);
+void FSLinkCB(FSViewer *fsViewer, int item, Time time);
+void FSListCB(FSViewer *fsViewer, int item, Time time);
+void FSNewDirCB(FSViewer *fsViewer, int item, Time time);
+void FSNewViewCB(FSViewer *fsViewer, int item, Time time);
+void FSSortOrderCB(FSViewer *fsViewer, int item, Time time);
+
 #endif
