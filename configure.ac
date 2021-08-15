@@ -31,29 +31,6 @@ dnl Additional "default" items
 #CFLAGS="$CFLAGS -I/usr/X11/include"
 #LDFLAGS="$LDFLAGS -L/usr/X11/lib"
 
-dnl Check for get-wraster-flags
-AC_CHECK_PROG(GET_WRASTER_FLAGS, get-wraster-flags, get-wraster-flags)
-if test "$GET_WRASTER_FLAGS" != ""; then
-	dnl CFLAGS first
-        c_flags=`$GET_WRASTER_FLAGS --cflags`
-        echo $c_flags
-        CFLAGS="$CFLAGS $c_flags"
-
-	dnl LDFLAGS next
-        ld_flags=`$GET_WRASTER_FLAGS --ldflags`
-	echo $ld_flags
-        LDFLAGS="$LDFLAGS $ld_flags"
-
-	dnl And finally libs
-        libs_flags=`$GET_WRASTER_FLAGS --libs`
-	echo $libs_flags
-        LIBS="$LIBS $libs_flags"
-
-else
-
-	AC_MSG_ERROR("Danger Will Robinson: Unable to find get-wraster-flags in $PATH variable.");
-fi
-
 AC_CHECK_LIB(Xmu, XmuClientWindow)
 
 dnl Support for extralibs
@@ -76,6 +53,8 @@ AC_CHECK_LIB(WINGs, WMHandleEvent,,
              AC_MSG_ERROR([WINGs library not found]))
 AC_CHECK_LIB(WUtil, wmalloc,,
              AC_MSG_ERROR([WUtil library not found]))
+AC_CHECK_LIB(wrlib, RCreateContext,,
+             AC_MSG_ERROR([wraster library not found]))
 
 dnl Checks for PropList (not necessary since version 0.2.3b)
 dnl AC_CHECK_HEADERS(proplist.h,, AC_MSG_WARN(Can't find PropList include-file: Please install libPropList (included in WindowMaker)))
