@@ -38,24 +38,56 @@ FSLoadFSViewerConfigurations(FSViewer *fsViewer)
     char *magicFile = NULL;
 
     defaultsDB = WMGetStandardUserDefaults();
+
+    /*if there is no user database available, create one*/
     if (WMGetUDStringForKey(defaultsDB, "DIRECTORY") == NULL)
     {
 	InitFilesDB(fsViewer);
-	/* Bug fixed in 0.2.3d */
     }	
     iconDir = FSGetStringForName("ICONDIR");
+
     if (iconDir)
     {
-      /* test for existing ICONDIR */
-      if (access(iconDir, F_OK)!=0) {
-        wwarning(_("ICONDIR not found: %s"), iconDir);
-        free(iconDir);
+        /* test for existing ICONDIR */
+        if (access(iconDir, F_OK) != 0) {
+            wwarning(_("User database entry for ICONDIR is not "
+                        "valid: %s. Taking default value."), iconDir);
+            free(iconDir);
+
+            /*try compile time default value*/
+            WMSetUDStringForKey(defaultsDB, ICONDIR, "ICONDIR");
+            iconDir = FSGetStringForName("ICONDIR");
+
+            if (iconDir)
+            {
+                if (access(iconDir, F_OK) != 0) {
+                    wwarning(_("Default ICONDIR not found: %s"), iconDir);
+                    free(iconDir);
+                    exit (1);
+                }
+                else {
+                    WMSetResourcePath(iconDir);
+                    free(iconDir);
+                }
+            }
+            else {
+                wwarning(_("No valid value for ICONDIR found. "
+                            "Even default directory is broken!"));
+                exit (1);
+            }
+
+
+        }
+        else {
+            WMSetResourcePath(iconDir);
+            free(iconDir);
+        }
+    }
+    
+    else {
+        wwarning(_("No value for ICONDIR found! May be your %s"
+                    " preferences file is broken."), PACKAGE_NAME);
 	exit (1);
-      }
-      else {
-	WMSetResourcePath(iconDir);
-      }
-      free(iconDir);
     }
 
     magicFile = FSGetStringForName("MAGICFILE");

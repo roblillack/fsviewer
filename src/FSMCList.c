@@ -257,7 +257,7 @@ fillBrowserColumn(FSBrowser *bPtr, int column)
 {
     char        *path;
     FileInfo    *fileList;
-    FileInfo    *start;
+    FileInfo    *start = NULL;
     WMListItem  *listItem;
     FSMCList    *mPtr = (FSMCList *)(WMGetHangedData(bPtr));
     WMList      *list = FSGetBrowserListInColumn(bPtr, column);
@@ -408,7 +408,7 @@ createTruncatedString(WMFont *font, char *text, int *textLen, int width)
     if (width >= 3*dLen) {
 	int dddLen = 3*dLen;
 	int tmpTextLen = *textLen;
-	
+
 	strcpy(textBuf, text);
 	while (tmpTextLen
 	       && (WMWidthOfString(font, textBuf, tmpTextLen)+dddLen > width))
@@ -429,7 +429,7 @@ createTruncatedString(WMFont *font, char *text, int *textLen, int width)
 }
 
 static void
-paintItem(WMList *lPtr, int index, Drawable d, 
+paintItem(WMList *lPtr, int index, Drawable d,
 	  char *text, int state, WMRect *rect)
 {
     int i = 0;
@@ -450,17 +450,18 @@ paintItem(WMList *lPtr, int index, Drawable d,
     x = rect->pos.x;
     y = rect->pos.y;
     fontHeight = WMFontHeight(scr->normalFont);
-    
+
     /* Highlight the selected area */
     if (state & WLDSSelected)
-        XFillRectangle(scr->display, d, WMColorGC(scr->white), 
-		       x, y, width, height);
+        WMPaintColorSwatch(WMWhiteColor(scr), d, x, y,
+		       width, height);
     else
-        XClearArea(scr->display, d, x, y, width, height, False);
+        WMPaintColorSwatch(WMGetWidgetBackgroundColor(lPtr), d, x, y,
+		       width, height);
 
     if(item->clientData)
     {
-	str = wstrdup(item->clientData);	
+	str = wstrdup(item->clientData);
 	len  = strlen(str);
     }
     else
@@ -513,10 +514,10 @@ paintItem(WMList *lPtr, int index, Drawable d,
 		else
 		    image = WMCreatePixmapFromXPMData(scr, list_file_xpm);
 		size  = WMGetPixmapSize(image);
-		WMDrawPixmap(image, d, 
+		WMDrawPixmap(image, d,
 			     x+6+(20-size.width)/2, (height-size.height)/2+y);
 		WMReleasePixmap(image);
-	    
+
 	    }
 	    else
 	    {
@@ -527,52 +528,52 @@ paintItem(WMList *lPtr, int index, Drawable d,
 		else
 		    tmpStr = wstrdup("F");
 
-		W_PaintText(view, d, scr->boldFont,  
+		W_PaintText(view, d, scr->boldFont,
 			    x+6, y+(height-fontHeight)/2, widthC,
-			    WALeft, WMColorGC(scr->darkGray), False, 
+			    WALeft, WMDarkGrayColor(scr), False,
 			    tmpStr, 1);
 
 		free(tmpStr);
 	    }
-		
-	    if (WMWidthOfString(scr->normalFont, items[i], textLen) > widthC) 
+
+	    if (WMWidthOfString(scr->normalFont, items[i], textLen) > widthC)
 	    {
 		char *textBuf = createTruncatedString(scr->normalFont,
-						      items[i], &textLen, 
+						      items[i], &textLen,
 						      widthC);
-		
-		W_PaintText(view, d, scr->normalFont,  
+
+		W_PaintText(view, d, scr->normalFont,
 			    x+26, y+(height-fontHeight)/2, widthC,
-			    WALeft, WMColorGC(scr->black), False, 
+			    WALeft, WMBlackColor(scr), False,
 			    textBuf, textLen);
 
 		free(textBuf);
 	    }
-	    else 
+	    else
 	    {
-		W_PaintText(view, d, scr->normalFont,  
+		W_PaintText(view, d, scr->normalFont,
 			    x+26, y+(height-fontHeight)/2, widthC,
-			    WALeft, WMColorGC(scr->black), False, items[i],
+			    WALeft, WMBlackColor(scr), False, items[i],
 			    textLen);
 	    }
 	    x += 194;
-	}	    
+	}
 	else if(i==3)
 	{
-	    W_PaintText(view, d, scr->normalFont,  
+	    W_PaintText(view, d, scr->normalFont,
 			x+6, y+(height-fontHeight)/2, 100,
-			WALeft, WMColorGC(scr->black), False, items[i], 
+			WALeft, WMBlackColor(scr), False, items[i],
 			strlen(items[i]));
 	    x += 100;
 	}
 	else
 	{
-	    W_PaintText(view, d, scr->normalFont,  
+	    W_PaintText(view, d, scr->normalFont,
 			x+6, y+(height-fontHeight)/2, 82,
-			WALeft, WMColorGC(scr->black), False, items[i], 
+			WALeft, WMBlackColor(scr), False, items[i],
 			strlen(items[i]));
 	    x += 82;
-	}	  
+	}
 	free(items[i]);
 	items[i] = NULL;
     }

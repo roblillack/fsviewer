@@ -12,34 +12,34 @@
 
 #include <WINGs/WINGs.h>
 #include <WINGs/WUtil.h>
-#include <WINGs/proplist-compat.h>
 
 #include "../src/config.h"
 
-static proplist_t FSGetDBObjectForKey(proplist_t dict, char *key);
-proplist_t filesDB = NULL;
+
+static WMPropList* FSGetDBObjectForKey(WMPropList* dict, char *key);
+WMPropList* filesDB = NULL;
 
 Bool
-InsertArrayElement(proplist_t array, proplist_t val)
+InsertArrayElement(WMPropList* array, WMPropList* val)
 {
     int i;
     Bool notFound = True;
 
-    if (array && PLIsArray(array)) 
+    if (array && WMIsPLArray(array)) 
     {
-	for(i = 0; i < PLGetNumberOfElements(array); i++)
+	for (i = 0; i < WMGetPropListItemCount(array); i++)
 	{
-	    if(PLIsEqual(val, PLGetArrayElement(array, i)))
+	    if (WMIsPropListEqualTo(val, WMGetFromPLArray(array, i)))
 	    {
 		notFound = False;
 		break;
 	    }
 	}
-	if(notFound)
-	     PLAppendArrayElement(array, val);
+	if (notFound)
+	     WMAddToPLArray(array, val);
     }
     else
-	array = PLMakeArrayFromElements(val, NULL);
+	array = WMCreatePLArray(val, NULL);
 
     return notFound;
 }
@@ -49,15 +49,15 @@ loadConfigurationFile()
 {
     char *home         = NULL;
     char mbuf[512];
-    proplist_t val     = NULL;
+    WMPropList* val     = NULL;
 
     home = wdefaultspathfordomain("FSViewer"); 
-    filesDB = PLGetProplistWithPath(home);
-    if(filesDB)
+    filesDB = WMReadPropListFromFile(home);
+    if (filesDB)
     {
-        if (!PLIsDictionary(filesDB)) 
+        if (!WMIsPLDictionary(filesDB)) 
         {
-            PLRelease(filesDB);
+            WMReleasePropList(filesDB);
             filesDB = NULL;
             snprintf(mbuf, 512, "FSViewer Defaults Domain (%s) is "\
                      "corrupted!", home);
@@ -65,25 +65,25 @@ loadConfigurationFile()
         }
     } 
 
-    if(home)
+    if (home)
         free(home);
 }
 
-proplist_t
-GetDictObject(proplist_t dictKey, proplist_t valKey)
+WMPropList*
+GetDictObject(WMPropList* dictKey, WMPropList* valKey)
 {
-    proplist_t dict = NULL;
-    proplist_t val  = NULL;
+    WMPropList* dict = NULL;
+    WMPropList* val  = NULL;
 
-    if(dictKey && PLIsString(dictKey))
+    if (dictKey && WMIsPLString(dictKey))
     {
-	dict = PLGetDictionaryEntry(filesDB, dictKey);
-	if(dict && PLIsDictionary(dict))
+	dict = WMGetFromPLDictionary(filesDB, dictKey);
+	if (dict && WMIsPLDictionary(dict))
 	{
-	    if(valKey && PLIsString(valKey))
+	    if (valKey && WMIsPLString(valKey))
 	    {
-		val = PLGetDictionaryEntry(dict, valKey);
-		if(val)
+		val = WMGetFromPLDictionary(dict, valKey);
+		if (val)
 		    return val;
 	    }
 /* 	    else */
@@ -94,20 +94,20 @@ GetDictObject(proplist_t dictKey, proplist_t valKey)
     return NULL;
 } 
 
-proplist_t
+WMPropList*
 GetCmdForExtn(char *extn, char *cmd)
 {
-    proplist_t dictKey = PLMakeString(extn);
-    proplist_t cmdKey  = PLMakeString(cmd);
-    proplist_t val     = NULL;
+    WMPropList* dictKey = WMCreatePLString(extn);
+    WMPropList* cmdKey  = WMCreatePLString(cmd);
+    WMPropList* val     = NULL;
 
 
     val = GetDictObject(dictKey, cmdKey);
 
-    if(dictKey)
-	PLRelease(dictKey);
-    if(cmdKey)
-	PLRelease(cmdKey);
+    if (dictKey)
+	WMReleasePropList(dictKey);
+    if (cmdKey)
+	WMReleasePropList(cmdKey);
 
     return val;
 }
@@ -115,12 +115,12 @@ GetCmdForExtn(char *extn, char *cmd)
 char *
 GetExecStringForExtn(char *extn)
 {
-    proplist_t val = NULL;
+    WMPropList* val = NULL;
     
     val = GetCmdForExtn(extn, "exec");
     
-    if(val != NULL)
-	return PLGetString(val);
+    if (val != NULL)
+	return WMGetFromPLString(val);
     else
 	return NULL;
 }
@@ -128,12 +128,12 @@ GetExecStringForExtn(char *extn)
 char *
 GetViewerStringForExtn(char *extn)
 {
-    proplist_t val = NULL;
+    WMPropList* val = NULL;
     
     val = GetCmdForExtn(extn, "viewer");
     
-    if(val != NULL)
-	return PLGetString(val);
+    if (val != NULL)
+	return WMGetFromPLString(val);
     else
 	return NULL;
 }
@@ -141,12 +141,12 @@ GetViewerStringForExtn(char *extn)
 char *
 GetEditorStringForExtn(char *extn)
 {
-    proplist_t val = NULL;
+    WMPropList* val = NULL;
     
     val = GetCmdForExtn(extn, "editor");
     
-    if(val)
-	return PLGetString(val);
+    if (val)
+	return WMGetFromPLString(val);
     else
 	return NULL;
 }
@@ -154,30 +154,30 @@ GetEditorStringForExtn(char *extn)
 char *
 GetIconStringForExtn(char *extn)
 {
-    proplist_t val = NULL;
+    WMPropList* val = NULL;
     
     val = GetCmdForExtn(extn, "icon");
     
-    if(val != NULL)
-	return PLGetString(val);
+    if (val != NULL)
+	return WMGetFromPLString(val);
     else
 	return NULL;
 }
 
-proplist_t
-FSRemoveArrayElement(proplist_t array, proplist_t val)
+WMPropList*
+FSRemoveArrayElement(WMPropList* array, WMPropList* val)
 {
     int i;
     Bool notFound = True;
 
-    if (array && PLIsArray(array)) 
+    if (array && WMIsPLArray(array)) 
     {
-	for(i = 0; i < PLGetNumberOfElements(array); i++)
+	for (i = 0; i < WMGetPropListItemCount(array); i++)
 	{
-	    if(PLIsEqual(val, PLGetArrayElement(array, i)))
+	    if (WMIsPropListEqualTo(val, WMGetFromPLArray(array, i)))
 	    {
-		PLRemoveArrayElement(array, i);
-		PLRelease(val);
+		WMDeleteFromPLArray(array, i);
+		WMReleasePropList(val);
 		break;
 	    }
 	}
@@ -189,15 +189,15 @@ FSRemoveArrayElement(proplist_t array, proplist_t val)
 void
 SetEditorStringForExtn(char *extn, char *execStr)
 {
-    proplist_t dict = NULL;
-    proplist_t dictKey = PLMakeString(extn);
-    proplist_t val = PLMakeString(execStr);
-    proplist_t key = PLMakeString("editor");
+    WMPropList* dict = NULL;
+    WMPropList* dictKey = WMCreatePLString(extn);
+    WMPropList* val = WMCreatePLString(execStr);
+    WMPropList* key = WMCreatePLString("editor");
 
-    dict = PLGetDictionaryEntry(filesDB, dictKey);
-    if (dict && PLIsDictionary(dict))
+    dict = WMGetFromPLDictionary(filesDB, dictKey);
+    if (dict && WMIsPLDictionary(dict))
     {
-	PLInsertDictionaryEntry(dict, key, val);
+	WMPutInPLDictionary(dict, key, val);
     }
     else
 	fprintf(stderr,"%s %d\n\n", __FILE__, __LINE__);
@@ -207,15 +207,15 @@ SetEditorStringForExtn(char *extn, char *execStr)
 void
 SetViewerStringForExtn(char *extn, char *execStr)
 {
-    proplist_t dict = NULL;
-    proplist_t dictKey = PLMakeString(extn);
-    proplist_t val = PLMakeString(execStr);
-    proplist_t key = PLMakeString("viewer");
+    WMPropList* dict = NULL;
+    WMPropList* dictKey = WMCreatePLString(extn);
+    WMPropList* val = WMCreatePLString(execStr);
+    WMPropList* key = WMCreatePLString("viewer");
 
-    dict = PLGetDictionaryEntry(filesDB, dictKey);
-    if (dict && PLIsDictionary(dict))
+    dict = WMGetFromPLDictionary(filesDB, dictKey);
+    if (dict && WMIsPLDictionary(dict))
     {
-	PLInsertDictionaryEntry(dict, key, val);
+	WMPutInPLDictionary(dict, key, val);
     }
     else
 	fprintf(stderr,"%s %d\n\n", __FILE__, __LINE__);
@@ -223,36 +223,36 @@ SetViewerStringForExtn(char *extn, char *execStr)
 }
 
 void
-SetObjectForKey(proplist_t object, char *keyName)
+SetObjectForKey(WMPropList* object, char *keyName)
 {
-    proplist_t key = PLMakeString(keyName);
+    WMPropList* key = WMCreatePLString(keyName);
 
-    PLInsertDictionaryEntry(filesDB, key, object);
-    PLRelease(key);    
+    WMPutInPLDictionary(filesDB, key, object);
+    WMReleasePropList(key);    
 }
 
 void
 SetIntegerForKey(int i, char *key)
 {
-    proplist_t object;
+    WMPropList* object;
     char buffer[128];
 
     sprintf(buffer, "%i", i);
-    object = PLMakeString(buffer);
+    object = WMCreatePLString(buffer);
 
     SetObjectForKey(object, key);
-    PLRelease(object);
+    WMReleasePropList(object);
 }
 
 void
 SetStringForKey(char *str, char *key)
 {
-    proplist_t object;
+    WMPropList* object;
 
-    object = PLMakeString(str);
+    object = WMCreatePLString(str);
 
     SetObjectForKey(object, key);
-    PLRelease(object);
+    WMReleasePropList(object);
 }
 
 int 
@@ -263,108 +263,108 @@ main(int argc, char **argv)
 
     loadConfigurationFile();
 
-    if(filesDB)
+    if (filesDB)
     {
 	int numElem, i;
 	int execArrayFound = 0;
 	int extnArrayFound = 0;
-	proplist_t key   = NULL;
-	proplist_t val   = NULL;
-	proplist_t tmp   = NULL;
-	proplist_t dict  = NULL;
-	proplist_t array = PLGetAllDictionaryKeys(filesDB);
-	proplist_t extnArray = PLGetDictionaryEntry(filesDB, 
-						    PLMakeString("EXTN"));
-	proplist_t execArray = PLGetDictionaryEntry(filesDB, 
-						    PLMakeString("EXE"));
-	proplist_t diskDict  = PLGetDictionaryEntry(filesDB, 
-						    PLMakeString("DISKS"));
+	WMPropList* key   = NULL;
+	WMPropList* val   = NULL;
+	WMPropList* tmp   = NULL;
+	WMPropList* dict  = NULL;
+	WMPropList* array = WMGetPLDictionaryKeys(filesDB);
+	WMPropList* extnArray = WMGetFromPLDictionary(filesDB, 
+						    WMCreatePLString("EXTN"));
+	WMPropList* execArray = WMGetFromPLDictionary(filesDB, 
+						    WMCreatePLString("EXE"));
+	WMPropList* diskDict  = WMGetFromPLDictionary(filesDB, 
+						    WMCreatePLString("DISKS"));
 
-	if(!extnArray || !PLIsArray(extnArray))
+	if (!extnArray || !WMIsPLArray(extnArray))
 	{
-	    extnArray = PLMakeArrayFromElements(NULL, NULL);
+	    extnArray = WMCreatePLArray(NULL, NULL);
 	    extnArrayFound = 0;
 	}
 	else
 	    extnArrayFound = 1;
 
-	if(!execArray || !PLIsArray(execArray))
+	if (!execArray || !WMIsPLArray(execArray))
 	{
-	    execArray = PLMakeArrayFromElements(NULL, NULL);
+	    execArray = WMCreatePLArray(NULL, NULL);
 	    execArrayFound = 0;
 	}
 	else
 	    execArrayFound = 1;
 
-	if(array && PLIsArray(array))
+	if (array && WMIsPLArray(array))
 	{
 	    char *extn = NULL;
 	    char *exe  = NULL;
 	    char *execStr = NULL;
 
-	    numElem = PLGetNumberOfElements(array);
-	    for(i = 0; i < numElem; i++)
+	    numElem = WMGetPropListItemCount(array);
+	    for (i = 0; i < numElem; i++)
 	    {
-		tmp = PLGetArrayElement(array, i);
-		extn = PLGetDescription(tmp);
-		if(extn)
+		tmp = WMGetFromPLArray(array, i);
+		extn = WMGetPropListDescription(tmp, True);
+		if (extn)
 		{
 		    exe = GetViewerStringForExtn(extn);
-		    if(exe)
+		    if (exe)
 		    {
 			/* Add to extn list */
-			InsertArrayElement(extnArray, PLMakeString(extn));
+			InsertArrayElement(extnArray, WMCreatePLString(extn));
 			continue;
-		    } /* End if(exe) */
+		    } /* End if (exe) */
 
 		    exe = GetEditorStringForExtn(extn);
-		    if(exe)
+		    if (exe)
 		    {
 			/* Add to extn list */
-			InsertArrayElement(extnArray, PLMakeString(extn));
+			InsertArrayElement(extnArray, WMCreatePLString(extn));
 			continue;
-		    } /* End if(exe) */
+		    } /* End if (exe) */
 
 		    exe = GetExecStringForExtn(extn);
-		    if(exe)
+		    if (exe)
 		    {
 			/*Add to Exe list*/
-			InsertArrayElement(execArray, PLMakeString(extn));
+			InsertArrayElement(execArray, WMCreatePLString(extn));
 			continue;
-		    } /* End if(exe) */
-		} /* End if(extn) */
-	    } /* End for(i;;) */
+		    } /* End if (exe) */
+		} /* End if (extn) */
+	    } /* End for (i;;) */
 	}
 
-	if(!extnArrayFound)
+	if (!extnArrayFound)
 	    SetObjectForKey(extnArray, "EXTN");
-	if(!execArrayFound)
+	if (!execArrayFound)
 	    SetObjectForKey(execArray, "EXE");
 	/* DISKS setting */
-	if(diskDict && PLIsDictionary(diskDict))
+	if (diskDict && WMIsPLDictionary(diskDict))
 	{
-	    proplist_t devices = NULL;
-	    proplist_t mount = NULL;
-	    proplist_t umount = NULL;
-	    proplist_t eject = NULL;
+	    WMPropList* devices = NULL;
+	    WMPropList* mount = NULL;
+	    WMPropList* umount = NULL;
+	    WMPropList* eject = NULL;
 
-	    devices = PLGetDictionaryEntry(diskDict, PLMakeString("devices"));
-	    mount = PLGetDictionaryEntry(diskDict, PLMakeString("mount"));
-	    umount = PLGetDictionaryEntry(diskDict, PLMakeString("umount"));
-	    eject = PLGetDictionaryEntry(diskDict, PLMakeString("eject"));
+	    devices = WMGetFromPLDictionary(diskDict, WMCreatePLString("devices"));
+	    mount = WMGetFromPLDictionary(diskDict, WMCreatePLString("mount"));
+	    umount = WMGetFromPLDictionary(diskDict, WMCreatePLString("umount"));
+	    eject = WMGetFromPLDictionary(diskDict, WMCreatePLString("eject"));
 
-	    if(devices/*  && PLIsArray(devices) */)
+	    if (devices/*  && WMIsPLArray(devices) */)
 	    { 
-		numElem = PLGetNumberOfElements(devices);
-		for(i = 0; i < numElem; i++)
+		numElem = WMGetPropListItemCount(devices);
+		for (i = 0; i < numElem; i++)
 		{
-		    tmp = PLGetArrayElement(devices, i);
-		    if(tmp && PLIsArray(tmp))
+		    tmp = WMGetFromPLArray(devices, i);
+		    if (tmp && WMIsPLArray(tmp))
 		    {
 			InsertArrayElement(tmp, mount);
 			InsertArrayElement(tmp, umount);
 			InsertArrayElement(tmp, eject);
-			InsertArrayElement(tmp, PLMakeString("close %s"));
+			InsertArrayElement(tmp, WMCreatePLString("close %s"));
 		    }
 		}
 		SetObjectForKey(devices, "DISCS");
@@ -373,7 +373,8 @@ main(int argc, char **argv)
 
 	SetIntegerForKey(0, "DisplayMCListPixmap");
 	
-	PLSave(filesDB, wdefaultspathfordomain("FSViewer"), YES);
+	WMWritePropListToFile(filesDB,
+                wdefaultspathfordomain("FSViewer"), True);
 	result = 0;
     }	    
     else

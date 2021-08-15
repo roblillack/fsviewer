@@ -1,7 +1,17 @@
+2007-10-14 Guido Scholz <guido.scholz@bayernline.de>
+	* po/sv.po: Swedish translation added.
+	* man/fsviewer.x1, chdef.x1: Man pages from debian package added.
+	* configure.sub, configure.guess: updated autoconf files
+	* configure.ac: some administrative changes, error messages for
+	not found libraries etc.
+	* chdef/chdef.c: Removed dependency from "proplist-compat.h".
+	* FSPrefs.c: Update file view if view options are changed
+	activating the apply button.
+
 FSViewer.app-0.2.5 (20021215)
 -----------------------------
 	o All lists in preferencs panel and inspector panel are sorted
- 	  in alphabetical order.
+	  in alphabetical order.
 	o Added a russian (ru) translation.
 	o Changed gettext DOMAIN from "FSViewer.app" to "FSViewer".
 	o Removed dependency from "proplist-compat.h".
@@ -46,17 +56,17 @@ FSViewer.app-0.2.3e (20021009)
 	o Changes in FSViewer.c to handle wrong values of XPOS, YPOS,
 	  WSIZE and HSIZE without crash when read from property list.
 	o Some administrative changes to make the FSViewer package
- 	  distributable as bzip2 file.
+	  distributable as bzip2 file.
 	o Substitution of some broken pixmaps.
 
 
 FSViewer.app-0.2.3d (20020225)
 -----------------------------
 	o Removed FSVERSION in FSViewer.h, changed FSPanel.c,
-          FSViewer.c and configure.in to use VERSION defined in
-          configure.in.
-        o Integrated xpm and tiff directories with containing icons.
-        o Fixed bug in prop.c which crashes FSViewer writing the user
+	  FSViewer.c and configure.in to use VERSION defined in
+	  configure.in.
+	o Integrated xpm and tiff directories with containing icons.
+	o Fixed bug in prop.c which crashes FSViewer writing the user
 	  default database.
 
 
@@ -68,7 +78,7 @@ FSViewer.app-0.2.3c (20020107)
 FSViewer.app-0.2.3b (20020105)
 -----------------------------
 	o Made adaptation to WindowMaker 0.80.0.
-        o Removed libPropList dependency.
+	o Removed libPropList dependency.
 
 
 FSViewer.app-0.2.3 (19991010)
@@ -86,7 +96,7 @@ FSViewer.app-0.2.3 (19991010)
 	o Updated Edit|View Inspectors to save the extn into the EXTN
 	  defaults file entry.
 	o Modified chdefs to make the latest changes the necessary
- 	  changes to the defaults file.
+	  changes to the defaults file.
 	o Added DisplayMCListPixmap variable to turn on/off display
 	  of pixmaps indicating file/directory. The list runs better with
 	  it off!
@@ -127,7 +137,7 @@ FSViewer.app-0.2.0 (19990519)
 	o Reorganised app/file extension association. The extension now
 	  has a viewer/editor exec string associated with it.
 	o Inspector panels resized, they look better now :)
- 	o Removed Extension Inpector Panel.
+	o Removed Extension Inpector Panel.
 	o Fixed bug wrt adding to shelf from column 0.
 	o Shelf item background momentarily changes when clicked.
 	o "/" cannot be added to the shelf.
@@ -248,7 +258,7 @@ FSViewer.app-0.1.0 (19990201)
 	o Before launching an app, the pwd is changed to the selected dir.
 	o Added in the Tools submenu and moved the Inspector there.
 	o Created icons and src sub directories.
- 	
+
 
 FSViewer.app-0.0.2 (19981217)
 -----------------------------

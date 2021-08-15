@@ -14,16 +14,7 @@
 
 @SET_MAKE@
 
-# Copyright (C) 2002 Guido Scholz <guido.scholz@bayernline.de>
-#  
-# This file is free software; as a special exception the author gives
-# unlimited permission to copy and/or distribute it, with or without 
-# modifications, as long as this notice is preserved.
-# 
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
-# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
+# manual file 
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -42,7 +33,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = tiff
+subdir = man
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
@@ -57,15 +48,10 @@ CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES =
 SOURCES =
 DIST_SOURCES =
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(tiffdatadir)"
-tiffdataDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(tiffdata_DATA)
+man1dir = $(mandir)/man1
+am__installdirs = "$(DESTDIR)$(man1dir)"
+NROFF = nroff
+MANS = $(man_MANS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -179,82 +165,8 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-tiffdatadir = $(fsviewerdir)/tiff
-tiffdata_DATA = FSViewer.tif \
-	exec-link.tif \
-	file-dot-a.tif \
-	file-dot-aiff.tif \
-	file-dot-au.tif \
-	file-dot-avi.tif \
-	file-dot-bz2.tif \
-	file-dot-c.tif \
-	file-dot-cc.tif \
-	file-dot-class.tif \
-	file-dot-conf.tif \
-	file-dot-core.tif \
-	file-dot-cpp.tif \
-	file-dot-dat.tif \
-	file-dot-deb.tif \
-	file-dot-eps.tif \
-	file-dot-f90.tif \
-	file-dot-fig.tif \
-	file-dot-for.tif \
-	file-dot-gif.tif \
-	file-dot-gz.tif \
-	file-dot-h.tif \
-	file-dot-html.tif \
-	file-dot-jar.tif \
-	file-dot-java.tif \
-	file-dot-jpg.tif \
-	file-dot-m.tif \
-	file-dot-mov.tif \
-	file-dot-mp3.tif \
-	file-dot-mpg.tif \
-	file-dot-o.tif \
-	file-dot-pdf.tif \
-	file-dot-pedro.tif \
-	file-dot-pl.tif \
-	file-dot-png.tif \
-	file-dot-ps.tif \
-	file-dot-py.tif \
-	file-dot-rc.tif \
-	file-dot-rpm.tif \
-	file-dot-sh.tif \
-	file-dot-shar.tif \
-	file-dot-so.tif \
-	file-dot-tar.tif \
-	file-dot-tcl.tif \
-	file-dot-tex.tif \
-	file-dot-texi.tif \
-	file-dot-tga.tif \
-	file-dot-tif.tif \
-	file-dot-txt.tif \
-	file-dot-wav.tif \
-	file-dot-xbm.tif \
-	file-dot-xcf.tif \
-	file-dot-xpm.tif \
-	file-dot-zip.tif \
-	file-executable.tif \
-	file-generic-gnustep.tif \
-	file-generic-text.tif \
-	file-link.tif \
-	file-makefile.tif \
-	file-plain.tif \
-	file-readme.tif \
-	folder-link.tif \
-	folder.tif \
-	fullfolder.tif \
-	generic-coding.tif \
-	generic-conf.tif \
-	generic-config.tif \
-	generic-library.tif \
-	generic-sound.tif \
-	generic-text.tif \
-	home.tif \
-	mycomputer.tif \
-	neighbour.tif
-
-EXTRA_DIST = $(tiffdata_DATA)
+man_MANS = fsviewer.1x chdef.1x
+EXTRA_DIST = $(man_MANS)
 all: all-am
 
 .SUFFIXES:
@@ -267,9 +179,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  tiff/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  man/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  tiff/Makefile
+	  $(AUTOMAKE) --gnu  man/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -287,22 +199,50 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-install-tiffdataDATA: $(tiffdata_DATA)
+install-man1: $(man1_MANS) $(man_MANS)
 	@$(NORMAL_INSTALL)
-	test -z "$(tiffdatadir)" || $(MKDIR_P) "$(DESTDIR)$(tiffdatadir)"
-	@list='$(tiffdata_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(tiffdataDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(tiffdatadir)/$$f'"; \
-	  $(tiffdataDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(tiffdatadir)/$$f"; \
+	test -z "$(man1dir)" || $(MKDIR_P) "$(DESTDIR)$(man1dir)"
+	@list='$(man1_MANS) $(dist_man1_MANS) $(nodist_man1_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.1*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  if test -f $(srcdir)/$$i; then file=$(srcdir)/$$i; \
+	  else file=$$i; fi; \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    1*) ;; \
+	    *) ext='1' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " $(INSTALL_DATA) '$$file' '$(DESTDIR)$(man1dir)/$$inst'"; \
+	  $(INSTALL_DATA) "$$file" "$(DESTDIR)$(man1dir)/$$inst"; \
 	done
-
-uninstall-tiffdataDATA:
+uninstall-man1:
 	@$(NORMAL_UNINSTALL)
-	@list='$(tiffdata_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(tiffdatadir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(tiffdatadir)/$$f"; \
+	@list='$(man1_MANS) $(dist_man1_MANS) $(nodist_man1_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.1*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    1*) ;; \
+	    *) ext='1' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " rm -f '$(DESTDIR)$(man1dir)/$$inst'"; \
+	  rm -f "$(DESTDIR)$(man1dir)/$$inst"; \
 	done
 tags: TAGS
 TAGS:
@@ -339,9 +279,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(DATA)
+all-am: Makefile $(MANS)
 installdirs:
-	for dir in "$(DESTDIR)$(tiffdatadir)"; do \
+	for dir in "$(DESTDIR)$(man1dir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -386,7 +326,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-tiffdataDATA
+install-data-am: install-man
 
 install-dvi: install-dvi-am
 
@@ -396,7 +336,7 @@ install-html: install-html-am
 
 install-info: install-info-am
 
-install-man:
+install-man: install-man1
 
 install-pdf: install-pdf-am
 
@@ -420,7 +360,9 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-tiffdataDATA
+uninstall-am: uninstall-man
+
+uninstall-man: uninstall-man1
 
 .MAKE: install-am install-strip
 
@@ -429,11 +371,11 @@ uninstall-am: uninstall-tiffdataDATA
 	install install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip install-tiffdataDATA installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
-	pdf-am ps ps-am uninstall uninstall-am uninstall-tiffdataDATA
+	install-man1 install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
+	uninstall-am uninstall-man uninstall-man1
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

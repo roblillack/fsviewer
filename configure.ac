@@ -1,15 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
 
-dnl old style:
-AC_INIT(src/FSViewer.c)
-AM_INIT_AUTOMAKE(FSViewer.app,0.2.5)
-AM_CONFIG_HEADER(src/config.h)
-
-dnl new style (I guess automake >= 1.6):
-dnl AC_INIT(FSViewer.app,0.2.5,[guido.scholz@bayernline.de])
-dnl AC_CONFIG_SRCDIR(src/FSViewer.c)
-dnl AM_INIT_AUTOMAKE([dist-bzip2])
-dnl AM_CONFIG_HEADER(src/config.h)
+AC_INIT(FSViewer.app,0.2.6,[guido.scholz@bayernline.de])
+AC_CONFIG_SRCDIR([src/FSViewer.c])
+AM_INIT_AUTOMAKE([dist-bzip2])
+AC_CONFIG_HEADERS([src/config.h])
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -18,11 +12,6 @@ dnl AC_PROG_LN_S
 
 dnl AC_ARG_PROGRAM
 AC_PROG_RANLIB
-
-AC_PATH_PROG(AUTOCONF, autoconf)
-AC_PATH_PROG(ACLOCAL, aclocal)
-AC_PATH_PROG(AUTOHEADER, autoheader)
-AC_PATH_PROG(AUTOMAKE, automake)
 
 dnl the prefix
 dnl ==========
@@ -86,8 +75,12 @@ if test "x$extralibs" != "x"; then
     LIBS="$extralibs $LIBS"
 fi
 
-AC_CHECK_LIB(WMaker, WMAppSetMainMenu)
-AC_CHECK_LIB(WINGs, WMAppSetMainMenu, , , $LIBS)
+AC_CHECK_LIB(Xft, XftFontOpen,,
+             AC_MSG_ERROR([Xft library not found]))
+AC_CHECK_LIB(WMaker, WMAppSetMainMenu,,
+             AC_MSG_ERROR([WMaker library not found]))
+AC_CHECK_LIB(WINGs, WMAppSetMainMenu,,
+             AC_MSG_ERROR([WINGs library not found]))
 
 dnl Checks for PropList (not necessary since version 0.2.3b)
 dnl AC_CHECK_HEADERS(proplist.h,, AC_MSG_WARN(Can't find PropList include-file: Please install libPropList (included in WindowMaker)))
@@ -120,10 +113,13 @@ clk=no
 AC_ARG_ENABLE(clk,
 [  --enable-clk            enable inspector clk (default = yes)],
                 clk=$enableval, clk=yes)
+AH_TEMPLATE([CLK],[enable inspector clk])
 if test "$clk" = yes; then
-        AC_DEFINE(CLK, 1)
+    AC_DEFINE([CLK], [1])
+    dnl AC_DEFINE(CLK, 1)
 else
-        AC_DEFINE(CLK, 0)	
+    AC_DEFINE([CLK], [0])
+    dnl    AC_DEFINE(CLK, 0)	
 fi
 
 
@@ -153,7 +149,8 @@ fi
 fsviewerdir=$with_appspath/FSViewer.app
 AC_SUBST(fsviewerdir)
 
-AC_DEFINE_UNQUOTED(ICONDIR, "${fsviewerdir}")
+AH_TEMPLATE([ICONDIR],[Where to put icon files])
+AC_DEFINE_UNQUOTED([ICONDIR], "${fsviewerdir}")
 
 dnl Support for NLS
 dnl ==============================================
@@ -167,6 +164,7 @@ AC_DEFINE_UNQUOTED(LOCALEDIR, "$LOCALEDIR")
 
 
 AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.15])
 
 AC_OUTPUT(Makefile src/Makefile src/regexp/Makefile defs/Makefile \
-  po/Makefile.in m4/Makefile tiff/Makefile xpm/Makefile)
+  po/Makefile.in m4/Makefile tiff/Makefile xpm/Makefile man/Makefile)

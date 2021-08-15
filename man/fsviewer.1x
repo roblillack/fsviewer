@@ -1,0 +1,214 @@
+.\" Man page for fsviewer
+.\"
+.\" Hacked from the:
+.\" Man page for fsviewer
+.\" Copyright (C), 1994, 1995, Graeme W. Wilford. (Wilf.)
+.\"
+.\" You may distribute under the terms of the GNU General Public
+.\" License 
+.\"
+.TH fsviewer 1x "July 1st, 1999" "NeXT fileviewer lookalike"
+.SH NAME
+fsviewer \- a NeXT fileviewer lookalike
+.SH SYNOPSIS
+.\" The general command line
+.B fsviewer 
+.SH DESCRIPTION
+.B fsviewer 
+is a NeXT fileviewer lookalike designed to work with
+the Window Maker window manager. It features 
+Browser mode, DND and file operations.
+
+.SH "THE INTERFACE"
+
+The interface is split into 3 sections. 
+The shelf is an area to place frequently accessed directories 
+or files. The pathview section depicts the current selected path and the 
+browser columns lists the directory contents of the current selected path. 
+Icons/Actions/Events can be set in the Inspector Panel.
+
+.SH "KEY BINDINGS"
+All keys bindings can only be accessed in combination with the Meta key.
+In systems without a Meta key, this should be the Alt key.
+
+.SH "MOUSE CLICKS"
+Clicking on an entry in a browser column will update the scroll view with the
+new selection and if the selection is a directory, it will fill the next 
+column. It will then scroll the browser/pathview accordingly.
+
+Double-clicking on an entry in the pathview/browser will execute it if it is 
+executable or launch the associated editor/viewer. 
+
+Ctrl-MouseClick over an icon in the shelf will remove it from the shelf.
+
+.SH INSPECTOR
+The inspector contains 6 different panels:
+
+.Bl -bullet
+.It Attributes
+The attributes panel displays the file permissions, the last changed date,
+file size, owner and group. The link section is not working.
+
+.Bl -bullet
+.It Icon
+The icon panel allows an icon to be selected for the current extension.  If 
+the file does not have an extension it will be associated with the full
+filename. The paths used are read from the Window Maker defaults domain. To add
+paths either edit the Window Maker defaults file or use WPrefs.app. 
+Click 'OK' to set the new icon. 
+
+.Bl -bullet
+.It Viewer
+The viewer panel allows for the selection of the default viewer to be 
+associated with the file extension. The list all the executables registered 
+with FSViewer.
+
+.Bl -bullet
+Editor
+4) The editor is the same as the Viewer. This becomes useful when a
+file requires a separate editor e.g. HTML files.
+
+.Bl -bullet 
+.It Executable
+The executable panel allows a command to be associated with the file. 
+This panel is only accessible when the file is executable. Three shortcuts 
+have been provided. %p for the current path, %f for the current filename and 
+%s for the filename to be passed as an arg to the program. For example if 
+/usr/bin/xemacs was selected:
+
+       %p = /usr/bin/
+       %f = xemacs
+
+And a possible command could be:
+
+       %p%f %s
+
+which translates to
+
+       /usr/bin/xemacs %s
+
+Any file that has xemacs as it's default viewer/editor will use this command
+where %s is replaced with the full path and filename.
+
+.Bl -bullet
+.It File Extensions
+The file extension panel provides a method for associating file extensions
+with an app. An extension MUST start with a '.'. If a new extension 
+is entered its icon may be set from this panel.
+
+.SH "Magic Files"
+Rudimentary magic file support is available -- the app will try to 
+figure out what type the file is if it is unknown. It will then do something
+based on the file type. There are 3 cases:
+
+.TP
+If it is ascii, xedit is started.
+.TP
+If it is an image, xv is started.
+.TP
+If it is a ps file, ghostview is started.
+
+To change these settings, edit the defaults file in 
+.I ~/GNUstep/Defaults.
+
+
+.SH DnD
+A port of the OffiX DnD library is being used in this app. The port has been 
+undertaken by Igor Roboul. OffiX DnD is supported by Window Maker so you can
+drop things on the dock/clip. Also icons can be dragged from the pathview to a 
+folder or to the shelf, dragging to a folder causes the item to be moved into
+that folder. Presing the Shift key while dragging will cause the item to be
+copied.
+
+
+.SH "Mounting Devices"
+
+The app provides rudimentary support for mounting, unmounting and ejecting 
+file systems. A sample defaults file entry is provided below.
+
+  DISKS = {
+    devices = ((CDROM, "/cdrom", "/dev/hdc"), \\
+    (Zip, "/dosz", "/dev/sda4"));
+    mount = "mount %s";
+    umount = "umount %s";
+    eject = "eject %s";
+  };
+
+At the moment any errors from the commands are not detected.
+
+
+.SH "File Settings"
+When an unknown file type is encountered a window will pop up prompting you
+for a command. For example if the file is a jpeg the command may be:
+
+       xv %s
+
+where %s will be replaced with the filename when the app comes across a jpeg 
+type file. To pass something as one arguement, just wrap it in double quotes
+eg:
+
+       app "-p foo"
+
+The "-p foo" will be passed as one arguement.
+
+
+.SH Preferences
+Sometimes it may be easier to edit the defaults file 
+(
+.I ~/GNUstep/Defaults/FSViewer
+) than to work with the app. Also there are some 
+options that the currently sparse Preferences Dialog does not know about. 
+It is worth looking at the file to see what can be changed. A more 
+comprehensive Preferences Dialog Box, that will allow access to most if not all
+of the defaults file, is planned for the next version.
+Make sure to backup the defaults file if you plan to edit it by hand!
+
+.SH FILES
+.TP
+.I /etc/GNUstep/Defaults/FSViewer
+the systemwide configuration file.
+.TP
+.I ~/GNUstep/Defaults/FSViewer
+a user's personal configuration file.
+
+.SH BUGS
+The link section under Attributes doesn't work.
+
+Many features remain unimplemented.  A list of these from the 
+.B fsviewer
+README file:
+.TP
+Revert in the Inspector Panel (partially supported).
+.TP 
+Recycler Support.
+.TP
+Implement a locate/find dialog. Done but it needs to be customizable.
+.TP
+Improve the feel of the app.
+.TP
+Add a panel to allow for 'quick' registering of apps.
+.TP
+Change cursor during busy periods.
+.TP
+Add in support for file completion for navigating the columns.
+.TP
+Provide an interface to PGP to allow for file encryption via FSViewer.
+.TP
+Implement other viewing modes.
+.TP
+Implement a full preferences dialog.
+.TP
+Revert in the Inspector Panel (partially supported).
+
+Send comments and bug reports to <clernong@tinet.ie>.
+
+.SH "SEE ALSO"
+.BR wmaker (1x), 
+.SH AUTHORS
+.B fsviewer 
+is Copyright 1998/1999 George Clernon <clernong@tinet.ie>
+and was written by George Clernon.
+
+This manpage was adapted from the 
+.B fsviewer
+README file by Will Lowe <lowe@debian.org> for the Debian GNU/Linux distribution.  

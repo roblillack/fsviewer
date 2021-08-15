@@ -516,9 +516,8 @@ paintImageAndText(W_View *view, int x, int y, int width, int height,
 
     if(text)
     {
-	
 	W_PaintText(view, d, screen->normalFont, x+ix, y+iy,
-		    strwidth, WACenter, WMColorGC(screen->black),
+		    strwidth, WACenter, WMBlackColor(screen),
 		    True, text, strlen(text));
     }
 
@@ -711,7 +710,7 @@ createTextView(W_Screen *scr, char *text, int width, int len)
     XSetWindowBackgroundPixmap(WMScreenDisplay(scr), view->window, pix);
     XClearWindow(WMScreenDisplay(scr), view->window);
     W_PaintText(view, pix, scr->normalFont, 2, 1, width, WACenter, 
-		WMColorGC(scr->black), False, text, len);
+		WMBlackColor(scr), False, text, len);
     if(pix)
 	XFreePixmap(scr->display, pix);
 

@@ -30,7 +30,6 @@
 #include <kvm.h>
 #include <limits.h>
 #include <osreldate.h>
-#include <sys/param.h>
 #include <sys/conf.h>
 #include <sys/dkstat.h>
 /* #include <sys/rlist.h> */
@@ -977,8 +976,8 @@ FSCreateBlendedPixmapFromFile(WMScreen *scr, char *fileName, RColor *color)
     clone = RMakeCenteredImage(image, 64, 64, &color1);
     pixmap = WMCreatePixmapFromRImage(scr, clone, 0);
 
-    RDestroyImage(image);
-    RDestroyImage(clone);
+    RReleaseImage(image);
+    RReleaseImage(clone);
 
     return pixmap;
 }
@@ -1029,8 +1028,8 @@ FSCreatePixmapWithBackingFromFile(WMScreen *scr, char *fileName, RColor *color)
       pixmap = WMCreatePixmapFromRImage(scr, clone, 0);
     }
 
-    RDestroyImage(clone);
-    RDestroyImage(image);
+    RReleaseImage(clone);
+    RReleaseImage(image);
 
     return pixmap;
 }
@@ -1069,7 +1068,7 @@ FSCreateBlurredPixmapFromFile(WMScreen *scr, char *fileName)
     RClearImage(image, &color);
     pixmap = WMCreatePixmapFromRImage(scr, image, 0);
 
-    RDestroyImage(image);
+    RReleaseImage(image);
 
     return pixmap;
 }

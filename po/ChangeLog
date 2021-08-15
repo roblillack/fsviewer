@@ -1,8 +1,11 @@
+2007-10-13  Daniel Nylander <yeager@lidkoping.net>
+	* Swedish translation: sv.po
+
 2002-12-11  Alexey Voinov <voins@voins.program.ru>
-        * Russian translation: ru.po
+	* Russian translation: ru.po
 
 2002-11-01  Guido Scholz <guido.scholz@bayernline.de>
-        * German translation: de.po
+	* German translation: de.po
 
 2002-11-01  gettextize  <bug-gnu-gettext@gnu.org>
 

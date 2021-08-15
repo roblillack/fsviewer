@@ -278,13 +278,13 @@ drawTitleOfColumn(FSBrowser *bPtr, int column)
 						   &titleLen, widthC);
 	    W_PaintText(bPtr->view, bPtr->view->window, scr->boldFont, x, 
 			(bPtr->titleHeight-WMFontHeight(scr->boldFont))/2,
-			bPtr->columnSize.width, WACenter, WMColorGC(scr->white),
+			bPtr->columnSize.width, WACenter, WMWhiteColor(scr),
 			False, titleBuf, titleLen);
 	    free (titleBuf);
 	} else {
 	    W_PaintText(bPtr->view, bPtr->view->window, scr->boldFont, x, 
 			(bPtr->titleHeight-WMFontHeight(scr->boldFont))/2,
-			bPtr->columnSize.width, WACenter, WMColorGC(scr->white),
+			bPtr->columnSize.width, WACenter, WMWhiteColor(scr),
 			False, bPtr->titles[column], titleLen);
 	}
     }
@@ -621,7 +621,7 @@ willResizeFSBrowser(W_ViewDelegate *self, WMView *view,
 
 
 static void
-paintItem(WMList *lPtr, int index, Drawable d, char *text, int state, 
+paintItem(WMList *lPtr, int index, Drawable d, char *text, int state,
 	  WMRect *rect)
 {
     WMView *view = W_VIEW(lPtr);
@@ -630,19 +630,18 @@ paintItem(WMList *lPtr, int index, Drawable d, char *text, int state,
 /*     WMListItem *item; */
 
 /*     item = WMGetListItem(lPtr, index); */
-    
+
     width = rect->size.width;
     height = rect->size.height;
     x = rect->pos.x;
     y = rect->pos.y;
 
     if (state & WLDSSelected)
-	XFillRectangle(scr->display, d, WMColorGC(scr->white), x, y,
+        WMPaintColorSwatch(WMWhiteColor(scr), d, x, y,
 		       width, height);
-/*     else if(item->uflags & 1) */
-/* 	XFillRectangle(scr->display, d, WMColorGC(WMCreateNamedColor(scr, "yellow", False)), x, y, width, height); */
     else
-	XClearArea(scr->display, d, x, y, width, height, False);
+        WMPaintColorSwatch(WMGetWidgetBackgroundColor(lPtr), d, x, y,
+		       width, height);
 
     if (text) {
 	/* Avoid overlaping... */
@@ -652,11 +651,11 @@ paintItem(WMList *lPtr, int index, Drawable d, char *text, int state,
 	    char *textBuf = createTruncatedString(scr->normalFont,
 		                                  text, &textLen, widthC);
             W_PaintText(view, d, scr->normalFont,  x+4, y, widthC,
-		    	WALeft, WMColorGC(scr->black), False, textBuf, textLen);
+			WALeft, WMBlackColor(scr), False, textBuf, textLen);
 	    free(textBuf);
 	} else {
-      	    W_PaintText(view, d, scr->normalFont,  x+4, y, widthC,
-		    	WALeft, WMColorGC(scr->black), False, text, textLen);
+	    W_PaintText(view, d, scr->normalFont,  x+4, y, widthC,
+			WALeft, WMBlackColor(scr), False, text, textLen);
 	}
     }
 

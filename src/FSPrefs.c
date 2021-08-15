@@ -77,7 +77,7 @@ static	FSPreferencesPanel     *preferences = NULL;
 
 void FSRunPreferencesPanel(FSViewer *app, char *title)
 { 
-    if(preferences)
+    if (preferences)
 	return;
 
     if (!(preferences = FSCreatePreferencesPanel(app, title))) { return; }
@@ -105,7 +105,7 @@ static FSPreferencesPanel *FSCreatePreferencesPanel(FSViewer *app, char *title)
     WMTabViewItem         *tab;
 
     /* allocate memory for the prefernces panel */
-    if(!( prefs= (FSPreferencesPanel *)malloc(sizeof(FSPreferencesPanel))))
+    if (!( prefs= (FSPreferencesPanel *)malloc(sizeof(FSPreferencesPanel))))
     { 
 	return NULL; 
     }
@@ -711,43 +711,43 @@ populateVarsTab(FSPreferencesPanel *prefs)
     WMListItem *item;
 
     item = WMAddListItem(prefs->imgList, "ROOT");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForNameKey("ROOT", "icon");
 
     item = WMAddListItem(prefs->imgList, "DIRECTORY");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForName("DIRECTORY");
 
     item = WMAddListItem(prefs->imgList, "DEFAULT_IMG");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForName("DEFAULT_IMG");
 
     item = WMAddListItem(prefs->imgList, "HOME");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForName("HOME");
 
     item = WMAddListItem(prefs->execList, "CONSOLE");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForNameKey("CONSOLE", "exec");
     
     item = WMAddListItem(prefs->execList, "PROCESS");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForNameKey("PROCESS", "exec");
     
     item = WMAddListItem(prefs->execList, "MAGICASCII");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForNameKey("MAGICASCII", "exec");
     
     item = WMAddListItem(prefs->execList, "MAGICIMAGE");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForNameKey("MAGICIMAGE", "exec");
     
     item = WMAddListItem(prefs->execList, "MAGICPS");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForNameKey("MAGICPS", "exec");
     
     item = WMAddListItem(prefs->dpyList, "ColumnWidth");
-    if(item)
+    if (item)
     {
 	char buf[10];
 
@@ -756,7 +756,7 @@ populateVarsTab(FSPreferencesPanel *prefs)
     }
     
 /*     item = WMAddListItem(prefs->dpyList, "IconWidth"); */
-/*     if(item) */
+/*     if (item) */
 /*     { */
 /* 	char buf[10]; */
 
@@ -765,11 +765,11 @@ populateVarsTab(FSPreferencesPanel *prefs)
 /*     } */
     
     item = WMAddListItem(prefs->dpyList, "ICONDIR");
-    if(item)
+    if (item)
 	item->clientData = FSGetStringForName("ICONDIR");
     
     item = WMAddListItem(prefs->dpyList, "SortDisplay");
-    if(item)
+    if (item)
     {
 	char buf[10];
 
@@ -778,7 +778,7 @@ populateVarsTab(FSPreferencesPanel *prefs)
     }
     
     item = WMAddListItem(prefs->dpyList, "SortOrder");
-    if(item)
+    if (item)
     {
 	char buf[10];
 
@@ -787,7 +787,7 @@ populateVarsTab(FSPreferencesPanel *prefs)
     }
     
     item = WMAddListItem(prefs->dpyList, "DisplaySVBG");
-    if(item)
+    if (item)
     {
 	char buf[10];
 
@@ -796,7 +796,7 @@ populateVarsTab(FSPreferencesPanel *prefs)
     }
     
     item = WMAddListItem(prefs->dpyList, "DisplayMCListPixmap");
-    if(item)
+    if (item)
     {
 	char buf[10];
 
@@ -827,7 +827,7 @@ populateTypesTab(FSPreferencesPanel *prefs)
     WMSetButtonImage(prefs->typesIconBtn, NULL);
 
     array = FSGetUDObjectForKey(defaultsDB, "EXTN");
-    if(array && WMIsPLArray(array))
+    if (array && WMIsPLArray(array))
     {
       
 	numElem = WMGetPropListItemCount(array);
@@ -835,55 +835,55 @@ populateTypesTab(FSPreferencesPanel *prefs)
 	{
 	    element = WMGetFromPLArray(array, i);
 	    
-	    if(element)
+	    if (element)
 	    {
 		char *str = WMGetPropListDescription(element, False);
 
-		if(str)
+		if (str)
 		    item = WMAddListItem(prefs->typesList, str);
 		else
 		    continue;
 
-		if(item)
+		if (item)
 		{
 		    WMPropList* tmp = NULL;
 
 		    tmp = FSGetUDObjectForKey(defaultsDB, str);
-		    if(tmp)
+		    if (tmp)
 			item->clientData = WMDeepCopyPropList(tmp);
 		}
-		if(str)
+		if (str)
 		    free(str);
 	    }
 	}
     } 
 
     array = FSGetUDObjectForKey(defaultsDB, "EXE");
-    if(array && WMIsPLArray(array))
+    if (array && WMIsPLArray(array))
     {
 	numElem = WMGetPropListItemCount(array);
 	for(i = 0; i < numElem; i++)
 	{
 	    element = WMGetFromPLArray(array, i);
 	    
-	    if(element)
+	    if (element)
 	    {
 		char *str = WMGetPropListDescription(element, False);
 
-		if(str)
+		if (str)
 		    item = WMAddListItem(prefs->appsList, str);
 		else
 		    continue;
 
-		if(item)
+		if (item)
 		{
 		    WMPropList* tmp = NULL;
 
 		    tmp = FSGetUDObjectForKey(defaultsDB, str);
-		    if(tmp)
+		    if (tmp)
 			item->clientData = WMDeepCopyPropList(tmp);
 		}
-		if(str)
+		if (str)
 		    free(str);
 	    }
 	}
@@ -901,7 +901,7 @@ populateDisksTab(FSPreferencesPanel *prefs)
 
     devArray = FSGetUDObjectForKey(defaultsDB, "DISCS");
 
-    if(devArray && WMIsPLArray(devArray))
+    if (devArray && WMIsPLArray(devArray))
     {
 	int i, numElem;
 	WMPropList* tmp;
@@ -910,7 +910,7 @@ populateDisksTab(FSPreferencesPanel *prefs)
 	for(i = 0; i < numElem; i++)
 	{
 	    array = WMGetFromPLArray(devArray, i);
-	    if(array && WMIsPLArray(array))
+	    if (array && WMIsPLArray(array))
 	    {
 		Disc *disk       = NULL;
 		WMListItem *item = NULL;
@@ -919,7 +919,7 @@ populateDisksTab(FSPreferencesPanel *prefs)
 		memset(disk, 0, sizeof(Disc));
 
 		tmp = WMGetFromPLArray(array, 0);
-		if(WMIsPLString(tmp))
+		if (WMIsPLString(tmp))
 		{
 		    disk->name = wstrdup(WMGetFromPLString(tmp));
 		    item = WMAddListItem(prefs->disksList, disk->name);
@@ -930,30 +930,30 @@ populateDisksTab(FSPreferencesPanel *prefs)
 		}
 
 		tmp = WMGetFromPLArray(array, 1);
-		if(WMIsPLString(tmp))
+		if (WMIsPLString(tmp))
 		    disk->point = wstrdup(WMGetFromPLString(tmp));
 		
 		tmp = WMGetFromPLArray(array, 2);
-		if(WMIsPLString(tmp))
+		if (WMIsPLString(tmp))
 		    disk->device = wstrdup(WMGetFromPLString(tmp));
 		
 		tmp = WMGetFromPLArray(array, 3);
-		if(WMIsPLString(tmp))
+		if (WMIsPLString(tmp))
 		    disk->mnt = wstrdup(WMGetFromPLString(tmp));
 		
 		tmp = WMGetFromPLArray(array, 4);
-		if(WMIsPLString(tmp))
+		if (WMIsPLString(tmp))
 		    disk->umnt = wstrdup(WMGetFromPLString(tmp));
 		
 		tmp = WMGetFromPLArray(array, 5);
-		if(WMIsPLString(tmp))
+		if (WMIsPLString(tmp))
 		    disk->eject = wstrdup(WMGetFromPLString(tmp));
 	       
 		tmp = WMGetFromPLArray(array, 6);
-		if(WMIsPLString(tmp))
+		if (WMIsPLString(tmp))
 		    disk->close = wstrdup(WMGetFromPLString(tmp));
 
-		if(item)
+		if (item)
 		    item->clientData = disk;		
 	    }
 	}
@@ -967,37 +967,37 @@ populateDisksFields(FSPreferencesPanel *prefs)
     WMListItem *item    = WMGetListSelectedItem(prefs->disksList);
     Disc *disk          = (Disc *)item->clientData;
 
-    if(disk->name)
+    if (disk->name)
 	WMSetTextFieldText(prefs->disksNameTF, disk->name);
     else
 	WMSetTextFieldText(prefs->disksNameTF, "");
 
-    if(disk->point)
+    if (disk->point)
 	WMSetTextFieldText(prefs->disksMntTF, disk->point);
     else
 	WMSetTextFieldText(prefs->disksMntTF, "");
 
-    if(disk->device)
+    if (disk->device)
 	WMSetTextFieldText(prefs->disksDevTF, disk->device);
     else
 	WMSetTextFieldText(prefs->disksDevTF, "");
 
-    if(disk->mnt)
+    if (disk->mnt)
 	WMSetTextFieldText(prefs->cmdMntTF, disk->mnt);
     else
 	WMSetTextFieldText(prefs->cmdMntTF, "");
 
-    if(disk->umnt)
+    if (disk->umnt)
 	WMSetTextFieldText(prefs->cmdUMntTF, disk->umnt);
     else
 	WMSetTextFieldText(prefs->cmdUMntTF, "");
 
-    if(disk->eject)
+    if (disk->eject)
 	WMSetTextFieldText(prefs->cmdEjectTF, disk->eject);
     else
 	WMSetTextFieldText(prefs->cmdEjectTF, "");
 
-    if(disk->close)
+    if (disk->close)
 	WMSetTextFieldText(prefs->cmdCloseTF, disk->close);
     else
 	WMSetTextFieldText(prefs->cmdCloseTF, "");
@@ -1011,7 +1011,7 @@ populateAppsFields(FSPreferencesPanel *prefs)
     WMPropList*  val   = NULL;
     WMListItem *item  = WMGetListSelectedItem(prefs->appsList);
 
-    if(!item)
+    if (!item)
 	return;
 
     val = FSGetDBObjectForKey(item->clientData, "exec");
@@ -1023,7 +1023,7 @@ populateAppsFields(FSPreferencesPanel *prefs)
     {
 	char *img = LocateImage(WMGetFromPLString(val));
 	
-	if(img)
+	if (img)
 	{
 	    FSSetButtonImageFromFile(prefs->appsIconBtn, img);
 	    WMHangData(prefs->appsIconBtn, WMGetFromPLString(val));
@@ -1037,7 +1037,7 @@ populateAppsFields(FSPreferencesPanel *prefs)
      * uflags indicates whether or not the list item should be
      * removed.
      */
-    if(item->uflags)
+    if (item->uflags)
 	WMSetButtonText(prefs->appsRemoveBtn, _("Undelete"));
     else
 	WMSetButtonText(prefs->appsRemoveBtn, _("Delete"));
@@ -1050,7 +1050,7 @@ populateTypesFields(FSPreferencesPanel *prefs)
     WMPropList*  val   = NULL;
     WMListItem *item  = WMGetListSelectedItem(prefs->typesList);
 
-    if(!item)
+    if (!item)
 	return;
 
     val = FSGetDBObjectForKey(item->clientData, "editor");
@@ -1070,7 +1070,7 @@ populateTypesFields(FSPreferencesPanel *prefs)
     {
 	char *img = LocateImage(WMGetFromPLString(val));
 	
-	if(img)
+	if (img)
 	{
 	    FSSetButtonImageFromFile(prefs->typesIconBtn, img);
 	    WMHangData(prefs->typesIconBtn, WMGetFromPLString(val));
@@ -1080,7 +1080,7 @@ populateTypesFields(FSPreferencesPanel *prefs)
     else
 	WMSetButtonImage(prefs->typesIconBtn, NULL);
 
-    if(item->uflags)
+    if (item->uflags)
     {
 	WMSetButtonText(prefs->typesRemoveBtn, _("Undelete"));
     }
@@ -1109,7 +1109,7 @@ updateDisksList(FSPreferencesPanel *prefs)
     Disc *disk = NULL;
     char *name = WMGetTextFieldText(prefs->disksNameTF);
 
-    if(item)
+    if (item)
     { 
 	/* If an item is selected, update it's settings */
 	disk = (Disc *) item->clientData;
@@ -1129,7 +1129,7 @@ updateDisksList(FSPreferencesPanel *prefs)
      * This could be a problem if an empty entry is
      * created. I wonder what will happen!!
      */
-    if(disk)
+    if (disk)
     {
 	disk->name   = WMGetTextFieldText(prefs->disksNameTF);
 	disk->point  = WMGetTextFieldText(prefs->disksMntTF);
@@ -1148,35 +1148,35 @@ genericListClick(WMWidget *self, void *data)
     WMListItem         *item  = WMGetListSelectedItem(list);
     FSPreferencesPanel *prefs = (FSPreferencesPanel *) data;
 
-    if(list  == prefs->imgList)
+    if (list  == prefs->imgList)
     {
 	char *img = NULL;
 
 	img = LocateImage(item->clientData);
 	
-	if(img)
+	if (img)
 	{
 	    FSSetButtonImageFromFile(prefs->imgIconBtn, img);
 	    free(img);
 	}
     }
-    else if(list == prefs->execList)
+    else if (list == prefs->execList)
     {
 	WMSetTextFieldText(prefs->execTF, item->clientData);
     }
-    else if(list == prefs->dpyList)
+    else if (list == prefs->dpyList)
     {
 	WMSetTextFieldText(prefs->dpyTF, item->clientData);
     }
-    else if(list == prefs->disksList)
+    else if (list == prefs->disksList)
     {
 	populateDisksFields(prefs);
     }
-    else if(list == prefs->typesList)
+    else if (list == prefs->typesList)
     {
 	populateTypesFields(prefs);
     }
-    else if(list == prefs->appsList)
+    else if (list == prefs->appsList)
     {
 	populateAppsFields(prefs);
     }
@@ -1190,21 +1190,21 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
     WMButton    *btn    = (WMButton *) self;
     FSPreferencesPanel *prefs = (FSPreferencesPanel *) clientData;
 
-    if(btn == prefs->imgIconBtn)
+    if (btn == prefs->imgIconBtn)
     {
 	char *img = NULL;
 	char *tmp = NULL;
 	WMListItem *item = WMGetListSelectedItem(prefs->imgList);
 
-	if(!item || !item->clientData)
+	if (!item || !item->clientData)
 	    return;
 
 	tmp = FSRunSelectIconPanel(prefs->win, _("Icon Select"),item->clientData);
-	if(tmp == NULL)
+	if (tmp == NULL)
 	    return;
 	
 	img = LocateImage(tmp);	
-	if(img)
+	if (img)
 	{
 	    FSSetButtonImageFromFile(prefs->imgIconBtn, img);
 	    free(img);
@@ -1213,11 +1213,11 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	item->clientData = tmp;
 	edited = True;
     }
-    else if(btn == prefs->execSetBtn)
+    else if (btn == prefs->execSetBtn)
     {
 	WMListItem *item = WMGetListSelectedItem(prefs->execList);
 
-	if(!item)
+	if (!item)
 	    return;
 
 	item->clientData = WMGetTextFieldText(prefs->execTF);
@@ -1225,11 +1225,11 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 /* 	WMSetTextFieldText(prefs->execTF, ""); */
 /* 	WMSelectListItem(prefs->execList, -1); */
     }
-    else if(btn == prefs->dpySetBtn)
+    else if (btn == prefs->dpySetBtn)
     {
 	WMListItem *item = WMGetListSelectedItem(prefs->dpyList);
 
-	if(!item)
+	if (!item)
 	    return;
 
 	item->clientData = WMGetTextFieldText(prefs->dpyTF);
@@ -1237,19 +1237,19 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 /* 	WMSelectListItem(prefs->dpyList, -1); */
 	edited = True;
     }
-    else if(btn == prefs->disksNewBtn)
+    else if (btn == prefs->disksNewBtn)
     {
 	clearDisksFields(prefs);
 	WMSelectListItem(prefs->disksList, -1);
     }
-    else if(btn == prefs->disksRemoveBtn)
+    else if (btn == prefs->disksRemoveBtn)
     {
 	int row = -1;
 	WMListItem *item = NULL;
 
 	clearDisksFields(prefs);
 	item = WMGetListSelectedItem(prefs->disksList);
-	if(item)
+	if (item)
 	{
 	    free(item->clientData);
 	    item->clientData = NULL;
@@ -1258,7 +1258,7 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	WMRemoveListItem(prefs->disksList, row);
 	edited = True;
     }
-    else if(btn == prefs->disksUpdateBtn)
+    else if (btn == prefs->disksUpdateBtn)
     {
 	updateDisksList(prefs);
 
@@ -1266,7 +1266,7 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 /* 	WMSelectListItem(prefs->disksList, -1); */
 	edited = True;
     }
-    else if(btn == prefs->appsSetBtn)
+    else if (btn == prefs->appsSetBtn)
     {
 	char *appStr     = WMGetTextFieldText(prefs->appsExecTF);
 	char *imgStr     = WMGetHangedData(prefs->appsIconBtn);
@@ -1274,10 +1274,10 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	WMPropList* array = FSGetUDObjectForKey(defaultsDB, "EXE");
 
 
-	if(!item)
+	if (!item)
 	    return;
         
-	if(appStr) /* crash in 0.2.3e*/
+	if (appStr) /* crash in 0.2.3e*/
 	{
 	  if (item->clientData) {
 	    WMPutInPLDictionary(item->clientData, 
@@ -1289,7 +1289,7 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	      WMCreatePLString("exec"), WMCreatePLString(appStr), NULL);
 	  }
 	}
-	if(imgStr)
+	if (imgStr)
 	{
 	  if (item->clientData) {
 	    WMPutInPLDictionary(item->clientData, 
@@ -1302,21 +1302,21 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	  }
 	}
 
-	if(array && WMIsPLArray(array))
+	if (array && WMIsPLArray(array))
 	{
 	    InsertArrayElement(array, WMCreatePLString(item->text));
 	}
 
 	edited = True;
     }
-    else if(btn == prefs->appsRemoveBtn)
+    else if (btn == prefs->appsRemoveBtn)
     {
 	WMListItem *item = WMGetListSelectedItem(prefs->appsList);
 
-	if(!item)
+	if (!item)
 	    return;
 
-	if(!item->uflags)
+	if (!item->uflags)
 	{
 	    item->uflags = 1;
 	    WMSetButtonText(btn, _("Undelete"));
@@ -1332,7 +1332,7 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 
 	edited = True;
     }
-    else if(btn == prefs->typesSetBtn)
+    else if (btn == prefs->typesSetBtn)
     {
 	char *viewStr    = WMGetTextFieldText(prefs->typesViewTF);
 	char *editStr    = WMGetTextFieldText(prefs->typesEditTF);
@@ -1340,10 +1340,10 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	WMListItem *item = WMGetListSelectedItem(prefs->typesList);
 	WMPropList* array = FSGetUDObjectForKey(defaultsDB, "EXTN");
 
-	if(!item)
+	if (!item)
 	    return;
 
-	if(viewStr)
+	if (viewStr)
 	{
 	  if (item->clientData) {
 	    WMPutInPLDictionary(item->clientData, 
@@ -1356,7 +1356,7 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	  }
 	}
 
-	if(editStr)
+	if (editStr)
 	{
 	  if (item->clientData) {
 	    WMPutInPLDictionary(item->clientData, 
@@ -1368,7 +1368,7 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	      WMCreatePLString("editor"), WMCreatePLString(editStr), NULL);
 	  }
 	}
-	if(imgStr)
+	if (imgStr)
 	{
 	  if (item->clientData) {
 	    WMPutInPLDictionary(item->clientData, 
@@ -1381,21 +1381,21 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	  }
 	}
 
-	if(array && WMIsPLArray(array))
+	if (array && WMIsPLArray(array))
 	{
 	    InsertArrayElement(array, WMCreatePLString(item->text));
 	}
 
 	edited = True;
     }
-    else if(btn == prefs->typesRemoveBtn)
+    else if (btn == prefs->typesRemoveBtn)
     {
 	WMListItem *item = WMGetListSelectedItem(prefs->typesList);
 
-	if(!item)
+	if (!item)
 	    return;
 
-	if(!item->uflags)
+	if (!item->uflags)
 	{
 	    item->uflags = 1;
 	    WMSetButtonText(btn, _("Undelete"));
@@ -1410,14 +1410,14 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 
 	edited = True;
     }
-    else if(btn == prefs->appsIconBtn)
+    else if (btn == prefs->appsIconBtn)
     {
 	char *img = NULL;
 	char *tmp = NULL;
 	WMPropList* val;
 	WMListItem *item = WMGetListSelectedItem(prefs->appsList);
 
-	if(!item || !item->clientData)
+	if (!item || !item->clientData)
 	    return;
 
 	val = FSGetDBObjectForKey(item->clientData, "icon");
@@ -1425,11 +1425,11 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	{
 	    tmp = FSRunSelectIconPanel(prefs->win, _("Icon Select"),
 				       WMGetFromPLString(val));
-	    if(tmp == NULL)
+	    if (tmp == NULL)
 		return;
 	    
 	    img = LocateImage(tmp);	
-	    if(img)
+	    if (img)
 	    {
 		FSSetButtonImageFromFile(prefs->appsIconBtn, img);
 		WMHangData(prefs->appsIconBtn, tmp);
@@ -1439,14 +1439,14 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	    WMSetButtonImage(prefs->appsIconBtn, NULL);
 /* 	edited = True; */
     }
-    else if(btn == prefs->typesIconBtn)
+    else if (btn == prefs->typesIconBtn)
     {
 	char *img = NULL;
 	char *tmp = NULL;
 	WMPropList* val;
 	WMListItem *item = WMGetListSelectedItem(prefs->typesList);
 
-	if(!item || !item->clientData)
+	if (!item || !item->clientData)
 	    return;
 
 	val = FSGetDBObjectForKey(item->clientData, "icon");
@@ -1454,11 +1454,11 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	{
 	    tmp = FSRunSelectIconPanel(prefs->win, _("Icon Select"),
 				       WMGetFromPLString(val));
-	    if(tmp == NULL)
+	    if (tmp == NULL)
 		return;
 	    
 	    img = LocateImage(tmp);	
-	    if(img)
+	    if (img)
 	    {
 		FSSetButtonImageFromFile(prefs->typesIconBtn, img);
 		WMHangData(prefs->typesIconBtn, tmp);
@@ -1468,12 +1468,12 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	    WMSetButtonImage(prefs->typesIconBtn, NULL);
 /* 	edited = True; */
     }
-    else if(btn == prefs->appsBrowseBtn)
+    else if (btn == prefs->appsBrowseBtn)
     {
 	WMOpenPanel *oPanel = NULL;
 	
 	oPanel = WMGetOpenPanel(prefs->scr);
-        if(WMRunModalFilePanelForDirectory(oPanel, prefs->win, 
+        if (WMRunModalFilePanelForDirectory(oPanel, prefs->win, 
 					   "/", _("Browse -> App"), NULL))
 	{
 	    char *str = WMGetFilePanelFileName(oPanel);
@@ -1482,10 +1482,10 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	    WMInsertTextFieldText(prefs->appsExecTF, " %s", strlen(str));
 	}
     }
-    else if(btn == prefs->typesViewBrowseBtn)
+    else if (btn == prefs->typesViewBrowseBtn)
     {
 	oPanel = WMGetOpenPanel(prefs->scr);
-        if(WMRunModalFilePanelForDirectory(oPanel, prefs->win, 
+        if (WMRunModalFilePanelForDirectory(oPanel, prefs->win, 
 					   "/", _("Browse -> Viewer"), NULL))
 	{
 	    char *str = WMGetFilePanelFileName(oPanel);
@@ -1494,10 +1494,10 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	    WMInsertTextFieldText(prefs->typesViewTF, " %s", strlen(str));
 	}
     }
-    else if(btn == prefs->typesEditBrowseBtn)
+    else if (btn == prefs->typesEditBrowseBtn)
     {
 	oPanel = WMGetOpenPanel(prefs->scr);
-        if(WMRunModalFilePanelForDirectory(oPanel, prefs->win, 
+        if (WMRunModalFilePanelForDirectory(oPanel, prefs->win, 
 					   "/", _("Browse -> Editor"), NULL))
 	{
 	    char *str = WMGetFilePanelFileName(oPanel);
@@ -1507,13 +1507,13 @@ genericButtonActionHandler(WMWidget *self, void *clientData)
 	}
     }
 
-    if(edited)
+    if (edited)
     {
 	int id = -1;
 	WMTabViewItem *item = NULL;
 	
 	item = WMGetSelectedTabViewItem(prefs->tabV);
-	if(!item)
+	if (!item)
 	    return;
 	
 	id = WMGetTabViewItemIdentifier(item);
@@ -1555,7 +1555,7 @@ saveAllTabsAndClose(WMWidget *self, void *client)
     int i;
     FSPreferencesPanel	*prefs = (FSPreferencesPanel *) client;
     
-    for(i = 0; i < NUM_TABS; i++)
+    for (i = 0; i < NUM_TABS; i++)
 	saveTab(prefs, i);
 
     FSClosePreferencesPanel(self, client);
@@ -1569,7 +1569,7 @@ applyBtnCB(WMWidget *self, void *client)
     FSPreferencesPanel	*prefs = (FSPreferencesPanel *) client;
     
     item = WMGetSelectedTabViewItem(prefs->tabV);
-    if(!item)
+    if (!item)
 	return;
     id = WMGetTabViewItemIdentifier(item);
 	
@@ -1631,7 +1631,7 @@ setTFDelegate(FSPreferencesPanel *prefs, WMTextField *tf)
     delegate = (WMTextFieldDelegate *) wmalloc(sizeof(WMTextFieldDelegate));
     memset(delegate, 0, sizeof(WMTextFieldDelegate));
 
-    if(delegate)
+    if (delegate)
     {
 	delegate->data = prefs;
 	delegate->didChange = tfDidChange;
@@ -1647,7 +1647,7 @@ setTVIDelegate(FSPreferencesPanel *prefs, WMTabView *tv)
     delegate = (WMTabViewDelegate *) wmalloc(sizeof(WMTabViewDelegate));
     memset(delegate, 0, sizeof(WMTabViewDelegate));
 
-    if(delegate)
+    if (delegate)
     {
 	delegate->data = prefs;
 	delegate->didSelectItem = tvDidSelectItem;
@@ -1669,15 +1669,15 @@ tvDidSelectItem(struct WMTabViewDelegate *self, WMTabView *tabView,
     switch(id)
     {
     case VARS_TAB : 
-	if(prefs->flags.evars)
+	if (prefs->flags.evars)
 	    edited = True;
 	break;
     case APPS_TAB : 
-	if(prefs->flags.eapps)
+	if (prefs->flags.eapps)
 	    edited = True;
 	break;
     case DISCS_TAB :  
-	if(prefs->flags.ediscs)
+	if (prefs->flags.ediscs)
 	    edited = True;
 	break;
     default:  edited = False;
@@ -1694,132 +1694,163 @@ saveVarsTab(FSPreferencesPanel *prefs)
     WMListItem *item = NULL;
 
     row = WMFindRowOfListItemWithTitle(prefs->imgList, "ROOT");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->imgList, row);
-	if(item)
+	if (item)
 	    FSSetStringForNameKey("ROOT", "icon", item->clientData);
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->imgList, "DIRECTORY");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->imgList, row);
-	if(item)
+	if (item)
 	    FSSetStringForName("DIRECTORY", item->clientData);
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->imgList, "DEFAULT_IMG");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->imgList, row);
-	if(item)
+	if (item)
 	    FSSetStringForName("DEFAULT_IMG", item->clientData);
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->imgList, "HOME");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->imgList, row);
-	if(item)
+	if (item)
 	    FSSetStringForName("HOME", item->clientData);
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->execList, "CONSOLE");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->execList, row);
-	if(item)
+	if (item)
 	    FSSetStringForNameKey("CONSOLE", "exec", item->clientData);
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->execList, "PROCESS");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->execList, row);
-	if(item)
+	if (item)
 	    FSSetStringForNameKey("PROCESS", "exec", item->clientData);
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->execList, "MAGICASCII");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->execList, row);
-	if(item)
+	if (item)
 	    FSSetStringForNameKey("MAGICASCII", "exec", item->clientData);
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->execList, "MAGICIMAGE");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->execList, row);
-	if(item)
+	if (item)
 	    FSSetStringForNameKey("MAGICIMAGE", "exec", item->clientData);
     }
     
     row = WMFindRowOfListItemWithTitle(prefs->execList, "MAGICPS");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->execList, row);
-	if(item)
+	if (item)
 	    FSSetStringForNameKey("MAGICPS", "exec", item->clientData);
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->dpyList, "ColumnWidth");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->dpyList, row);
-	if(item)
-	    FSSetIntegerForName("ColumnWidth", atoi(item->clientData));
+	if (item) {
+            int value = atoi(item->clientData);
+            if (FSGetIntegerForName("ColumnWidth") != value) {
+                if (value < 169) /*MAGIC*/
+                    value = 169;
+                FSSetIntegerForName("ColumnWidth", value);
+                /* TODO: update viewer width */
+            }
+        }
     }    
 
 /*     row = WMFindRowOfListItemWithTitle(prefs->imgList, "IconWidth"); */
-/*     if(row >= 0) */
+/*     if (row >= 0) */
 /*     { */
 /* 	item = WMGetListItem(prefs->dpyList, row); */
-/* 	if(item) */
+/* 	if (item) */
 /* 	    FSSetIntegerForName("IconWidth", atoi(item->clientData)); */
 /*     }     */
 
     
     row = WMFindRowOfListItemWithTitle(prefs->dpyList, "ICONDIR");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->dpyList, row);
-	if(item)
+	if (item)
 	    FSSetStringForName("ICONDIR", item->clientData);
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->dpyList, "SortDisplay");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->dpyList, row);
-	if(item)
-	    FSSetIntegerForName("SortDisplay", atoi(item->clientData));
+	if (item) {
+            int value = atoi(item->clientData);
+            if (FSGetIntegerForName("SortDisplay") != value) {
+                FSSetIntegerForName("SortDisplay", value);
+                FSUpdateFileViewPath(
+                        FSGetFSViewerCurrentView(prefs->app),
+                        FileSync, NULL, NULL);
+            }
+        }
     }
     
     row = WMFindRowOfListItemWithTitle(prefs->dpyList, "SortOrder");
-    if(row >= 0)
+    if (row >= 0)
     {
-	item = WMGetListItem(prefs->dpyList, row);
-	if(item)
-	    FSSetIntegerForName("SortOrder", atoi(item->clientData));
+        item = WMGetListItem(prefs->dpyList, row);
+        if (item) {
+            int value = atoi(item->clientData);
+            if (FSGetIntegerForName("SortOrder") != value) {
+                FSSetIntegerForName("SortOrder", value);
+                FSUpdateFileViewPath(
+                        FSGetFSViewerCurrentView(prefs->app),
+                        FileSync, NULL, NULL);
+            }
+        }
     }
     
     row = WMFindRowOfListItemWithTitle(prefs->dpyList, "DisplaySVBG");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->dpyList, row);
-	if(item)
-	    FSSetIntegerForName("DisplaySVBG", atoi(item->clientData));
+	if (item) {
+            int value = atoi(item->clientData);
+            if (FSGetIntegerForName("DisplaySVBG") != value) {
+                FSSetIntegerForName("DisplaySVBG", value);
+                /* TODO: update view*/
+            }
+        }
     }
 
     row = WMFindRowOfListItemWithTitle(prefs->dpyList, "DisplayMCListPixmap");
-    if(row >= 0)
+    if (row >= 0)
     {
 	item = WMGetListItem(prefs->dpyList, row);
-	if(item)
-	    FSSetIntegerForName("DisplayMCListPixmap", atoi(item->clientData));
+	if (item) {
+            int value = atoi(item->clientData);
+            if (FSGetIntegerForName("DisplayMCListPixmap") != value) {
+                FSSetIntegerForName("DisplayMCListPixmap", value);
+                /* TODO: update view*/
+            }
+        }
     }
 }
 
@@ -1835,14 +1866,14 @@ saveAppsTab(FSPreferencesPanel *prefs)
 
     numRows = WMGetListNumberOfRows(prefs->appsList);
 
-    for(row = 0; row < numRows; row++)
+    for (row = 0; row < numRows; row++)
     {
 	item = WMGetListItem(prefs->appsList, row);
-	if(item && !item->uflags)
+	if (item && !item->uflags)
 	    WMSetUDObjectForKey(defaultsDB, item->clientData, item->text);
 	else
 	{
-	    if(exeArray && WMIsPLArray(exeArray))
+	    if (exeArray && WMIsPLArray(exeArray))
 	    {
 		FSRemoveArrayElement(exeArray, WMCreatePLString(item->text));
 		WMRemoveUDObjectForKey(defaultsDB, item->text);
@@ -1851,16 +1882,16 @@ saveAppsTab(FSPreferencesPanel *prefs)
     }
 
     numRows = WMGetListNumberOfRows(prefs->typesList);
-    for(row = 0; row < numRows; row++)
+    for (row = 0; row < numRows; row++)
     {
 	item = WMGetListItem(prefs->typesList, row);
-	if(item && !item->uflags)
+	if (item && !item->uflags)
 	{
 	    WMSetUDObjectForKey(defaultsDB, item->clientData, item->text);
 	}
 	else
 	{
-	    if(extnArray && WMIsPLArray(extnArray))
+	    if (extnArray && WMIsPLArray(extnArray))
 	    {
 		FSRemoveArrayElement(extnArray, WMCreatePLString(item->text));
 		WMRemoveUDObjectForKey(defaultsDB, item->text);
@@ -1883,12 +1914,12 @@ saveDiscsTab(FSPreferencesPanel *prefs)
     diskArray = WMCreatePLArray(NULL, NULL);
 
     numRows = WMGetListNumberOfRows(prefs->disksList);
-    for(row = 0; row < numRows; row++)
+    for (row = 0; row < numRows; row++)
     {
 	item = WMGetListItem(prefs->disksList, row);
 	disk = (Disc *)item->clientData;
 
-	if(item)
+	if (item)
 	{
 	    array = WMCreatePLArray(WMCreatePLString(disk->name), 
 					     WMCreatePLString(disk->point), 
@@ -1913,25 +1944,26 @@ genericListDrawProc(WMList *lPtr, int index, Drawable d,
     WMListItem *item = WMGetListItem(lPtr, index);
 
     if (item->selected)
-	XFillRectangle(scr->display, view->window, WMColorGC(scr->white), 
-		       rect->pos.x, rect->pos.y, 
+        WMPaintColorSwatch(WMWhiteColor(scr), d,
+		       rect->pos.x, rect->pos.y,
 		       rect->size.width, rect->size.height);
     else
-	XClearArea(scr->display, view->window, rect->pos.x, rect->pos.y, 
-		   rect->size.width, rect->size.height, False);
+        WMPaintColorSwatch(WMGetWidgetBackgroundColor(lPtr), d,
+		       rect->pos.x, rect->pos.y,
+		       rect->size.width, rect->size.height);
     
-    if(item->uflags)
+    if (item->uflags)
     {
-	W_PaintText(view, view->window, scr->boldFont, 
+	W_PaintText(view, d, scr->boldFont, 
 		    rect->pos.x+4, rect->pos.y, rect->size.width,
-		    WALeft, WMColorGC(scr->black), False,
+		    WALeft, WMBlackColor(scr), False,
 		    item->text, strlen(item->text));
     }
     else
     {
-	W_PaintText(view, view->window, scr->normalFont, 
+	W_PaintText(view, d, scr->normalFont, 
 		    rect->pos.x+4, rect->pos.y, rect->size.width,
-		    WALeft, WMColorGC(scr->black), False,
+		    WALeft, WMBlackColor(scr), False,
 		    item->text, strlen(item->text));
     }
 }

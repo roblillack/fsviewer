@@ -169,7 +169,7 @@ FSCreateFileBrowser(WMWidget *parent)
     bPtr->maxVisibleColumns = 3;
     bPtr->selectedCol = -1;
     bPtr->columnCount = 0;
-    bPtr->columnWidth = 169;
+    bPtr->columnWidth = PVICON_WIDTH;
 
     bPtr->displayFrame = WMCreateFrame(bPtr);
     WMSetFrameRelief(bPtr->displayFrame, WRFlat);
@@ -746,7 +746,7 @@ FSSetFileBrowserColumnWidth(FileBrowser *bPtr, int width)
 {
     WMSize size;
 
-    assert(width >= 169);
+    assert(width >= PVICON_WIDTH);
 
     size = WMGetViewSize(bPtr->view);
     bPtr->columnWidth = width;

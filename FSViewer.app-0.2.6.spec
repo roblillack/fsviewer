@@ -1,27 +1,19 @@
-%define	name	fsviewer
-%define	version	0.2.5
-%define	release	1
-%define	serial	1
-%define	prefix	/usr
 %define	GNUstepApps	/usr/X11R6/GNUstep/Apps
 
 Summary:	FSViewer is a NeXT FileViewer lookalike for Window Maker.
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-Serial:		%{serial}
-Prefix:		%{prefix}
-Copyright:	GPL
-Group:		unsorted
+Summary(de):	Dateisystembrowser aehnlich dem NeXT FileViewer.
+Name:		FSViewer.app
+Version:	0.2.6
+Release:        1%{?dist}
+Prefix:		/usr
+License:	GPL
+Group:		Productivity/File utilities
 URL:		http://www.bayernline.de/~gscholz/linux/fsviewer/
 Vendor:		Guido Scholz <guido.scholz@bayernline.de>
-Source:		FSViewer.app-%{version}.tar.gz
-#Patch:		FSViewer.app-0.2.3-gnustepdir.patch
-BuildRoot:	/var/tmp/%{name}-%{version}
-Requires:	wmaker >= 0.70.0
-
-Distribution:	Freshmeat RPMs (adaptiert an SuSE)
-Packager:	Guido Scholz <guido.scholz@bayernline.de>
+Source:		fsviewer-app-%{version}.tar.bz2
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+Requires:	WindowMaker >= 0.90
+Distribution:	SuSE 10.1
 
 %description
 FSViewer is a NeXT FileViewer lookalike for Window Maker. Viewing is
@@ -33,40 +25,62 @@ Authors:
   George Clernon <clernong@tinet.ie>
   Guido Scholz <guido.scholz@bayernline.de> (port to Window Maker 0.80.0)
 
+%description -l de
+FSViewer ist ein Dateisystembrowser, der sich optisch und funktionell
+stark an den NeXT FileViewer anlehnt. Die Dateiansicht besteht derzeit in
+Form einer "Browser"- und einer Listenansicht. Das Programm wurde in C
+unter Benutzung der WINGs-Bibliothek geschrieben. 
+
+Autoren:
+========
+  George Clernon <clernong@tinet.ie>
+  Guido Scholz <guido.scholz@bayernline.de> (Portierung nach Window Maker 0.80.0)
 
 %prep
-%setup -q -n FSViewer.app-%{version}
-#%patch -p1 -b .gnustepdir
+%setup -q -n fsviewer-app-%{version}
 
 %build
 CFLAGS=$RPM_OPT_FLAGS \
-./configure --prefix=%{prefix} \
+./configure --prefix=%{_prefix} \
+	    --mandir=%{_mandir} \
             --with-appspath=%{GNUstepApps}
 make
 
 %install
-if [ -e $RPM_BUILD_ROOT ]; then rm -rf $RPM_BUILD_ROOT; fi
-mkdir -p $RPM_BUILD_ROOT%{prefix}
-
+[ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
 make DESTDIR=$RPM_BUILD_ROOT install-strip
 
-install -d $RPM_BUILD_ROOT/%{GNUstepApps}/FSViewer.app/tiff
-install -m 644 tiff/*.tif $RPM_BUILD_ROOT/%{GNUstepApps}/FSViewer.app/tiff
+install -d $RPM_BUILD_ROOT/%{_docdir}/%{name}
 
-install -d $RPM_BUILD_ROOT/%{GNUstepApps}/FSViewer.app/xpm
-install -m 644 xpm/*.xpm  $RPM_BUILD_ROOT/%{GNUstepApps}/FSViewer.app/xpm
+install -d $RPM_BUILD_ROOT/%{GNUstepApps}/%{name}/tiff
+install -m 644 tiff/*.tif $RPM_BUILD_ROOT/%{GNUstepApps}/%{name}/tiff
+
+install -d $RPM_BUILD_ROOT/%{GNUstepApps}/%{name}/xpm
+install -m 644 xpm/*.xpm  $RPM_BUILD_ROOT/%{GNUstepApps}/%{name}/xpm
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+[ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
+%{GNUstepApps}/%{name}
+%{_prefix}/share/locale/*/LC_MESSAGES/FSViewer.mo
+%docdir %{_mandir}/man1/*
+%{_mandir}/man1/*
+%{_docdir}/%{name}
 %doc defs/chdef docs/* AUTHORS COPYING ChangeLog INSTALL NEWS README
-%{GNUstepApps}/FSViewer.app
-%{prefix}/share/locale/de/LC_MESSAGES/FSViewer.mo
-%{prefix}/share/locale/ru/LC_MESSAGES/FSViewer.mo
 
 %changelog
+* Sun Oct 14 2007 Guido Scholz <guido.scholz@bayernline.de>
+- update to version 0.2.6
+- spec-File modifications for SuSE 10.1
+
+* Sat Jun 12 2004 Guido Scholz <guido.scholz@bayernline.de>
+- spec-File Modifications for SuSE 9.0
+
+* Tue Dec 24 2002 Guido Scholz <guido.scholz@bayernline.de>
+- Added menu modification scripts for SuSE 8.0
+
 * Sun Dec 15 2002 Guido Scholz <guido.scholz@bayernline.de>
 - New release FSViewer.app 0.2.5
 

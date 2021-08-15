@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FSViewer.app 0.2.4\n"
-"POT-Creation-Date: 2002-12-15 17:54+0100\n"
+"Report-Msgid-Bugs-To: guido.scholz@bayernline.de\n"
+"POT-Creation-Date: 2009-09-14 16:36+0200\n"
 "PO-Revision-Date: 2002-12-01 00:15+0400\n"
 "Last-Translator: Alexey Voinov <voins@voins.program.ru>\n"
 "Language-Team: ru <ru@li.org>\n"
@@ -314,7 +315,8 @@ msgstr "Недопустимое значение HSIZE: %d. Используется значение по умолчанию"
 msgid "FileView"
 msgstr "FileView"
 
-#: src/FSFileView.c:616
+#: src/FSFileView.c:619
+#, c-format
 msgid "FSViewer - we've got a problem!"
 msgstr "FSViewer - у нас проблема!"
 
@@ -498,6 +500,7 @@ msgid "This option is only available via the window manager."
 msgstr "Эта команда доступна только через диспетчер окон."
 
 #: src/FSMenu.c:757
+#, c-format
 msgid "Unable to compress selection."
 msgstr "Не удалось сжать выбранное"
 
@@ -923,6 +926,7 @@ msgid "Browse -> Editor"
 msgstr "Выбор -> Редактор"
 
 #: src/FSUtils.c:158 src/FSUtils.c:170 src/FSUtils.c:316
+#, c-format
 msgid "Unavailable"
 msgstr "Недоступно"
 
@@ -973,56 +977,70 @@ msgstr "Не удалось загрузть параметры Window Maker (%s)"
 msgid "Error changing to %s, \"%s\" cancelled."
 msgstr "Ошибка при смене каталога на %s, команда \"%s\" остановлена"
 
-#: src/FSViewer.c:51
+#: src/FSViewer.c:53
 #, c-format
-msgid "ICONDIR not found: %s"
+msgid "User database entry for ICONDIR is not valid: %s. Taking default value."
+msgstr ""
+
+#: src/FSViewer.c:64
+#, fuzzy, c-format
+msgid "Default ICONDIR not found: %s"
 msgstr "Не найден каталог ICONDIR: %s"
 
 #: src/FSViewer.c:74
+msgid "No valid value for ICONDIR found. Even default directory is broken!"
+msgstr ""
+
+#: src/FSViewer.c:88
+#, c-format
+msgid "No value for ICONDIR found! May be your %s preferences file is broken."
+msgstr ""
+
+#: src/FSViewer.c:106
 #, c-format
 msgid "Usage: %s [options]\n"
 msgstr "Использование: %s [опции]\n"
 
-#: src/FSViewer.c:75
+#: src/FSViewer.c:107
 msgid "options:"
 msgstr "опции:"
 
-#: src/FSViewer.c:76
+#: src/FSViewer.c:108
 msgid " -p <initial path>  initial path to display"
 msgstr " -p <каталог>       начальный каталог"
 
-#: src/FSViewer.c:77
+#: src/FSViewer.c:109
 msgid " -v                 print version number and exit"
 msgstr " -v                 вывод номера версии и выход"
 
-#: src/FSViewer.c:325
+#: src/FSViewer.c:357
 #, c-format
 msgid "too few arguments for %s"
 msgstr "мало параметров для %s"
 
-#: src/FSViewer.c:396
+#: src/FSViewer.c:428
 #, c-format
 msgid "Unable to get RContext: %s %s %d\n"
 msgstr "Не удалось создать RContext: %s %s %d\n"
 
-#: src/FSViewer.c:450
+#: src/FSViewer.c:482
 msgid "X server does not support locale"
 msgstr "X сервер не поддерживает локализацию"
 
-#: src/FSViewer.c:453
+#: src/FSViewer.c:485
 msgid "cannot set locale modifiers"
 msgstr "не удалось установить параметры локализации"
 
-#: src/FSViewer.c:461
+#: src/FSViewer.c:493
 #, c-format
 msgid "Unable to allocate memory for %s %s %d\n"
 msgstr "Не удалось выделить память для %s %s %d\n"
 
-#: src/FSViewer.c:468
+#: src/FSViewer.c:500
 msgid "Unable to Open Display!"
 msgstr "Не удалось открыть дисплей!"
 
-#: src/FSViewer.c:489
+#: src/FSViewer.c:521
 #, c-format
 msgid "Unable to create a FileView instance %s %s %d"
 msgstr "Не удалось создать экзепляр FileView %s %s %d"

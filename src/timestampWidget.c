@@ -99,6 +99,7 @@ typedef struct W_TimeStamp
     XpmIcon     weekday;
     XpmIcon     asvisible;
     GC          gc;
+    WMColor     *color;
     time_t      time;
 
     struct flags
@@ -233,10 +234,12 @@ TimeStamp *CreateTimeStamp(WMWidget *parent)
     scr = timestamp->view->screen;
 
     /* Create event handler. */
-    WMCreateEventHandler(timestamp->view, ExposureMask | StructureNotifyMask, handleEvents, timestamp);
+    WMCreateEventHandler(timestamp->view,
+            ExposureMask | StructureNotifyMask, handleEvents, timestamp);
 
     /* Default GC for paint. */
-    timestamp->gc = WMColorGC(scr->gray);
+    timestamp->color = WMGrayColor(scr);
+    timestamp->gc = WMColorGC(timestamp->color);
 
     W_ResizeView(timestamp->view, TIMESTAMP_MIN_WIDTH, TIMESTAMP_MIN_HEIGHT);
     DEBUG_PRINT("Resized View");
@@ -668,14 +671,14 @@ static void paintTimeStamp(TimeStamp *timestamp)
     {
         W_PaintTextAndImage(timestamp->view,
                             False,
-                            timestamp->gc,
+                            timestamp->color,
                             scr->normalFont,
                             WRFlat,
                             NULL,
                             WACenter,
                             timestamp->image,
                             WIPImageOnly,
-                            timestamp->gc,
+                            timestamp->color,
                             offset);
         DEBUG_PRINT("Painted image");
     }

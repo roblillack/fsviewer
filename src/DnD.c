@@ -21,9 +21,7 @@
 #include <X11/cursorfont.h>
 #include <stdio.h>
 #include <stdlib.h>
-#if !defined(__FreeBSD__)
 #include <values.h>
-#endif
 
 #include "DnD.h"
 

@@ -1,20 +1,26 @@
-/* src/config.h.in.  Generated automatically from configure.ac by autoheader.  */
-/* Define CLK if we want to display the inspector timestamp */
-#define CLK 1
+/* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define ICONDIR as the directoy contains the xpm and/or TIFF image dirs */
-#define ICONDIR "/usr/local/GNUstep/FSViewer.app"
-
+/* enable inspector clk */
+#undef CLK
 
 /* Define to 1 if translation of program messages to the user's native
    language is requested. */
 #undef ENABLE_NLS
 
+/* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
+   CoreFoundation framework. */
+#undef HAVE_CFLOCALECOPYCURRENT
+
+/* Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in
+   the CoreFoundation framework. */
+#undef HAVE_CFPREFERENCESCOPYAPPVALUE
+
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */
 #undef HAVE_DCGETTEXT
 
-/* Define if you have the <dirent.h> header file, and it defines `DIR'. */
+/* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
+   */
 #undef HAVE_DIRENT_H
 
 /* Define if the GNU gettext() function is already present or preinstalled. */
@@ -23,65 +29,73 @@
 /* Define if you have the iconv() function. */
 #undef HAVE_ICONV
 
-/* Define if you have the <inttypes.h> header file. */
+/* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define if you have the `kvm' library (-lkvm). */
+/* Define to 1 if you have the `kvm' library (-lkvm). */
 #undef HAVE_LIBKVM
 
-/* Define if you have the `nsl' library (-lnsl). */
+/* Define to 1 if you have the `nsl' library (-lnsl). */
 #undef HAVE_LIBNSL
 
-/* Define if you have the `socket' library (-lsocket). */
+/* Define to 1 if you have the `socket' library (-lsocket). */
 #undef HAVE_LIBSOCKET
 
-/* Define if you have the `WINGs' library (-lWINGs). */
+/* Define to 1 if you have the `WINGs' library (-lWINGs). */
 #undef HAVE_LIBWINGS
 
-/* Define if you have the `WMaker' library (-lWMaker). */
+/* Define to 1 if you have the `WMaker' library (-lWMaker). */
 #undef HAVE_LIBWMAKER
 
-/* Define if you have the `Xmu' library (-lXmu). */
+/* Define to 1 if you have the `Xft' library (-lXft). */
+#undef HAVE_LIBXFT
+
+/* Define to 1 if you have the `Xmu' library (-lXmu). */
 #undef HAVE_LIBXMU
 
-/* Define if you have the <memory.h> header file. */
+/* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
-/* Define if you have the `mktime' function. */
+/* Define to 1 if you have the `mktime' function. */
 #undef HAVE_MKTIME
 
-/* Define if you have the <ndir.h> header file, and it defines `DIR'. */
+/* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
 #undef HAVE_NDIR_H
 
-/* Define if you have the <stdint.h> header file. */
+/* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
 
-/* Define if you have the <stdlib.h> header file. */
+/* Define to 1 if you have the <stdlib.h> header file. */
 #undef HAVE_STDLIB_H
 
-/* Define if you have the `strdup' function. */
+/* Define to 1 if you have the `strdup' function. */
 #undef HAVE_STRDUP
 
-/* Define if you have the <strings.h> header file. */
+/* Define to 1 if you have the <strings.h> header file. */
 #undef HAVE_STRINGS_H
 
-/* Define if you have the <string.h> header file. */
+/* Define to 1 if you have the <string.h> header file. */
 #undef HAVE_STRING_H
 
-/* Define if you have the <sys/dir.h> header file, and it defines `DIR'. */
+/* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
+   */
 #undef HAVE_SYS_DIR_H
 
-/* Define if you have the <sys/ndir.h> header file, and it defines `DIR'. */
+/* Define to 1 if you have the <sys/ndir.h> header file, and it defines `DIR'.
+   */
 #undef HAVE_SYS_NDIR_H
 
-/* Define if you have the <sys/stat.h> header file. */
+/* Define to 1 if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
 
-/* Define if you have the <sys/types.h> header file. */
+/* Define to 1 if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
 
-/* Define if you have the <unistd.h> header file. */
+/* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
+
+/* Where to put icon files */
+#undef ICONDIR
 
 /* Where to put locale files */
 #undef LOCALEDIR
@@ -89,10 +103,25 @@
 /* Name of package */
 #undef PACKAGE
 
-/* Define if you have the ANSI C header files. */
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
-/* Define if your <sys/time.h> declares `struct tm'. */
+/* Define to 1 if your <sys/time.h> declares `struct tm'. */
 #undef TM_IN_SYS_TIME
 
 /* Version number of package */

@@ -348,8 +348,11 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     /* watch values for w and h, should not be to small */
     WMResizeWidget(fView->fileBrowser, 
 		   fView->w-10, fView->h-5-MIN_UPPER_HEIGHT-divThickness);
-    FSSetFileBrowserColumnWidth(fView->fileBrowser, 
-				FSGetIntegerForName("ColumnWidth"));
+
+    int cw = FSGetIntegerForName("ColumnWidth");
+    if (cw < 169)
+        cw = 169;
+    FSSetFileBrowserColumnWidth(fView->fileBrowser, cw);
 
     WMResizeWidget(fView->shelfF, fView->w, MIN_UPPER_HEIGHT);
     FSSetupFileViewShelfItems(fView);
