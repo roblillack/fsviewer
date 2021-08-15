@@ -70,10 +70,12 @@ fi
 
 AC_CHECK_LIB(Xft, XftFontOpen,,
              AC_MSG_ERROR([Xft library not found]))
-AC_CHECK_LIB(WMaker, WMAppSetMainMenu,,
+AC_CHECK_LIB(WMaker, WMMenuCreate,,
              AC_MSG_ERROR([WMaker library not found]))
-AC_CHECK_LIB(WINGs, WMAppSetMainMenu,,
+AC_CHECK_LIB(WINGs, WMHandleEvent,,
              AC_MSG_ERROR([WINGs library not found]))
+AC_CHECK_LIB(WUtil, wmalloc,,
+             AC_MSG_ERROR([WUtil library not found]))
 
 dnl Checks for PropList (not necessary since version 0.2.3b)
 dnl AC_CHECK_HEADERS(proplist.h,, AC_MSG_WARN(Can't find PropList include-file: Please install libPropList (included in WindowMaker)))

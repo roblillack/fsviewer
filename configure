@@ -4867,9 +4867,9 @@ else $as_nop
   as_fn_error $? "Xft library not found" "$LINENO" 5
 fi
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for WMAppSetMainMenu in -lWMaker" >&5
-printf %s "checking for WMAppSetMainMenu in -lWMaker... " >&6; }
-if test ${ac_cv_lib_WMaker_WMAppSetMainMenu+y}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for WMMenuCreate in -lWMaker" >&5
+printf %s "checking for WMMenuCreate in -lWMaker... " >&6; }
+if test ${ac_cv_lib_WMaker_WMMenuCreate+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
@@ -4881,28 +4881,28 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
    builtin and then its argument prototype would still apply.  */
-char WMAppSetMainMenu ();
+char WMMenuCreate ();
 int
 main (void)
 {
-return WMAppSetMainMenu ();
+return WMMenuCreate ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"
 then :
-  ac_cv_lib_WMaker_WMAppSetMainMenu=yes
+  ac_cv_lib_WMaker_WMMenuCreate=yes
 else $as_nop
-  ac_cv_lib_WMaker_WMAppSetMainMenu=no
+  ac_cv_lib_WMaker_WMMenuCreate=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_WMaker_WMAppSetMainMenu" >&5
-printf "%s\n" "$ac_cv_lib_WMaker_WMAppSetMainMenu" >&6; }
-if test "x$ac_cv_lib_WMaker_WMAppSetMainMenu" = xyes
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_WMaker_WMMenuCreate" >&5
+printf "%s\n" "$ac_cv_lib_WMaker_WMMenuCreate" >&6; }
+if test "x$ac_cv_lib_WMaker_WMMenuCreate" = xyes
 then :
   printf "%s\n" "#define HAVE_LIBWMAKER 1" >>confdefs.h
 
@@ -4912,9 +4912,9 @@ else $as_nop
   as_fn_error $? "WMaker library not found" "$LINENO" 5
 fi
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for WMAppSetMainMenu in -lWINGs" >&5
-printf %s "checking for WMAppSetMainMenu in -lWINGs... " >&6; }
-if test ${ac_cv_lib_WINGs_WMAppSetMainMenu+y}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for WMHandleEvent in -lWINGs" >&5
+printf %s "checking for WMHandleEvent in -lWINGs... " >&6; }
+if test ${ac_cv_lib_WINGs_WMHandleEvent+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
@@ -4926,28 +4926,28 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
    builtin and then its argument prototype would still apply.  */
-char WMAppSetMainMenu ();
+char WMHandleEvent ();
 int
 main (void)
 {
-return WMAppSetMainMenu ();
+return WMHandleEvent ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"
 then :
-  ac_cv_lib_WINGs_WMAppSetMainMenu=yes
+  ac_cv_lib_WINGs_WMHandleEvent=yes
 else $as_nop
-  ac_cv_lib_WINGs_WMAppSetMainMenu=no
+  ac_cv_lib_WINGs_WMHandleEvent=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_WINGs_WMAppSetMainMenu" >&5
-printf "%s\n" "$ac_cv_lib_WINGs_WMAppSetMainMenu" >&6; }
-if test "x$ac_cv_lib_WINGs_WMAppSetMainMenu" = xyes
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_WINGs_WMHandleEvent" >&5
+printf "%s\n" "$ac_cv_lib_WINGs_WMHandleEvent" >&6; }
+if test "x$ac_cv_lib_WINGs_WMHandleEvent" = xyes
 then :
   printf "%s\n" "#define HAVE_LIBWINGS 1" >>confdefs.h
 
@@ -4955,6 +4955,51 @@ then :
 
 else $as_nop
   as_fn_error $? "WINGs library not found" "$LINENO" 5
+fi
+
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for wmalloc in -lWUtil" >&5
+printf %s "checking for wmalloc in -lWUtil... " >&6; }
+if test ${ac_cv_lib_WUtil_wmalloc+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lWUtil  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+char wmalloc ();
+int
+main (void)
+{
+return wmalloc ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"
+then :
+  ac_cv_lib_WUtil_wmalloc=yes
+else $as_nop
+  ac_cv_lib_WUtil_wmalloc=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_WUtil_wmalloc" >&5
+printf "%s\n" "$ac_cv_lib_WUtil_wmalloc" >&6; }
+if test "x$ac_cv_lib_WUtil_wmalloc" = xyes
+then :
+  printf "%s\n" "#define HAVE_LIBWUTIL 1" >>confdefs.h
+
+  LIBS="-lWUtil $LIBS"
+
+else $as_nop
+  as_fn_error $? "WUtil library not found" "$LINENO" 5
 fi
 
 

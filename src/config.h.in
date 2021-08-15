@@ -47,6 +47,9 @@
 /* Define to 1 if you have the `WMaker' library (-lWMaker). */
 #undef HAVE_LIBWMAKER
 
+/* Define to 1 if you have the `WUtil' library (-lWUtil). */
+#undef HAVE_LIBWUTIL
+
 /* Define to 1 if you have the `Xft' library (-lXft). */
 #undef HAVE_LIBXFT
 
