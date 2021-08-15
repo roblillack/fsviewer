@@ -431,7 +431,7 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
 				   WMResizableWindowMask);
 	attributes.window_level = WMNormalWindowLevel;
 	attributes.extra_flags = GSFullKeyboardEventsFlag;
-	attributes.flags = (GSWindowStyleAttr | GSWindowLevelAttr |
+	attributes.flags = (/*GSWindowStyleAttr | */GSWindowLevelAttr |
 			    GSExtraFlagsAttr);
 	WMSetWindowAttributes(fView->dpy, WMWidgetXID(fView->fileView),
 			      &attributes);
