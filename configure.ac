@@ -24,14 +24,7 @@ dnl Let make expand exec_prefix.
 test "x$exec_prefix" = xNONE && exec_prefix='${prefix}'
 
 dnl look for X windows first so further libs check
-AC_PATH_X 
-
-if test "$x_includes" != "NONE"; then
-        CFLAGS="$CFLAGS -I$x_includes"
-fi
-if test "$x_libraries" != "NONE"; then
-        LDFLAGS="$LDFLAGS -L$x_libraries"
-fi
+AC_PATH_X
 
 dnl Additional "default" items
 #LIBS="$LIBS -lX11"
@@ -50,12 +43,12 @@ if test "$GET_WRASTER_FLAGS" != ""; then
         ld_flags=`$GET_WRASTER_FLAGS --ldflags`
 	echo $ld_flags
         LDFLAGS="$LDFLAGS $ld_flags"
-	
+
 	dnl And finally libs
         libs_flags=`$GET_WRASTER_FLAGS --libs`
 	echo $libs_flags
         LIBS="$LIBS $libs_flags"
-	
+
 else
 
 	AC_MSG_ERROR("Danger Will Robinson: Unable to find get-wraster-flags in $PATH variable.");
@@ -119,7 +112,7 @@ if test "$clk" = yes; then
     dnl AC_DEFINE(CLK, 1)
 else
     AC_DEFINE([CLK], [0])
-    dnl    AC_DEFINE(CLK, 0)	
+    dnl    AC_DEFINE(CLK, 0)
 fi
 
 
@@ -134,7 +127,7 @@ AC_ARG_WITH(appspath,
 if test "x$appspath" = "x"; then
     gnustepdir="${prefix}/GNUstep"
 dnl WMPrefs uses this method but it doesn't seem to work for me
-dnl if there are problems with ICONDIR or fsviewerdir uncomment 
+dnl if there are problems with ICONDIR or fsviewerdir uncomment
 dnl the next line
 dnl    gnustepdir='$(prefix)/GNUstep'
 
