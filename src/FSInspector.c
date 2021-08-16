@@ -7,6 +7,7 @@
 
 #include "FSViewer.h"
 #include "FSUtils.h"
+#include "windowmanager.h"
 
 #define INITIALIZED_PANEL	(1<<0)
 #define FSI_WIDTH               272
@@ -333,7 +334,7 @@ FSInitInspector(FSViewer *fsViewer)
 {
     
     XWMHints               *hints;
-    GNUstepWMAttributes     attributes;
+    MyGNUstepWMAttributes     attributes;
 
     if (!(fsInspector = (FSInspector *) malloc(sizeof(FSInspector))))
     {

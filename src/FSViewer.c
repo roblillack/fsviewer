@@ -18,6 +18,7 @@
 #include "FSUtils.h"
 #include "FSMenu.h"
 #include "FSFinder.h"
+#include "windowmanager.h"
 #include "xpm/FSViewer.xpm"
 
 #define DEBUG 0
@@ -146,7 +147,7 @@ void
 FSSetFSViewerTransientWindow(FSViewer *fsViewer, Window window)
 {
     XWMHints               *hints;
-    GNUstepWMAttributes     attributes;
+    MyGNUstepWMAttributes     attributes;
 
     // WM_DELETE should be set here...
     if ((hints = XAllocWMHints()))
@@ -157,13 +158,13 @@ FSSetFSViewerTransientWindow(FSViewer *fsViewer, Window window)
 	XFree((void *) hints);
     }
 
-    memset((void *) &attributes, 0, sizeof(GNUstepWMAttributes));
+    memset((void *) &attributes, 0, sizeof(MyGNUstepWMAttributes));
     attributes.window_style = (WMTitledWindowMask | WMClosableWindowMask);
     attributes.window_level = WMFloatingWindowLevel;
     attributes.extra_flags = GSFullKeyboardEventsFlag;
     attributes.flags =
 	(GSWindowStyleAttr | GSWindowLevelAttr | GSExtraFlagsAttr);
-    WMSetWindowAttributes(fsViewer->dpy, window, &attributes);
+    MyWMSetWindowAttributes(fsViewer->dpy, window, &attributes);
     WMAppAddWindow(fsViewer->wmContext, window);
 
 }
@@ -172,7 +173,7 @@ void
 FSAddWindow(FSViewer *fsViewer, Window window)
 {
     XWMHints               *hints;
-    GNUstepWMAttributes     attributes;
+    MyGNUstepWMAttributes     attributes;
 
     // WM_DELETE should be set here...
     if ((hints = XAllocWMHints()))
@@ -183,7 +184,7 @@ FSAddWindow(FSViewer *fsViewer, Window window)
 	XFree((void *) hints);
     }
 
-    memset((void *) &attributes, 0, sizeof(GNUstepWMAttributes));
+    memset((void *) &attributes, 0, sizeof(MyGNUstepWMAttributes));
     attributes.window_style = (WMTitledWindowMask | 
 			       WMClosableWindowMask |
 			       WMMiniaturizableWindowMask);
@@ -191,7 +192,7 @@ FSAddWindow(FSViewer *fsViewer, Window window)
     attributes.extra_flags = GSFullKeyboardEventsFlag;
     attributes.flags =
 	(GSWindowStyleAttr | GSWindowLevelAttr | GSExtraFlagsAttr);
-    WMSetWindowAttributes(fsViewer->dpy, window, &attributes);
+    MyWMSetWindowAttributes(fsViewer->dpy, window, &attributes);
     WMAppAddWindow(fsViewer->wmContext, window);
 }
 
@@ -199,7 +200,7 @@ void
 FSSetFSViewerConfirmWindow(FSViewer *fsViewer, Window window)
 {
     XWMHints               *hints;
-    GNUstepWMAttributes     attributes;
+    MyGNUstepWMAttributes     attributes;
     
     // WM_DELETE should be set here...
     if ((hints = XAllocWMHints()))
@@ -212,13 +213,13 @@ FSSetFSViewerConfirmWindow(FSViewer *fsViewer, Window window)
 
     // This is horrible: there must be a better way?
     XStoreName(fsViewer->dpy, window, " ");
-    memset((void *) &attributes, 0, sizeof(GNUstepWMAttributes));
+    memset((void *) &attributes, 0, sizeof(MyGNUstepWMAttributes));
     attributes.window_style = (WMTitledWindowMask);
     attributes.window_level = WMFloatingWindowLevel;
     attributes.extra_flags = GSFullKeyboardEventsFlag;
     attributes.flags =
 	(GSWindowStyleAttr | GSWindowLevelAttr | GSExtraFlagsAttr);
-    WMSetWindowAttributes(fsViewer->dpy, window, &attributes);
+    MyWMSetWindowAttributes(fsViewer->dpy, window, &attributes);
     WMAppAddWindow(fsViewer->wmContext, window);
 }
 

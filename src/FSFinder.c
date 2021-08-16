@@ -14,6 +14,7 @@
 #include "FSViewer.h"
 #include "FSFinder.h"
 #include "FSUtils.h"
+#include "windowmanager.h"
 
 #define  MIN_UPPER_HEIGHT  90
 #define  MIN_LOWER_HEIGHT  200
@@ -34,7 +35,7 @@ FSCreateFinder(FSViewer *fsViewer)
 {
     WMFrame            *frame;
     FSFinder           *finder;
-    GNUstepWMAttributes attributes;
+    MyGNUstepWMAttributes attributes;
 
     if (!(finder = (FSFinder *) malloc(sizeof(FSFinder))))
 	return NULL;
@@ -137,7 +138,7 @@ FSCreateFinder(FSViewer *fsViewer)
 			  finder->size);
     }
     
-    memset((void *) &attributes, 0, sizeof(GNUstepWMAttributes));
+    memset((void *) &attributes, 0, sizeof(MyGNUstepWMAttributes));
     attributes.window_style = (WMTitledWindowMask |
 			       WMMiniaturizableWindowMask | 
 			       WMClosableWindowMask |
@@ -146,7 +147,7 @@ FSCreateFinder(FSViewer *fsViewer)
     attributes.extra_flags = GSFullKeyboardEventsFlag;
     attributes.flags = (GSWindowStyleAttr | GSWindowLevelAttr |
 			GSExtraFlagsAttr);
-    WMSetWindowAttributes(finder->dpy, WMWidgetXID(finder->win),
+    MyWMSetWindowAttributes(finder->dpy, WMWidgetXID(finder->win),
 			  &attributes);
 
     WMAppAddWindow(FSGetFSViewerWMContext(fsViewer), 

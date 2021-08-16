@@ -19,6 +19,7 @@
 #include "FSMenu.h"
 #include "DnD.h"
 #include "FSUtils.h"
+#include "windowmanager.h"
 
 #define  MIN_UPPER_HEIGHT  90
 #define  MIN_LOWER_HEIGHT  200
@@ -248,7 +249,7 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     int                   divThickness;
     WMPropList* array      = NULL;
     FSFileView           *fView;
-    GNUstepWMAttributes   attributes;
+    MyGNUstepWMAttributes   attributes;
 
     if (!path)
 	return NULL;
@@ -425,15 +426,15 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     
     if ((fView->primary))
     {
-	memset((void *) &attributes, 0, sizeof(GNUstepWMAttributes));
+	memset((void *) &attributes, 0, sizeof(MyGNUstepWMAttributes));
 	attributes.window_style = (WMTitledWindowMask |
 				   WMMiniaturizableWindowMask | 
 				   WMResizableWindowMask);
 	attributes.window_level = WMNormalWindowLevel;
 	attributes.extra_flags = GSFullKeyboardEventsFlag;
-	attributes.flags = (/*GSWindowStyleAttr | */GSWindowLevelAttr |
+	attributes.flags = (GSWindowStyleAttr | GSWindowLevelAttr |
 			    GSExtraFlagsAttr);
-	WMSetWindowAttributes(fView->dpy, WMWidgetXID(fView->fileView),
+	MyWMSetWindowAttributes(fView->dpy, WMWidgetXID(fView->fileView),
 			      &attributes);
     }
     
