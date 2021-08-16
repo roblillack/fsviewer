@@ -23,6 +23,10 @@
 
 #define DEBUG 0
 
+/* Application defaults */
+WMUserDefaults *defaultsDB;
+WMPropList *filesDB;
+
 static FSViewer *fsViewer;
 static Bool      focusIn;
 int ModifierFromKey(Display *dpy, char *key);

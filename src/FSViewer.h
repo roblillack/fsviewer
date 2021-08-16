@@ -123,8 +123,8 @@ typedef struct {
 } CallbackRec;
 
 /* Application defaults */
-WMUserDefaults *defaultsDB;
-WMPropList *filesDB;
+extern WMUserDefaults *defaultsDB;
+extern WMPropList *filesDB;
 
 /* all Panels must start with the following layout */
 typedef struct PanelRec {
