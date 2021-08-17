@@ -455,6 +455,7 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     WMMapWidget(fView->fileBrowserF);
     WMMapWidget(fView->fileBrowser);
     WMMapWidget(fView->fileView);
+    WMSetFocusToWidget(fView->fileView);
 
     XSaveContext(fView->dpy, WMWidgetXID(fView->fileView),
 		 fView->xcontext,
