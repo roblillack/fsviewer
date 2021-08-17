@@ -348,6 +348,6 @@ FSInitInspector(FSViewer *fsViewer)
     FSCreateInspectorWindow();
 
     WMRealizeWidget(fsInspector->win);
-    FSAddWindow(fsInspector->fsViewer, WMWidgetXID(fsInspector->win));
+    FSSetFSViewerTransientWindow(fsInspector->fsViewer, WMWidgetXID(fsInspector->win));
     fsInspector->isOpen = False;
 }
