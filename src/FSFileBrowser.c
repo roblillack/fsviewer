@@ -746,7 +746,7 @@ FSSetFileBrowserColumnWidth(FileBrowser *bPtr, int width)
 {
     WMSize size;
 
-    assert(width >= PVICON_WIDTH);
+    // assert(width >= PVICON_WIDTH);
 
     size = WMGetViewSize(bPtr->view);
     bPtr->columnWidth = width;

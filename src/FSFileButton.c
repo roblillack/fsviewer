@@ -22,14 +22,14 @@
  * Default Button width/height
  * Default Label  width/height
  */
-#define DEFAULT_WIDTH		64
-#define DEFAULT_HEIGHT	        80
-#define BUTTON_WIDTH		64
-#define BUTTON_HEIGHT		64
-#define LABEL_WIDTH             20
-#define LABEL_HEIGHT            16
+#define DEFAULT_WIDTH		80
+#define DEFAULT_HEIGHT	    72
+#define BUTTON_WIDTH		70
+#define BUTTON_HEIGHT		54
+#define LABEL_WIDTH         20
+#define LABEL_HEIGHT        14
 /* Size of the font to be used in labels */
-#define FONT_PT                 14
+#define FONT_PT             14
 
 /*
  * FSFileButton Widget 
@@ -204,8 +204,8 @@ willResizeFSFileButton(W_ViewDelegate *self, WMView *view,
      * We can't make the widget smaller than the defaults
      * Is this okay???
      */
-    assert(*height >= DEFAULT_HEIGHT);
-    assert(*width  >= DEFAULT_WIDTH);
+    // assert(*height >= DEFAULT_HEIGHT);
+    // assert(*width  >= DEFAULT_WIDTH);
 
     bPtr->width = *width;
     bPtr->height = *height;
@@ -449,14 +449,24 @@ handleActionEvents(XEvent *event, void *data)
     } 	    
 }
 
+static void roundedRect(Display *dpy, Drawable d, GC backGC, int x, int y, int w, int h) {
+    XDrawLine(dpy, d, backGC, x+5, y,   x+w-6, y);
+    XDrawLine(dpy, d, backGC, x+3, y+1, x+w-4, y+1);
+    XDrawLine(dpy, d, backGC, x+2, y+2, x+w-3, y+2);
+    XDrawLine(dpy, d, backGC, x+1, y+3, x+w-2, y+3);
+    XDrawLine(dpy, d, backGC, x+1, y+4, x+w-2, y+4);
+    XFillRectangle(dpy, d, backGC, x, y+5, w, h-10);
+    XDrawLine(dpy, d, backGC, x+1, y+h-5, x+w-2, y+h-5);
+    XDrawLine(dpy, d, backGC, x+1, y+h-4, x+w-2, y+h-4);
+    XDrawLine(dpy, d, backGC, x+2, y+h-3, x+w-3, y+h-3);
+    XDrawLine(dpy, d, backGC, x+3, y+h-2, x+w-4, y+h-2);
+    XDrawLine(dpy, d, backGC, x+5, y+h-1, x+w-6, y+h-1);
+}
+
 static void
 paintImageAndText(W_View *view, int x, int y, int width, int height,
 		  char *imgName, char *text, GC backGC)
 {
-    int ix   = 0;
-    int iy   = 0;
-    int xoff = 0;
-    int yoff = 0;
     int strwidth = 1;
     RColor    color;
     WMFont   *aFont;
@@ -485,38 +495,36 @@ paintImageAndText(W_View *view, int x, int y, int width, int height,
 	strwidth = WMWidthOfString(aFont, text, strlen(text));
 	WMReleaseFont(aFont);
     }
-    ix = (width - strwidth)/2;
+
+    // W_DrawRelief(screen, d, x, y, width, height, RRaisedBevel);
 
     /* background */
     if(backGC)
     {
-	image = FSCreatePixmapWithBackingFromFile(screen, imgName, &color);
-
-	yoff = (height - image->height - LABEL_HEIGHT)/2;
-	iy = yoff + image->height;
-    
+	//image = FSCreatePixmapWithBackingFromFile(screen, imgName, &color);
+    roundedRect(screen->display, d, backGC,
+        x+(width - BUTTON_WIDTH)/2, y+(height-BUTTON_HEIGHT-LABEL_HEIGHT)/2,
+        BUTTON_WIDTH, BUTTON_HEIGHT);
 	/* text background rectangle */
 	if(text)
-	    XFillRectangle(screen->display, d, backGC, x+ix, y+iy, 
-			   strwidth, LABEL_HEIGHT);
+	    XFillRectangle(screen->display, d, backGC,
+            x+(width - strwidth)/2, y+(height-BUTTON_HEIGHT-LABEL_HEIGHT)/2+BUTTON_HEIGHT,
+			strwidth, LABEL_HEIGHT);
     }
-    else
-    {        /* FS.. */
+    //else
+    //{        /* FS.. */
 	image = WMCreateBlendedPixmapFromFile(screen, imgName, &color);	
-	yoff = (height - image->height - LABEL_HEIGHT)/2;
-	iy = yoff + image->height;
-    }
+    //}
 
-    xoff = (width - image->width)/2;
     if(image)
     {
-	WMDrawPixmap(image, d, x+xoff, y+yoff);
+	WMDrawPixmap(image, d, x+(width - image->width)/2, y+(height - image->height)/2-LABEL_HEIGHT/2);
 	WMReleasePixmap(image);
     }
 
     if(text)
     {
-	W_PaintText(view, d, screen->normalFont, x+ix, y+iy,
+	W_PaintText(view, d, screen->normalFont, x+(width - strwidth)/2, y+(height-BUTTON_HEIGHT-LABEL_HEIGHT)/2+BUTTON_HEIGHT,
 		    strwidth, WACenter, WMBlackColor(screen),
 		    True, text, strlen(text));
     }

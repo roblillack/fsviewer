@@ -25,11 +25,20 @@
 #define  MIN_LOWER_HEIGHT  200
 #define  FILE_ICON_WIDTH   95
 #define  FILE_ICON_HEIGHT  80
-#define  PADX              10
-#define  PADY              10
-#define  PADDED_WIDTH      115
-#define  PADDED_HEIGHT     100
-#define  BOTTOM_FRAME_PADDING -1
+#define  PADX              0
+#define  PADY              0
+#define  PADDED_WIDTH      95
+#define  PADDED_HEIGHT     80
+
+#define  FRAME_PAD_TOP     0                // above shelf
+#define  FRAME_PAD_Y       14               // between shelf & browser
+#define  FRAME_PAD_BOTTOM  -2               // below browser
+#define  FRAME_PAD_X       8                // left & right of shelf or browser
+
+#define  SHELF_HEIGHT         72
+#define  MIN_WINDOW_HEIGHT    300
+#define  DEFAULT_COLUMN_WIDTH 150
+#define  COLUMN_PADDING       4             // only used for increment calc here, needs to go
 
 static void notificationObserver(void *self, WMNotification *notif);
 static void FSAddFileViewShelfItem(FSFileView *fView, FileInfo *fileInfo);
@@ -97,24 +106,29 @@ notificationObserver(void *self, WMNotification *notif)
             fView->h = WMWidgetHeight(fView->fileView);
             fView->w = WMWidgetWidth(fView->fileView);
 
-	    WMResizeWidget(fView->split, fView->w, fView->h);
-        } 
-	else if (object == WMWidgetView(fView->shelfF)) 
-	{
-	    int w = WMWidgetWidth(fView->shelfF);
+	    //WMResizeWidget(fView->split, fView->w, fView->h);
+            WMResizeWidget(fView->fileBrowser,
+                fView->w - 2 * FRAME_PAD_X,
+                fView->h - FRAME_PAD_TOP - SHELF_HEIGHT - FRAME_PAD_Y - FRAME_PAD_BOTTOM);
+            WMResizeWidget(fView->shelfF, fView->w-2*FRAME_PAD_X, SHELF_HEIGHT);
 
-	    if(fView->shelfW != w)
-	    {
-		FSReorganiseShelf(fView);
-		fView->shelfW = w;
-	    }
         } 
-	else if (object == WMWidgetView(fView->fileBrowserF)) 
-	{
-	    WMResizeWidget(fView->fileBrowser, 
-			   WMWidgetWidth(fView->fileBrowserF)-10, 
-			   WMWidgetHeight(fView->fileBrowserF)-BOTTOM_FRAME_PADDING);
-	}
+	// else if (object == WMWidgetView(fView->shelfF)) 
+	// {
+	//     int w = WMWidgetWidth(fView->shelfF);
+
+	//     if(fView->shelfW != w)
+	//     {
+	// 	FSReorganiseShelf(fView);
+	// 	fView->shelfW = w;
+	//     }
+    //     } 
+	// else if (object == WMWidgetView(fView->fileBrowserF)) 
+	// {
+	//     WMResizeWidget(fView->fileBrowser, 
+	// 		   WMWidgetWidth(fView->fileBrowserF)-10, 
+	// 		   WMWidgetHeight(fView->fileBrowserF)-FRAME_PAD_BOTTOM);
+	// }
     }
 }
 
@@ -279,6 +293,12 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     520, "WSIZE"
     390, "HSIZE"
 */
+
+    int cw = FSGetIntegerForName("ColumnWidth");
+    if (cw < DEFAULT_COLUMN_WIDTH) {
+        cw = DEFAULT_COLUMN_WIDTH;
+    }
+
     fView->x = FSGetIntegerForName("XPOS");
     if (fView->x < 0)
     {
@@ -295,7 +315,7 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     if (fView->w <= 0)
     {
       wwarning(_("Wrong WSIZE value: %d. Using default."), fView->w);
-      fView->w = 520;
+      fView->w = 3*cw + 2*COLUMN_PADDING + 2*FRAME_PAD_X;
     }
     fView->h = FSGetIntegerForName("HSIZE");
     if (fView->h <= 0)
@@ -320,51 +340,59 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     WMResizeWidget(fView->fileView, fView->w, fView->h);
     WMMoveWidget(fView->fileView, fView->x, fView->y);
 
-    fView->split = WMCreateSplitView(fView->fileView);
-    WMResizeWidget(fView->split, fView->w, fView->h);
-    WMSetSplitViewConstrainProc(fView->split, splitViewConstrainCallback);
+    // fView->split = WMCreateSplitView(fView->fileView);
+    // WMResizeWidget(fView->split, fView->w, fView->h);
+    // WMSetSplitViewConstrainProc(fView->split, splitViewConstrainCallback);
 
-    divThickness = WMGetSplitViewDividerThickness(fView->split);
+    // divThickness = WMGetSplitViewDividerThickness(fView->split);
 
     /* Initialise the FileButton Widget */
     InitFSFileButton(fView->scr);
 
     /* Initialize drag'n'drop */
     DndInitialize(fView->fileView);
+    
+    // fView->fileBrowserF = WMCreateFrame(fView->fileView);
+    // WMSetViewNotifySizeChanges(WMWidgetView(fView->fileBrowserF), True);
+    // WMSetFrameRelief(fView->fileBrowserF, WRFlat);
+
+    
+    // WMAddSplitViewSubview(fView->split, W_VIEW(fView->shelfF));
+    // WMAddSplitViewSubview(fView->split, W_VIEW(fView->fileBrowserF));
+
+    InitFileBrowser(fView->scr);
 
     fView->shelfF = WMCreateFrame(fView->fileView);
     WMSetViewNotifySizeChanges(WMWidgetView(fView->shelfF), True);
     WMSetFrameRelief(fView->shelfF, WRFlat);
-    
-    fView->fileBrowserF = WMCreateFrame(fView->fileView);
-    WMSetViewNotifySizeChanges(WMWidgetView(fView->fileBrowserF), True);
-    WMSetFrameRelief(fView->fileBrowserF, WRFlat);
+    WMMoveWidget(fView->shelfF, FRAME_PAD_X, FRAME_PAD_TOP);
+    WMResizeWidget(fView->shelfF, fView->w-2*FRAME_PAD_X, SHELF_HEIGHT);
 
-    
-    WMAddSplitViewSubview(fView->split, W_VIEW(fView->shelfF));
-    WMAddSplitViewSubview(fView->split, W_VIEW(fView->fileBrowserF));
+    // WMLabel *lbl = WMCreateLabel(fView->fileView);
+    // WMResizeWidget(lbl, fView->w-2*FRAME_PAD_X, FRAME_PAD_Y);
+    // WMMoveWidget(lbl, FRAME_PAD_X, FRAME_TOP+SHELF_HEIGHT-4);
+    // WMSetLabelFont(lbl, WMSystemFontOfSize(fView->scr, 10));
+    // WMSetLabelTextColor(lbl, WMDarkGrayColor(fView->scr));
+    // WMSetLabelTextAlignment(lbl, WALeft);
+    // WMSetLabelText(lbl, "X.XX GB available on hard disk");
 
-    InitFileBrowser(fView->scr);
-    fView->fileBrowser = FSCreateFileBrowser(fView->fileBrowserF);
+    fView->fileBrowser = FSCreateFileBrowser(fView->fileView);
     WMRealizeWidget(fView->fileView);
-    WMMoveWidget(fView->fileBrowser, 5, 0);
+    WMMoveWidget(fView->fileBrowser, FRAME_PAD_X, FRAME_PAD_TOP+SHELF_HEIGHT+FRAME_PAD_Y);
     /* watch values for w and h, should not be to small */
     WMResizeWidget(fView->fileBrowser, 
-		   fView->w-10, fView->h-BOTTOM_FRAME_PADDING-MIN_UPPER_HEIGHT-divThickness);
+		   fView->w-2*FRAME_PAD_X, fView->h-FRAME_PAD_BOTTOM-FRAME_PAD_TOP-FRAME_PAD_Y-SHELF_HEIGHT);
 
-    int cw = FSGetIntegerForName("ColumnWidth");
-    if (cw < 169)
-        cw = 169;
     FSSetFileBrowserColumnWidth(fView->fileBrowser, cw);
 
-    WMResizeWidget(fView->shelfF, fView->w, MIN_UPPER_HEIGHT);
+    // WMResizeWidget(fView->shelfF, fView->w, MIN_UPPER_HEIGHT);
     FSSetupFileViewShelfItems(fView);
 
-    fView->shelfW = fView->w;
-    fView->shelfH = MIN_UPPER_HEIGHT;
-    WMResizeWidget(fView->fileBrowserF, 
-		   fView->w, fView->h-MIN_UPPER_HEIGHT-divThickness);
-    WMMoveWidget(fView->fileBrowserF, 0, MIN_UPPER_HEIGHT+divThickness);
+    // fView->shelfW = fView->w;
+    // fView->shelfH = MIN_UPPER_HEIGHT;
+    // WMResizeWidget(fView->fileBrowserF, 
+	// 	   fView->w, fView->h-MIN_UPPER_HEIGHT-divThickness);
+    // WMMoveWidget(fView->fileBrowserF, 0, MIN_UPPER_HEIGHT+divThickness);
 
 /*     WMRealizeWidget(fView->fileView); */
 
@@ -405,13 +433,12 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     {
 	fView->size->width = fView->w;
 	fView->size->height = fView->h;
-	fView->size->min_width = fView->w;
-	fView->size->max_width =
-	    DisplayWidth(fView->dpy, DefaultScreen(fView->dpy)); 
-	fView->size->min_height = 250;
+	fView->size->min_width = 2*cw + 1*COLUMN_PADDING + 2*FRAME_PAD_X;
+	fView->size->max_width = 10*cw + 9*COLUMN_PADDING + 2*FRAME_PAD_X;
+	fView->size->min_height = MIN_WINDOW_HEIGHT;
 	fView->size->max_height =
 	    DisplayHeight(fView->dpy, DefaultScreen(fView->dpy));
-	fView->size->width_inc = 171;
+	fView->size->width_inc = cw + COLUMN_PADDING;
 	fView->size->height_inc = 1;
 	fView->size->flags = (USSize | PSize | PMinSize | 
 			      PMaxSize | PResizeInc);
@@ -452,7 +479,7 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
 
     WMMapSubwidgets(fView->fileView); 
     WMMapWidget(fView->shelfF);
-    WMMapWidget(fView->fileBrowserF);
+    // WMMapWidget(fView->fileBrowserF);
     WMMapWidget(fView->fileBrowser);
     WMMapWidget(fView->fileView);
     WMSetFocusToWidget(fView->fileView);
@@ -472,9 +499,9 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     WMAddNotificationObserver(notificationObserver, fView,
                               WMViewSizeDidChangeNotification,
                               WMWidgetView(fView->shelfF));
-    WMAddNotificationObserver(notificationObserver, fView,
-                              WMViewSizeDidChangeNotification,
-                              WMWidgetView(fView->fileBrowserF));
+    // WMAddNotificationObserver(notificationObserver, fView,
+    //                           WMViewSizeDidChangeNotification,
+    //                           WMWidgetView(fView->fileBrowserF));
 
     WMSetWindowMiniwindowPixmap(fView->fileView, 
 			       WMGetApplicationIconPixmap(fView->scr));
@@ -853,14 +880,14 @@ FSPositionItemInShelf(FSFileView *fView, FSFileIcon *fileIcon, int num)
     int numCol = 0;
     int width = 0;
 
-    w = WMWidgetWidth(fView->shelfF)-25;
+    w = WMWidgetWidth(fView->shelfF)-PADX;
     h = WMWidgetHeight(fView->shelfF);
     
     numCol = (int) (w / PADDED_WIDTH);
     row = (int) (num/numCol);
     col = num-(numCol*row);
 
-    WMMoveWidget(fileIcon->btn, 25+(PADDED_WIDTH*(col)), 
+    WMMoveWidget(fileIcon->btn, PADX+(PADDED_WIDTH*(col)), 
 		 PADY+(PADDED_HEIGHT*row));
 
 }

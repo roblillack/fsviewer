@@ -26,7 +26,7 @@ typedef struct _FSFView
     WMSplitView             *split;
 
     /* File Browser */
-    WMFrame                 *fileBrowserF;
+    // WMFrame                 *fileBrowserF;
     FileBrowser             *fileBrowser;
 
     /* Shelf components */
@@ -41,7 +41,7 @@ typedef struct _FSFView
     char                    *path;
     unsigned short           w, h;
     int                      x, y;
-    int                      shelfW, shelfH;
+    // int                      shelfW, shelfH;
 
     Bool                     ctrlKey;
 
