@@ -438,8 +438,8 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
 			      &attributes);
     }
     
-    WMAppAddWindow(FSGetFSViewerWMContext(fsViewer), 
-		   WMWidgetXID(fView->fileView));
+    //WMAppAddWindow(FSGetFSViewerWMContext(fsViewer), 
+		   //WMWidgetXID(fView->fileView));
 
     FSSetFileBrowserPath(fView->fileBrowser, fView->path); 
     FSSetFileBrowserDoubleAction(fView->fileBrowser, 
