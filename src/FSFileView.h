@@ -45,6 +45,8 @@ typedef struct _FSFView
 
     Bool                     ctrlKey;
 
+    WMLabel                 *dfLabel;
+    WMHandlerID              dfTimer;
 } _FSFView;
 
 FSFileView *FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary);

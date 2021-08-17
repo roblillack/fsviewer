@@ -8,6 +8,7 @@ char     *FSProcessor();
 char     *FSSystemRelease();
 char     *FSMemory();
 char     *FSDisk();
+char     *FSDiskFree(const char *dir);
 char     *FSNodeName();
 void      FSLaunchApp(FSViewer *fsViewer, AppEvent event);
 void      FSSetButtonImageFromFile(WMButton *btn, char *imgName);

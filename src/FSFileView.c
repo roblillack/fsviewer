@@ -20,6 +20,7 @@
 #include "DnD.h"
 #include "FSUtils.h"
 #include "windowmanager.h"
+#include "df.h"
 
 #define  MIN_UPPER_HEIGHT  90
 #define  MIN_LOWER_HEIGHT  200
@@ -55,6 +56,8 @@ static Bool FSAddFileViewShelfItemIntoProplist(FSFileView *fView,
 static void handleShelfDrop(XEvent *ev, void *clientData);
 static void handleBtnDrop(XEvent *ev, void *clientData);
 static void handleBtnDrag(XEvent *ev, void *clientData);
+static void updateDiskFree(FSFileView *fView);
+
 static FSFileIcon *FSFindFileIconWithFileInfo(FSFileView *fView, 
 					      FileInfo *fileInfo);
 
@@ -368,13 +371,12 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     WMMoveWidget(fView->shelfF, FRAME_PAD_X, FRAME_PAD_TOP);
     WMResizeWidget(fView->shelfF, fView->w-2*FRAME_PAD_X, SHELF_HEIGHT);
 
-    // WMLabel *lbl = WMCreateLabel(fView->fileView);
-    // WMResizeWidget(lbl, fView->w-2*FRAME_PAD_X, FRAME_PAD_Y);
-    // WMMoveWidget(lbl, FRAME_PAD_X, FRAME_TOP+SHELF_HEIGHT-4);
-    // WMSetLabelFont(lbl, WMSystemFontOfSize(fView->scr, 10));
-    // WMSetLabelTextColor(lbl, WMDarkGrayColor(fView->scr));
-    // WMSetLabelTextAlignment(lbl, WALeft);
-    // WMSetLabelText(lbl, "X.XX GB available on hard disk");
+    fView->dfLabel = WMCreateLabel(fView->fileView);
+    WMResizeWidget(fView->dfLabel, fView->w-2*FRAME_PAD_X, FRAME_PAD_Y);
+    WMMoveWidget(fView->dfLabel, FRAME_PAD_X, FRAME_TOP+SHELF_HEIGHT-4);
+    WMSetLabelFont(fView->dfLabel, WMSystemFontOfSize(fView->scr, 10));
+    WMSetLabelTextColor(fView->dfLabel, WMDarkGrayColor(fView->scr));
+    WMSetLabelTextAlignment(fView->dfLabel, WALeft);
 
     fView->fileBrowser = FSCreateFileBrowser(fView->fileView);
     WMRealizeWidget(fView->fileView);
@@ -513,6 +515,8 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     }
 
     FSUpdateFileViewTitles(fView);
+    fView->dfTimer = WMAddPersistentTimerHandler(60000, updateDiskFree, fView);
+    updateDiskFree(fView);
 
     return fView;
 }
@@ -531,6 +535,10 @@ FSDestroyFileView(WMWidget *self, void *client)
     FSSetIntegerForName("YPOS", pos.y);
     FSSetIntegerForName("WSIZE", size.width);
     FSSetIntegerForName("HSIZE", size.height);
+
+    if (fileView->dfTimer != NULL) {
+        WMDeleteTimerHandler(fileView->dfTimer);
+    }
 
     XDeleteContext(fileView->dpy, WMWidgetXID(fileView->fileView),
 		   fileView->xcontext);
@@ -630,6 +638,17 @@ void
 FSSetFileViewPath(FSFileView *fileView, char *path)
 {
     FSSetFileBrowserPath(fileView->fileBrowser, path);
+}
+
+static void updateDiskFree(FSFileView *fView)
+{
+    char *path = FSGetFileBrowserPath(fView->fileBrowser);
+    char buf[512];
+    snprintf(buf, 512, "%s available on hard disk", DiskFree(path));
+    WMSetLabelText(fView->dfLabel, buf);
+    if (path) {
+        free(path);
+    }
 }
 
 void
