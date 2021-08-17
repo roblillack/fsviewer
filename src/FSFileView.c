@@ -29,6 +29,7 @@
 #define  PADY              10
 #define  PADDED_WIDTH      115
 #define  PADDED_HEIGHT     100
+#define  BOTTOM_FRAME_PADDING -1
 
 static void notificationObserver(void *self, WMNotification *notif);
 static void FSAddFileViewShelfItem(FSFileView *fView, FileInfo *fileInfo);
@@ -112,7 +113,7 @@ notificationObserver(void *self, WMNotification *notif)
 	{
 	    WMResizeWidget(fView->fileBrowser, 
 			   WMWidgetWidth(fView->fileBrowserF)-10, 
-			   WMWidgetHeight(fView->fileBrowserF)-5);
+			   WMWidgetHeight(fView->fileBrowserF)-BOTTOM_FRAME_PADDING);
 	}
     }
 }
@@ -349,7 +350,7 @@ FSCreateFileView(FSViewer *fsViewer, char *path, Bool primary)
     WMMoveWidget(fView->fileBrowser, 5, 0);
     /* watch values for w and h, should not be to small */
     WMResizeWidget(fView->fileBrowser, 
-		   fView->w-10, fView->h-5-MIN_UPPER_HEIGHT-divThickness);
+		   fView->w-10, fView->h-BOTTOM_FRAME_PADDING-MIN_UPPER_HEIGHT-divThickness);
 
     int cw = FSGetIntegerForName("ColumnWidth");
     if (cw < 169)
