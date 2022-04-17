@@ -20,6 +20,10 @@ add_definitions(-DVERSION="${PROJECT_VERSION}")
 add_definitions(-DICONDIR="${CMAKE_INSTALL_PREFIX}/GNUstep/Apps/FSViewer.app")
 add_definitions(-DLOCALEDIR="${CMAKE_INSTALL_PREFIX}/share/locale")
 
+install(TARGETS ${EXECUTABLE} DESTINATION bin)
+install(DIRECTORY xpm DESTINATION GNUstep/Apps/FSViewer.app)
+install(DIRECTORY tiff DESTINATION GNUstep/Apps/FSViewer.app)
+
 #add_subdirectory(src/regexp)
 #add_subdirectory(src)
 #add_subdirectory(defs)
