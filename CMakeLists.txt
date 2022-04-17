@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(FSViewer VERSION 0.2.7)
+project(FSViewer VERSION 0.2.7 LANGUAGES C)
 set(EXECUTABLE ${PROJECT_NAME})
 
 find_package(PkgConfig REQUIRED)
