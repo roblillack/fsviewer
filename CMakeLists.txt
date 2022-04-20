@@ -12,6 +12,7 @@ add_executable(${EXECUTABLE} ${SRC} ${REGEXP})
 pkg_check_modules(DEPS REQUIRED IMPORTED_TARGET wrlib wmlib WUtil WINGs xpm xmu x11)
 # include_directories(${DEPS_INCLUDE_DIRS})
 #find_library(LIBINTL intl)
+find_package(Intl)
 target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} -lm)
 
 add_definitions(-DCLK=1)
