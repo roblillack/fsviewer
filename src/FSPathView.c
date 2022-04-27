@@ -3,6 +3,7 @@
 #include <math.h> /* for : double rint (double) */
 
 #include "FSFileButton.h"
+#include "FSFileView.h"
 #include "FSPathView.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
@@ -702,8 +703,8 @@ int FSAddPathViewColumn(FSPathView* pvPtr)
     FSSetFileButtonAction(list, btnCallback, pvPtr);
     FSSetFileButtonDoubleAction(list, btnDoubleCallback, pvPtr);
     /* Drag'n'Drop */
-    DndRegisterDropWidget(list, handlePVButtonDrop, list);
-    DndRegisterDragWidget(list, handlePVButtonDrag, list);
+    // DndRegisterDropWidget(list, handlePVButtonDrop, list);
+    // DndRegisterDragWidget(list, handlePVButtonDrag, list);
     WMHangData(list, pvPtr);
 
     pvPtr->columns[index] = list;
@@ -822,6 +823,14 @@ void FSSetPathViewColumnContents(FSPathView* pvPtr, int column,
         if (backlight)
             FSSetFileButtonSelected(pvPtr->columns[column], 1);
         FSSetFileButtonSelected(pvPtr->columns[column - 1], 0);
+
+        FSFileButton *btn = pvPtr->columns[column];
+        FileInfo *fileInfo = FSGetFileInfo(FSGetFileButtonPathname(btn));
+        WMPixmap* dragImg = FSCreateBlurredPixmapFromFile(WMWidgetScreen(btn), fileInfo->imgName);
+        WMDragSourceProcs* procs = CreateDragSourceProcs();
+        WMSetViewDraggable(W_VIEW(btn), procs, dragImg);
+        WMReleasePixmap(dragImg);
+        wfree(procs);
     }
 }
 

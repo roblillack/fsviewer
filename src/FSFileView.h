@@ -63,5 +63,6 @@ void FSSetFileViewFilter(FSFileView* fView, char* filter);
 char* FSGetFileViewFilter(FSFileView* fView);
 void FSSetFileViewPath(FSFileView* fileView, char* path);
 void FSSetFileViewMode(FSFileView* fView, FSFileViewType mode);
+WMDragSourceProcs* CreateDragSourceProcs();
 
 #endif

@@ -904,9 +904,19 @@ void EndedDrag(WMView* self, WMPoint* point, Bool deposited)
     wwarning("Ended drag, deposited: %s", deposited ? "YES" : "NO");
 }
 
-void FetchDragData(WMView* self, char* type)
+WMData* FetchDragData(WMView* self, char* type)
 {
     wwarning("Somebody requested drag data of type %s", type);
+    WMWidget*btn = WMWidgetOfView(self);
+    FileInfo* fileInfo = FSGetFileButtonFileInfo(btn);
+
+    // TODO
+    char buf[1024+1];
+    snprintf(buf, 1024, "file://%s%s\r\n", fileInfo->path, fileInfo->name);
+
+    wwarning(buf);
+
+    return WMCreateDataWithBytes(buf, strlen(buf));
 }
 
 static WMArray* dataTypes = NULL;
@@ -921,16 +931,20 @@ WMArray* DropDataTypes(WMView* self)
     return dataTypes;
 }
 
+Bool AcceptDropOperation(WMView *self, WMDragOperationType operation) {
+    return True;
+}
+
 WMDragOperationType WantedDropOperation(WMView* self)
 {
     return WDOperationCopy;
 }
 
-WMDragSourceProcs* CreateDragSourceProcs(FileInfo* fileInfo, FSFileIcon* fileIcon)
+WMDragSourceProcs* CreateDragSourceProcs()
 {
-    wwarning("Creating drag source procs for %s%s", fileInfo->path, fileInfo->name);
-
-    WMDragSourceProcs* r = wmalloc(sizeof(WMDragSourceProcs));
+    WMDragSourceProcs *r = wmalloc(sizeof(WMDragSourceProcs));
+    memset(r, 0, sizeof(WMDragSourceProcs));
+    r->acceptDropOperation = AcceptDropOperation;
     // Can be NULL if we don't return WDOAskedOperations in wantedDropOperation
     r->askedOperations = NULL;
     r->beganDrag = BeganDrag;
@@ -975,8 +989,7 @@ FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
     // DndRegisterDragWidget(fileIcon->btn, handleShelfButtonDrag, fileIcon);
 
     WMPixmap* dragImg = FSCreateBlurredPixmapFromFile(WMWidgetScreen(fileIcon->btn), fileInfo->imgName);
-    WMDragSourceProcs* procs = CreateDragSourceProcs(fileInfo, fileIcon);
-    CreateDragSourceProcs(fileInfo, fileIcon);
+    WMDragSourceProcs* procs = CreateDragSourceProcs(fileInfo);
     WMSetViewDraggable(W_VIEW(fileIcon->btn), procs, dragImg);
     WMReleasePixmap(dragImg);
     wfree(procs);
