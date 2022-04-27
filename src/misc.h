@@ -4,8 +4,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-extern void parse_command(char *, char ***, int *);
+extern void parse_command(char*, char***, int*);
 
-extern pid_t execCommand(char *);
+extern pid_t execCommand(char*);
 
 #endif /* __MISC_H */

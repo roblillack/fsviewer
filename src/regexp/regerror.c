@@ -1,8 +1,7 @@
 #include <stdio.h>
 
 void
-regerror(s)
-char *s;
+    regerror(s) char* s;
 {
-	fprintf(stderr, "regexp(3): %s", s);
+    fprintf(stderr, "regexp(3): %s", s);
 }

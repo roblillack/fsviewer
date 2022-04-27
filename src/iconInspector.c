@@ -1,166 +1,157 @@
 /* iconInspector.c */
 
-#include "FSViewer.h"
 #include "FSFileView.h"
 #include "FSUtils.h"
+#include "FSViewer.h"
 
-#define WIDTH               272
-#define HEIGHT              272
-#define LABEL_HEIGHT         16
-#define LABEL_WIDTH          48
+#define WIDTH 272
+#define HEIGHT 272
+#define LABEL_HEIGHT 16
+#define LABEL_WIDTH 48
 
 typedef struct _Panel {
-    WMFrame      *frame;
-    char         *sectionName;
-    
-    CallbackRec   callbacks;
+    WMFrame* frame;
+    char* sectionName;
 
-    Display    	 *dpy;
-    WMScreen	 *scr;
-    FSViewer   	 *app;
-    WMWindow     *win;
+    CallbackRec callbacks;
 
-    WMLabel      *iconLabel;
-    WMList       *pathList;
-    WMList       *fileList;
-    WMButton     *okBtn;
-    WMButton     *revertBtn;
+    Display* dpy;
+    WMScreen* scr;
+    FSViewer* app;
+    WMWindow* win;
 
-    FileInfo     *fileInfo;
+    WMLabel* iconLabel;
+    WMList* pathList;
+    WMList* fileList;
+    WMButton* okBtn;
+    WMButton* revertBtn;
 
-    char         *xpmDir;
-    char         *tiffDir;
-    char         *iconName;
+    FileInfo* fileInfo;
 
-    int           x;
-    int           y;
+    char* xpmDir;
+    char* tiffDir;
+    char* iconName;
+
+    int x;
+    int y;
 
 } _Panel;
 
-static char *getSelectedFilename(_Panel *panel);
+static char* getSelectedFilename(_Panel* panel);
 
 static void
-setIconLabel(WMWidget *self, void *data)
+setIconLabel(WMWidget* self, void* data)
 {
-    RColor    color;
-    WMPixmap *pixmap;
-    _Panel *panel = (_Panel *) data;
-    
-    color.red   = 0xae;
+    RColor color;
+    WMPixmap* pixmap;
+    _Panel* panel = (_Panel*)data;
+
+    color.red = 0xae;
     color.green = 0xaa;
-    color.blue  = 0xae;
+    color.blue = 0xae;
     color.alpha = 0;
-    
-    if(panel->iconName)
-	free(panel->iconName);
+
+    if (panel->iconName)
+        free(panel->iconName);
     panel->iconName = getSelectedFilename(panel);
-          /* FS.. */
-    pixmap = WMCreateBlendedPixmapFromFile(panel->scr, 
-					   LocateImage(panel->iconName), 
-					   &color);
+    /* FS.. */
+    pixmap = WMCreateBlendedPixmapFromFile(panel->scr,
+        LocateImage(panel->iconName),
+        &color);
     WMSetLabelImage(panel->iconLabel, pixmap);
 }
 
-
 static void
-fillIconFileList(WMWidget *self, void *data)
+fillIconFileList(WMWidget* self, void* data)
 {
-    _Panel *panel = (_Panel *) data;
-    char *pathname = NULL;
-    WMListItem *listItem;
-    FileInfo   *fileList;
+    _Panel* panel = (_Panel*)data;
+    char* pathname = NULL;
+    WMListItem* listItem;
+    FileInfo* fileList;
 
     WMClearList(panel->fileList);
     WMSetLabelImage(panel->iconLabel, NULL);
 
     listItem = WMGetListSelectedItem(panel->pathList);
-    pathname = (char *) wmalloc(strlen(listItem->text)+1);
+    pathname = (char*)wmalloc(strlen(listItem->text) + 1);
     strcpy(pathname, listItem->text);
     strcat(pathname, "/");
-    
 
     fileList = GetDirList(pathname);
-    while(fileList != NULL)
-    {
-	if(DisplayFile(fileList->name, NULL, fileList->fileType))
-	{
-	    listItem = WMAddListItem(panel->fileList, fileList->name);
-	    listItem->clientData = fileList;
-	}
+    while (fileList != NULL) {
+        if (DisplayFile(fileList->name, NULL, fileList->fileType)) {
+            listItem = WMAddListItem(panel->fileList, fileList->name);
+            listItem->clientData = fileList;
+        }
 
-	fileList = fileList->next;
+        fileList = fileList->next;
     }
 
-    if(pathname)
-    {
-	free(pathname);
+    if (pathname) {
+        free(pathname);
     }
     WMSortListItems(panel->fileList);
 }
 
-static char *
-getSelectedFilename(_Panel *panel)
+static char*
+getSelectedFilename(_Panel* panel)
 {
-    WMListItem *listItem;
-    FileInfo   *fileInfo;
-    char       *filename;
-    char       *imgName;
+    WMListItem* listItem;
+    FileInfo* fileInfo;
+    char* filename;
+    char* imgName;
 
-    imgName  = NULL;
+    imgName = NULL;
     filename = NULL;
     listItem = NULL;
 
     listItem = WMGetListSelectedItem(panel->fileList);
-    if(listItem)
-    {
-	RColor color;
-	WMPixmap *pixmap;
-	
-	color.red   = 0xae;
-	color.green = 0xaa;
-	color.blue  = 0xae;
-	color.alpha = 0;
-	
-	fileInfo = (FileInfo *) listItem->clientData;
-	
-	if(!strncmp(fileInfo->path, panel->xpmDir, strlen(fileInfo->path)-1) ||
-	   !strncmp(fileInfo->path, panel->tiffDir, strlen(fileInfo->path)-1) )
-	{
-	    filename = RemoveFileExtension(fileInfo->name);
-	}
-	else
-	    filename = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
-	
-	imgName = LocateImage(filename);
-	      /* FS..*/
- 	pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win),
-					       imgName, &color);
+    if (listItem) {
+        RColor color;
+        WMPixmap* pixmap;
 
-	WMSetLabelImage(panel->iconLabel, pixmap);
-	WMReleasePixmap(pixmap);
+        color.red = 0xae;
+        color.green = 0xaa;
+        color.blue = 0xae;
+        color.alpha = 0;
+
+        fileInfo = (FileInfo*)listItem->clientData;
+
+        if (!strncmp(fileInfo->path, panel->xpmDir, strlen(fileInfo->path) - 1) || !strncmp(fileInfo->path, panel->tiffDir, strlen(fileInfo->path) - 1)) {
+            filename = RemoveFileExtension(fileInfo->name);
+        } else
+            filename = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
+
+        imgName = LocateImage(filename);
+        /* FS..*/
+        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win),
+            imgName, &color);
+
+        WMSetLabelImage(panel->iconLabel, pixmap);
+        WMReleasePixmap(pixmap);
     }
-    
-    if(imgName)
-	free(imgName);
+
+    if (imgName)
+        free(imgName);
 
     return filename;
 }
 
 static void
-showData(_Panel *panel)
+showData(_Panel* panel)
 {
-    char *file;
+    char* file;
     RColor color;
-    WMPixmap *pixmap;
-    
-    color.red =   0xae;
+    WMPixmap* pixmap;
+
+    color.red = 0xae;
     color.green = 0xaa;
-    color.blue =  0xae;
+    color.blue = 0xae;
     color.alpha = 0;
-          /* FS..*/ 
-    pixmap = WMCreateBlendedPixmapFromFile(panel->scr, 
-					   panel->fileInfo->imgName, 
-					   &color);
+    /* FS..*/
+    pixmap = WMCreateBlendedPixmapFromFile(panel->scr,
+        panel->fileInfo->imgName,
+        &color);
     WMClearList(panel->pathList);
     WMClearList(panel->fileList);
 
@@ -173,73 +164,70 @@ showData(_Panel *panel)
 }
 
 static void
-storeData(_Panel *panel)
+storeData(_Panel* panel)
 {
-    char *filename = NULL;
+    char* filename = NULL;
 
     filename = getSelectedFilename(panel);
-    if(filename)
-    {	
-	FSSetStringForNameKey(panel->fileInfo->extn, "icon", filename);
-	free(filename);
+    if (filename) {
+        FSSetStringForNameKey(panel->fileInfo->extn, "icon", filename);
+        free(filename);
     }
 }
 
 static void
-buttonClick(WMWidget *self, void *data)
+buttonClick(WMWidget* self, void* data)
 {
-    Panel *panel = (Panel *)data;
+    Panel* panel = (Panel*)data;
 
-    if ((WMButton *)self == panel->okBtn) 
-    {
-	storeData(panel);
-	WMSetButtonEnabled(panel->revertBtn, True);
+    if ((WMButton*)self == panel->okBtn) {
+        storeData(panel);
+        WMSetButtonEnabled(panel->revertBtn, True);
         // TODO: WTF??
         // FSUpdateFileViewPath(FSGetFSViewerCurrentView(panel->app));
-    }
-    else {
-      WMRunAlertPanel(panel->scr, NULL,
-        _("Inspector Error"), 
-	_("This function has not yet been implemented."),
-	_("OK"), NULL, NULL);
+    } else {
+        WMRunAlertPanel(panel->scr, NULL,
+            _("Inspector Error"),
+            _("This function has not yet been implemented."),
+            _("OK"), NULL, NULL);
         /* reloadDefaults(); */
-	WMSetButtonEnabled(panel->revertBtn, False);
+        WMSetButtonEnabled(panel->revertBtn, False);
     }
 }
 
 static void
-createButtons(Panel *panel)
+createButtons(Panel* panel)
 {
 
     panel->revertBtn = WMCreateCommandButton(panel->frame);
-    WMMoveWidget(panel->revertBtn, 16, HEIGHT-24);
+    WMMoveWidget(panel->revertBtn, 16, HEIGHT - 24);
     WMResizeWidget(panel->revertBtn, 115, 24);
     WMSetButtonText(panel->revertBtn, _("Revert"));
     WMSetButtonEnabled(panel->revertBtn, False);
     WMSetButtonAction(panel->revertBtn, buttonClick, panel);
-   
+
     panel->okBtn = WMCreateCommandButton(panel->frame);
-    WMMoveWidget(panel->okBtn, 140, HEIGHT-24);
+    WMMoveWidget(panel->okBtn, 140, HEIGHT - 24);
     WMResizeWidget(panel->okBtn, 115, 24);
     WMSetButtonText(panel->okBtn, _("Set Default"));
-    WMSetButtonImage(panel->okBtn, 
-		     WMGetSystemPixmap(panel->scr, WSIReturnArrow));
-    WMSetButtonAltImage(panel->okBtn, 
-			WMGetSystemPixmap(panel->scr, 
-					  WSIHighlightedReturnArrow));
+    WMSetButtonImage(panel->okBtn,
+        WMGetSystemPixmap(panel->scr, WSIReturnArrow));
+    WMSetButtonAltImage(panel->okBtn,
+        WMGetSystemPixmap(panel->scr,
+            WSIHighlightedReturnArrow));
     WMSetButtonImagePosition(panel->okBtn, WIPRight);
     WMSetButtonEnabled(panel->okBtn, True);
-    WMSetButtonAction(panel->okBtn, buttonClick, panel);   
+    WMSetButtonAction(panel->okBtn, buttonClick, panel);
 }
 
 static void
-createPanel(Panel *p)
+createPanel(Panel* p)
 {
-    WMFrame *f = NULL;
-    WMFont *aFont = NULL;
-    WMLabel *l = NULL;
+    WMFrame* f = NULL;
+    WMFont* aFont = NULL;
+    WMLabel* l = NULL;
 
-    _Panel *panel = (_Panel*)p;
+    _Panel* panel = (_Panel*)p;
     panel->frame = WMCreateFrame(panel->win);
 
     WMResizeWidget(panel->frame, WIDTH, HEIGHT);
@@ -269,7 +257,7 @@ createPanel(Panel *p)
     FSLoadIconPaths(panel->pathList);
     WMAddListItem(panel->pathList, panel->xpmDir);
     WMAddListItem(panel->pathList, panel->tiffDir);
-   
+
     l = WMCreateLabel(f);
     WMMoveWidget(l, 10, 114);
     WMResizeWidget(l, 252, 20);
@@ -299,15 +287,15 @@ createPanel(Panel *p)
 }
 
 Panel*
-InitIcon(WMWindow *parent, FSViewer *app, FileInfo *fileInfo, int x, int y)
+InitIcon(WMWindow* parent, FSViewer* app, FileInfo* fileInfo, int x, int y)
 {
-    char   *txt = NULL;
-    _Panel *panel;
-	  
+    char* txt = NULL;
+    _Panel* panel;
+
     panel = wmalloc(sizeof(_Panel));
     memset(panel, 0, sizeof(_Panel));
 
-    panel->sectionName = (char *) wmalloc(strlen(_("Icon Inspector"))+1);
+    panel->sectionName = (char*)wmalloc(strlen(_("Icon Inspector")) + 1);
     strcpy(panel->sectionName, _("Icon Inspector"));
 
     panel->win = parent;
@@ -319,23 +307,23 @@ InitIcon(WMWindow *parent, FSViewer *app, FileInfo *fileInfo, int x, int y)
 
     panel->callbacks.updateDomain = storeData;
     panel->callbacks.updateDisplay = showData;
-    
+
     panel->fileInfo = fileInfo;
 
     txt = FSGetStringForName("ICONDIR");
-    if(!txt) 
-	txt = ICONDIR;
-	
-    panel->xpmDir = (char *) wmalloc(strlen(txt)+5);
+    if (!txt)
+        txt = ICONDIR;
+
+    panel->xpmDir = (char*)wmalloc(strlen(txt) + 5);
     strcpy(panel->xpmDir, txt);
     strcat(panel->xpmDir, "/xpm");
-    
-    panel->tiffDir = (char *) wmalloc(strlen(txt)+6);
+
+    panel->tiffDir = (char*)wmalloc(strlen(txt) + 6);
     strcpy(panel->tiffDir, txt);
     strcat(panel->tiffDir, "/tiff");
-    
-    if(txt != ICONDIR) 
-	free(txt);
+
+    if (txt != ICONDIR)
+        free(txt);
 
     panel->x = x;
     panel->y = y;

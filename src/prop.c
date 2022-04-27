@@ -2,100 +2,91 @@
 
 #include "FSViewer.h"
 
-
 WMPropList*
 GetDictObject(WMPropList* dictKey, WMPropList* valKey)
 {
     WMPropList* dict = NULL;
-    WMPropList* val  = NULL;
+    WMPropList* val = NULL;
 
-    if(dictKey && WMIsPLString(dictKey))
-    {
-	dict = WMGetFromPLDictionary(filesDB, dictKey);
-	if(dict && WMIsPLDictionary(dict))
-	{
-	    if(valKey && WMIsPLString(valKey))
-	    {
-		val = WMGetFromPLDictionary(dict, valKey);
-		if(val)
-		    return val;
-	    }
-/* 	    else */
-/* 		return dict; */
-	}
+    if (dictKey && WMIsPLString(dictKey)) {
+        dict = WMGetFromPLDictionary(filesDB, dictKey);
+        if (dict && WMIsPLDictionary(dict)) {
+            if (valKey && WMIsPLString(valKey)) {
+                val = WMGetFromPLDictionary(dict, valKey);
+                if (val)
+                    return val;
+            }
+            /* 	    else */
+            /* 		return dict; */
+        }
     }
 
     return NULL;
-} 
+}
 
 WMPropList*
-GetCmdForExtn(char *extn, char *cmd)
+GetCmdForExtn(char* extn, char* cmd)
 {
     WMPropList* dictKey = WMCreatePLString(extn);
-    WMPropList* cmdKey  = WMCreatePLString(cmd);
-    WMPropList* val     = NULL;
-
+    WMPropList* cmdKey = WMCreatePLString(cmd);
+    WMPropList* val = NULL;
 
     val = GetDictObject(dictKey, cmdKey);
 
-    if(dictKey)
-	WMReleasePropList(dictKey);
-    if(cmdKey)
-	WMReleasePropList(cmdKey);
+    if (dictKey)
+        WMReleasePropList(dictKey);
+    if (cmdKey)
+        WMReleasePropList(cmdKey);
 
     return val;
 }
 
-char *
-GetExecStringForExtn(char *extn)
+char* GetExecStringForExtn(char* extn)
 {
     WMPropList* val = NULL;
-    
+
     val = GetCmdForExtn(extn, "exec");
-    
-    if(val != NULL)
-	return WMGetFromPLString(val);
+
+    if (val != NULL)
+        return WMGetFromPLString(val);
     else
-	return NULL;
+        return NULL;
 }
 
-char *
-GetViewerStringForExtn(char *extn)
+char* GetViewerStringForExtn(char* extn)
 {
     WMPropList* val = NULL;
-    
+
     val = GetCmdForExtn(extn, "viewer");
-    
-    if(val != NULL)
-	return WMGetFromPLString(val);
+
+    if (val != NULL)
+        return WMGetFromPLString(val);
     else
-	return NULL;
+        return NULL;
 }
 
-char *
-GetEditorStringForExtn(char *extn)
+char* GetEditorStringForExtn(char* extn)
 {
     WMPropList* val = NULL;
-    
+
     val = GetCmdForExtn(extn, "editor");
-    
-    if(val)
-	return WMGetFromPLString(val);
+
+    if (val)
+        return WMGetFromPLString(val);
     else
-	return NULL;
+        return NULL;
 }
 
-char *
-GetIconStringForExtn(char *extn)
+char* GetIconStringForExtn(char* extn)
 {
     WMPropList* val = NULL;
-    
+
     val = GetCmdForExtn(extn, "icon");
-    
-    if(val != NULL)
-	return WMGetFromPLString(val);
+
+    if (val != NULL)
+        return WMGetFromPLString(val);
     else
-	return NULL;
+        return NULL;
 }
 
 WMPropList*
@@ -104,61 +95,53 @@ FSRemoveArrayElement(WMPropList* array, WMPropList* val)
     int i;
     Bool notFound = True;
 
-    if (array && WMIsPLArray(array)) 
-    {
-	for(i = 0; i < WMGetPropListItemCount(array); i++)
-	{
-	    if(WMIsPropListEqualTo(val, WMGetFromPLArray(array, i)))
-	    {
-		WMDeleteFromPLArray(array, i);
-		WMReleasePropList(val);
-		break;
-	    }
-	}
+    if (array && WMIsPLArray(array)) {
+        for (i = 0; i < WMGetPropListItemCount(array); i++) {
+            if (WMIsPropListEqualTo(val, WMGetFromPLArray(array, i))) {
+                WMDeleteFromPLArray(array, i);
+                WMReleasePropList(val);
+                break;
+            }
+        }
     }
 
     return array;
 }
 
-int
-FSGetIntegerForName(char *name)
+int FSGetIntegerForName(char* name)
 {
     return WMGetUDIntegerForKey(defaultsDB, name);
-}   
+}
 
-void 
-FSSetIntegerForName(char *name, int val)
+void FSSetIntegerForName(char* name, int val)
 {
     WMSetUDIntegerForKey(defaultsDB, val, name);
-}   
+}
 
-void
-FSSetStringForName(char *name, char *str)
+void FSSetStringForName(char* name, char* str)
 {
     WMSetUDStringForKey(defaultsDB, str, name);
 }
 
-char *
-FSGetStringForName(char *name)
+char* FSGetStringForName(char* name)
 {
-    char *str;
+    char* str;
 
     str = WMGetUDStringForKey(defaultsDB, name);
 
-    if(str)
-	return wstrdup(str);
+    if (str)
+        return wstrdup(str);
     else
-	return NULL;
-}   
+        return NULL;
+}
 
-char *
-FSGetStringForNameKey(char *name, char *key)
+char* FSGetStringForNameKey(char* name, char* key)
 {
-    WMPropList* val  = NULL;
+    WMPropList* val = NULL;
     WMPropList* dict = NULL;
 
     dict = FSGetUDObjectForKey(defaultsDB, name);
-    val  = FSGetDBObjectForKey(dict, key);
+    val = FSGetDBObjectForKey(dict, key);
 
     if (!val)
         return NULL;
@@ -167,50 +150,48 @@ FSGetStringForNameKey(char *name, char *key)
         return NULL;
 
     return wstrdup(WMGetFromPLString(val));
-}   
+}
 
-WMPropList* 
-FSGetDBObjectForKey(WMPropList* dict, char *key)
+WMPropList*
+FSGetDBObjectForKey(WMPropList* dict, char* key)
 {
-    WMPropList* val    = NULL;
+    WMPropList* val = NULL;
     WMPropList* valKey = WMCreatePLString(key);
 
-    if(dict && WMIsPLDictionary(dict))
-    {
-	val = WMGetFromPLDictionary(dict, valKey);
-    }    
+    if (dict && WMIsPLDictionary(dict)) {
+        val = WMGetFromPLDictionary(dict, valKey);
+    }
     WMReleasePropList(valKey);
 
     return val;
 }
 
-void
-FSSetStringForNameKey(char *name, char *dictKey, char *str)
+void FSSetStringForNameKey(char* name, char* dictKey, char* str)
 {
-    WMPropList* val  = NULL;
-    WMPropList* key  = NULL;
+    WMPropList* val = NULL;
+    WMPropList* key = NULL;
     WMPropList* dict = NULL;
 
     val = WMCreatePLString(str);
     key = WMCreatePLString(dictKey);
 
     dict = FSGetUDObjectForKey(defaultsDB, name);
-    if(dict)
-	WMPutInPLDictionary(dict, key, val);
+    if (dict)
+        WMPutInPLDictionary(dict, key, val);
     else
-	dict = WMCreatePLDictionary(key, val, NULL);
+        dict = WMCreatePLDictionary(key, val, NULL);
 
     WMSetUDObjectForKey(defaultsDB, dict, name);
-}   
+}
 
 WMPropList*
-FSGetArrayForNameKey(char *name, char *key)
+FSGetArrayForNameKey(char* name, char* key)
 {
-    WMPropList* val  = NULL;
+    WMPropList* val = NULL;
     WMPropList* dict = NULL;
 
     dict = FSGetUDObjectForKey(defaultsDB, name);
-    val  = FSGetDBObjectForKey(dict, key);
+    val = FSGetDBObjectForKey(dict, key);
 
     if (!val)
         return NULL;
@@ -221,50 +202,44 @@ FSGetArrayForNameKey(char *name, char *key)
     return val;
 }
 
-Bool
-InsertArrayElement(WMPropList* array, WMPropList* val)
+Bool InsertArrayElement(WMPropList* array, WMPropList* val)
 {
     int i;
     Bool notFound = True;
 
-    if (array && WMIsPLArray(array)) 
-    {
-	for(i = 0; i < WMGetPropListItemCount(array); i++)
-	{
-	    if(WMIsPropListEqualTo(val, WMGetFromPLArray(array, i)))
-	    {
-		notFound = False;
-		break;
-	    }
-	}
-	if(notFound)
-	     WMAddToPLArray(array, val);
-    }
-    else
-	array = WMCreatePLArray(val, NULL);
+    if (array && WMIsPLArray(array)) {
+        for (i = 0; i < WMGetPropListItemCount(array); i++) {
+            if (WMIsPropListEqualTo(val, WMGetFromPLArray(array, i))) {
+                notFound = False;
+                break;
+            }
+        }
+        if (notFound)
+            WMAddToPLArray(array, val);
+    } else
+        array = WMCreatePLArray(val, NULL);
 
     return notFound;
 }
 
 WMPropList*
-FSGetUDObjectForKey(WMUserDefaults *database, char *defaultName)
+FSGetUDObjectForKey(WMUserDefaults* database, char* defaultName)
 {
     WMPropList* origObj = NULL;
     WMPropList* copyObj = NULL;
-    
+
     origObj = WMGetUDObjectForKey(database, defaultName);
-    if(origObj) 
-	copyObj = WMDeepCopyPropList(origObj);
-    
+    if (origObj)
+        copyObj = WMDeepCopyPropList(origObj);
+
     return copyObj;
 }
 
-void
-InitFilesDB(FSViewer *fsViewer)
+void InitFilesDB(FSViewer* fsViewer)
 {
-    WMPropList* key   = NULL;
-    WMPropList* val   = NULL;
-    WMPropList* dict  = NULL;
+    WMPropList* key = NULL;
+    WMPropList* val = NULL;
+    WMPropList* dict = NULL;
     WMPropList* array = NULL;
 
     /* App settings */
@@ -281,8 +256,8 @@ InitFilesDB(FSViewer *fsViewer)
 
     /* Default Folder setting */
     WMSetUDStringForKey(defaultsDB, "folder", "DIRECTORY");
-    /* 
-       Default Icon Directory 
+    /*
+       Default Icon Directory
        This is one of the place where the app looks for
        icons.  Check config.h for value.
     */
@@ -294,7 +269,7 @@ InitFilesDB(FSViewer *fsViewer)
 
     /* Shelf Settings */
     array = WMCreatePLArray(WMCreatePLString(wgethomedir()),
-				    NULL);
+        NULL);
     WMSetUDObjectForKey(defaultsDB, array, "SHELF");
 
     WMReleasePropList(array);
@@ -320,16 +295,16 @@ InitFilesDB(FSViewer *fsViewer)
     WMReleasePropList(dict);
 
     /* DISKS setting */
-/*     key = WMCreatePLString("devices"); */
-    val = WMCreatePLArray( WMCreatePLString("CDROM"), 
-				   WMCreatePLString("/cdrom"), 
-				   WMCreatePLString("/dev/hdc"),
-				   WMCreatePLString("mount %s"),
-				   WMCreatePLString("umount %s"),
-				   WMCreatePLString("eject %s"),
-				   WMCreatePLString("close %s"),
-				   NULL );
-    array = WMCreatePLArray( val, NULL );
+    /*     key = WMCreatePLString("devices"); */
+    val = WMCreatePLArray(WMCreatePLString("CDROM"),
+        WMCreatePLString("/cdrom"),
+        WMCreatePLString("/dev/hdc"),
+        WMCreatePLString("mount %s"),
+        WMCreatePLString("umount %s"),
+        WMCreatePLString("eject %s"),
+        WMCreatePLString("close %s"),
+        NULL);
+    array = WMCreatePLArray(val, NULL);
     WMSetUDObjectForKey(defaultsDB, array, "DISCS");
 
     WMReleasePropList(array);
@@ -337,7 +312,7 @@ InitFilesDB(FSViewer *fsViewer)
 
     /* Magic File file */
     WMSetUDStringForKey(defaultsDB, "MagicFiles", "MAGICFILE");
-   
+
     /* Default Editor */
     key = WMCreatePLString("exec");
     val = WMCreatePLString("xedit %s");
@@ -379,48 +354,47 @@ InitFilesDB(FSViewer *fsViewer)
     WMSetUDIntegerForKey(defaultsDB, 520, "WSIZE");
     WMSetUDIntegerForKey(defaultsDB, 390, "HSIZE");
 
-
     /* List of EXEs */
-    array = WMCreatePLArray( WMCreatePLString("xemacs"),
-				     WMCreatePLString("netscape"),
-				     WMCreatePLString("xv"),
-				     WMCreatePLString("gimp"),
-				     WMCreatePLString("xedit"),
-				     NULL );
+    array = WMCreatePLArray(WMCreatePLString("xemacs"),
+        WMCreatePLString("netscape"),
+        WMCreatePLString("xv"),
+        WMCreatePLString("gimp"),
+        WMCreatePLString("xedit"),
+        NULL);
     WMSetUDObjectForKey(defaultsDB, array, "EXE");
     WMReleasePropList(array);
 
     /* List of EXTNs */
-    array = WMCreatePLArray( WMCreatePLString(".bmp"),
-				     WMCreatePLString(".bz2"),
-				     WMCreatePLString(".c"),
-				     WMCreatePLString(".cgi"),
-				     WMCreatePLString(".class"),
-				     WMCreatePLString(".core"),
-				     WMCreatePLString(".csh"),
-				     WMCreatePLString(".dat"),
-				     WMCreatePLString(".gif"),
-				     WMCreatePLString(".gz"),
-				     WMCreatePLString(".h"),
-				     WMCreatePLString(".java"),
-				     WMCreatePLString(".jpg"),
-				     WMCreatePLString(".mp3"),
-				     WMCreatePLString(".o"),
-				     WMCreatePLString(".phtml"),
-				     WMCreatePLString(".pl"),
-				     WMCreatePLString(".png"),
-				     WMCreatePLString(".rpm"),
-				     WMCreatePLString(".sh"),
-				     WMCreatePLString(".shtml"),
-				     WMCreatePLString(".tgz"),
-				     WMCreatePLString(".tif"),
-				     WMCreatePLString(".txt"),
-				     WMCreatePLString(".xbm"),
-				     WMCreatePLString(".xcf"),
-				     WMCreatePLString(".xpm"),
-				     WMCreatePLString(".zip"),
-                                     WMCreatePLString(".html"),
-				     NULL );
+    array = WMCreatePLArray(WMCreatePLString(".bmp"),
+        WMCreatePLString(".bz2"),
+        WMCreatePLString(".c"),
+        WMCreatePLString(".cgi"),
+        WMCreatePLString(".class"),
+        WMCreatePLString(".core"),
+        WMCreatePLString(".csh"),
+        WMCreatePLString(".dat"),
+        WMCreatePLString(".gif"),
+        WMCreatePLString(".gz"),
+        WMCreatePLString(".h"),
+        WMCreatePLString(".java"),
+        WMCreatePLString(".jpg"),
+        WMCreatePLString(".mp3"),
+        WMCreatePLString(".o"),
+        WMCreatePLString(".phtml"),
+        WMCreatePLString(".pl"),
+        WMCreatePLString(".png"),
+        WMCreatePLString(".rpm"),
+        WMCreatePLString(".sh"),
+        WMCreatePLString(".shtml"),
+        WMCreatePLString(".tgz"),
+        WMCreatePLString(".tif"),
+        WMCreatePLString(".txt"),
+        WMCreatePLString(".xbm"),
+        WMCreatePLString(".xcf"),
+        WMCreatePLString(".xpm"),
+        WMCreatePLString(".zip"),
+        WMCreatePLString(".html"),
+        NULL);
     WMSetUDObjectForKey(defaultsDB, array, "EXTN");
     WMReleasePropList(array);
 
@@ -431,12 +405,12 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-    
-    key = WMCreatePLString("extn");    
-    array = WMCreatePLArray( WMCreatePLString(".html"),
-				     WMCreatePLString(".shtml"),
-				     WMCreatePLString(".phtml"),
-				     NULL );
+
+    key = WMCreatePLString("extn");
+    array = WMCreatePLArray(WMCreatePLString(".html"),
+        WMCreatePLString(".shtml"),
+        WMCreatePLString(".phtml"),
+        NULL);
     WMPutInPLDictionary(dict, key, array);
 
     WMReleasePropList(key);
@@ -459,14 +433,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("icon");
     val = WMCreatePLString("file-dot-html");
     WMPutInPLDictionary(dict, key, val);
@@ -483,14 +457,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("icon");
     val = WMCreatePLString("file-dot-html");
     WMPutInPLDictionary(dict, key, val);
@@ -507,14 +481,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("icon");
     val = WMCreatePLString("file-dot-html");
     WMPutInPLDictionary(dict, key, val);
@@ -531,14 +505,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("icon");
     val = WMCreatePLString("file-dot-html");
     WMPutInPLDictionary(dict, key, val);
@@ -555,21 +529,21 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-    
-    key = WMCreatePLString("extn");    
-    array = WMCreatePLArray( WMCreatePLString(".html"),
-				     WMCreatePLString(".shtml"),
-				     WMCreatePLString(".phtml"),
-				     WMCreatePLString(".pl"),
-				     WMCreatePLString(".txt"),
-				     WMCreatePLString(".java"),
-				     WMCreatePLString(".cgi"),
-				     WMCreatePLString(".sh"),
-				     WMCreatePLString(".csh"),
-				     WMCreatePLString(".dat"),
-				     WMCreatePLString(".c"),
-				     WMCreatePLString(".h"),
-				     NULL );
+
+    key = WMCreatePLString("extn");
+    array = WMCreatePLArray(WMCreatePLString(".html"),
+        WMCreatePLString(".shtml"),
+        WMCreatePLString(".phtml"),
+        WMCreatePLString(".pl"),
+        WMCreatePLString(".txt"),
+        WMCreatePLString(".java"),
+        WMCreatePLString(".cgi"),
+        WMCreatePLString(".sh"),
+        WMCreatePLString(".csh"),
+        WMCreatePLString(".dat"),
+        WMCreatePLString(".c"),
+        WMCreatePLString(".h"),
+        NULL);
     WMPutInPLDictionary(dict, key, array);
 
     WMReleasePropList(key);
@@ -592,14 +566,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xedit %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("icon");
     val = WMCreatePLString("file-dot-txt");
     WMPutInPLDictionary(dict, key, val);
@@ -616,14 +590,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("icon");
     val = WMCreatePLString("file-executable");
     WMPutInPLDictionary(dict, key, val);
@@ -640,14 +614,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("icon");
     val = WMCreatePLString("file-dot-h");
     WMPutInPLDictionary(dict, key, val);
@@ -674,14 +648,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
@@ -780,14 +754,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("gimp %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xv %s");
     WMPutInPLDictionary(dict, key, val);
@@ -804,14 +778,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("gimp %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xv %s");
     WMPutInPLDictionary(dict, key, val);
@@ -828,14 +802,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("gimp %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xv %s");
     WMPutInPLDictionary(dict, key, val);
@@ -852,14 +826,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("gimp %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xv %s");
     WMPutInPLDictionary(dict, key, val);
@@ -876,14 +850,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("gimp %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xv %s");
     WMPutInPLDictionary(dict, key, val);
@@ -900,14 +874,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("gimp %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xv %s");
     WMPutInPLDictionary(dict, key, val);
@@ -924,14 +898,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("gimp %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xv %s");
     WMPutInPLDictionary(dict, key, val);
@@ -948,14 +922,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("gimp %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("gimp %s");
     WMPutInPLDictionary(dict, key, val);
@@ -972,16 +946,16 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-    
-    key = WMCreatePLString("extn");    
-    array = WMCreatePLArray( WMCreatePLString(".jpg"),
-				     WMCreatePLString(".gif"),
-				     WMCreatePLString(".bmp"),
-				     WMCreatePLString(".xcf"),
-				     WMCreatePLString(".xpm"),
-				     WMCreatePLString(".xbm"),
-				     WMCreatePLString(".png"),
-				     NULL );
+
+    key = WMCreatePLString("extn");
+    array = WMCreatePLArray(WMCreatePLString(".jpg"),
+        WMCreatePLString(".gif"),
+        WMCreatePLString(".bmp"),
+        WMCreatePLString(".xcf"),
+        WMCreatePLString(".xpm"),
+        WMCreatePLString(".xbm"),
+        WMCreatePLString(".png"),
+        NULL);
     WMPutInPLDictionary(dict, key, array);
 
     WMReleasePropList(key);
@@ -1004,11 +978,11 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-    
-    key = WMCreatePLString("extn");    
-    array = WMCreatePLArray( WMCreatePLString(".txt"),
-				     WMCreatePLString(".dat"),
-				     NULL );
+
+    key = WMCreatePLString("extn");
+    array = WMCreatePLArray(WMCreatePLString(".txt"),
+        WMCreatePLString(".dat"),
+        NULL);
     WMPutInPLDictionary(dict, key, array);
 
     WMReleasePropList(key);
@@ -1031,14 +1005,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xedit %s");
     WMPutInPLDictionary(dict, key, val);
@@ -1055,14 +1029,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-    
-    key = WMCreatePLString("extn");    
-    array = WMCreatePLArray( WMCreatePLString(".jpg"),
-				     WMCreatePLString(".gif"),
-				     WMCreatePLString(".bmp"),
-				     WMCreatePLString(".xpm"),
-				     WMCreatePLString(".xbm"),
-				     NULL );
+
+    key = WMCreatePLString("extn");
+    array = WMCreatePLArray(WMCreatePLString(".jpg"),
+        WMCreatePLString(".gif"),
+        WMCreatePLString(".bmp"),
+        WMCreatePLString(".xpm"),
+        WMCreatePLString(".xbm"),
+        NULL);
     WMPutInPLDictionary(dict, key, array);
 
     WMReleasePropList(key);
@@ -1085,7 +1059,7 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("mpg123 %s");
     WMPutInPLDictionary(dict, key, val);
@@ -1102,10 +1076,10 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-    
-    key = WMCreatePLString("extn");    
-    array = WMCreatePLArray( WMCreatePLString(".mp3"),
-				     NULL );
+
+    key = WMCreatePLString("extn");
+    array = WMCreatePLArray(WMCreatePLString(".mp3"),
+        NULL);
     WMPutInPLDictionary(dict, key, array);
 
     WMReleasePropList(key);
@@ -1158,14 +1132,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
@@ -1182,14 +1156,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
@@ -1206,14 +1180,14 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("editor");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
 
     WMReleasePropList(key);
     WMReleasePropList(val);
-   
+
     key = WMCreatePLString("viewer");
     val = WMCreatePLString("xemacs %s");
     WMPutInPLDictionary(dict, key, val);
@@ -1225,4 +1199,3 @@ InitFilesDB(FSViewer *fsViewer)
 
     WMSynchronizeUserDefaults(defaultsDB);
 }
-

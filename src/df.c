@@ -1,10 +1,10 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
 #include <ctype.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-static const char *formatk(unsigned long k)
+static const char* formatk(unsigned long k)
 {
     static char buffer[10];
 
@@ -18,27 +18,25 @@ static const char *formatk(unsigned long k)
     return buffer;
 }
 
-const char *DiskFree(const char *dir)
+const char* DiskFree(const char* dir)
 {
     unsigned long total = 0; /* Total Space */
     char buffer[1024];
     snprintf(buffer, 1024, "df -k %s", dir);
 
-    FILE *f = popen(buffer, "r");
+    FILE* f = popen(buffer, "r");
 
-    if (!f)
-    {
+    if (!f) {
         fprintf(stderr, "%s %d: Can't run df, %s\n", __FILE__, __LINE__, strerror(errno));
         return "?";
     }
 
     /* Read in from the pipe until we hit the end */
-    for (;;)
-    {
+    for (;;) {
         int n = 0; /* number of words */
-        char *p = NULL;
-        char *fs = NULL; /* File System */
-        char *word[10];  /* pointer to each word */
+        char* p = NULL;
+        char* fs = NULL; /* File System */
+        char* word[10]; /* pointer to each word */
         // char  buffer[1024];
 
         /* Read in line by line */
@@ -46,8 +44,7 @@ const char *DiskFree(const char *dir)
             break;
 
         /* Strip the whitespace and break up the line */
-        for (p = buffer; n < 10;)
-        {
+        for (p = buffer; n < 10;) {
             // skip leading whitespace:
             while (*p && isspace(*p))
                 p++;

@@ -10,13 +10,13 @@ typedef struct
     unsigned long window_level;
     unsigned long reserved;
     Pixmap miniaturize_pixmap; /* pixmap for miniaturize button */
-    Pixmap close_pixmap;       /* pixmap for close button */
-    Pixmap miniaturize_mask;   /* miniaturize pixmap mask */
-    Pixmap close_mask;         /* close pixmap mask */
+    Pixmap close_pixmap; /* pixmap for close button */
+    Pixmap miniaturize_mask; /* miniaturize pixmap mask */
+    Pixmap close_mask; /* close pixmap mask */
     unsigned long extra_flags;
 } MyGNUstepWMAttributes;
 
-void MyWMSetWindowAttributes(Display *dpy, Window window,
-                             MyGNUstepWMAttributes *attributes);
+void MyWMSetWindowAttributes(Display* dpy, Window window,
+    MyGNUstepWMAttributes* attributes);
 
 #endif
