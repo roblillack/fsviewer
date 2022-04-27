@@ -808,6 +808,9 @@ handleShelfButtonDrag(XEvent* ev, void* clientData)
     FSFileIcon* fileIcon = (FSFileIcon*)clientData;
     FileInfo* fileInfo = FSGetFileButtonFileInfo(fileIcon->btn);
 
+    wwarning("DRAG HANDLER");
+    // WMIsDraggingFromView(ev->)
+
     if (!DragStarted)
         return;
 
@@ -880,6 +883,65 @@ FSReorganiseShelf(FSFileView* fView)
     }
 }
 
+// typedef struct W_DragSourceProcs {
+//     WMArray* (*dropDataTypes)(WMView* self);
+//     WMDragOperationType (*wantedDropOperation)(WMView* self);
+//     WMArray* (*askedOperations)(WMView* self);
+//     Bool (*acceptDropOperation)(WMView* self, WMDragOperationType operation);
+//     void (*beganDrag)(WMView* self, WMPoint* point);
+//     void (*endedDrag)(WMView* self, WMPoint* point, Bool deposited);
+//     WMData* (*fetchDragData)(WMView* self, char* type);
+//     /*Bool (*ignoreModifierKeysWhileDragging)(WMView *view);*/
+// } WMDragSourceProcs;
+
+void BeganDrag(WMView* self, WMPoint* point)
+{
+    wwarning("Began drag");
+}
+
+void EndedDrag(WMView* self, WMPoint* point, Bool deposited)
+{
+    wwarning("Ended drag, deposited: %s", deposited ? "YES" : "NO");
+}
+
+void FetchDragData(WMView* self, char* type)
+{
+    wwarning("Somebody requested drag data of type %s", type);
+}
+
+static WMArray* dataTypes = NULL;
+
+WMArray* DropDataTypes(WMView* self)
+{
+    wwarning("supported data types requested");
+    if (!dataTypes) {
+        dataTypes = WMCreateArray(1);
+        WMSetInArray(dataTypes, 0, &("text/uri-list"));
+    }
+    return dataTypes;
+}
+
+WMDragOperationType WantedDropOperation(WMView* self)
+{
+    return WDOperationCopy;
+}
+
+WMDragSourceProcs* CreateDragSourceProcs(FileInfo* fileInfo, FSFileIcon* fileIcon)
+{
+    wwarning("Creating drag source procs for %s%s", fileInfo->path, fileInfo->name);
+
+    WMDragSourceProcs* r = wmalloc(sizeof(WMDragSourceProcs));
+    // Can be NULL if we don't return WDOAskedOperations in wantedDropOperation
+    r->askedOperations = NULL;
+    r->beganDrag = BeganDrag;
+    r->dropDataTypes = DropDataTypes;
+    r->endedDrag = EndedDrag;
+    r->fetchDragData = FetchDragData;
+    r->wantedDropOperation = WantedDropOperation;
+
+    return r;
+}
+
 /*
  * FSAddFileViewShelfItem:
  * Create a fileIcon, add it to FileView->fileIcons
@@ -909,8 +971,15 @@ FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
     WMMapWidget(fileIcon->btn);
 
     /* Drag'n'Drop */
-    DndRegisterDropWidget(fileIcon->btn, handleShelfButtonDrop, fileIcon);
-    DndRegisterDragWidget(fileIcon->btn, handleShelfButtonDrag, fileIcon);
+    // DndRegisterDropWidget(fileIcon->btn, handleShelfButtonDrop, fileIcon);
+    // DndRegisterDragWidget(fileIcon->btn, handleShelfButtonDrag, fileIcon);
+
+    WMPixmap* dragImg = FSCreateBlurredPixmapFromFile(WMWidgetScreen(fileIcon->btn), fileInfo->imgName);
+    WMDragSourceProcs* procs = CreateDragSourceProcs(fileInfo, fileIcon);
+    CreateDragSourceProcs(fileInfo, fileIcon);
+    WMSetViewDraggable(W_VIEW(fileIcon->btn), procs, dragImg);
+    WMReleasePixmap(dragImg);
+    wfree(procs);
 
     /* Add the new Btn to the fileIcon linked list */
     if (fView->fileIcons == NULL)
