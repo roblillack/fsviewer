@@ -7,9 +7,8 @@
 #include "FSPathView.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
+#include "dnd.h"
 #include "files.h"
-
-#include "DnD.h"
 
 #include "xpm/arrow.xpm"
 
@@ -827,10 +826,8 @@ void FSSetPathViewColumnContents(FSPathView* pvPtr, int column,
         FSFileButton* btn = pvPtr->columns[column];
         FileInfo* fileInfo = FSGetFileInfo(FSGetFileButtonPathname(btn));
         WMPixmap* dragImg = FSCreateBlurredPixmapFromFile(WMWidgetScreen(btn), fileInfo->imgName);
-        WMDragSourceProcs* procs = CreateDragSourceProcs();
-        WMSetViewDraggable(W_VIEW(btn), procs, dragImg);
+        WMSetViewDraggable(W_VIEW(btn), PathViewDragSourceProcs(), dragImg);
         WMReleasePixmap(dragImg);
-        wfree(procs);
     }
 }
 

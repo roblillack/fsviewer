@@ -11,13 +11,13 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "DnD.h"
 #include "FSFileButton.h"
 #include "FSFileView.h"
 #include "FSMenu.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
 #include "df.h"
+#include "dnd.h"
 #include "filebrowser.h"
 #include "files.h"
 #include "windowmanager.h"
@@ -448,7 +448,7 @@ FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
     /* Drag'n'Drop handles */
     WMHangData(fView->shelfF, (void*)fView);
     WMRegisterViewForDraggedTypes(W_VIEW(fView->shelfF), SupportedDataTypes());
-    WMSetViewDragDestinationProcs(W_VIEW(fView->shelfF), CreateDragDestinationProcs());
+    WMSetViewDragDestinationProcs(W_VIEW(fView->shelfF), ShelfDragDestinationProcs());
 
     WMMapSubwidgets(fView->fileView);
     WMMapWidget(fView->shelfF);
@@ -873,10 +873,8 @@ void FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
 
     /* Drag'n'Drop */
     WMPixmap* dragImg = FSCreateBlurredPixmapFromFile(WMWidgetScreen(fileIcon->btn), fileInfo->imgName);
-    WMDragSourceProcs* procs = CreateDragSourceProcs(fileInfo);
-    WMSetViewDraggable(WMWidgetView(fileIcon->btn), procs, dragImg);
+    WMSetViewDraggable(WMWidgetView(fileIcon->btn), FileViewDragSourceProcs(fileInfo), dragImg);
     WMReleasePixmap(dragImg);
-    wfree(procs);
 
     // TODO: Implement handleShelfButtonDrop for XDND, too.
 

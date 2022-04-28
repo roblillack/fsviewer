@@ -3,8 +3,9 @@
 
 #include <WINGs/WINGs.h>
 
-WMDragSourceProcs* CreateDragSourceProcs();
-WMDragDestinationProcs* CreateDragDestinationProcs();
+WMDragDestinationProcs* ShelfDragDestinationProcs();
 WMArray* SupportedDataTypes();
+WMDragSourceProcs* FileViewDragSourceProcs();
+WMDragSourceProcs* PathViewDragSourceProcs();
 
 #endif
