@@ -125,6 +125,11 @@ InitFSFileButton(WMScreen* scr)
     return fileButtonWidgetClass;
 }
 
+W_Class FileButtonWidgetClass()
+{
+    return fileButtonWidgetClass;
+}
+
 /*
  * Function to create the Widget
  */

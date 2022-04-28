@@ -1082,41 +1082,41 @@ void FSSetBusyCursor(WMWidget* w, Bool state)
         XUndefineCursor(dpy, wnd);
 }
 
-int FSGetDNDType(FileInfo* fileInfo)
-{
-    int type = DndFile;
-    char buf[MAX_LEN];
-    char* pathname = NULL;
+// int FSGetDNDType(FileInfo* fileInfo)
+// {
+//     int type = DndFile;
+//     char buf[MAX_LEN];
+//     char* pathname = NULL;
 
-    if (fileInfo == NULL)
-        return 0;
+//     if (fileInfo == NULL)
+//         return 0;
 
-    switch (fileInfo->fileType) {
-    case S_LINK:
-        type = DndLink;
-        break;
-    case DIRECTORY:
-    case ROOT:
-    case HOME:
-        type = DndDir;
-        break;
-    default:
-        pathname = GetPathnameFromPathName(fileInfo->path,
-            fileInfo->name);
-        magic_get_type(pathname, buf);
-        if (strcmp("EXEC", buf) == 0)
-            type = DndExe;
-        else if (strcmp("ascii", buf) == 0)
-            type = DndFile;
-        else if (strcmp("ascii", buf) == 0)
-            type = DndText;
-        else
-            type = DndFile;
-        break;
-    }
+//     switch (fileInfo->fileType) {
+//     case S_LINK:
+//         type = DndLink;
+//         break;
+//     case DIRECTORY:
+//     case ROOT:
+//     case HOME:
+//         type = DndDir;
+//         break;
+//     default:
+//         pathname = GetPathnameFromPathName(fileInfo->path,
+//             fileInfo->name);
+//         magic_get_type(pathname, buf);
+//         if (strcmp("EXEC", buf) == 0)
+//             type = DndExe;
+//         else if (strcmp("ascii", buf) == 0)
+//             type = DndFile;
+//         else if (strcmp("ascii", buf) == 0)
+//             type = DndText;
+//         else
+//             type = DndFile;
+//         break;
+//     }
 
-    return type;
-}
+//     return type;
+// }
 
 int FSExecCommand(char* path, char* execStr)
 {

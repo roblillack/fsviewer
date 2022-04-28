@@ -63,6 +63,8 @@ void FSSetFileViewFilter(FSFileView* fView, char* filter);
 char* FSGetFileViewFilter(FSFileView* fView);
 void FSSetFileViewPath(FSFileView* fileView, char* path);
 void FSSetFileViewMode(FSFileView* fView, FSFileViewType mode);
-WMDragSourceProcs* CreateDragSourceProcs();
-
+void FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo);
+void FSAddFileViewItemIntoShelf(FSViewer* fsViewer);
+Bool FSAddFileViewShelfItemIntoProplist(FSFileView* fView, FileInfo* fileInfo);
+void FSFileViewRemoveFileButtonFromShelf(FSFileView* fView, FSFileButton* btn);
 #endif

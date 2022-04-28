@@ -20,7 +20,7 @@ void FSSetFileButtonDoubleAction(FSFileButton* bPtr,
     void* doubleClientData);
 void FSGroupFileButtons(FSFileButton* bPtr, FSFileButton* newMember);
 void FSClearFileButton(FSFileButton* bPtr);
-
+W_Class FileButtonWidgetClass();
 W_Class InitFSFileButton(WMScreen*);
 
 typedef struct FSFileIcon {
