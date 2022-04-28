@@ -15,6 +15,7 @@ pkg_check_modules(DEPS REQUIRED IMPORTED_TARGET wrlib wmlib WUtil WINGs xpm xmu 
 find_package(Intl)
 target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} -lm)
 
+add_compile_options(-Wall -Wextra -pedantic -Werror)
 add_definitions(-DCLK=1)
 add_definitions(-DPACKAGE_NAME="${PROJECT_NAME}")
 add_definitions(-DVERSION="${PROJECT_VERSION}")
