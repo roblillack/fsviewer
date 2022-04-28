@@ -20,7 +20,7 @@
 #define NUM_TABS 3
 
 typedef struct _DISK {
-    /*     FSViewer *app; */
+    /* FSViewer *app; */
     /* Nickname for mount point */
     char* name;
     /* Mount point */
@@ -56,19 +56,16 @@ static void populateDisksFields(FSPreferencesPanel* prefs);
 static void populateAppsFields(FSPreferencesPanel* prefs);
 static void populateTypesFields(FSPreferencesPanel* prefs);
 static void applyBtnCB(WMWidget* self, void* client);
-static void tfDidChange(struct WMTextFieldDelegate* self,
-    WMNotification* notif);
+static void tfDidChange(struct WMTextFieldDelegate* self, WMNotification* notif);
 static void setTFDelegate(FSPreferencesPanel* prefs, WMTextField* tf);
 static void setTVIDelegate(FSPreferencesPanel* prefs, WMTabView* tv);
-static void tvDidSelectItem(struct WMTabViewDelegate* self,
-    WMTabView* tabView, WMTabViewItem* item);
+static void tvDidSelectItem(struct WMTabViewDelegate* self, WMTabView* tabView, WMTabViewItem* item);
 static void saveTab(FSPreferencesPanel* prefs, int tabID);
 static void saveVarsTab(FSPreferencesPanel* prefs);
 static void saveAppsTab(FSPreferencesPanel* prefs);
 static void saveDiscsTab(FSPreferencesPanel* prefs);
 static void saveAllTabsAndClose(WMWidget* self, void* client);
-static void genericListDrawProc(WMList* lPtr, int index, Drawable d,
-    char* text, int state, WMRect* rect);
+static void genericListDrawProc(WMList* lPtr, int index, Drawable d, char* text, int state, WMRect* rect);
 
 static FSPreferencesPanel* preferences = NULL;
 
@@ -185,8 +182,7 @@ static FSPreferencesPanel* FSCreatePreferencesPanel(FSViewer* app, char* title)
     return prefs;
 }
 
-static void
-createDiskTab(FSPreferencesPanel* prefs)
+static void createDiskTab(FSPreferencesPanel* prefs)
 {
     WMFrame* f;
     WMFrame* f2;
@@ -368,8 +364,7 @@ createDiskTab(FSPreferencesPanel* prefs)
     WMSetTabViewItemLabel(tab, _("Disks"));
 }
 
-static void
-createTypesTab(FSPreferencesPanel* prefs)
+static void createTypesTab(FSPreferencesPanel* prefs)
 {
     WMFrame* f;
     WMFrame* f2;
@@ -548,8 +543,7 @@ createTypesTab(FSPreferencesPanel* prefs)
     WMSetTabViewItemLabel(tab, _("App/File Types"));
 }
 
-static void
-createVarsTab(FSPreferencesPanel* prefs)
+static void createVarsTab(FSPreferencesPanel* prefs)
 {
     WMFrame* f;
     WMFrame* f2;
@@ -676,8 +670,7 @@ createVarsTab(FSPreferencesPanel* prefs)
     WMSetTabViewItemLabel(tab, _("Variables"));
 }
 
-static void
-populateVarsTab(FSPreferencesPanel* prefs)
+static void populateVarsTab(FSPreferencesPanel* prefs)
 {
     WMListItem* item;
 
@@ -774,8 +767,7 @@ populateVarsTab(FSPreferencesPanel* prefs)
     WMSortListItems(prefs->dpyList);
 }
 
-static void
-populateTypesTab(FSPreferencesPanel* prefs)
+static void populateTypesTab(FSPreferencesPanel* prefs)
 {
     int numElem, i;
     WMListItem* item = NULL;
@@ -850,8 +842,7 @@ populateTypesTab(FSPreferencesPanel* prefs)
     WMSortListItems(prefs->typesList);
 }
 
-static void
-populateDisksTab(FSPreferencesPanel* prefs)
+static void populateDisksTab(FSPreferencesPanel* prefs)
 {
     WMPropList* devArray = NULL;
     WMPropList* array = NULL;
@@ -912,8 +903,7 @@ populateDisksTab(FSPreferencesPanel* prefs)
     WMSortListItems(prefs->disksList);
 }
 
-static void
-populateDisksFields(FSPreferencesPanel* prefs)
+static void populateDisksFields(FSPreferencesPanel* prefs)
 {
     WMListItem* item = WMGetListSelectedItem(prefs->disksList);
     Disc* disk = (Disc*)item->clientData;
@@ -954,8 +944,7 @@ populateDisksFields(FSPreferencesPanel* prefs)
         WMSetTextFieldText(prefs->cmdCloseTF, "");
 }
 
-static void
-populateAppsFields(FSPreferencesPanel* prefs)
+static void populateAppsFields(FSPreferencesPanel* prefs)
 {
     char* str = NULL;
     WMPropList* val = NULL;
@@ -990,8 +979,7 @@ populateAppsFields(FSPreferencesPanel* prefs)
         WMSetButtonText(prefs->appsRemoveBtn, _("Delete"));
 }
 
-static void
-populateTypesFields(FSPreferencesPanel* prefs)
+static void populateTypesFields(FSPreferencesPanel* prefs)
 {
     char* str = NULL;
     WMPropList* val = NULL;
@@ -1031,7 +1019,7 @@ populateTypesFields(FSPreferencesPanel* prefs)
     }
 }
 
-static clearDisksFields(FSPreferencesPanel* prefs)
+static void clearDisksFields(FSPreferencesPanel* prefs)
 {
     WMSetTextFieldText(prefs->disksNameTF, "");
     WMSetTextFieldText(prefs->disksMntTF, "");
@@ -1042,8 +1030,7 @@ static clearDisksFields(FSPreferencesPanel* prefs)
     WMSetTextFieldText(prefs->cmdCloseTF, "");
 }
 
-static void
-updateDisksList(FSPreferencesPanel* prefs)
+static void updateDisksList(FSPreferencesPanel* prefs)
 {
     WMListItem* item = WMGetListSelectedItem(prefs->disksList);
     Disc* disk = NULL;
@@ -1077,8 +1064,7 @@ updateDisksList(FSPreferencesPanel* prefs)
     }
 }
 
-static void
-genericListClick(WMWidget* self, void* data)
+static void genericListClick(WMWidget* self, void* data)
 {
     WMList* list = (WMList*)self;
     WMListItem* item = WMGetListSelectedItem(list);
@@ -1106,8 +1092,7 @@ genericListClick(WMWidget* self, void* data)
     }
 }
 
-static void
-genericButtonActionHandler(WMWidget* self, void* clientData)
+static void genericButtonActionHandler(WMWidget* self, void* clientData)
 {
     Bool edited = False;
     WMOpenPanel* oPanel = NULL;
@@ -1406,8 +1391,7 @@ genericButtonActionHandler(WMWidget* self, void* clientData)
     }
 }
 
-static void
-setVarsImage(WMWidget* self, void* data)
+static void setVarsImage(WMWidget* self, void* data)
 {
 }
 
@@ -1418,8 +1402,7 @@ static void FSClosePreferencesPanel(WMWidget* self, void* client)
     prefs->flags.done = 1;
 }
 
-static void
-saveAllTabsAndClose(WMWidget* self, void* client)
+static void saveAllTabsAndClose(WMWidget* self, void* client)
 {
     int i;
     FSPreferencesPanel* prefs = (FSPreferencesPanel*)client;
@@ -1430,8 +1413,7 @@ saveAllTabsAndClose(WMWidget* self, void* client)
     FSClosePreferencesPanel(self, client);
 }
 
-static void
-applyBtnCB(WMWidget* self, void* client)
+static void applyBtnCB(WMWidget* self, void* client)
 {
     int id = -1;
     WMTabViewItem* item = NULL;
@@ -1459,8 +1441,7 @@ applyBtnCB(WMWidget* self, void* client)
     saveTab(prefs, id);
 }
 
-static void
-saveTab(FSPreferencesPanel* prefs, int tabID)
+static void saveTab(FSPreferencesPanel* prefs, int tabID)
 {
     switch (tabID) {
     case VARS_TAB:
@@ -1478,8 +1459,7 @@ saveTab(FSPreferencesPanel* prefs, int tabID)
     WMSynchronizeUserDefaults(defaultsDB);
 }
 
-static void
-FSDestroyPreferencesPanel(FSPreferencesPanel* preferences)
+static void FSDestroyPreferencesPanel(FSPreferencesPanel* preferences)
 {
     WMUnmapWidget(preferences->win);
     WMDestroyWidget(preferences->win);
@@ -1487,13 +1467,11 @@ FSDestroyPreferencesPanel(FSPreferencesPanel* preferences)
     preferences = NULL;
 }
 
-static void
-tfDidChange(struct WMTextFieldDelegate* self, WMNotification* notif)
+static void tfDidChange(struct WMTextFieldDelegate* self, WMNotification* notif)
 {
 }
 
-static void
-setTFDelegate(FSPreferencesPanel* prefs, WMTextField* tf)
+static void setTFDelegate(FSPreferencesPanel* prefs, WMTextField* tf)
 {
     WMTextFieldDelegate* delegate = NULL;
 
@@ -1507,8 +1485,7 @@ setTFDelegate(FSPreferencesPanel* prefs, WMTextField* tf)
     }
 }
 
-static void
-setTVIDelegate(FSPreferencesPanel* prefs, WMTabView* tv)
+static void setTVIDelegate(FSPreferencesPanel* prefs, WMTabView* tv)
 {
     WMTabViewDelegate* delegate = NULL;
 
@@ -1522,9 +1499,7 @@ setTVIDelegate(FSPreferencesPanel* prefs, WMTabView* tv)
     }
 }
 
-static void
-tvDidSelectItem(struct WMTabViewDelegate* self, WMTabView* tabView,
-    WMTabViewItem* item)
+static void tvDidSelectItem(struct WMTabViewDelegate* self, WMTabView* tabView, WMTabViewItem* item)
 {
     int id = -1;
     Bool edited = False;
@@ -1554,8 +1529,7 @@ tvDidSelectItem(struct WMTabViewDelegate* self, WMTabView* tabView,
     WMSetButtonEnabled(prefs->applyBtn, edited);
 }
 
-static void
-saveVarsTab(FSPreferencesPanel* prefs)
+static void saveVarsTab(FSPreferencesPanel* prefs)
 {
     int row;
     WMListItem* item = NULL;
@@ -1705,8 +1679,7 @@ saveVarsTab(FSPreferencesPanel* prefs)
     }
 }
 
-static void
-saveAppsTab(FSPreferencesPanel* prefs)
+static void saveAppsTab(FSPreferencesPanel* prefs)
 {
     int row = -1;
     int numRows = -1;
@@ -1743,8 +1716,7 @@ saveAppsTab(FSPreferencesPanel* prefs)
     populateTypesTab(prefs);
 }
 
-static void
-saveDiscsTab(FSPreferencesPanel* prefs)
+static void saveDiscsTab(FSPreferencesPanel* prefs)
 {
     int row = -1;
     int numRows = -1;
@@ -1775,9 +1747,7 @@ saveDiscsTab(FSPreferencesPanel* prefs)
     WMSetUDObjectForKey(defaultsDB, diskArray, "DISCS");
 }
 
-static void
-genericListDrawProc(WMList* lPtr, int index, Drawable d,
-    char* text, int state, WMRect* rect)
+static void genericListDrawProc(WMList* lPtr, int index, Drawable d, char* text, int state, WMRect* rect)
 {
     WMView* view = W_VIEW(lPtr);
     W_Screen* scr = view->screen;

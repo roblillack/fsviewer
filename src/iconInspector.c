@@ -310,9 +310,12 @@ InitIcon(WMWindow* parent, FSViewer* app, FileInfo* fileInfo, int x, int y)
 
     panel->fileInfo = fileInfo;
 
+    Bool customIconDir = True;
     txt = FSGetStringForName("ICONDIR");
-    if (!txt)
+    if (!txt) {
         txt = ICONDIR;
+        customIconDir = False;
+    }
 
     panel->xpmDir = (char*)wmalloc(strlen(txt) + 5);
     strcpy(panel->xpmDir, txt);
@@ -322,8 +325,9 @@ InitIcon(WMWindow* parent, FSViewer* app, FileInfo* fileInfo, int x, int y)
     strcpy(panel->tiffDir, txt);
     strcat(panel->tiffDir, "/tiff");
 
-    if (txt != ICONDIR)
+    if (customIconDir) {
         free(txt);
+    }
 
     panel->x = x;
     panel->y = y;

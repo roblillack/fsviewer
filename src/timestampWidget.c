@@ -273,9 +273,9 @@ static int GetXPM(TimeStamp* timestamp)
     Display* dpy = timestamp->view->screen->display;
     Colormap cmap;
     XColor col;
-    char brightLED[22];
-    char darkLED[22];
-    char greyStr[22];
+    char brightLED[23];
+    char darkLED[23];
+    char greyStr[23];
     int greyR = 0, greyG = 0, greyB = 0;
 
     /* Get the default colourmap ID for this screen. */

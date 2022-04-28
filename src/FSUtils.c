@@ -153,11 +153,11 @@ void FSInitSystemInfo(FSViewer* fsV)
 
 char* FSProcessor()
 {
-
-    if ((info->haveUname == True))
+    if (info->haveUname) {
         snprintf(buf, MAX_LEN, "%s", info->uts.machine);
-    else
+    } else {
         snprintf(buf, MAX_LEN, _("Unavailable"));
+    }
 
     return wstrdup(buf);
 }
@@ -165,10 +165,11 @@ char* FSProcessor()
 char* FSSystemRelease()
 {
 
-    if ((info->haveUname == True))
+    if (info->haveUname) {
         snprintf(buf, MAX_LEN, "%s %s", info->uts.sysname, info->uts.release);
-    else
+    } else {
         snprintf(buf, MAX_LEN, _("Unavailable"));
+    }
 
     return wstrdup(buf);
 }
@@ -176,10 +177,11 @@ char* FSSystemRelease()
 char* FSNodeName()
 {
 
-    if ((info->haveUname == True))
+    if (info->haveUname) {
         snprintf(buf, MAX_LEN, "%s", info->uts.nodename);
-    else
+    } else {
         snprintf(buf, MAX_LEN, "/");
+    }
 
     return wstrdup(buf);
 }
@@ -712,9 +714,7 @@ void FSLoadIconPaths(WMList* list)
         free(path);
 }
 
-static void
-FSRenderPixmap(WMScreen* screen, Pixmap d, char** data,
-    int width, int height)
+static void FSRenderPixmap(WMScreen* screen, Pixmap d, char** data, int width, int height)
 {
     int x, y;
     Display* dpy = WMScreenDisplay(screen);
@@ -752,8 +752,7 @@ FSRenderPixmap(WMScreen* screen, Pixmap d, char** data,
     }
 }
 
-WMPixmap*
-FSMakePixmap(WMScreen* sPtr, char** data, int width, int height)
+WMPixmap* FSMakePixmap(WMScreen* sPtr, char** data, int width, int height)
 {
     Pixmap pixmap;
 
@@ -788,8 +787,7 @@ void FSUpdateFileView(FileAction action, FileInfo* src, FileInfo* dest)
         action, src, dest);
 }
 
-mode_t
-FSGetUMask()
+mode_t FSGetUMask()
 {
     return info->umask;
 }
@@ -1125,7 +1123,7 @@ int FSExecCommand(char* path, char* execStr)
     if (chdir(path)) {
         char s[0xff];
 
-        sprintf(s, _("Error changing to %s, \"%s\" cancelled."), path);
+        sprintf(s, _("Error changing to %s, \"%s\" cancelled."), path, execStr);
         FSErrorDialog(_("Error File Operation"), s);
 
         return 1;
