@@ -150,24 +150,24 @@ WMData* FirstNonNullDataItem(WMArray* array)
     return NULL;
 }
 
-int Index(WMData* data, char ch)
+int Index(WMData* data, char ch, int startPos)
 {
     char* bytes = WMDataBytes(data);
     unsigned int len = WMGetDataLength(data);
 
-    for (int i = 0; i < len; i++) {
+    for (int i = startPos; i < len; i++) {
         if (*(bytes + i) == ch) {
-            return i;
+            return i - startPos;
         }
     }
 
     return -1;
 }
 
-char* FirstPath(WMData* data)
+char* FindNextPath(WMData* data, int* startPos)
 {
-    char* bytes = WMDataBytes(data);
-    unsigned int len = WMGetDataLength(data);
+    char* bytes = WMDataBytes(data) + *startPos;
+    unsigned int len = WMGetDataLength(data) - *startPos;
 
     if (len < 7) {
         return NULL;
@@ -177,9 +177,9 @@ char* FirstPath(WMData* data)
         return NULL;
     }
 
-    int pos = Index(data, '\r');
+    int pos = Index(data, '\r', *startPos);
     if (pos < 7) {
-        if ((pos = Index(data, '\r')) < 7) {
+        if ((pos = Index(data, '\n', *startPos)) < 7) {
             return NULL;
         }
     }
@@ -187,6 +187,18 @@ char* FirstPath(WMData* data)
     char* r = (char*)wmalloc(pos - 7 + 1);
     strncpy(r, bytes + 7, pos - 7);
     r[pos - 7] = '\0';
+
+    int next = pos + 1;
+    for (int i = next; i < len; i++) {
+        if (*(bytes + i) == '\r' || *(bytes + i) == '\n') {
+            continue;
+        }
+
+        next = i;
+        break;
+    }
+    *startPos += next;
+
     return r;
 }
 
@@ -208,19 +220,18 @@ void PerformDragOperation(WMView* self, WMArray* dropData, WMArray* operations, 
             return;
         }
 
-        // TODO: Iterate through all paths
-        char* d = FirstPath(data);
-        if (!d) {
-            return;
-        }
+        int pos = 0;
+        char* d = NULL;
 
-        FileInfo* fileInfo = FSGetFileInfo(d);
-        if (fileInfo) {
-            if (FSAddFileViewShelfItemIntoProplist(fView, fileInfo)) {
-                FSAddFileViewShelfItem(fView, fileInfo);
+        while ((d = FindNextPath(data, &pos)) != NULL) {
+            FileInfo* fileInfo = FSGetFileInfo(d);
+            if (fileInfo) {
+                if (FSAddFileViewShelfItemIntoProplist(fView, fileInfo)) {
+                    FSAddFileViewShelfItem(fView, fileInfo);
+                }
             }
+            wfree(d);
         }
-        wfree(d);
     }
 }
 
