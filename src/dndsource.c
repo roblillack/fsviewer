@@ -97,45 +97,32 @@ WMDragOperationType WantedDropOperation(WMView* self)
     return WDOperationCopy;
 }
 
-static WMDragSourceProcs* pathViewDragSourceProcs = NULL;
-static WMDragSourceProcs* fileViewDragSourceProcs = NULL;
-
-WMDragSourceProcs* PathViewDragSourceProcs()
-{
-    if (pathViewDragSourceProcs) {
-        return pathViewDragSourceProcs;
-    }
-
-    WMDragSourceProcs* r = wmalloc(sizeof(WMDragSourceProcs));
-    memset((void*)r, 0, sizeof(WMDragSourceProcs));
-    r->acceptDropOperation = AcceptDropOperation;
-    // Can be NULL if we don't return WDOAskedOperations in wantedDropOperation
-    r->askedOperations = NULL;
-    r->beganDrag = NULL;
-    r->dropDataTypes = DropDataTypes;
-    r->endedDrag = NULL;
-    r->fetchDragData = FetchDragData;
-    r->wantedDropOperation = WantedDropOperation;
-
-    return (pathViewDragSourceProcs = r);
-}
+static WMDragSourceProcs fileViewDragSourceProcs = {
+    .acceptDropOperation = AcceptDropOperation,
+    .askedOperations = NULL,
+    .beganDrag = NULL,
+    .dropDataTypes = DropDataTypes,
+    .endedDrag = EndedFileViewDrag,
+    .fetchDragData = FetchDragData,
+    .wantedDropOperation = WantedDropOperation,
+};
 
 WMDragSourceProcs* FileViewDragSourceProcs()
 {
-    if (fileViewDragSourceProcs) {
-        return fileViewDragSourceProcs;
-    }
+    return &fileViewDragSourceProcs;
+}
 
-    WMDragSourceProcs* r = wmalloc(sizeof(WMDragSourceProcs));
-    memset((void*)r, 0, sizeof(WMDragSourceProcs));
-    r->acceptDropOperation = AcceptDropOperation;
-    // Can be NULL if we don't return WDOAskedOperations in wantedDropOperation
-    r->askedOperations = NULL;
-    r->beganDrag = NULL;
-    r->dropDataTypes = DropDataTypes;
-    r->endedDrag = EndedFileViewDrag;
-    r->fetchDragData = FetchDragData;
-    r->wantedDropOperation = WantedDropOperation;
+static WMDragSourceProcs pathViewDragSourceProcs = {
+    .acceptDropOperation = AcceptDropOperation,
+    .askedOperations = NULL,
+    .beganDrag = NULL,
+    .dropDataTypes = DropDataTypes,
+    .endedDrag = NULL,
+    .fetchDragData = FetchDragData,
+    .wantedDropOperation = WantedDropOperation,
+};
 
-    return (fileViewDragSourceProcs = r);
+WMDragSourceProcs* PathViewDragSourceProcs()
+{
+    return &pathViewDragSourceProcs;
 }
