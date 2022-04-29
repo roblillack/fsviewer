@@ -7,11 +7,11 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "DnD.h"
 #include "FSBrowser.h"
 #include "FSMCList.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
+#include "dnd.h"
 #include "files.h"
 #include "xpm/list_dir.xpm"
 #include "xpm/list_file.xpm"

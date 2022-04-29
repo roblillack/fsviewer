@@ -53,12 +53,12 @@ typedef unsigned long ulong;
 #endif /*__SunOS__*/
 
 /* #include "config.h" */
-#include "DnD.h"
 #include "FSFileButton.h"
 #include "FSFileView.h"
 #include "FSPanel.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
+#include "dnd.h"
 #include "filebrowser.h"
 #include "files.h"
 #include "misc.h"

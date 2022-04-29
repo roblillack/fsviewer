@@ -54,7 +54,7 @@ WMData* FirstNonNullDataItem(WMArray* array)
 
 int Index(WMData* data, char ch, int startPos)
 {
-    char* bytes = WMDataBytes(data);
+    const char* bytes = WMDataBytes(data);
     unsigned int len = WMGetDataLength(data);
 
     for (int i = startPos; i < len; i++) {
@@ -68,7 +68,7 @@ int Index(WMData* data, char ch, int startPos)
 
 char* FindNextPath(WMData* data, int* startPos)
 {
-    char* bytes = WMDataBytes(data) + *startPos;
+    const char* bytes = WMDataBytes(data) + *startPos;
     unsigned int len = WMGetDataLength(data) - *startPos;
 
     if (len < 7) {

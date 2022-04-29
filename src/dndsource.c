@@ -27,9 +27,6 @@ void EndedFileViewDrag(WMView* self, WMPoint* point, Bool deposited)
         return;
     }
 
-    // TODO: We (wrongly) assume this is a shelf FSFileButton
-    //       that has its FSFileView attached. For FilePath's
-    //       buttons, this is not true.
     FSFileView* fView = (FSFileView*)WMGetHangedData(btn);
     if (!fView) {
         return;
@@ -40,7 +37,7 @@ void EndedFileViewDrag(WMView* self, WMPoint* point, Bool deposited)
 
 WMData* FetchDragData(WMView* self, char* type)
 {
-    wwarning("Somebody requested drag data of type %s", type);
+    wwarning("data type %s requested", type);
 
     if (!self) {
         return NULL;
@@ -51,19 +48,27 @@ WMData* FetchDragData(WMView* self, char* type)
         return NULL;
     }
 
+    if (WMWidgetClass(btn) != FileButtonWidgetClass()) {
+        return NULL;
+    }
+
     FileInfo* fileInfo = FSGetFileButtonFileInfo(btn);
     if (!fileInfo) {
         return NULL;
     }
 
-    // TODO
-    char buf[2048 + 1];
-    memset((void*)buf, 0, 2048 + 1);
-    snprintf(buf, 2048, "file://%s%s\r\n", fileInfo->path, fileInfo->name);
+    const int pathLen = strlen(fileInfo->path);
+    const int nameLen = strlen(fileInfo->name);
+    char* buf = (char*)malloc(7 + pathLen + nameLen + 2 + 1);
+    if (!buf) {
+        return NULL;
+    }
+    strncpy(buf, "file://", 7);
+    strncpy(buf + 7, fileInfo->path, pathLen);
+    strncpy(buf + 7 + pathLen, fileInfo->name, nameLen);
+    strncpy(buf + 7 + pathLen + nameLen, "\r\n", 2);
 
-    wwarning(buf);
-
-    return WMCreateDataWithBytes(buf, strlen(buf));
+    return WMCreateDataWithBytesNoCopy(buf, strlen(buf), wfree);
 }
 
 static WMArray* dataTypes = NULL;
