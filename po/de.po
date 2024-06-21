@@ -11,107 +11,171 @@ msgstr ""
 "PO-Revision-Date: 2002-11-02 13:44+0100\n"
 "Last-Translator: Guido Scholz <guido.scholz@bayernline.de>\n"
 "Language-Team: de <de@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/attribsInspector.c:188
-#, c-format
-msgid "%s %d: lstat Error"
-msgstr "%s %d: lstat Fehler"
+#: src/FSViewer.c:108
+msgid " -p <initial path>  initial path to display"
+msgstr " -p <ANFANGSPFAD>   Anfangs angezeigter Pfad"
 
-#: src/attribsInspector.c:211
-#, c-format
-msgid "%'.1lf MB\n"
-msgstr "%'.1lf MB\n"
+#: src/FSViewer.c:109
+msgid " -v                 print version number and exit"
+msgstr " -v                 Ausgabe der Versionsinformation und beenden."
+
+#: src/FSPrefs.c:404
+msgid " Applications "
+msgstr " Anwendungen "
+
+#: src/attribsInspector.c:512
+msgid " Changed "
+msgstr " Geändert "
+
+#: src/FSPrefs.c:212
+msgid " Disks "
+msgstr " Speichermedien "
+
+#: src/FSPrefs.c:662
+msgid " Display "
+msgstr " Anzeige "
+
+#: src/FSPrefs.c:620
+msgid " Executables "
+msgstr " Anwendungen "
+
+#: src/FSPrefs.c:473
+msgid " File Types "
+msgstr " Dateitypen "
+
+#: src/FSPrefs.c:594
+msgid " Images "
+msgstr " Bilder "
+
+#: src/attribsInspector.c:501
+msgid " Permissions "
+msgstr " Zugriffsrechte "
 
 #: src/attribsInspector.c:215
 #, c-format
 msgid "%'.1lf KB\n"
 msgstr "%'.1lf kB\n"
 
+#: src/attribsInspector.c:211
+#, c-format
+msgid "%'.1lf MB\n"
+msgstr "%'.1lf MB\n"
+
 #: src/attribsInspector.c:219
 #, c-format
 msgid "%d Bytes\n"
 msgstr "%d Byte\n"
 
-#: src/attribsInspector.c:322
-msgid "Link To:"
-msgstr "Verweis auf:"
+#: src/FSUtils.c:330
+#, c-format
+msgid "%s %d: Can't run df, %s\n"
+msgstr "%s %d: Kann \"df\" nicht ausführen, %s\n"
 
-#: src/attribsInspector.c:342
-msgid "Size:"
-msgstr "Größe:"
+#: src/FSUtils.c:712 src/FSUtils.c:726
+#, c-format
+msgid "%s %d: Could not create Pixmap from Data"
+msgstr "%s %d: Konnte keine Pixmap aus Daten erzeugen"
 
-#: src/attribsInspector.c:357
-msgid "Owner:"
-msgstr "Eigentümer:"
+#: src/FSUtils.c:667 src/FSUtils.c:690
+#, c-format
+msgid "%s %d: Could not load icon file %s"
+msgstr "%s %d: Konnte Symbol nicht laden %s"
 
-#: src/attribsInspector.c:372
-msgid "Group:"
-msgstr "Gruppe:"
+#: src/FSInspector.c:70
+#, c-format
+msgid "%s %d: Stat Error"
+msgstr "%s %d: Stat Fehler"
 
-#: src/attribsInspector.c:451
-msgid "Read"
-msgstr "Read"
+#: src/FSMenu.c:590
+#, c-format
+msgid "%s %d: Unable to create FSFinder"
+msgstr "%s %d: Dateisuche konnte nicht erzeugt werden"
 
-#: src/attribsInspector.c:451
-msgid "Write"
-msgstr "Write"
+#: src/attribsInspector.c:188
+#, c-format
+msgid "%s %d: lstat Error"
+msgstr "%s %d: lstat Fehler"
 
-#: src/attribsInspector.c:451
-msgid "Exec"
-msgstr "Exec"
+#: src/files.c:261
+#, c-format
+msgid "%s GetFileInfo %d: Stat Error for %s\n"
+msgstr "%s GetFileInfo %d: Stat Fehler für %s\n"
 
-#: src/attribsInspector.c:452 src/FSMCList.c:103
-msgid "Owner"
-msgstr "Eigent."
+#: src/extnInspector.c:434
+msgid "Add"
+msgstr "Hinzufügen"
 
-#: src/attribsInspector.c:452 src/FSMCList.c:110
-msgid "Group"
-msgstr "Gruppe"
+#: src/FSPrefs.c:320 src/FSPrefs.c:337 src/FSPrefs.c:354 src/FSPrefs.c:437
+#: src/FSPrefs.c:507 src/FSPrefs.c:533
+msgid "App"
+msgstr "App"
 
-#: src/attribsInspector.c:452
-msgid "Other"
-msgstr "Andere"
+#: src/FSUtils.c:616 src/FSUtils.c:632
+msgid "App Input Window"
+msgstr "Anwendung festlegen"
 
-#: src/attribsInspector.c:501
-msgid " Permissions "
-msgstr " Zugriffsrechte "
+#: src/FSPrefs.c:570
+msgid "App/File Types"
+msgstr "Anwendungen/Dateitypen"
 
-#: src/attribsInspector.c:512
-msgid " Changed "
-msgstr " Geändert "
+#: src/FSPrefs.c:161
+msgid "Apply"
+msgstr "Anwenden"
 
-#: src/attribsInspector.c:531 src/editInspector.c:288 src/exeInspector.c:215
-#: src/extnInspector.c:414 src/iconInspector.c:215 src/viewInspector.c:293
-msgid "Revert"
-msgstr "Rückgängig"
-
-#: src/attribsInspector.c:538 src/exeInspector.c:202 src/extnInspector.c:421
-#: src/FSMenu.c:142 src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285
-#: src/FSMenu.c:339 src/FSMenu.c:416 src/FSMenu.c:433 src/FSMenu.c:441
-#: src/FSMenu.c:475 src/FSMenu.c:510 src/FSMenu.c:545 src/FSMenu.c:580
-#: src/FSMenu.c:608 src/FSMenu.c:616 src/FSMenu.c:656 src/FSMenu.c:759
-#: src/FSMenu.c:771 src/FSPanel.c:873 src/FSPanel.c:1536 src/FSPrefs.c:170
-#: src/FSUtils.c:757 src/FSUtils.c:765 src/FSUtils.c:842 src/FSUtils.c:851
-#: src/iconInspector.c:202
-msgid "OK"
-msgstr "OK"
+#: src/FSInspector.c:284
+msgid "Attributes"
+msgstr "Attribute"
 
 #: src/attribsInspector.c:582 src/attribsInspector.c:583
 msgid "Attributes Inspector"
 msgstr "Attribut-Inspektor"
 
-#: src/editInspector.c:224 src/viewInspector.c:228
-msgid "Click button to edit selected document"
-msgstr ""
-"Auf Button klicken, um das Dokument mit der gewählten Anwendung zu "
-"bearbeiten."
+#: src/FSMenu.c:933
+msgid "Browse"
+msgstr "Browser"
 
-#: src/editInspector.c:239 src/viewInspector.c:243
-msgid "Default:"
-msgstr "Voreinstellung:"
+#: src/FSPrefs.c:1477
+msgid "Browse -> App"
+msgstr "Browse -> Anw."
+
+#: src/FSPrefs.c:1501
+msgid "Browse -> Editor"
+msgstr "Browse -> Werkzeug"
+
+#: src/FSPrefs.c:1489
+msgid "Browse -> Viewer"
+msgstr "Browse -> Inhalt"
+
+#: src/FSPrefs.c:447 src/FSPrefs.c:517 src/FSPrefs.c:543
+msgid "Browse..."
+msgstr "Ändern..."
+
+#: src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285 src/FSMenu.c:339
+#: src/FSMenu.c:416 src/FSPanel.c:621 src/FSPanel.c:866 src/FSPanel.c:1529
+#: src/FSPrefs.c:153 src/FSUtils.c:852
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/files.c:1034
+msgid "Cannot copy a directory to a file"
+msgstr "Kann Verzeichnis nicht auf eine Datei kopieren"
+
+#: src/files.c:1091
+msgid "Cannot delete . or .."
+msgstr "Kann . und .. nicht löschen"
+
+#: src/files.c:1216
+msgid "Cannot move a directory to a file"
+msgstr "Kann Verzeichnis nicht in eine Datei verschieben"
+
+#: src/extnInspector.c:376
+msgid "Click \"OK\" to update this application's file extension list"
+msgstr "\"OK\" klicken, um die Dateierweiterungsliste neu anzuzeigen"
 
 #: src/editInspector.c:265 src/viewInspector.c:271
 msgid ""
@@ -121,68 +185,306 @@ msgstr ""
 "\"Voreinstellung\" verknüpft die gewählte An- wendung mit allen Dokumenten "
 "dieses Typs."
 
-#: src/editInspector.c:295 src/exeInspector.c:222 src/iconInspector.c:222
-#: src/viewInspector.c:300
-msgid "Set Default"
-msgstr "Voreinstellung"
+#: src/extnInspector.c:448
+msgid "Click To Set Icon"
+msgstr "Klicken zum Setzen des Symbols"
+
+#: src/editInspector.c:224 src/viewInspector.c:228
+msgid "Click button to edit selected document"
+msgstr ""
+"Auf Button klicken, um das Dokument mit der gewählten Anwendung zu "
+"bearbeiten."
+
+#: src/FSPanel.c:814
+msgid "Click to set icon for the selected file type."
+msgstr "Zum Festlegen des Symbols für diesen Dateityp Button klicken."
+
+#: src/FSMenu.c:840
+msgid "Close"
+msgstr "Schließen"
+
+#: src/FSMenu.c:989
+msgid "Close Window"
+msgstr "Fenster schließen"
+
+#: src/FSPrefs.c:364
+msgid "Close:"
+msgstr "Schließen:"
+
+#: src/FSMenu.c:885
+msgid "Compress"
+msgstr "Komprimieren"
+
+#: src/FSMenu.c:966
+msgid "Console..."
+msgstr "Konsole..."
+
+#: src/FSMenu.c:903
+msgid "Copy"
+msgstr "Kopieren"
+
+#: src/files.c:977 src/files.c:1044 src/files.c:1338
+msgid "Copy: Source and destination are identical"
+msgstr "Kopieren: Quelle und Ziel sind identisch"
+
+#: src/files.c:1053
+#, c-format
+msgid "Copy: file %s already exists"
+msgstr "Kopieren: Datei %s existiert bereits"
+
+#: src/files.c:998
+#, c-format
+msgid "Copy: file %s already exists at destination"
+msgstr "Kopieren: Datei %s existiert am Zielpunkt bereits"
+
+#: src/FSUtils.c:762
+#, c-format
+msgid "Could not load Window Maker defaults (%s)"
+msgstr "Konnte Window Maker Voreinstellungen nicht laden (%s)"
+
+#: src/FSMenu.c:336
+msgid "Create a new directory"
+msgstr "Verzeichnis anlegen"
+
+#: src/FSMenu.c:282
+msgid "Create a new file"
+msgstr "Neue Datei anlegen"
+
+#: src/FSMenu.c:901
+msgid "Cut"
+msgstr "Ausscheiden"
+
+#: src/FSMenu.c:912
+msgid "DeSelect All"
+msgstr "Alles löschen"
+
+#: src/FSViewer.c:64
+#, c-format
+msgid "Default ICONDIR not found: %s"
+msgstr "Voreinstellung für ICONDIR nicht gefunden: %s"
+
+#: src/editInspector.c:239 src/viewInspector.c:243
+msgid "Default:"
+msgstr "Voreinstellung:"
+
+#: src/FSMenu.c:907 src/FSPrefs.c:464 src/FSPrefs.c:560 src/FSPrefs.c:1043
+#: src/FSPrefs.c:1089 src/FSPrefs.c:1327 src/FSPrefs.c:1406
+msgid "Delete"
+msgstr "Löschen"
+
+#: src/FSMenu.c:891 src/FSPanel.c:621
+msgid "Destroy"
+msgstr "Vernichten"
+
+#: src/FSPrefs.c:260
+msgid "Dev:"
+msgstr "Ger:"
+
+#: src/FSPrefs.c:267
+msgid "Device"
+msgstr "Gerät"
+
+#: src/FSPanel.c:1490 src/iconInspector.c:256
+msgid "Directories"
+msgstr "Verzeichnisse"
+
+#: src/FSMenu.c:917 src/FSMenu.c:918
+msgid "Disk"
+msgstr "Laufwerk"
+
+#: src/FSPanel.c:193
+#, c-format
+msgid "Disk: %s"
+msgstr "Plattenspeicher: %s"
+
+#: src/FSPrefs.c:381
+msgid "Disks"
+msgstr "Speichermedien"
+
+#: src/FSPrefs.c:685
+msgid "Display"
+msgstr "Anzeige"
+
+#: src/FSPrefs.c:678
+msgid "Display:"
+msgstr "Anzeige:"
+
+#: src/files.c:1102
+#, c-format
+msgid "Do you REALLY wish to delete %s"
+msgstr "Wollen Sie %s wirklich löschen?"
+
+#: src/FSPanel.c:618
+#, c-format
+msgid "Do you really want to destroy %s?"
+msgstr "Wollen Sie %s wirklich löschen?"
+
+#: src/FSMenu.c:882
+msgid "Duplicate"
+msgstr "Duplizieren"
+
+#: src/FSMenu.c:899 src/FSMenu.c:900
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: src/FSPrefs.c:526
+msgid "Edit:"
+msgstr "Bearbeiten:"
+
+#: src/FSInspector.c:287
+msgid "Editor"
+msgstr "Werkzeuge"
 
 #: src/editInspector.c:346 src/editInspector.c:347
 msgid "Editor Inspector"
 msgstr "Werkzeug-Inspektor"
 
+#: src/FSMenu.c:838
+msgid "Eject"
+msgstr "Auswerfen"
+
+#: src/FSPrefs.c:347
+msgid "Eject:"
+msgstr "Auswerfen:"
+
+#: src/FSMenu.c:894
+msgid "Empty Recycler"
+msgstr "Recycler leeren"
+
+#: src/FSPanel.c:841
+msgid "Enter App Executable String:"
+msgstr "Auszuführende Anwendung eingeben:"
+
+#: src/FSMenu.c:409
+msgid "Enter Filter Value:"
+msgstr "Wert für Filter eingeben:"
+
 #: src/exeInspector.c:101
 msgid "Enter command plus arguments into the textfield below:"
 msgstr "Kommando und Argument im Textfeld unten eingeben:"
 
-#: src/exeInspector.c:117
-msgid "Shortcuts:"
-msgstr "Tastaturkürzel:"
+#: src/FSUtils.c:756 src/FSUtils.c:764
+msgid "Error"
+msgstr "Fehler"
 
-#: src/exeInspector.c:175
-msgid "associated file to open"
-msgstr "Verknüpfte Datei zum Öffnen"
+#: src/FSUtils.c:558 src/FSUtils.c:1231
+msgid "Error File Operation"
+msgstr "Fehler bei Dateioperation"
 
-#: src/exeInspector.c:200 src/iconInspector.c:200
-msgid "Inspector Error"
-msgstr "Inspektor Fehler"
-
-#: src/exeInspector.c:201 src/iconInspector.c:201
-msgid "This function has not yet been implemented."
-msgstr "Diese Funktion wurde noch nicht implementiert."
-
-#: src/exeInspector.c:266 src/exeInspector.c:267
-msgid "Executable Inspector"
-msgstr "Ausführbar Inspektor"
-
-#: src/extnInspector.c:376
-msgid "Click \"OK\" to update this application's file extension list"
-msgstr "\"OK\" klicken, um die Dateierweiterungsliste neu anzuzeigen"
-
-#: src/extnInspector.c:434
-msgid "Add"
-msgstr "Hinzufügen"
-
-#: src/extnInspector.c:441 src/FSPrefs.c:295
-msgid "Remove"
-msgstr "Entfernen"
-
-#: src/extnInspector.c:448
-msgid "Click To Set Icon"
-msgstr "Klicken zum Setzen des Symbols"
-
-#: src/extnInspector.c:520 src/extnInspector.c:521
-msgid "File Extensions Inspector"
-msgstr "Dateierweiterungs-Inspektor"
-
-#: src/files.c:261
+#: src/FSUtils.c:556
 #, c-format
-msgid "%s GetFileInfo %d: Stat Error for %s\n"
-msgstr "%s GetFileInfo %d: Stat Fehler für %s\n"
+msgid "Error changing to %s but it's not that serious!"
+msgstr "Fehler beim Wechseln nach %s, aber nichts Ernstes!"
+
+#: src/FSUtils.c:1230
+#, c-format
+msgid "Error changing to %s, \"%s\" cancelled."
+msgstr "Fehler beim Wechseln nach %s, \"%s\" ungültig."
 
 #: src/files.c:838 src/files.c:1011 src/files.c:1065 src/files.c:1192
 #, c-format
 msgid "Error copying %s:"
 msgstr "Fehler beim Kopieren von: %s"
+
+#: src/FSMenu.c:141
+msgid "Error creating New FileViewer"
+msgstr "Fehler beim Erzeugen einer neuen Übersicht"
+
+#: src/FSMenu.c:293
+#, c-format
+msgid "Error creating file %s"
+msgstr "Fehler beim Anlegen der Datei %s"
+
+#: src/FSMenu.c:347 src/FSMenu.c:702
+#, c-format
+msgid "Error creating folder %s"
+msgstr "Fehler beim Erzeugen von Verzeichnis %s"
+
+#: src/files.c:932 src/files.c:1114
+#, c-format
+msgid "Error deleting %s:"
+msgstr "Fehler beim Löschen von %s"
+
+#: src/files.c:1376 src/files.c:1423
+#, c-format
+msgid "Error linking %s to %s"
+msgstr "Fehler beim Verlinken von %s mit %s"
+
+#: src/files.c:1247 src/files.c:1303
+#, c-format
+msgid "Error renaming %s:"
+msgstr "Fehler beim Umbenennen von %s:"
+
+#: src/attribsInspector.c:451
+msgid "Exec"
+msgstr "Exec"
+
+#: src/FSMenu.c:474 src/FSMenu.c:509 src/FSMenu.c:544 src/FSMenu.c:579
+#: src/FSMenu.c:758
+msgid "Exec Error"
+msgstr "Fehler beim Ausführen"
+
+#: src/FSPrefs.c:636
+msgid "Exec Str:"
+msgstr "Ausführen:"
+
+#: src/FSPrefs.c:430
+msgid "Exec:"
+msgstr "Ausf.:"
+
+#: src/FSInspector.c:288
+msgid "Executable"
+msgstr "Ausführbar"
+
+#: src/exeInspector.c:266 src/exeInspector.c:267
+msgid "Executable Inspector"
+msgstr "Ausführbar Inspektor"
+
+#: src/FSPrefs.c:643
+msgid "Exes:"
+msgstr "Ausf.:"
+
+#: src/FSFinder.c:53
+msgid "FSViewer - Finder"
+msgstr "FSViewer - Suche"
+
+#: src/FSFileView.c:619
+#, c-format
+msgid "FSViewer - we've got a problem!"
+msgstr "FSViewer - wir haben ein Problem!"
+
+#: src/FSInspector.c:264
+msgid "FSViewer Inspector"
+msgstr "FSViewer-Inspektor"
+
+#: src/FSPanel.c:165
+#, c-format
+msgid "FSViewer Release %s"
+msgstr "FSViewer-Version %s"
+
+#: src/FSMenu.c:872 src/FSMenu.c:873
+msgid "File"
+msgstr "Datei"
+
+#: src/FSMenu.c:996
+msgid "File Edit..."
+msgstr "Datei bearbeiten..."
+
+#: src/extnInspector.c:520 src/extnInspector.c:521
+msgid "File Extensions Inspector"
+msgstr "Dateierweiterungs-Inspektor"
+
+#: src/FSMenu.c:998
+msgid "File Link..."
+msgstr "Datei verknüpfen..."
+
+#: src/FSMenu.c:1000
+msgid "File New..."
+msgstr "Datei neu..."
+
+#: src/files.c:1104
+msgid "File Operation"
+msgstr "Dateioperation"
 
 #: src/files.c:839 src/files.c:890 src/files.c:933 src/files.c:962
 #: src/files.c:976 src/files.c:1012 src/files.c:1033 src/files.c:1043
@@ -194,98 +496,113 @@ msgstr "Fehler beim Kopieren von: %s"
 msgid "File Operation Error"
 msgstr "Fehler bei Dateioperation"
 
-#: src/files.c:889
-#, c-format
-msgid "Unrecognized File type: %s"
-msgstr "Unerkannter Dateityp: %s"
+#: src/FSMenu.c:1002
+msgid "File Rename..."
+msgstr "Datei umbenennen..."
 
-#: src/files.c:932 src/files.c:1114
-#, c-format
-msgid "Error deleting %s:"
-msgstr "Fehler beim Löschen von %s"
+#: src/FSMenu.c:1004
+msgid "File Run..."
+msgstr "Datei ausführen"
 
-#: src/files.c:961 src/files.c:1142
-#, c-format
-msgid "No write access to %s"
-msgstr "Kein Schreibzugriff auf %s"
+#: src/FSFileView.c:308
+msgid "FileView"
+msgstr "Dateiansicht"
 
-#: src/files.c:977 src/files.c:1044 src/files.c:1338
-msgid "Copy: Source and destination are identical"
-msgstr "Kopieren: Quelle und Ziel sind identisch"
+#: src/FSPanel.c:1508 src/iconInspector.c:274
+msgid "Files"
+msgstr "Dateien"
 
-#: src/files.c:998
-#, c-format
-msgid "Copy: file %s already exists at destination"
-msgstr "Kopieren: Datei %s existiert am Zielpunkt bereits"
+#: src/FSMenu.c:408
+msgid "Filter Current FileView"
+msgstr "Aktuelle Dateiansicht filtern"
 
-#: src/files.c:1000 src/files.c:1054 src/files.c:1181 src/files.c:1236
-#: src/files.c:1290 src/files.c:1363 src/files.c:1410
-msgid "Overwrite?"
-msgstr "Überschreiben?"
+#: src/FSMenu.c:948
+msgid "Filter..."
+msgstr "Filter..."
 
-#: src/files.c:1034
-msgid "Cannot copy a directory to a file"
-msgstr "Kann Verzeichnis nicht auf eine Datei kopieren"
+#: src/FSMenu.c:960
+msgid "Finder"
+msgstr "Dateisuche..."
 
-#: src/files.c:1053
-#, c-format
-msgid "Copy: file %s already exists"
-msgstr "Kopieren: Datei %s existiert bereits"
+#: src/attribsInspector.c:452 src/FSMCList.c:110
+msgid "Group"
+msgstr "Gruppe"
 
-#: src/files.c:1091
-msgid "Cannot delete . or .."
-msgstr "Kann . und .. nicht löschen"
+#: src/attribsInspector.c:372
+msgid "Group:"
+msgstr "Gruppe:"
 
-#: src/files.c:1102
-#, c-format
-msgid "Do you REALLY wish to delete %s"
-msgstr "Wollen Sie %s wirklich löschen?"
+#: src/FSMenu.c:867
+msgid "Help..."
+msgstr "Hilfe..."
 
-#: src/files.c:1104
-msgid "File Operation"
-msgstr "Dateioperation"
+#: src/FSMenu.c:1013
+msgid "Hide"
+msgstr "Ausblenden"
 
-#: src/files.c:1158 src/files.c:1226
-msgid "Move: Source and destination are identical"
-msgstr "Verschieben: Quelle und Ziel sind identisch"
+#: src/FSMenu.c:1015
+msgid "Hide Others"
+msgstr "Andere ausblenden"
 
-#: src/files.c:1179
-#, c-format
-msgid "Move: file %s already exists at destination"
-msgstr "Verschieben: Datei %s existiert am Zielpunkt bereits"
+#: src/FSInspector.c:285 src/FSMenu.c:936
+msgid "Icon"
+msgstr "Symbol"
 
-#: src/files.c:1216
-msgid "Cannot move a directory to a file"
-msgstr "Kann Verzeichnis nicht in eine Datei verschieben"
+#: src/iconInspector.c:308 src/iconInspector.c:309
+msgid "Icon Inspector"
+msgstr "Symbol-Inspektor"
 
-#: src/files.c:1235
-#, c-format
-msgid "Move: file %s already exists"
-msgstr "Verschieben: Datei %s existiert bereits"
+#: src/FSPanel.c:940 src/FSPrefs.c:1202 src/FSPrefs.c:1426 src/FSPrefs.c:1455
+msgid "Icon Select"
+msgstr "Symbol Auswahl"
 
-#: src/files.c:1247 src/files.c:1303
-#, c-format
-msgid "Error renaming %s:"
-msgstr "Fehler beim Umbenennen von %s:"
+#: src/FSPanel.c:685
+msgid "Icon Selector"
+msgstr "Symbol Auswahl"
 
-#: src/files.c:1278
-msgid "Rename: Source and destination are identical"
-msgstr "Umbenennen: Quelle und Ziel sind identisch"
+#: src/FSMenu.c:48 src/FSMenu.c:857 src/FSMenu.c:858 src/FSPanel.c:102
+msgid "Info"
+msgstr "Info"
 
-#: src/files.c:1289
-#, c-format
-msgid "Rename: file %s already exists"
-msgstr "Umbenennen: Datei %s existiert bereits"
+#: src/FSMenu.c:859
+msgid "Info Panel..."
+msgstr "Kurzinformation..."
 
-#: src/files.c:1361
-#, c-format
-msgid "Link: file %s already exists at destination"
-msgstr "Link: Datei %s existiert am Zielpunkt bereits"
+#: src/exeInspector.c:200 src/iconInspector.c:200
+msgid "Inspector Error"
+msgstr "Inspektor Fehler"
 
-#: src/files.c:1376 src/files.c:1423
-#, c-format
-msgid "Error linking %s to %s"
-msgstr "Fehler beim Verlinken von %s mit %s"
+#: src/FSMenu.c:958
+msgid "Inspector..."
+msgstr "Inspektor..."
+
+#: src/FSMCList.c:89
+msgid "Last Changed"
+msgstr "Letzte Änderung"
+
+#: src/FSMenu.c:54 src/FSPanel.c:280
+msgid "Legal"
+msgstr "Rechtliches"
+
+#: src/FSMenu.c:861
+msgid "Legal..."
+msgstr "Rechte..."
+
+#: src/FSMenu.c:54
+msgid "License"
+msgstr "Lizenz"
+
+#: src/FSMenu.c:208
+msgid "Link Name"
+msgstr "Verweis anlegen"
+
+#: src/attribsInspector.c:322
+msgid "Link To:"
+msgstr "Verweis auf:"
+
+#: src/FSMenu.c:208
+msgid "Link: Enter the link name"
+msgstr "Namen für Verweis eingeben"
 
 #: src/files.c:1398
 msgid "Link: Source and destination are identical"
@@ -296,702 +613,98 @@ msgstr "Link: Quelle und Ziel sind identisch"
 msgid "Link: file %s already exists"
 msgstr "Link: Datei %s existiert bereits"
 
-#: src/FSFileView.c:282
+#: src/files.c:1361
 #, c-format
-msgid "Wrong XPOS value: %d. Using default."
-msgstr "Falscher XPOS-Wert: %d. Nehme Voreinstellung."
-
-#: src/FSFileView.c:288
-#, c-format
-msgid "Wrong YPOS value: %d. Using default."
-msgstr "Falscher YPOS-Wert: %d. Nehme Voreinstellung."
-
-#: src/FSFileView.c:294
-#, c-format
-msgid "Wrong WSIZE value: %d. Using default."
-msgstr "Falscher WSIZE-Wert: %d. Nehme Voreinstellung."
-
-#: src/FSFileView.c:300
-#, c-format
-msgid "Wrong HSIZE value: %d. Using default."
-msgstr "Falscher HSIZE-Wert: %d. Nehme Voreinstellung."
-
-#: src/FSFileView.c:308
-msgid "FileView"
-msgstr "Dateiansicht"
-
-#: src/FSFileView.c:619
-#, c-format
-msgid "FSViewer - we've got a problem!"
-msgstr "FSViewer - wir haben ein Problem!"
-
-#: src/FSFinder.c:53
-msgid "FSViewer - Finder"
-msgstr "FSViewer - Suche"
-
-#: src/FSFinder.c:90
-msgid "Search String:"
-msgstr "Suchen nach:"
-
-#: src/FSInspector.c:70
-#, c-format
-msgid "%s %d: Stat Error"
-msgstr "%s %d: Stat Fehler"
-
-#: src/FSInspector.c:136
-msgid "Path: "
-msgstr "Pfad: "
-
-#: src/FSInspector.c:138
-#, c-format
-msgid "Path: %s"
-msgstr "Pfad: %s"
-
-#: src/FSInspector.c:264
-msgid "FSViewer Inspector"
-msgstr "FSViewer-Inspektor"
-
-#: src/FSInspector.c:283
-msgid "Select"
-msgstr "Auswählen"
-
-#: src/FSInspector.c:284
-msgid "Attributes"
-msgstr "Attribute"
-
-#: src/FSInspector.c:285 src/FSMenu.c:936
-msgid "Icon"
-msgstr "Symbol"
-
-#: src/FSInspector.c:286
-msgid "Viewer"
-msgstr "Inhalt"
-
-#: src/FSInspector.c:287
-msgid "Editor"
-msgstr "Werkzeuge"
-
-#: src/FSInspector.c:288
-msgid "Executable"
-msgstr "Ausführbar"
-
-#: src/FSInspector.c:340
-#, c-format
-msgid "Unable to allocate memory for FSInspector %s %d\n"
-msgstr "Kann keinen Speicher belegen für FSInspector %s %d\n"
-
-#: src/FSMCList.c:75
-msgid "Name"
-msgstr "Name"
-
-#: src/FSMCList.c:82
-msgid "Size"
-msgstr "Größe"
-
-#: src/FSMCList.c:89
-msgid "Last Changed"
-msgstr "Letzte Änderung"
-
-#: src/FSMCList.c:96
-msgid "Permissions"
-msgstr "Zugriffsrechte"
-
-#: src/FSMenu.c:48 src/FSMenu.c:857 src/FSMenu.c:858 src/FSPanel.c:102
-msgid "Info"
-msgstr "Info"
-
-#: src/FSMenu.c:54 src/FSPanel.c:280
-msgid "Legal"
-msgstr "Rechtliches"
-
-#: src/FSMenu.c:54
-msgid "License"
-msgstr "Lizenz"
-
-#: src/FSMenu.c:60 src/FSMenu.c:66
-msgid "Preferences"
-msgstr "Einstellungen"
-
-#: src/FSMenu.c:140
-msgid "New View"
-msgstr "Neue Übersicht"
-
-#: src/FSMenu.c:141
-msgid "Error creating New FileViewer"
-msgstr "Fehler beim Erzeugen einer neuen Übersicht"
-
-#: src/FSMenu.c:208
-msgid "Link Name"
-msgstr "Verweis anlegen"
-
-#: src/FSMenu.c:208
-msgid "Link: Enter the link name"
-msgstr "Namen für Verweis eingeben"
-
-#: src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285 src/FSMenu.c:339
-#: src/FSMenu.c:416 src/FSPanel.c:621 src/FSPanel.c:866 src/FSPanel.c:1529
-#: src/FSPrefs.c:153 src/FSUtils.c:852
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: src/FSMenu.c:235
-msgid "Rename File"
-msgstr "Datei umbenennen"
-
-#: src/FSMenu.c:235
-msgid "Rename: Enter the new file name"
-msgstr "Neuen Dateinamen eingeben"
-
-#: src/FSMenu.c:282
-msgid "Create a new file"
-msgstr "Neue Datei anlegen"
-
-#: src/FSMenu.c:283
-msgid "New File: Enter the new file name"
-msgstr "Namen der neuen Datei eingeben"
-
-#: src/FSMenu.c:293
-#, c-format
-msgid "Error creating file %s"
-msgstr "Fehler beim Anlegen der Datei %s"
-
-#: src/FSMenu.c:336
-msgid "Create a new directory"
-msgstr "Verzeichnis anlegen"
-
-#: src/FSMenu.c:337
-msgid "New Dir: Enter the new directory name"
-msgstr "Namen für das Verzeichnis eingeben"
-
-#: src/FSMenu.c:347 src/FSMenu.c:702
-#, c-format
-msgid "Error creating folder %s"
-msgstr "Fehler beim Erzeugen von Verzeichnis %s"
-
-#: src/FSMenu.c:408
-msgid "Filter Current FileView"
-msgstr "Aktuelle Dateiansicht filtern"
-
-#: src/FSMenu.c:409
-msgid "Enter Filter Value:"
-msgstr "Wert für Filter eingeben:"
-
-#: src/FSMenu.c:431 src/FSMenu.c:439 src/FSMenu.c:614 src/FSMenu.c:654
-#: src/FSMenu.c:769
-msgid "Menu Error"
-msgstr "Menüfehler"
-
-#: src/FSMenu.c:432 src/FSMenu.c:440 src/FSMenu.c:615 src/FSMenu.c:655
-#: src/FSMenu.c:770
-msgid "This menu option has not yet been implemented"
-msgstr "Diese Menüoption wurde noch nicht implementiert"
-
-#: src/FSMenu.c:474 src/FSMenu.c:509 src/FSMenu.c:544 src/FSMenu.c:579
-#: src/FSMenu.c:758
-msgid "Exec Error"
-msgstr "Fehler beim Ausführen"
-
-#: src/FSMenu.c:590
-#, c-format
-msgid "%s %d: Unable to create FSFinder"
-msgstr "%s %d: Dateisuche konnte nicht erzeugt werden"
-
-#: src/FSMenu.c:606
-msgid "Menu Info"
-msgstr "Menü Info"
-
-#: src/FSMenu.c:607
-msgid "This option is only available via the window manager."
-msgstr "Diese Option ist nur über den Windowmanager zugänglich."
-
-#: src/FSMenu.c:757
-#, c-format
-msgid "Unable to compress selection."
-msgstr "Auswahl konnte nicht komprimiert werden."
-
-#: src/FSMenu.c:834
-msgid "Mount"
-msgstr "Einhängen"
-
-#: src/FSMenu.c:836
-msgid "Unmount"
-msgstr "Aushängen"
-
-#: src/FSMenu.c:838
-msgid "Eject"
-msgstr "Auswerfen"
-
-#: src/FSMenu.c:840
-msgid "Close"
-msgstr "Schließen"
-
-#: src/FSMenu.c:859
-msgid "Info Panel..."
-msgstr "Kurzinformation..."
-
-#: src/FSMenu.c:861
-msgid "Legal..."
-msgstr "Rechte..."
-
-#: src/FSMenu.c:863
-msgid "Preferences..."
-msgstr "Präferenzen..."
-
-#: src/FSMenu.c:867
-msgid "Help..."
-msgstr "Hilfe..."
-
-#: src/FSMenu.c:872 src/FSMenu.c:873
-msgid "File"
-msgstr "Datei"
-
-#: src/FSMenu.c:874
-msgid "Open"
-msgstr "Öffnen"
-
-#: src/FSMenu.c:877
-msgid "Open as Folder"
-msgstr "Als Ordner öffnen "
-
-#: src/FSMenu.c:880
-msgid "New Folder"
-msgstr "Neuer Ordner"
-
-#: src/FSMenu.c:882
-msgid "Duplicate"
-msgstr "Duplizieren"
-
-#: src/FSMenu.c:885
-msgid "Compress"
-msgstr "Komprimieren"
-
-#: src/FSMenu.c:888
-msgid "UnCompress"
-msgstr "Expandieren"
-
-#: src/FSMenu.c:891 src/FSPanel.c:621
-msgid "Destroy"
-msgstr "Vernichten"
-
-#: src/FSMenu.c:894
-msgid "Empty Recycler"
-msgstr "Recycler leeren"
-
-#: src/FSMenu.c:899 src/FSMenu.c:900
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: src/FSMenu.c:901
-msgid "Cut"
-msgstr "Ausscheiden"
-
-#: src/FSMenu.c:903
-msgid "Copy"
-msgstr "Kopieren"
-
-#: src/FSMenu.c:905
-msgid "Paste"
-msgstr "Einfügen"
-
-#: src/FSMenu.c:907 src/FSPrefs.c:464 src/FSPrefs.c:560 src/FSPrefs.c:1043
-#: src/FSPrefs.c:1089 src/FSPrefs.c:1327 src/FSPrefs.c:1406
-msgid "Delete"
-msgstr "Löschen"
-
-#: src/FSMenu.c:909
-msgid "Select All"
-msgstr "Alles auswählen"
-
-#: src/FSMenu.c:912
-msgid "DeSelect All"
-msgstr "Alles löschen"
-
-#: src/FSMenu.c:917 src/FSMenu.c:918
-msgid "Disk"
-msgstr "Laufwerk"
-
-#: src/FSMenu.c:931 src/FSMenu.c:932
-msgid "View"
-msgstr "Übersicht"
-
-#: src/FSMenu.c:933
-msgid "Browse"
-msgstr "Browser"
+msgid "Link: file %s already exists at destination"
+msgstr "Link: Datei %s existiert am Zielpunkt bereits"
 
 #: src/FSMenu.c:939
 msgid "List"
 msgstr "Liste"
-
-#: src/FSMenu.c:941
-msgid "Sort"
-msgstr "Sortieren"
-
-#: src/FSMenu.c:946
-msgid "Show .files"
-msgstr "Versteckte Dateien"
-
-#: src/FSMenu.c:948
-msgid "Filter..."
-msgstr "Filter..."
-
-#: src/FSMenu.c:950
-msgid "New Viewer..."
-msgstr "Neue Übersicht..."
-
-#: src/FSMenu.c:952
-msgid "Update View"
-msgstr "Übersicht aktualisieren"
-
-#: src/FSMenu.c:956 src/FSMenu.c:957
-msgid "Tools"
-msgstr "Werkzeuge"
-
-#: src/FSMenu.c:958
-msgid "Inspector..."
-msgstr "Inspektor..."
-
-#: src/FSMenu.c:960
-msgid "Finder"
-msgstr "Dateisuche..."
-
-#: src/FSMenu.c:963
-msgid "Processes..."
-msgstr "Prozesse..."
-
-#: src/FSMenu.c:966
-msgid "Console..."
-msgstr "Konsole..."
-
-#: src/FSMenu.c:970 src/FSMenu.c:971
-msgid "Windows"
-msgstr "Fenster"
-
-#: src/FSMenu.c:986
-msgid "Miniaturize Window"
-msgstr "Fenster miniaturisieren"
-
-#: src/FSMenu.c:989
-msgid "Close Window"
-msgstr "Fenster schließen"
-
-#: src/FSMenu.c:994 src/FSMenu.c:995
-msgid "Services"
-msgstr "Dienste"
-
-#: src/FSMenu.c:996
-msgid "File Edit..."
-msgstr "Datei bearbeiten..."
-
-#: src/FSMenu.c:998
-msgid "File Link..."
-msgstr "Datei verknüpfen..."
-
-#: src/FSMenu.c:1000
-msgid "File New..."
-msgstr "Datei neu..."
-
-#: src/FSMenu.c:1002
-msgid "File Rename..."
-msgstr "Datei umbenennen..."
-
-#: src/FSMenu.c:1004
-msgid "File Run..."
-msgstr "Datei ausführen"
-
-#: src/FSMenu.c:1006
-msgid "Show Image"
-msgstr "Bild anzeigen"
-
-#: src/FSMenu.c:1013
-msgid "Hide"
-msgstr "Ausblenden"
-
-#: src/FSMenu.c:1015
-msgid "Hide Others"
-msgstr "Andere ausblenden"
-
-#: src/FSMenu.c:1017
-msgid "Quit"
-msgstr "Verlassen"
-
-#: src/FSPanel.c:158
-#, c-format
-msgid "System Release %s"
-msgstr "Systemversion %s"
-
-#: src/FSPanel.c:165
-#, c-format
-msgid "FSViewer Release %s"
-msgstr "FSViewer-Version %s"
-
-#: src/FSPanel.c:172
-#, c-format
-msgid "Window Server %d"
-msgstr "Window Server %d"
-
-#: src/FSPanel.c:179
-#, c-format
-msgid "Processor: %s"
-msgstr "Prozessor: %s"
 
 #: src/FSPanel.c:186
 #, c-format
 msgid "Memory: %s"
 msgstr "Speicher: %s"
 
-#: src/FSPanel.c:193
-#, c-format
-msgid "Disk: %s"
-msgstr "Plattenspeicher: %s"
+#: src/FSMenu.c:431 src/FSMenu.c:439 src/FSMenu.c:614 src/FSMenu.c:654
+#: src/FSMenu.c:769
+msgid "Menu Error"
+msgstr "Menüfehler"
 
-#: src/FSPanel.c:618
-#, c-format
-msgid "Do you really want to destroy %s?"
-msgstr "Wollen Sie %s wirklich löschen?"
-
-#: src/FSPanel.c:685
-msgid "Icon Selector"
-msgstr "Symbol Auswahl"
-
-#: src/FSPanel.c:814
-msgid "Click to set icon for the selected file type."
-msgstr "Zum Festlegen des Symbols für diesen Dateityp Button klicken."
-
-#: src/FSPanel.c:841
-msgid "Enter App Executable String:"
-msgstr "Auszuführende Anwendung eingeben:"
-
-#: src/FSPanel.c:855
-msgid "Set As Default Viewer"
-msgstr "Als Betrachter festlegen"
-
-#: src/FSPanel.c:861
-msgid "Set As Default Editor"
-msgstr "Als Werkzeug festlegen"
-
-#: src/FSPanel.c:940 src/FSPrefs.c:1202 src/FSPrefs.c:1426 src/FSPrefs.c:1455
-msgid "Icon Select"
-msgstr "Symbol Auswahl"
-
-#: src/FSPanel.c:1490 src/iconInspector.c:256
-msgid "Directories"
-msgstr "Verzeichnisse"
-
-#: src/FSPanel.c:1508 src/iconInspector.c:274
-msgid "Files"
-msgstr "Dateien"
-
-#: src/FSPrefs.c:161
-msgid "Apply"
-msgstr "Anwenden"
-
-#: src/FSPrefs.c:212
-msgid " Disks "
-msgstr " Speichermedien "
-
-#: src/FSPrefs.c:227
-msgid "Name:"
-msgstr "Name:"
+#: src/FSMenu.c:606
+msgid "Menu Info"
+msgstr "Menü Info"
 
 #: src/FSPrefs.c:234
 msgid "Menu Name"
 msgstr "Menü Name"
 
+#: src/FSMenu.c:986
+msgid "Miniaturize Window"
+msgstr "Fenster miniaturisieren"
+
 #: src/FSPrefs.c:243
 msgid "Mnt:"
 msgstr "Mnt:"
+
+#: src/FSMenu.c:834
+msgid "Mount"
+msgstr "Einhängen"
 
 #: src/FSPrefs.c:250
 msgid "Mount Point"
 msgstr "Einhängepunkt"
 
-#: src/FSPrefs.c:260
-msgid "Dev:"
-msgstr "Ger:"
+#: src/FSPrefs.c:313
+msgid "Mount:"
+msgstr "Einhängen:"
 
-#: src/FSPrefs.c:267
-msgid "Device"
-msgstr "Gerät"
+#: src/files.c:1158 src/files.c:1226
+msgid "Move: Source and destination are identical"
+msgstr "Verschieben: Quelle und Ziel sind identisch"
+
+#: src/files.c:1235
+#, c-format
+msgid "Move: file %s already exists"
+msgstr "Verschieben: Datei %s existiert bereits"
+
+#: src/files.c:1179
+#, c-format
+msgid "Move: file %s already exists at destination"
+msgstr "Verschieben: Datei %s existiert am Zielpunkt bereits"
+
+#: src/FSMCList.c:75
+msgid "Name"
+msgstr "Name"
+
+#: src/FSPrefs.c:227
+msgid "Name:"
+msgstr "Name:"
 
 #: src/FSPrefs.c:277
 msgid "New"
 msgstr "Neu"
 
-#: src/FSPrefs.c:286
-msgid "Update"
-msgstr "Erneuern"
+#: src/FSMenu.c:337
+msgid "New Dir: Enter the new directory name"
+msgstr "Namen für das Verzeichnis eingeben"
 
-#: src/FSPrefs.c:313
-msgid "Mount:"
-msgstr "Einhängen:"
+#: src/FSMenu.c:283
+msgid "New File: Enter the new file name"
+msgstr "Namen der neuen Datei eingeben"
 
-#: src/FSPrefs.c:320 src/FSPrefs.c:337 src/FSPrefs.c:354 src/FSPrefs.c:437
-#: src/FSPrefs.c:507 src/FSPrefs.c:533
-msgid "App"
-msgstr "App"
+#: src/FSMenu.c:880
+msgid "New Folder"
+msgstr "Neuer Ordner"
 
-#: src/FSPrefs.c:330
-msgid "Unmount:"
-msgstr "Aushängen:"
+#: src/FSMenu.c:140
+msgid "New View"
+msgstr "Neue Übersicht"
 
-#: src/FSPrefs.c:347
-msgid "Eject:"
-msgstr "Auswerfen:"
-
-#: src/FSPrefs.c:364
-msgid "Close:"
-msgstr "Schließen:"
-
-#: src/FSPrefs.c:371
-msgid "close tray"
-msgstr "Lade schließen"
-
-#: src/FSPrefs.c:381
-msgid "Disks"
-msgstr "Speichermedien"
-
-#: src/FSPrefs.c:404
-msgid " Applications "
-msgstr " Anwendungen "
-
-#: src/FSPrefs.c:430
-msgid "Exec:"
-msgstr "Ausf.:"
-
-#: src/FSPrefs.c:447 src/FSPrefs.c:517 src/FSPrefs.c:543
-msgid "Browse..."
-msgstr "Ändern..."
-
-#: src/FSPrefs.c:456 src/FSPrefs.c:552 src/FSPrefs.c:653 src/FSPrefs.c:695
-msgid "Set"
-msgstr "Setzen"
-
-#: src/FSPrefs.c:473
-msgid " File Types "
-msgstr " Dateitypen "
-
-#: src/FSPrefs.c:500
-msgid "View:"
-msgstr "Inhalt:"
-
-#: src/FSPrefs.c:526
-msgid "Edit:"
-msgstr "Bearbeiten:"
-
-#: src/FSPrefs.c:570
-msgid "App/File Types"
-msgstr "Anwendungen/Dateitypen"
-
-#: src/FSPrefs.c:594
-msgid " Images "
-msgstr " Bilder "
-
-#: src/FSPrefs.c:620
-msgid " Executables "
-msgstr " Anwendungen "
-
-#: src/FSPrefs.c:636
-msgid "Exec Str:"
-msgstr "Ausführen:"
-
-#: src/FSPrefs.c:643
-msgid "Exes:"
-msgstr "Ausf.:"
-
-#: src/FSPrefs.c:662
-msgid " Display "
-msgstr " Anzeige "
-
-#: src/FSPrefs.c:678
-msgid "Display:"
-msgstr "Anzeige:"
-
-#: src/FSPrefs.c:685
-msgid "Display"
-msgstr "Anzeige"
-
-#: src/FSPrefs.c:704
-msgid "Variables"
-msgstr "Variablen"
-
-#: src/FSPrefs.c:1041 src/FSPrefs.c:1085 src/FSPrefs.c:1322 src/FSPrefs.c:1401
-msgid "Undelete"
-msgstr "Zurück"
-
-#: src/FSPrefs.c:1477
-msgid "Browse -> App"
-msgstr "Browse -> Anw."
-
-#: src/FSPrefs.c:1489
-msgid "Browse -> Viewer"
-msgstr "Browse -> Inhalt"
-
-#: src/FSPrefs.c:1501
-msgid "Browse -> Editor"
-msgstr "Browse -> Werkzeug"
-
-#: src/FSUtils.c:158 src/FSUtils.c:170 src/FSUtils.c:316
-#, c-format
-msgid "Unavailable"
-msgstr "Nicht verfügbar"
-
-#: src/FSUtils.c:330
-#, c-format
-msgid "%s %d: Can't run df, %s\n"
-msgstr "%s %d: Kann \"df\" nicht ausführen, %s\n"
-
-#: src/FSUtils.c:556
-#, c-format
-msgid "Error changing to %s but it's not that serious!"
-msgstr "Fehler beim Wechseln nach %s, aber nichts Ernstes!"
-
-#: src/FSUtils.c:558 src/FSUtils.c:1231
-msgid "Error File Operation"
-msgstr "Fehler bei Dateioperation"
-
-#: src/FSUtils.c:616 src/FSUtils.c:632
-msgid "App Input Window"
-msgstr "Anwendung festlegen"
-
-#: src/FSUtils.c:667 src/FSUtils.c:690
-#, c-format
-msgid "%s %d: Could not load icon file %s"
-msgstr "%s %d: Konnte Symbol nicht laden %s"
-
-#: src/FSUtils.c:712 src/FSUtils.c:726
-#, c-format
-msgid "%s %d: Could not create Pixmap from Data"
-msgstr "%s %d: Konnte keine Pixmap aus Daten erzeugen"
-
-#: src/FSUtils.c:754
-#, c-format
-msgid "Window Maker domain (%s) is corrupted!"
-msgstr "Window Maker Datenbank (%s) ist defekt!"
-
-#: src/FSUtils.c:756 src/FSUtils.c:764
-msgid "Error"
-msgstr "Fehler"
-
-#: src/FSUtils.c:762
-#, c-format
-msgid "Could not load Window Maker defaults (%s)"
-msgstr "Konnte Window Maker Voreinstellungen nicht laden (%s)"
-
-#: src/FSUtils.c:1230
-#, c-format
-msgid "Error changing to %s, \"%s\" cancelled."
-msgstr "Fehler beim Wechseln nach %s, \"%s\" ungültig."
-
-#: src/FSViewer.c:53
-#, c-format
-msgid "User database entry for ICONDIR is not valid: %s. Taking default value."
-msgstr ""
-"Benutzereinstellung für ICONDIR ist ungültig: %s. Nehme Voreinstellung."
-
-#: src/FSViewer.c:64
-#, c-format
-msgid "Default ICONDIR not found: %s"
-msgstr "Voreinstellung für ICONDIR nicht gefunden: %s"
+#: src/FSMenu.c:950
+msgid "New Viewer..."
+msgstr "Neue Übersicht..."
 
 #: src/FSViewer.c:74
 msgid "No valid value for ICONDIR found. Even default directory is broken!"
@@ -1006,59 +719,347 @@ msgstr ""
 "Kein Wert für ICONDIR gefunden! Wahrscheinlich ist die Datei mit den "
 "Benutzereinstellungen %s defekt."
 
-#: src/FSViewer.c:106
+#: src/files.c:961 src/files.c:1142
 #, c-format
-msgid "Usage: %s [options]\n"
-msgstr "Benutzung: %s [OPTIONEN]\n"
+msgid "No write access to %s"
+msgstr "Kein Schreibzugriff auf %s"
 
-#: src/FSViewer.c:107
-msgid "options:"
-msgstr "Optionen:"
+#: src/attribsInspector.c:538 src/exeInspector.c:202 src/extnInspector.c:421
+#: src/FSMenu.c:142 src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285
+#: src/FSMenu.c:339 src/FSMenu.c:416 src/FSMenu.c:433 src/FSMenu.c:441
+#: src/FSMenu.c:475 src/FSMenu.c:510 src/FSMenu.c:545 src/FSMenu.c:580
+#: src/FSMenu.c:608 src/FSMenu.c:616 src/FSMenu.c:656 src/FSMenu.c:759
+#: src/FSMenu.c:771 src/FSPanel.c:873 src/FSPanel.c:1536 src/FSPrefs.c:170
+#: src/FSUtils.c:757 src/FSUtils.c:765 src/FSUtils.c:842 src/FSUtils.c:851
+#: src/iconInspector.c:202
+msgid "OK"
+msgstr "OK"
 
-#: src/FSViewer.c:108
-msgid " -p <initial path>  initial path to display"
-msgstr " -p <ANFANGSPFAD>   Anfangs angezeigter Pfad"
+#: src/FSMenu.c:874
+msgid "Open"
+msgstr "Öffnen"
 
-#: src/FSViewer.c:109
-msgid " -v                 print version number and exit"
-msgstr " -v                 Ausgabe der Versionsinformation und beenden."
+#: src/FSMenu.c:877
+msgid "Open as Folder"
+msgstr "Als Ordner öffnen "
 
-#: src/FSViewer.c:357
+#: src/attribsInspector.c:452
+msgid "Other"
+msgstr "Andere"
+
+#: src/files.c:1000 src/files.c:1054 src/files.c:1181 src/files.c:1236
+#: src/files.c:1290 src/files.c:1363 src/files.c:1410
+msgid "Overwrite?"
+msgstr "Überschreiben?"
+
+#: src/attribsInspector.c:452 src/FSMCList.c:103
+msgid "Owner"
+msgstr "Eigent."
+
+#: src/attribsInspector.c:357
+msgid "Owner:"
+msgstr "Eigentümer:"
+
+#: src/FSMenu.c:905
+msgid "Paste"
+msgstr "Einfügen"
+
+#: src/FSInspector.c:136
+msgid "Path: "
+msgstr "Pfad: "
+
+#: src/FSInspector.c:138
 #, c-format
-msgid "too few arguments for %s"
-msgstr "zu wenig Argumente für %s"
+msgid "Path: %s"
+msgstr "Pfad: %s"
 
-#: src/FSViewer.c:428
+#: src/FSMCList.c:96
+msgid "Permissions"
+msgstr "Zugriffsrechte"
+
+#: src/FSMenu.c:60 src/FSMenu.c:66
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: src/FSMenu.c:863
+msgid "Preferences..."
+msgstr "Präferenzen..."
+
+#: src/FSMenu.c:963
+msgid "Processes..."
+msgstr "Prozesse..."
+
+#: src/FSPanel.c:179
 #, c-format
-msgid "Unable to get RContext: %s %s %d\n"
-msgstr "Kann \"RContext\" nicht bekommen: %s %s %d\n"
+msgid "Processor: %s"
+msgstr "Prozessor: %s"
 
-#: src/FSViewer.c:482
-msgid "X server does not support locale"
-msgstr "X Server unterstützt keine Lokalisierung"
+#: src/FSMenu.c:1017
+msgid "Quit"
+msgstr "Verlassen"
 
-#: src/FSViewer.c:485
-msgid "cannot set locale modifiers"
-msgstr "Kann Spracheinstellungen nicht verändern"
+#: src/attribsInspector.c:451
+msgid "Read"
+msgstr "Read"
+
+#: src/extnInspector.c:441 src/FSPrefs.c:295
+msgid "Remove"
+msgstr "Entfernen"
+
+#: src/FSMenu.c:235
+msgid "Rename File"
+msgstr "Datei umbenennen"
+
+#: src/FSMenu.c:235
+msgid "Rename: Enter the new file name"
+msgstr "Neuen Dateinamen eingeben"
+
+#: src/files.c:1278
+msgid "Rename: Source and destination are identical"
+msgstr "Umbenennen: Quelle und Ziel sind identisch"
+
+#: src/files.c:1289
+#, c-format
+msgid "Rename: file %s already exists"
+msgstr "Umbenennen: Datei %s existiert bereits"
+
+#: src/attribsInspector.c:531 src/editInspector.c:288 src/exeInspector.c:215
+#: src/extnInspector.c:414 src/iconInspector.c:215 src/viewInspector.c:293
+msgid "Revert"
+msgstr "Rückgängig"
+
+#: src/FSFinder.c:90
+msgid "Search String:"
+msgstr "Suchen nach:"
+
+#: src/FSInspector.c:283
+msgid "Select"
+msgstr "Auswählen"
+
+#: src/FSMenu.c:909
+msgid "Select All"
+msgstr "Alles auswählen"
+
+#: src/FSMenu.c:994 src/FSMenu.c:995
+msgid "Services"
+msgstr "Dienste"
+
+#: src/FSPrefs.c:456 src/FSPrefs.c:552 src/FSPrefs.c:653 src/FSPrefs.c:695
+msgid "Set"
+msgstr "Setzen"
+
+#: src/FSPanel.c:861
+msgid "Set As Default Editor"
+msgstr "Als Werkzeug festlegen"
+
+#: src/FSPanel.c:855
+msgid "Set As Default Viewer"
+msgstr "Als Betrachter festlegen"
+
+#: src/editInspector.c:295 src/exeInspector.c:222 src/iconInspector.c:222
+#: src/viewInspector.c:300
+msgid "Set Default"
+msgstr "Voreinstellung"
+
+#: src/exeInspector.c:117
+msgid "Shortcuts:"
+msgstr "Tastaturkürzel:"
+
+#: src/FSMenu.c:946
+msgid "Show .files"
+msgstr "Versteckte Dateien"
+
+#: src/FSMenu.c:1006
+msgid "Show Image"
+msgstr "Bild anzeigen"
+
+#: src/FSMCList.c:82
+msgid "Size"
+msgstr "Größe"
+
+#: src/attribsInspector.c:342
+msgid "Size:"
+msgstr "Größe:"
+
+#: src/FSMenu.c:941
+msgid "Sort"
+msgstr "Sortieren"
+
+#: src/FSPanel.c:158
+#, c-format
+msgid "System Release %s"
+msgstr "Systemversion %s"
+
+#: src/exeInspector.c:201 src/iconInspector.c:201
+msgid "This function has not yet been implemented."
+msgstr "Diese Funktion wurde noch nicht implementiert."
+
+#: src/FSMenu.c:432 src/FSMenu.c:440 src/FSMenu.c:615 src/FSMenu.c:655
+#: src/FSMenu.c:770
+msgid "This menu option has not yet been implemented"
+msgstr "Diese Menüoption wurde noch nicht implementiert"
+
+#: src/FSMenu.c:607
+msgid "This option is only available via the window manager."
+msgstr "Diese Option ist nur über den Windowmanager zugänglich."
+
+#: src/FSMenu.c:956 src/FSMenu.c:957
+msgid "Tools"
+msgstr "Werkzeuge"
+
+#: src/FSMenu.c:888
+msgid "UnCompress"
+msgstr "Expandieren"
+
+#: src/FSViewer.c:500
+msgid "Unable to Open Display!"
+msgstr "Kann Display nicht öffnen!"
 
 #: src/FSViewer.c:493
 #, c-format
 msgid "Unable to allocate memory for %s %s %d\n"
 msgstr "Kann keinen Speicher belegen für %s %s %d\n"
 
-#: src/FSViewer.c:500
-msgid "Unable to Open Display!"
-msgstr "Kann Display nicht öffnen!"
+#: src/FSInspector.c:340
+#, c-format
+msgid "Unable to allocate memory for FSInspector %s %d\n"
+msgstr "Kann keinen Speicher belegen für FSInspector %s %d\n"
+
+#: src/FSMenu.c:757
+#, c-format
+msgid "Unable to compress selection."
+msgstr "Auswahl konnte nicht komprimiert werden."
 
 #: src/FSViewer.c:521
 #, c-format
 msgid "Unable to create a FileView instance %s %s %d"
 msgstr "Kann keine Dateiübersicht erzeugen %s %s %d"
 
-#: src/iconInspector.c:308 src/iconInspector.c:309
-msgid "Icon Inspector"
-msgstr "Symbol-Inspektor"
+#: src/FSViewer.c:428
+#, c-format
+msgid "Unable to get RContext: %s %s %d\n"
+msgstr "Kann \"RContext\" nicht bekommen: %s %s %d\n"
+
+#: src/FSUtils.c:158 src/FSUtils.c:170 src/FSUtils.c:316
+#, c-format
+msgid "Unavailable"
+msgstr "Nicht verfügbar"
+
+#: src/FSPrefs.c:1041 src/FSPrefs.c:1085 src/FSPrefs.c:1322 src/FSPrefs.c:1401
+msgid "Undelete"
+msgstr "Zurück"
+
+#: src/FSMenu.c:836
+msgid "Unmount"
+msgstr "Aushängen"
+
+#: src/FSPrefs.c:330
+msgid "Unmount:"
+msgstr "Aushängen:"
+
+#: src/files.c:889
+#, c-format
+msgid "Unrecognized File type: %s"
+msgstr "Unerkannter Dateityp: %s"
+
+#: src/FSPrefs.c:286
+msgid "Update"
+msgstr "Erneuern"
+
+#: src/FSMenu.c:952
+msgid "Update View"
+msgstr "Übersicht aktualisieren"
+
+#: src/FSViewer.c:106
+#, c-format
+msgid "Usage: %s [options]\n"
+msgstr "Benutzung: %s [OPTIONEN]\n"
+
+#: src/FSViewer.c:53
+#, c-format
+msgid "User database entry for ICONDIR is not valid: %s. Taking default value."
+msgstr ""
+"Benutzereinstellung für ICONDIR ist ungültig: %s. Nehme Voreinstellung."
+
+#: src/FSPrefs.c:704
+msgid "Variables"
+msgstr "Variablen"
+
+#: src/FSMenu.c:931 src/FSMenu.c:932
+msgid "View"
+msgstr "Übersicht"
+
+#: src/FSPrefs.c:500
+msgid "View:"
+msgstr "Inhalt:"
+
+#: src/FSInspector.c:286
+msgid "Viewer"
+msgstr "Inhalt"
 
 #: src/viewInspector.c:351 src/viewInspector.c:352
 msgid "Viewer Inspector"
 msgstr "Inhalt-Inspektor"
+
+#: src/FSUtils.c:754
+#, c-format
+msgid "Window Maker domain (%s) is corrupted!"
+msgstr "Window Maker Datenbank (%s) ist defekt!"
+
+#: src/FSPanel.c:172
+#, c-format
+msgid "Window Server %d"
+msgstr "Window Server %d"
+
+#: src/FSMenu.c:970 src/FSMenu.c:971
+msgid "Windows"
+msgstr "Fenster"
+
+#: src/attribsInspector.c:451
+msgid "Write"
+msgstr "Write"
+
+#: src/FSFileView.c:300
+#, c-format
+msgid "Wrong HSIZE value: %d. Using default."
+msgstr "Falscher HSIZE-Wert: %d. Nehme Voreinstellung."
+
+#: src/FSFileView.c:294
+#, c-format
+msgid "Wrong WSIZE value: %d. Using default."
+msgstr "Falscher WSIZE-Wert: %d. Nehme Voreinstellung."
+
+#: src/FSFileView.c:282
+#, c-format
+msgid "Wrong XPOS value: %d. Using default."
+msgstr "Falscher XPOS-Wert: %d. Nehme Voreinstellung."
+
+#: src/FSFileView.c:288
+#, c-format
+msgid "Wrong YPOS value: %d. Using default."
+msgstr "Falscher YPOS-Wert: %d. Nehme Voreinstellung."
+
+#: src/FSViewer.c:482
+msgid "X server does not support locale"
+msgstr "X Server unterstützt keine Lokalisierung"
+
+#: src/exeInspector.c:175
+msgid "associated file to open"
+msgstr "Verknüpfte Datei zum Öffnen"
+
+#: src/FSViewer.c:485
+msgid "cannot set locale modifiers"
+msgstr "Kann Spracheinstellungen nicht verändern"
+
+#: src/FSPrefs.c:371
+msgid "close tray"
+msgstr "Lade schließen"
+
+#: src/FSViewer.c:107
+msgid "options:"
+msgstr "Optionen:"
+
+#: src/FSViewer.c:357
+#, c-format
+msgid "too few arguments for %s"
+msgstr "zu wenig Argumente für %s"
