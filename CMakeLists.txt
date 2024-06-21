@@ -10,9 +10,11 @@ file(GLOB SRC "src/*.c")
 add_executable(${EXECUTABLE} ${SRC} ${REGEXP})
 
 pkg_check_modules(DEPS REQUIRED IMPORTED_TARGET wrlib wmlib WUtil WINGs xpm xmu x11)
+
 # include_directories(${DEPS_INCLUDE_DIRS})
-#find_library(LIBINTL intl)
+# find_library(LIBINTL intl)
 find_package(Intl)
+
 target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} -lm)
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
@@ -26,6 +28,6 @@ install(TARGETS ${EXECUTABLE} DESTINATION bin)
 install(DIRECTORY xpm DESTINATION GNUstep/Apps/FSViewer.app)
 install(DIRECTORY tiff DESTINATION GNUstep/Apps/FSViewer.app)
 
-#add_subdirectory(src/regexp)
-#add_subdirectory(src)
-#add_subdirectory(defs)
+# add_subdirectory(src/regexp)
+# add_subdirectory(src)
+# add_subdirectory(defs)

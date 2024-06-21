@@ -29,6 +29,8 @@ to keep track of some fixes I added to the codebase over the years:
 
    - **Debian:** \
      `sudo apt install cmake libxpm-dev libwmaker-dev libwraster-dev libwings-dev libxmu-dev libpango1.0-dev`
+   - **FreeBSD:** \
+     `sudo pkg install cmake windowmaker`
    - **NetBSD:** \
      `sudo pkgin in cmake pkg-config windowmaker`
    - **OpenBSD:** \
