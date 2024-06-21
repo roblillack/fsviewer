@@ -27,11 +27,11 @@ endif()
 
 # Create a "translations" target to compile translation files,
 # if gettext is found
-find_package(Gettext)
-if(GETTEXT_FOUND)
-    file(GLOB PO_FILES "po/*.po")
-    GETTEXT_CREATE_TRANSLATIONS("po/FSViewer.pot" ${PO_FILES})
-endif()
+#find_package(Gettext)
+#if(GETTEXT_FOUND)
+#    file(GLOB PO_FILES "po/*.po")
+#    GETTEXT_PROCESS_POT_FILE("po/FSViewer.pot" LANGUAGES de sv ru)
+#endif()
 
 target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} -lm)
 
