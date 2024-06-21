@@ -33,18 +33,12 @@ typedef unsigned long ulong;
 /* #define __Linux__ */
 
 #if defined(__FreeBSD__)
-#include <kvm.h>
 #include <limits.h>
 #include <osreldate.h>
-#include <sys/conf.h>
 #include <sys/dkstat.h>
-#include <sys/param.h>
-/* #include <sys/rlist.h> */
 #include <fcntl.h>
 #include <sys/sysctl.h>
 #include <sys/time.h>
-#define _WANT_VMMETER 1
-#include <sys/vmmeter.h>
 #endif /* __FreeBSD__ */
 
 #if defined(__SunOS__)
@@ -213,35 +207,8 @@ char* FSMemory()
 #endif /* __linux__ */
 
 #if defined(__FreeBSD__)
-    kvm_t* kvmd = NULL;
-    struct nlist nl[] = {
-#define N_CNT 0
-        { "_cnt" },
-#define N_BUFSPACE 1
-        { "_bufspace" },
-#define N_CP_TIME 2
-        { "_cp_time" },
-#define N_AVERUN 3
-        { "_averunnable" },
-#define VM_SWAPLIST 4
-        { "_swaplist" },
-#define VM_SWDEVT 5
-        { "_swdevt" },
-#define VM_NSWAP 6
-        { "_nswap" },
-#define VM_NSWDEV 7
-        { "_nswdev" },
-#define VM_DMMAX 8
-        { "_dmmax" },
-#define N_DK_NDRIVE 9
-        { "_dk_ndrive" },
-#define N_DK_WDS 10
-        { "_dk_wds" },
-        { "" }
-    };
-    int psize;
-    int pshift;
-    char errbuf[_POSIX2_LINE_MAX];
+    int mib[2];
+    size_t len;
 #endif /* __FreeBSD__ */
 
 #ifdef __SunOS__
@@ -265,27 +232,13 @@ char* FSMemory()
 #endif /* __linux__ */
 
 #ifdef __FreeBSD__
-
-    psize = getpagesize();
-    for (pshift = 0, psize = getpagesize(); psize > 1; pshift++, psize >>= 1)
-        ;
-    pshift -= 10;
-    psize = getpagesize();
-
-    if (kvmd == NULL)
-        kvmd = kvm_openfiles(NULL, NULL, NULL, O_RDONLY, errbuf);
-    if (kvmd) {
-        if (kvm_nlist(kvmd, nl) >= 0) {
-            if (nl[0].n_type != 0) {
-                struct vmmeter sum;
-
-                if ((kvm_read(kvmd, nl[N_CNT].n_value, (char*)&sum, sizeof(sum)) == sizeof(sum)) && (kvm_read(kvmd, nl[N_BUFSPACE].n_value, (char*)&buffers, sizeof(buffers)) == sizeof(buffers))) {
-                    total = (sum.v_page_count - (buffers / psize) - *sum.v_wire_count) << pshift;
-                }
-            }
-        }
-    }
-#endif /* __FreeBSD__ */
+    mib[0] = CTL_HW;
+    mib[1] = HW_PHYSMEM;
+    len = sizeof(total);
+    sysctl(mib, 2, &total, &len, NULL, 0);
+    /* hw.physmem is in bytes */
+    total /= 1024;
+ #endif /* __FreeBSD__ */
 
 #ifdef __SunOS__
 

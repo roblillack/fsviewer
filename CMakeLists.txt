@@ -15,9 +15,7 @@ pkg_check_modules(DEPS REQUIRED IMPORTED_TARGET wrlib wmlib WUtil WINGs xpm xmu 
 # find_library(LIBINTL intl)
 find_package(Intl)
 
-# Necessary for reading VM stats on FreeBSD
-find_library(KVM kvm)
-target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} ${KVM} -lm)
+target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} -lm)
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 add_definitions(-DCLK=1)
