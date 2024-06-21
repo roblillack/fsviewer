@@ -491,7 +491,7 @@ FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
     }
 
     FSUpdateFileViewTitles(fView);
-    fView->dfTimer = WMAddPersistentTimerHandler(60000, (WMCallback*) updateDiskFree, fView);
+    fView->dfTimer = WMAddPersistentTimerHandler(60000, (WMCallback*)updateDiskFree, fView);
     updateDiskFree(fView);
 
     return fView;
