@@ -33,10 +33,10 @@ typedef unsigned long ulong;
 /* #define __Linux__ */
 
 #if defined(__FreeBSD__)
+#include <fcntl.h>
 #include <limits.h>
 #include <osreldate.h>
 #include <sys/dkstat.h>
-#include <fcntl.h>
 #include <sys/sysctl.h>
 #include <sys/time.h>
 #endif /* __FreeBSD__ */
@@ -238,7 +238,7 @@ char* FSMemory()
     sysctl(mib, 2, &total, &len, NULL, 0);
     /* hw.physmem is in bytes */
     total /= 1024;
- #endif /* __FreeBSD__ */
+#endif /* __FreeBSD__ */
 
 #ifdef __SunOS__
 
