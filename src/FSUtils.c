@@ -36,12 +36,14 @@ typedef unsigned long ulong;
 #include <kvm.h>
 #include <limits.h>
 #include <osreldate.h>
+#include <sys/param.h>
 #include <sys/conf.h>
 #include <sys/dkstat.h>
 /* #include <sys/rlist.h> */
 #include <fcntl.h>
 #include <sys/sysctl.h>
 #include <sys/time.h>
+#define _WANT_VMMETER 1
 #include <sys/vmmeter.h>
 #endif /* __FreeBSD__ */
 
@@ -278,7 +280,7 @@ char* FSMemory()
                 struct vmmeter sum;
 
                 if ((kvm_read(kvmd, nl[N_CNT].n_value, (char*)&sum, sizeof(sum)) == sizeof(sum)) && (kvm_read(kvmd, nl[N_BUFSPACE].n_value, (char*)&buffers, sizeof(buffers)) == sizeof(buffers))) {
-                    total = (sum.v_page_count - (buffers / psize) - sum.v_wire_count - sum.v_cache_count) << pshift;
+                    total = (sum.v_page_count - (buffers / psize) - *sum.v_wire_count) << pshift;
                 }
             }
         }

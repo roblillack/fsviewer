@@ -13,7 +13,11 @@ pkg_check_modules(DEPS REQUIRED IMPORTED_TARGET wrlib wmlib WUtil WINGs xpm xmu 
 # include_directories(${DEPS_INCLUDE_DIRS})
 #find_library(LIBINTL intl)
 find_package(Intl)
-target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} -lm)
+find_library(KVM kvm)
+target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} ${KVM} -lm)
+#if(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+#  target_link_libraries(${EXECUTABLE} -lkvm)
+#endif()
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 add_definitions(-DCLK=1)
