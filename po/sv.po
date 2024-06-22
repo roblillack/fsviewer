@@ -11,82 +11,712 @@ msgstr ""
 "PO-Revision-Date: 2006-01-29 00:45+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/attribsInspector.c:188
-#, c-format
-msgid "%s %d: lstat Error"
-msgstr "%s %d: lstat-fel"
+#: src/FSViewer.c:108
+msgid " -p <initial path>  initial path to display"
+msgstr " -p <startsökväg>  startsökväg till display"
 
-#: src/attribsInspector.c:211
-#, c-format
-msgid "%'.1lf MB\n"
-msgstr "%'.1lf MB\n"
+#: src/FSViewer.c:109
+msgid " -v                 print version number and exit"
+msgstr " -v                 skriv ut versionsnummer och avsluta"
+
+#: src/FSPrefs.c:404
+msgid " Applications "
+msgstr " Program "
+
+#: src/attribsInspector.c:512
+msgid " Changed "
+msgstr " Ändrad "
+
+#: src/FSPrefs.c:212
+msgid " Disks "
+msgstr " Diskar "
+
+#: src/FSPrefs.c:662
+msgid " Display "
+msgstr " Display "
+
+#: src/FSPrefs.c:620
+msgid " Executables "
+msgstr " Körbara "
+
+#: src/FSPrefs.c:473
+msgid " File Types "
+msgstr " Filtyper "
+
+#: src/FSPrefs.c:594
+msgid " Images "
+msgstr " Bilder "
+
+#: src/attribsInspector.c:501
+msgid " Permissions "
+msgstr " Rättigheter "
 
 #: src/attribsInspector.c:215
 #, c-format
 msgid "%'.1lf KB\n"
 msgstr "%'.1lf KB\n"
 
+#: src/attribsInspector.c:211
+#, c-format
+msgid "%'.1lf MB\n"
+msgstr "%'.1lf MB\n"
+
 #: src/attribsInspector.c:219
 #, c-format
 msgid "%d Bytes\n"
 msgstr "%d Byte\n"
 
-#: src/attribsInspector.c:322
-msgid "Link To:"
-msgstr "Länk till:"
+#: src/FSUtils.c:330
+#, c-format
+msgid "%s %d: Can't run df, %s\n"
+msgstr "%s %d: Kan inte köra df, %s\n"
 
-#: src/attribsInspector.c:342
-msgid "Size:"
-msgstr "Storlek:"
+#: src/FSUtils.c:712 src/FSUtils.c:726
+#, c-format
+msgid "%s %d: Could not create Pixmap from Data"
+msgstr "%s %d: Kunde inte skapa bild från data"
 
-#: src/attribsInspector.c:357
-msgid "Owner:"
-msgstr "Ägare:"
+#: src/FSUtils.c:667 src/FSUtils.c:690
+#, c-format
+msgid "%s %d: Could not load icon file %s"
+msgstr "%s %d: Kunde inte läsa in ikonfil %s"
 
-#: src/attribsInspector.c:372
-msgid "Group:"
-msgstr "Grupp:"
+#: src/FSInspector.c:70
+#, c-format
+msgid "%s %d: Stat Error"
+msgstr "%s %d: Statusfel"
 
-#: src/attribsInspector.c:451
-msgid "Read"
-msgstr "Läs"
+#: src/FSMenu.c:590
+#, c-format
+msgid "%s %d: Unable to create FSFinder"
+msgstr "%s %d: Kunde inte skapa FSFinder"
 
-#: src/attribsInspector.c:451
-msgid "Write"
-msgstr "Skriv"
+#: src/attribsInspector.c:188
+#, c-format
+msgid "%s %d: lstat Error"
+msgstr "%s %d: lstat-fel"
+
+#: src/files.c:261
+#, c-format
+msgid "%s GetFileInfo %d: Stat Error for %s\n"
+msgstr "%s GetFileInfo %d: Statusfel för %s\n"
+
+#: src/extnInspector.c:434
+msgid "Add"
+msgstr "Lägg till"
+
+#: src/FSPrefs.c:320 src/FSPrefs.c:337 src/FSPrefs.c:354 src/FSPrefs.c:437
+#: src/FSPrefs.c:507 src/FSPrefs.c:533
+msgid "App"
+msgstr "Prg"
+
+#: src/FSUtils.c:616 src/FSUtils.c:632
+msgid "App Input Window"
+msgstr "Programinmatningsfönster"
+
+#: src/FSPrefs.c:570
+msgid "App/File Types"
+msgstr "Prog/Filtyper"
+
+#: src/FSPrefs.c:161
+msgid "Apply"
+msgstr "Verkställ"
+
+#: src/FSInspector.c:284
+msgid "Attributes"
+msgstr "Attribut"
+
+#: src/attribsInspector.c:582 src/attribsInspector.c:583
+msgid "Attributes Inspector"
+msgstr "Attributinspektör"
+
+#: src/FSMenu.c:933
+msgid "Browse"
+msgstr "Bläddra"
+
+#: src/FSPrefs.c:1477
+msgid "Browse -> App"
+msgstr "Bläddra -> Program"
+
+#: src/FSPrefs.c:1501
+msgid "Browse -> Editor"
+msgstr "Bläddra -> Redigerare"
+
+#: src/FSPrefs.c:1489
+msgid "Browse -> Viewer"
+msgstr "Bläddra -> Visare"
+
+#: src/FSPrefs.c:447 src/FSPrefs.c:517 src/FSPrefs.c:543
+msgid "Browse..."
+msgstr "Bläddra..."
+
+#: src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285 src/FSMenu.c:339
+#: src/FSMenu.c:416 src/FSPanel.c:621 src/FSPanel.c:866 src/FSPanel.c:1529
+#: src/FSPrefs.c:153 src/FSUtils.c:852
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/files.c:1034
+msgid "Cannot copy a directory to a file"
+msgstr "Kan inte kopiera en katalog till en fil"
+
+#: src/files.c:1091
+msgid "Cannot delete . or .."
+msgstr "Kan inte ta bort . eller .."
+
+#: src/files.c:1216
+msgid "Cannot move a directory to a file"
+msgstr "Kan inte flytta en katalog till en fil"
+
+#: src/extnInspector.c:376
+msgid "Click \"OK\" to update this application's file extension list"
+msgstr "Klicka \"OK\" för att uppdatera detta programs filändelselista"
+
+#: src/editInspector.c:265 src/viewInspector.c:271
+msgid ""
+"Click \"Set Default\" to set default application for all documents with this "
+"extension."
+msgstr ""
+"Klicka \"Sätt förval\" för att ställa in förvalt program för alla dokument "
+"med denna ändelse."
+
+#: src/extnInspector.c:448
+msgid "Click To Set Icon"
+msgstr "Klicka för att ställa in ikon"
+
+#: src/editInspector.c:224 src/viewInspector.c:228
+msgid "Click button to edit selected document"
+msgstr "Klicka på knappen för att redigera valt dokument"
+
+#: src/FSPanel.c:814
+msgid "Click to set icon for the selected file type."
+msgstr "Klicka för att ställa in ikon för den valda filtypen."
+
+#: src/FSMenu.c:840
+msgid "Close"
+msgstr "Stäng"
+
+#: src/FSMenu.c:989
+msgid "Close Window"
+msgstr "Stäng fönster"
+
+#: src/FSPrefs.c:364
+msgid "Close:"
+msgstr "Stäng:"
+
+#: src/FSMenu.c:885
+msgid "Compress"
+msgstr "Komprimera"
+
+#: src/FSMenu.c:966
+msgid "Console..."
+msgstr "Konsoll..."
+
+#: src/FSMenu.c:903
+msgid "Copy"
+msgstr "Kopiera"
+
+#: src/files.c:977 src/files.c:1044 src/files.c:1338
+msgid "Copy: Source and destination are identical"
+msgstr "Kopiera: Källa och mål är identiska"
+
+#: src/files.c:1053
+#, c-format
+msgid "Copy: file %s already exists"
+msgstr "Kopiera: fil %s existerar redan"
+
+#: src/files.c:998
+#, c-format
+msgid "Copy: file %s already exists at destination"
+msgstr "Kopiera: fil %s existerar redan i målkatalog"
+
+#: src/FSUtils.c:762
+#, c-format
+msgid "Could not load Window Maker defaults (%s)"
+msgstr "Kunde inte läsa in Window Maker-förvalen (%s)"
+
+#: src/FSMenu.c:336
+msgid "Create a new directory"
+msgstr "Skapa en ny katalog"
+
+#: src/FSMenu.c:282
+msgid "Create a new file"
+msgstr "Skapa en ny fil"
+
+#: src/FSMenu.c:901
+msgid "Cut"
+msgstr "Klipp ut"
+
+#: src/FSMenu.c:912
+msgid "DeSelect All"
+msgstr "Välj ingen"
+
+#: src/FSViewer.c:64
+#, fuzzy, c-format
+msgid "Default ICONDIR not found: %s"
+msgstr "ICONDIR hittades inte: %s"
+
+#: src/editInspector.c:239 src/viewInspector.c:243
+msgid "Default:"
+msgstr "Förval:"
+
+#: src/FSMenu.c:907 src/FSPrefs.c:464 src/FSPrefs.c:560 src/FSPrefs.c:1043
+#: src/FSPrefs.c:1089 src/FSPrefs.c:1327 src/FSPrefs.c:1406
+msgid "Delete"
+msgstr "Ta bort"
+
+#: src/FSMenu.c:891 src/FSPanel.c:621
+msgid "Destroy"
+msgstr "Förstör"
+
+#: src/FSPrefs.c:260
+msgid "Dev:"
+msgstr "Enhet:"
+
+#: src/FSPrefs.c:267
+msgid "Device"
+msgstr "Enhet"
+
+#: src/FSPanel.c:1490 src/iconInspector.c:256
+msgid "Directories"
+msgstr "Kataloger"
+
+#: src/FSMenu.c:917 src/FSMenu.c:918
+msgid "Disk"
+msgstr "Disk"
+
+#: src/FSPanel.c:193
+#, c-format
+msgid "Disk: %s"
+msgstr "Disk: %s"
+
+#: src/FSPrefs.c:381
+msgid "Disks"
+msgstr "Diskar"
+
+#: src/FSPrefs.c:685
+msgid "Display"
+msgstr "Display"
+
+#: src/FSPrefs.c:678
+msgid "Display:"
+msgstr "Display:"
+
+#: src/files.c:1102
+#, c-format
+msgid "Do you REALLY wish to delete %s"
+msgstr "Vill du VERKLIGEN ta bort %s"
+
+#: src/FSPanel.c:618
+#, c-format
+msgid "Do you really want to destroy %s?"
+msgstr "Vill du verkligen förstöra %s?"
+
+#: src/FSMenu.c:882
+msgid "Duplicate"
+msgstr "Duplicera"
+
+#: src/FSMenu.c:899 src/FSMenu.c:900
+msgid "Edit"
+msgstr "Redigera"
+
+#: src/FSPrefs.c:526
+msgid "Edit:"
+msgstr "Redigera:"
+
+#: src/FSInspector.c:287
+msgid "Editor"
+msgstr "Redigerare"
+
+#: src/editInspector.c:346 src/editInspector.c:347
+msgid "Editor Inspector"
+msgstr "Redigeringsinspektör"
+
+#: src/FSMenu.c:838
+msgid "Eject"
+msgstr "Mata ut"
+
+#: src/FSPrefs.c:347
+msgid "Eject:"
+msgstr "Mata ut:"
+
+#: src/FSMenu.c:894
+msgid "Empty Recycler"
+msgstr "Tom papperskorg"
+
+#: src/FSPanel.c:841
+msgid "Enter App Executable String:"
+msgstr "Ange programkörningssträng:"
+
+#: src/FSMenu.c:409
+msgid "Enter Filter Value:"
+msgstr "Ange filtervärde:"
+
+#: src/exeInspector.c:101
+msgid "Enter command plus arguments into the textfield below:"
+msgstr "Ange kommando plus argument i textfältet nedan:"
+
+#: src/FSUtils.c:756 src/FSUtils.c:764
+msgid "Error"
+msgstr "Fel"
+
+#: src/FSUtils.c:558 src/FSUtils.c:1231
+msgid "Error File Operation"
+msgstr "Fel vid filoperation"
+
+#: src/FSUtils.c:556
+#, c-format
+msgid "Error changing to %s but it's not that serious!"
+msgstr "Fel vid ändring till %s men det är inte så farligt!"
+
+#: src/FSUtils.c:1230
+#, c-format
+msgid "Error changing to %s, \"%s\" cancelled."
+msgstr "Fel vid ändring till %s, \"%s\" avbruten."
+
+#: src/files.c:838 src/files.c:1011 src/files.c:1065 src/files.c:1192
+#, c-format
+msgid "Error copying %s:"
+msgstr "Fel vid kopiering av %s:"
+
+#: src/FSMenu.c:141
+msgid "Error creating New FileViewer"
+msgstr "Fel vid skapandet av ny filvisare"
+
+#: src/FSMenu.c:293
+#, c-format
+msgid "Error creating file %s"
+msgstr "Fel vid skapandet av fil %s"
+
+#: src/FSMenu.c:347 src/FSMenu.c:702
+#, c-format
+msgid "Error creating folder %s"
+msgstr "Fel vid skapandet av mapp %s"
+
+#: src/files.c:932 src/files.c:1114
+#, c-format
+msgid "Error deleting %s:"
+msgstr "Fel vid borttagning av %s:"
+
+#: src/files.c:1376 src/files.c:1423
+#, c-format
+msgid "Error linking %s to %s"
+msgstr "Fel vid länkning av %s till %s"
+
+#: src/files.c:1247 src/files.c:1303
+#, c-format
+msgid "Error renaming %s:"
+msgstr "Fel vid namnbyte av %s:"
 
 #: src/attribsInspector.c:451
 msgid "Exec"
 msgstr "Kör"
 
-#: src/attribsInspector.c:452 src/FSMCList.c:103
-msgid "Owner"
-msgstr "Ägare"
+#: src/FSMenu.c:474 src/FSMenu.c:509 src/FSMenu.c:544 src/FSMenu.c:579
+#: src/FSMenu.c:758
+msgid "Exec Error"
+msgstr "Körfel"
+
+#: src/FSPrefs.c:636
+msgid "Exec Str:"
+msgstr "Kör:"
+
+#: src/FSPrefs.c:430
+msgid "Exec:"
+msgstr "Kör:"
+
+#: src/FSInspector.c:288
+msgid "Executable"
+msgstr "Körbar"
+
+#: src/exeInspector.c:266 src/exeInspector.c:267
+msgid "Executable Inspector"
+msgstr "Körinspektör"
+
+#: src/FSPrefs.c:643
+msgid "Exes:"
+msgstr "Körbara:"
+
+#: src/FSFinder.c:53
+msgid "FSViewer - Finder"
+msgstr "FSViewer - Sök"
+
+#: src/FSFileView.c:619
+#, c-format
+msgid "FSViewer - we've got a problem!"
+msgstr "FSViewer - vi har ett problem!"
+
+#: src/FSInspector.c:264
+msgid "FSViewer Inspector"
+msgstr "FSViewer-inspektör"
+
+#: src/FSPanel.c:165
+#, c-format
+msgid "FSViewer Release %s"
+msgstr "FSViewer-utgåva %s"
+
+#: src/FSMenu.c:872 src/FSMenu.c:873
+msgid "File"
+msgstr "Fil"
+
+#: src/FSMenu.c:996
+msgid "File Edit..."
+msgstr "Fil Redigera..."
+
+#: src/extnInspector.c:520 src/extnInspector.c:521
+msgid "File Extensions Inspector"
+msgstr "Filändelseinspektör"
+
+#: src/FSMenu.c:998
+msgid "File Link..."
+msgstr "Fil Länk..."
+
+#: src/FSMenu.c:1000
+msgid "File New..."
+msgstr "Fil Ny..."
+
+#: src/files.c:1104
+msgid "File Operation"
+msgstr "Filoperation"
+
+#: src/files.c:839 src/files.c:890 src/files.c:933 src/files.c:962
+#: src/files.c:976 src/files.c:1012 src/files.c:1033 src/files.c:1043
+#: src/files.c:1066 src/files.c:1091 src/files.c:1115 src/files.c:1143
+#: src/files.c:1157 src/files.c:1193 src/files.c:1215 src/files.c:1225
+#: src/files.c:1248 src/files.c:1277 src/files.c:1304 src/files.c:1337
+#: src/files.c:1377 src/files.c:1397 src/files.c:1424 src/FSMenu.c:294
+#: src/FSMenu.c:348 src/FSMenu.c:703
+msgid "File Operation Error"
+msgstr "Filoperationsfel"
+
+#: src/FSMenu.c:1002
+msgid "File Rename..."
+msgstr "Fil Byt namn..."
+
+#: src/FSMenu.c:1004
+msgid "File Run..."
+msgstr "Fil Kör..."
+
+#: src/FSFileView.c:308
+msgid "FileView"
+msgstr "Filvisning"
+
+#: src/FSPanel.c:1508 src/iconInspector.c:274
+msgid "Files"
+msgstr "Filer"
+
+#: src/FSMenu.c:408
+msgid "Filter Current FileView"
+msgstr "Filtrera aktuell filvy"
+
+#: src/FSMenu.c:948
+msgid "Filter..."
+msgstr "Filter..."
+
+#: src/FSMenu.c:960
+msgid "Finder"
+msgstr "Sökare"
 
 #: src/attribsInspector.c:452 src/FSMCList.c:110
 msgid "Group"
 msgstr "Grupp"
 
-#: src/attribsInspector.c:452
-msgid "Other"
-msgstr "Annan"
+#: src/attribsInspector.c:372
+msgid "Group:"
+msgstr "Grupp:"
 
-#: src/attribsInspector.c:501
-msgid " Permissions "
-msgstr " Rättigheter "
+#: src/FSMenu.c:867
+msgid "Help..."
+msgstr "Hjälp..."
 
-#: src/attribsInspector.c:512
-msgid " Changed "
-msgstr " Ändrad "
+#: src/FSMenu.c:1013
+msgid "Hide"
+msgstr "Göm"
 
-#: src/attribsInspector.c:531 src/editInspector.c:288 src/exeInspector.c:215
-#: src/extnInspector.c:414 src/iconInspector.c:215 src/viewInspector.c:293
-msgid "Revert"
-msgstr "Återgå"
+#: src/FSMenu.c:1015
+msgid "Hide Others"
+msgstr "Göm andra"
+
+#: src/FSInspector.c:285 src/FSMenu.c:936
+msgid "Icon"
+msgstr "Ikon"
+
+#: src/iconInspector.c:308 src/iconInspector.c:309
+msgid "Icon Inspector"
+msgstr "Ikoninspektör"
+
+#: src/FSPanel.c:940 src/FSPrefs.c:1202 src/FSPrefs.c:1426 src/FSPrefs.c:1455
+msgid "Icon Select"
+msgstr "Ikonval"
+
+#: src/FSPanel.c:685
+msgid "Icon Selector"
+msgstr "Ikonväljare"
+
+#: src/FSMenu.c:48 src/FSMenu.c:857 src/FSMenu.c:858 src/FSPanel.c:102
+msgid "Info"
+msgstr "Info"
+
+#: src/FSMenu.c:859
+msgid "Info Panel..."
+msgstr "Infopanel..."
+
+#: src/exeInspector.c:200 src/iconInspector.c:200
+msgid "Inspector Error"
+msgstr "Inspektörsfel"
+
+#: src/FSMenu.c:958
+msgid "Inspector..."
+msgstr "Inspektör..."
+
+#: src/FSMCList.c:89
+msgid "Last Changed"
+msgstr "Senast ändrad"
+
+#: src/FSMenu.c:54 src/FSPanel.c:280
+msgid "Legal"
+msgstr "Juridiskt"
+
+#: src/FSMenu.c:861
+msgid "Legal..."
+msgstr "Juridiskt..."
+
+#: src/FSMenu.c:54
+msgid "License"
+msgstr "Licens"
+
+#: src/FSMenu.c:208
+msgid "Link Name"
+msgstr "Länknamn"
+
+#: src/attribsInspector.c:322
+msgid "Link To:"
+msgstr "Länk till:"
+
+#: src/FSMenu.c:208
+msgid "Link: Enter the link name"
+msgstr "Länk: Ange länkens namn"
+
+#: src/files.c:1398
+msgid "Link: Source and destination are identical"
+msgstr "Länk: Källa och mål är identiska"
+
+#: src/files.c:1409
+#, c-format
+msgid "Link: file %s already exists"
+msgstr "Länk: fil %s existerar redan"
+
+#: src/files.c:1361
+#, c-format
+msgid "Link: file %s already exists at destination"
+msgstr "Länk: fil %s existerar redan i målkatalog"
+
+#: src/FSMenu.c:939
+msgid "List"
+msgstr "Lista"
+
+#: src/FSPanel.c:186
+#, c-format
+msgid "Memory: %s"
+msgstr "Minne: %s"
+
+#: src/FSMenu.c:431 src/FSMenu.c:439 src/FSMenu.c:614 src/FSMenu.c:654
+#: src/FSMenu.c:769
+msgid "Menu Error"
+msgstr "Menyfel"
+
+#: src/FSMenu.c:606
+msgid "Menu Info"
+msgstr "Menyinfo"
+
+#: src/FSPrefs.c:234
+msgid "Menu Name"
+msgstr "Menynamn"
+
+#: src/FSMenu.c:986
+msgid "Miniaturize Window"
+msgstr "Minimera fönster"
+
+#: src/FSPrefs.c:243
+msgid "Mnt:"
+msgstr "Mont:"
+
+#: src/FSMenu.c:834
+msgid "Mount"
+msgstr "Montera"
+
+#: src/FSPrefs.c:250
+msgid "Mount Point"
+msgstr "Monteringspunkt"
+
+#: src/FSPrefs.c:313
+msgid "Mount:"
+msgstr "Montera:"
+
+#: src/files.c:1158 src/files.c:1226
+msgid "Move: Source and destination are identical"
+msgstr "Flytta: Källa och mål är identiska"
+
+#: src/files.c:1235
+#, c-format
+msgid "Move: file %s already exists"
+msgstr "Flytta: fil %s existerar redan"
+
+#: src/files.c:1179
+#, c-format
+msgid "Move: file %s already exists at destination"
+msgstr "Flytta: fil %s existerar redan i målkatalogen"
+
+#: src/FSMCList.c:75
+msgid "Name"
+msgstr "Namn"
+
+#: src/FSPrefs.c:227
+msgid "Name:"
+msgstr "Namn:"
+
+#: src/FSPrefs.c:277
+msgid "New"
+msgstr "Ny"
+
+#: src/FSMenu.c:337
+msgid "New Dir: Enter the new directory name"
+msgstr "Ny katalog: Ange nytt katalognamn"
+
+#: src/FSMenu.c:283
+msgid "New File: Enter the new file name"
+msgstr "Ny fil: Ange nytt filnamn"
+
+#: src/FSMenu.c:880
+msgid "New Folder"
+msgstr "Ny mapp"
+
+#: src/FSMenu.c:140
+msgid "New View"
+msgstr "Ny vy"
+
+#: src/FSMenu.c:950
+msgid "New Viewer..."
+msgstr "Ny visare..."
+
+#: src/FSViewer.c:74
+msgid "No valid value for ICONDIR found. Even default directory is broken!"
+msgstr ""
+
+#: src/FSViewer.c:88
+#, c-format
+msgid "No value for ICONDIR found! May be your %s preferences file is broken."
+msgstr ""
+
+#: src/files.c:961 src/files.c:1142
+#, c-format
+msgid "No write access to %s"
+msgstr "Ingen skrivtillgång till %s"
 
 #: src/attribsInspector.c:538 src/exeInspector.c:202 src/extnInspector.c:421
 #: src/FSMenu.c:142 src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285
@@ -99,172 +729,84 @@ msgstr "Återgå"
 msgid "OK"
 msgstr "OK"
 
-#: src/attribsInspector.c:582 src/attribsInspector.c:583
-msgid "Attributes Inspector"
-msgstr "Attributinspektör"
+#: src/FSMenu.c:874
+msgid "Open"
+msgstr "Öppna"
 
-#: src/editInspector.c:224 src/viewInspector.c:228
-msgid "Click button to edit selected document"
-msgstr "Klicka på knappen för att redigera valt dokument"
+#: src/FSMenu.c:877
+msgid "Open as Folder"
+msgstr "Öppna som mapp"
 
-#: src/editInspector.c:239 src/viewInspector.c:243
-msgid "Default:"
-msgstr "Förval:"
-
-#: src/editInspector.c:265 src/viewInspector.c:271
-msgid ""
-"Click \"Set Default\" to set default application for all documents with this "
-"extension."
-msgstr ""
-"Klicka \"Sätt förval\" för att ställa in förvalt program för alla dokument "
-"med denna ändelse."
-
-#: src/editInspector.c:295 src/exeInspector.c:222 src/iconInspector.c:222
-#: src/viewInspector.c:300
-msgid "Set Default"
-msgstr "Sätt förval"
-
-#: src/editInspector.c:346 src/editInspector.c:347
-msgid "Editor Inspector"
-msgstr "Redigeringsinspektör"
-
-#: src/exeInspector.c:101
-msgid "Enter command plus arguments into the textfield below:"
-msgstr "Ange kommando plus argument i textfältet nedan:"
-
-#: src/exeInspector.c:117
-msgid "Shortcuts:"
-msgstr "Genvägar:"
-
-#: src/exeInspector.c:175
-msgid "associated file to open"
-msgstr "associerad fil att öppna"
-
-#: src/exeInspector.c:200 src/iconInspector.c:200
-msgid "Inspector Error"
-msgstr "Inspektörsfel"
-
-#: src/exeInspector.c:201 src/iconInspector.c:201
-msgid "This function has not yet been implemented."
-msgstr "Denna funktion har ännu inte implementerats."
-
-#: src/exeInspector.c:266 src/exeInspector.c:267
-msgid "Executable Inspector"
-msgstr "Körinspektör"
-
-#: src/extnInspector.c:376
-msgid "Click \"OK\" to update this application's file extension list"
-msgstr "Klicka \"OK\" för att uppdatera detta programs filändelselista"
-
-#: src/extnInspector.c:434
-msgid "Add"
-msgstr "Lägg till"
-
-#: src/extnInspector.c:441 src/FSPrefs.c:295
-msgid "Remove"
-msgstr "Ta bort"
-
-#: src/extnInspector.c:448
-msgid "Click To Set Icon"
-msgstr "Klicka för att ställa in ikon"
-
-#: src/extnInspector.c:520 src/extnInspector.c:521
-msgid "File Extensions Inspector"
-msgstr "Filändelseinspektör"
-
-#: src/files.c:261
-#, c-format
-msgid "%s GetFileInfo %d: Stat Error for %s\n"
-msgstr "%s GetFileInfo %d: Statusfel för %s\n"
-
-#: src/files.c:838 src/files.c:1011 src/files.c:1065 src/files.c:1192
-#, c-format
-msgid "Error copying %s:"
-msgstr "Fel vid kopiering av %s:"
-
-#: src/files.c:839 src/files.c:890 src/files.c:933 src/files.c:962
-#: src/files.c:976 src/files.c:1012 src/files.c:1033 src/files.c:1043
-#: src/files.c:1066 src/files.c:1091 src/files.c:1115 src/files.c:1143
-#: src/files.c:1157 src/files.c:1193 src/files.c:1215 src/files.c:1225
-#: src/files.c:1248 src/files.c:1277 src/files.c:1304 src/files.c:1337
-#: src/files.c:1377 src/files.c:1397 src/files.c:1424 src/FSMenu.c:294
-#: src/FSMenu.c:348 src/FSMenu.c:703
-msgid "File Operation Error"
-msgstr "Filoperationsfel"
-
-#: src/files.c:889
-#, c-format
-msgid "Unrecognized File type: %s"
-msgstr "Okänd filtyp: %s"
-
-#: src/files.c:932 src/files.c:1114
-#, c-format
-msgid "Error deleting %s:"
-msgstr "Fel vid borttagning av %s:"
-
-#: src/files.c:961 src/files.c:1142
-#, c-format
-msgid "No write access to %s"
-msgstr "Ingen skrivtillgång till %s"
-
-#: src/files.c:977 src/files.c:1044 src/files.c:1338
-msgid "Copy: Source and destination are identical"
-msgstr "Kopiera: Källa och mål är identiska"
-
-#: src/files.c:998
-#, c-format
-msgid "Copy: file %s already exists at destination"
-msgstr "Kopiera: fil %s existerar redan i målkatalog"
+#: src/attribsInspector.c:452
+msgid "Other"
+msgstr "Annan"
 
 #: src/files.c:1000 src/files.c:1054 src/files.c:1181 src/files.c:1236
 #: src/files.c:1290 src/files.c:1363 src/files.c:1410
 msgid "Overwrite?"
 msgstr "Skriva över?"
 
-#: src/files.c:1034
-msgid "Cannot copy a directory to a file"
-msgstr "Kan inte kopiera en katalog till en fil"
+#: src/attribsInspector.c:452 src/FSMCList.c:103
+msgid "Owner"
+msgstr "Ägare"
 
-#: src/files.c:1053
+#: src/attribsInspector.c:357
+msgid "Owner:"
+msgstr "Ägare:"
+
+#: src/FSMenu.c:905
+msgid "Paste"
+msgstr "Klistra in"
+
+#: src/FSInspector.c:136
+msgid "Path: "
+msgstr "Sökväg: "
+
+#: src/FSInspector.c:138
 #, c-format
-msgid "Copy: file %s already exists"
-msgstr "Kopiera: fil %s existerar redan"
+msgid "Path: %s"
+msgstr "Sökväg: %s"
 
-#: src/files.c:1091
-msgid "Cannot delete . or .."
-msgstr "Kan inte ta bort . eller .."
+#: src/FSMCList.c:96
+msgid "Permissions"
+msgstr "Rättigheter"
 
-#: src/files.c:1102
+#: src/FSMenu.c:60 src/FSMenu.c:66
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: src/FSMenu.c:863
+msgid "Preferences..."
+msgstr "Inställningar..."
+
+#: src/FSMenu.c:963
+msgid "Processes..."
+msgstr "Processer..."
+
+#: src/FSPanel.c:179
 #, c-format
-msgid "Do you REALLY wish to delete %s"
-msgstr "Vill du VERKLIGEN ta bort %s"
+msgid "Processor: %s"
+msgstr "Processor: %s"
 
-#: src/files.c:1104
-msgid "File Operation"
-msgstr "Filoperation"
+#: src/FSMenu.c:1017
+msgid "Quit"
+msgstr "Avsluta"
 
-#: src/files.c:1158 src/files.c:1226
-msgid "Move: Source and destination are identical"
-msgstr "Flytta: Källa och mål är identiska"
+#: src/attribsInspector.c:451
+msgid "Read"
+msgstr "Läs"
 
-#: src/files.c:1179
-#, c-format
-msgid "Move: file %s already exists at destination"
-msgstr "Flytta: fil %s existerar redan i målkatalogen"
+#: src/extnInspector.c:441 src/FSPrefs.c:295
+msgid "Remove"
+msgstr "Ta bort"
 
-#: src/files.c:1216
-msgid "Cannot move a directory to a file"
-msgstr "Kan inte flytta en katalog till en fil"
+#: src/FSMenu.c:235
+msgid "Rename File"
+msgstr "Byt namn på fil"
 
-#: src/files.c:1235
-#, c-format
-msgid "Move: file %s already exists"
-msgstr "Flytta: fil %s existerar redan"
-
-#: src/files.c:1247 src/files.c:1303
-#, c-format
-msgid "Error renaming %s:"
-msgstr "Fel vid namnbyte av %s:"
+#: src/FSMenu.c:235
+msgid "Rename: Enter the new file name"
+msgstr "Namnbyte: Ange nytt filnamn"
 
 #: src/files.c:1278
 msgid "Rename: Source and destination are identical"
@@ -275,24 +817,210 @@ msgstr "Namnbyte: Källa och mål är identiska"
 msgid "Rename: file %s already exists"
 msgstr "Namnbyte: fil %s existerar redan"
 
-#: src/files.c:1361
-#, c-format
-msgid "Link: file %s already exists at destination"
-msgstr "Länk: fil %s existerar redan i målkatalog"
+#: src/attribsInspector.c:531 src/editInspector.c:288 src/exeInspector.c:215
+#: src/extnInspector.c:414 src/iconInspector.c:215 src/viewInspector.c:293
+msgid "Revert"
+msgstr "Återgå"
 
-#: src/files.c:1376 src/files.c:1423
-#, c-format
-msgid "Error linking %s to %s"
-msgstr "Fel vid länkning av %s till %s"
+#: src/FSFinder.c:90
+msgid "Search String:"
+msgstr "Söksträng:"
 
-#: src/files.c:1398
-msgid "Link: Source and destination are identical"
-msgstr "Länk: Källa och mål är identiska"
+#: src/FSInspector.c:283
+msgid "Select"
+msgstr "Välj"
 
-#: src/files.c:1409
+#: src/FSMenu.c:909
+msgid "Select All"
+msgstr "Välj alla"
+
+#: src/FSMenu.c:994 src/FSMenu.c:995
+msgid "Services"
+msgstr "Tjänster"
+
+#: src/FSPrefs.c:456 src/FSPrefs.c:552 src/FSPrefs.c:653 src/FSPrefs.c:695
+msgid "Set"
+msgstr "Ställ in"
+
+#: src/FSPanel.c:861
+msgid "Set As Default Editor"
+msgstr "Ställ in som förvald redigerare"
+
+#: src/FSPanel.c:855
+msgid "Set As Default Viewer"
+msgstr "Ställ in som förvald visare"
+
+#: src/editInspector.c:295 src/exeInspector.c:222 src/iconInspector.c:222
+#: src/viewInspector.c:300
+msgid "Set Default"
+msgstr "Sätt förval"
+
+#: src/exeInspector.c:117
+msgid "Shortcuts:"
+msgstr "Genvägar:"
+
+#: src/FSMenu.c:946
+msgid "Show .files"
+msgstr "Visa .filer"
+
+#: src/FSMenu.c:1006
+msgid "Show Image"
+msgstr "Visa bild"
+
+#: src/FSMCList.c:82
+msgid "Size"
+msgstr "Storlek"
+
+#: src/attribsInspector.c:342
+msgid "Size:"
+msgstr "Storlek:"
+
+#: src/FSMenu.c:941
+msgid "Sort"
+msgstr "Sortera"
+
+#: src/FSPanel.c:158
 #, c-format
-msgid "Link: file %s already exists"
-msgstr "Länk: fil %s existerar redan"
+msgid "System Release %s"
+msgstr "Systemutgåva%s"
+
+#: src/exeInspector.c:201 src/iconInspector.c:201
+msgid "This function has not yet been implemented."
+msgstr "Denna funktion har ännu inte implementerats."
+
+#: src/FSMenu.c:432 src/FSMenu.c:440 src/FSMenu.c:615 src/FSMenu.c:655
+#: src/FSMenu.c:770
+msgid "This menu option has not yet been implemented"
+msgstr "Denna menypost har ännu inte implementerats"
+
+#: src/FSMenu.c:607
+msgid "This option is only available via the window manager."
+msgstr "Detta alternativ är endast tillgängligt via fönsterhanteraren."
+
+#: src/FSMenu.c:956 src/FSMenu.c:957
+msgid "Tools"
+msgstr "Verktyg"
+
+#: src/FSMenu.c:888
+msgid "UnCompress"
+msgstr "Dekomprimera"
+
+#: src/FSViewer.c:500
+msgid "Unable to Open Display!"
+msgstr "Kunde inte öppna display!"
+
+#: src/FSViewer.c:493
+#, c-format
+msgid "Unable to allocate memory for %s %s %d\n"
+msgstr "Kunde inte allokera minne för %s %s %d\n"
+
+#: src/FSInspector.c:340
+#, c-format
+msgid "Unable to allocate memory for FSInspector %s %d\n"
+msgstr "Kunde inte allokera minne för FSInspector %s %d\n"
+
+#: src/FSMenu.c:757
+#, c-format
+msgid "Unable to compress selection."
+msgstr "Kunde inte komprimera valet."
+
+#: src/FSViewer.c:521
+#, c-format
+msgid "Unable to create a FileView instance %s %s %d"
+msgstr "Kunde inte skapa en FileView-instans %s %s %d"
+
+#: src/FSViewer.c:428
+#, c-format
+msgid "Unable to get RContext: %s %s %d\n"
+msgstr "Kunde inte hämta RContext: %s %s %d\n"
+
+#: src/FSUtils.c:158 src/FSUtils.c:170 src/FSUtils.c:316
+#, c-format
+msgid "Unavailable"
+msgstr "Ej tillgänglig"
+
+#: src/FSPrefs.c:1041 src/FSPrefs.c:1085 src/FSPrefs.c:1322 src/FSPrefs.c:1401
+msgid "Undelete"
+msgstr "Återhämta"
+
+#: src/FSMenu.c:836
+msgid "Unmount"
+msgstr "Avmontera"
+
+#: src/FSPrefs.c:330
+msgid "Unmount:"
+msgstr "Avmontera:"
+
+#: src/files.c:889
+#, c-format
+msgid "Unrecognized File type: %s"
+msgstr "Okänd filtyp: %s"
+
+#: src/FSPrefs.c:286
+msgid "Update"
+msgstr "Uppdatera"
+
+#: src/FSMenu.c:952
+msgid "Update View"
+msgstr "Uppdatera vy"
+
+#: src/FSViewer.c:106
+#, c-format
+msgid "Usage: %s [options]\n"
+msgstr "Användning: %s [flaggor]\n"
+
+#: src/FSViewer.c:53
+#, c-format
+msgid "User database entry for ICONDIR is not valid: %s. Taking default value."
+msgstr ""
+
+#: src/FSPrefs.c:704
+msgid "Variables"
+msgstr "Variabler"
+
+#: src/FSMenu.c:931 src/FSMenu.c:932
+msgid "View"
+msgstr "Visa"
+
+#: src/FSPrefs.c:500
+msgid "View:"
+msgstr "Visa:"
+
+#: src/FSInspector.c:286
+msgid "Viewer"
+msgstr "Visare"
+
+#: src/viewInspector.c:351 src/viewInspector.c:352
+msgid "Viewer Inspector"
+msgstr "Visningsinspektör"
+
+#: src/FSUtils.c:754
+#, c-format
+msgid "Window Maker domain (%s) is corrupted!"
+msgstr "Window Maker-domän (%s) är skadad!"
+
+#: src/FSPanel.c:172
+#, c-format
+msgid "Window Server %d"
+msgstr "Fönsterserver %d"
+
+#: src/FSMenu.c:970 src/FSMenu.c:971
+msgid "Windows"
+msgstr "Fönster"
+
+#: src/attribsInspector.c:451
+msgid "Write"
+msgstr "Skriv"
+
+#: src/FSFileView.c:300
+#, c-format
+msgid "Wrong HSIZE value: %d. Using default."
+msgstr "Fel HSIZE-värde: %d. Använder förval."
+
+#: src/FSFileView.c:294
+#, c-format
+msgid "Wrong WSIZE value: %d. Using default."
+msgstr "Fel WSIZE-värde: %d. Använder förval."
 
 #: src/FSFileView.c:282
 #, c-format
@@ -304,754 +1032,27 @@ msgstr "Fel XPOS-värde: %d. Använder förval."
 msgid "Wrong YPOS value: %d. Using default."
 msgstr "Fel YPOS-värde: %d. Använder förval."
 
-#: src/FSFileView.c:294
-#, c-format
-msgid "Wrong WSIZE value: %d. Using default."
-msgstr "Fel WSIZE-värde: %d. Använder förval."
-
-#: src/FSFileView.c:300
-#, c-format
-msgid "Wrong HSIZE value: %d. Using default."
-msgstr "Fel HSIZE-värde: %d. Använder förval."
-
-#: src/FSFileView.c:308
-msgid "FileView"
-msgstr "Filvisning"
-
-#: src/FSFileView.c:619
-#, c-format
-msgid "FSViewer - we've got a problem!"
-msgstr "FSViewer - vi har ett problem!"
-
-#: src/FSFinder.c:53
-msgid "FSViewer - Finder"
-msgstr "FSViewer - Sök"
-
-#: src/FSFinder.c:90
-msgid "Search String:"
-msgstr "Söksträng:"
-
-#: src/FSInspector.c:70
-#, c-format
-msgid "%s %d: Stat Error"
-msgstr "%s %d: Statusfel"
-
-#: src/FSInspector.c:136
-msgid "Path: "
-msgstr "Sökväg: "
-
-#: src/FSInspector.c:138
-#, c-format
-msgid "Path: %s"
-msgstr "Sökväg: %s"
-
-#: src/FSInspector.c:264
-msgid "FSViewer Inspector"
-msgstr "FSViewer-inspektör"
-
-#: src/FSInspector.c:283
-msgid "Select"
-msgstr "Välj"
-
-#: src/FSInspector.c:284
-msgid "Attributes"
-msgstr "Attribut"
-
-#: src/FSInspector.c:285 src/FSMenu.c:936
-msgid "Icon"
-msgstr "Ikon"
-
-#: src/FSInspector.c:286
-msgid "Viewer"
-msgstr "Visare"
-
-#: src/FSInspector.c:287
-msgid "Editor"
-msgstr "Redigerare"
-
-#: src/FSInspector.c:288
-msgid "Executable"
-msgstr "Körbar"
-
-#: src/FSInspector.c:340
-#, c-format
-msgid "Unable to allocate memory for FSInspector %s %d\n"
-msgstr "Kunde inte allokera minne för FSInspector %s %d\n"
-
-#: src/FSMCList.c:75
-msgid "Name"
-msgstr "Namn"
-
-#: src/FSMCList.c:82
-msgid "Size"
-msgstr "Storlek"
-
-#: src/FSMCList.c:89
-msgid "Last Changed"
-msgstr "Senast ändrad"
-
-#: src/FSMCList.c:96
-msgid "Permissions"
-msgstr "Rättigheter"
-
-#: src/FSMenu.c:48 src/FSMenu.c:857 src/FSMenu.c:858 src/FSPanel.c:102
-msgid "Info"
-msgstr "Info"
-
-#: src/FSMenu.c:54 src/FSPanel.c:280
-msgid "Legal"
-msgstr "Juridiskt"
-
-#: src/FSMenu.c:54
-msgid "License"
-msgstr "Licens"
-
-#: src/FSMenu.c:60 src/FSMenu.c:66
-msgid "Preferences"
-msgstr "Inställningar"
-
-#: src/FSMenu.c:140
-msgid "New View"
-msgstr "Ny vy"
-
-#: src/FSMenu.c:141
-msgid "Error creating New FileViewer"
-msgstr "Fel vid skapandet av ny filvisare"
-
-#: src/FSMenu.c:208
-msgid "Link Name"
-msgstr "Länknamn"
-
-#: src/FSMenu.c:208
-msgid "Link: Enter the link name"
-msgstr "Länk: Ange länkens namn"
-
-#: src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285 src/FSMenu.c:339
-#: src/FSMenu.c:416 src/FSPanel.c:621 src/FSPanel.c:866 src/FSPanel.c:1529
-#: src/FSPrefs.c:153 src/FSUtils.c:852
-msgid "Cancel"
-msgstr "Avbryt"
-
-#: src/FSMenu.c:235
-msgid "Rename File"
-msgstr "Byt namn på fil"
-
-#: src/FSMenu.c:235
-msgid "Rename: Enter the new file name"
-msgstr "Namnbyte: Ange nytt filnamn"
-
-#: src/FSMenu.c:282
-msgid "Create a new file"
-msgstr "Skapa en ny fil"
-
-#: src/FSMenu.c:283
-msgid "New File: Enter the new file name"
-msgstr "Ny fil: Ange nytt filnamn"
-
-#: src/FSMenu.c:293
-#, c-format
-msgid "Error creating file %s"
-msgstr "Fel vid skapandet av fil %s"
-
-#: src/FSMenu.c:336
-msgid "Create a new directory"
-msgstr "Skapa en ny katalog"
-
-#: src/FSMenu.c:337
-msgid "New Dir: Enter the new directory name"
-msgstr "Ny katalog: Ange nytt katalognamn"
-
-#: src/FSMenu.c:347 src/FSMenu.c:702
-#, c-format
-msgid "Error creating folder %s"
-msgstr "Fel vid skapandet av mapp %s"
-
-#: src/FSMenu.c:408
-msgid "Filter Current FileView"
-msgstr "Filtrera aktuell filvy"
-
-#: src/FSMenu.c:409
-msgid "Enter Filter Value:"
-msgstr "Ange filtervärde:"
-
-#: src/FSMenu.c:431 src/FSMenu.c:439 src/FSMenu.c:614 src/FSMenu.c:654
-#: src/FSMenu.c:769
-msgid "Menu Error"
-msgstr "Menyfel"
-
-#: src/FSMenu.c:432 src/FSMenu.c:440 src/FSMenu.c:615 src/FSMenu.c:655
-#: src/FSMenu.c:770
-msgid "This menu option has not yet been implemented"
-msgstr "Denna menypost har ännu inte implementerats"
-
-#: src/FSMenu.c:474 src/FSMenu.c:509 src/FSMenu.c:544 src/FSMenu.c:579
-#: src/FSMenu.c:758
-msgid "Exec Error"
-msgstr "Körfel"
-
-#: src/FSMenu.c:590
-#, c-format
-msgid "%s %d: Unable to create FSFinder"
-msgstr "%s %d: Kunde inte skapa FSFinder"
-
-#: src/FSMenu.c:606
-msgid "Menu Info"
-msgstr "Menyinfo"
-
-#: src/FSMenu.c:607
-msgid "This option is only available via the window manager."
-msgstr "Detta alternativ är endast tillgängligt via fönsterhanteraren."
-
-#: src/FSMenu.c:757
-#, c-format
-msgid "Unable to compress selection."
-msgstr "Kunde inte komprimera valet."
-
-#: src/FSMenu.c:834
-msgid "Mount"
-msgstr "Montera"
-
-#: src/FSMenu.c:836
-msgid "Unmount"
-msgstr "Avmontera"
-
-#: src/FSMenu.c:838
-msgid "Eject"
-msgstr "Mata ut"
-
-#: src/FSMenu.c:840
-msgid "Close"
-msgstr "Stäng"
-
-#: src/FSMenu.c:859
-msgid "Info Panel..."
-msgstr "Infopanel..."
-
-#: src/FSMenu.c:861
-msgid "Legal..."
-msgstr "Juridiskt..."
-
-#: src/FSMenu.c:863
-msgid "Preferences..."
-msgstr "Inställningar..."
-
-#: src/FSMenu.c:867
-msgid "Help..."
-msgstr "Hjälp..."
-
-#: src/FSMenu.c:872 src/FSMenu.c:873
-msgid "File"
-msgstr "Fil"
-
-#: src/FSMenu.c:874
-msgid "Open"
-msgstr "Öppna"
-
-#: src/FSMenu.c:877
-msgid "Open as Folder"
-msgstr "Öppna som mapp"
-
-#: src/FSMenu.c:880
-msgid "New Folder"
-msgstr "Ny mapp"
-
-#: src/FSMenu.c:882
-msgid "Duplicate"
-msgstr "Duplicera"
-
-#: src/FSMenu.c:885
-msgid "Compress"
-msgstr "Komprimera"
-
-#: src/FSMenu.c:888
-msgid "UnCompress"
-msgstr "Dekomprimera"
-
-#: src/FSMenu.c:891 src/FSPanel.c:621
-msgid "Destroy"
-msgstr "Förstör"
-
-#: src/FSMenu.c:894
-msgid "Empty Recycler"
-msgstr "Tom papperskorg"
-
-#: src/FSMenu.c:899 src/FSMenu.c:900
-msgid "Edit"
-msgstr "Redigera"
-
-#: src/FSMenu.c:901
-msgid "Cut"
-msgstr "Klipp ut"
-
-#: src/FSMenu.c:903
-msgid "Copy"
-msgstr "Kopiera"
-
-#: src/FSMenu.c:905
-msgid "Paste"
-msgstr "Klistra in"
-
-#: src/FSMenu.c:907 src/FSPrefs.c:464 src/FSPrefs.c:560 src/FSPrefs.c:1043
-#: src/FSPrefs.c:1089 src/FSPrefs.c:1327 src/FSPrefs.c:1406
-msgid "Delete"
-msgstr "Ta bort"
-
-#: src/FSMenu.c:909
-msgid "Select All"
-msgstr "Välj alla"
-
-#: src/FSMenu.c:912
-msgid "DeSelect All"
-msgstr "Välj ingen"
-
-#: src/FSMenu.c:917 src/FSMenu.c:918
-msgid "Disk"
-msgstr "Disk"
-
-#: src/FSMenu.c:931 src/FSMenu.c:932
-msgid "View"
-msgstr "Visa"
-
-#: src/FSMenu.c:933
-msgid "Browse"
-msgstr "Bläddra"
-
-#: src/FSMenu.c:939
-msgid "List"
-msgstr "Lista"
-
-#: src/FSMenu.c:941
-msgid "Sort"
-msgstr "Sortera"
-
-#: src/FSMenu.c:946
-msgid "Show .files"
-msgstr "Visa .filer"
-
-#: src/FSMenu.c:948
-msgid "Filter..."
-msgstr "Filter..."
-
-#: src/FSMenu.c:950
-msgid "New Viewer..."
-msgstr "Ny visare..."
-
-#: src/FSMenu.c:952
-msgid "Update View"
-msgstr "Uppdatera vy"
-
-#: src/FSMenu.c:956 src/FSMenu.c:957
-msgid "Tools"
-msgstr "Verktyg"
-
-#: src/FSMenu.c:958
-msgid "Inspector..."
-msgstr "Inspektör..."
-
-#: src/FSMenu.c:960
-msgid "Finder"
-msgstr "Sökare"
-
-#: src/FSMenu.c:963
-msgid "Processes..."
-msgstr "Processer..."
-
-#: src/FSMenu.c:966
-msgid "Console..."
-msgstr "Konsoll..."
-
-#: src/FSMenu.c:970 src/FSMenu.c:971
-msgid "Windows"
-msgstr "Fönster"
-
-#: src/FSMenu.c:986
-msgid "Miniaturize Window"
-msgstr "Minimera fönster"
-
-#: src/FSMenu.c:989
-msgid "Close Window"
-msgstr "Stäng fönster"
-
-#: src/FSMenu.c:994 src/FSMenu.c:995
-msgid "Services"
-msgstr "Tjänster"
-
-#: src/FSMenu.c:996
-msgid "File Edit..."
-msgstr "Fil Redigera..."
-
-#: src/FSMenu.c:998
-msgid "File Link..."
-msgstr "Fil Länk..."
-
-#: src/FSMenu.c:1000
-msgid "File New..."
-msgstr "Fil Ny..."
-
-#: src/FSMenu.c:1002
-msgid "File Rename..."
-msgstr "Fil Byt namn..."
-
-#: src/FSMenu.c:1004
-msgid "File Run..."
-msgstr "Fil Kör..."
-
-#: src/FSMenu.c:1006
-msgid "Show Image"
-msgstr "Visa bild"
-
-#: src/FSMenu.c:1013
-msgid "Hide"
-msgstr "Göm"
-
-#: src/FSMenu.c:1015
-msgid "Hide Others"
-msgstr "Göm andra"
-
-#: src/FSMenu.c:1017
-msgid "Quit"
-msgstr "Avsluta"
-
-#: src/FSPanel.c:158
-#, c-format
-msgid "System Release %s"
-msgstr "Systemutgåva%s"
-
-#: src/FSPanel.c:165
-#, c-format
-msgid "FSViewer Release %s"
-msgstr "FSViewer-utgåva %s"
-
-#: src/FSPanel.c:172
-#, c-format
-msgid "Window Server %d"
-msgstr "Fönsterserver %d"
-
-#: src/FSPanel.c:179
-#, c-format
-msgid "Processor: %s"
-msgstr "Processor: %s"
-
-#: src/FSPanel.c:186
-#, c-format
-msgid "Memory: %s"
-msgstr "Minne: %s"
-
-#: src/FSPanel.c:193
-#, c-format
-msgid "Disk: %s"
-msgstr "Disk: %s"
-
-#: src/FSPanel.c:618
-#, c-format
-msgid "Do you really want to destroy %s?"
-msgstr "Vill du verkligen förstöra %s?"
-
-#: src/FSPanel.c:685
-msgid "Icon Selector"
-msgstr "Ikonväljare"
-
-#: src/FSPanel.c:814
-msgid "Click to set icon for the selected file type."
-msgstr "Klicka för att ställa in ikon för den valda filtypen."
-
-#: src/FSPanel.c:841
-msgid "Enter App Executable String:"
-msgstr "Ange programkörningssträng:"
-
-#: src/FSPanel.c:855
-msgid "Set As Default Viewer"
-msgstr "Ställ in som förvald visare"
-
-#: src/FSPanel.c:861
-msgid "Set As Default Editor"
-msgstr "Ställ in som förvald redigerare"
-
-#: src/FSPanel.c:940 src/FSPrefs.c:1202 src/FSPrefs.c:1426 src/FSPrefs.c:1455
-msgid "Icon Select"
-msgstr "Ikonval"
-
-#: src/FSPanel.c:1490 src/iconInspector.c:256
-msgid "Directories"
-msgstr "Kataloger"
-
-#: src/FSPanel.c:1508 src/iconInspector.c:274
-msgid "Files"
-msgstr "Filer"
-
-#: src/FSPrefs.c:161
-msgid "Apply"
-msgstr "Verkställ"
-
-#: src/FSPrefs.c:212
-msgid " Disks "
-msgstr " Diskar "
-
-#: src/FSPrefs.c:227
-msgid "Name:"
-msgstr "Namn:"
-
-#: src/FSPrefs.c:234
-msgid "Menu Name"
-msgstr "Menynamn"
-
-#: src/FSPrefs.c:243
-msgid "Mnt:"
-msgstr "Mont:"
-
-#: src/FSPrefs.c:250
-msgid "Mount Point"
-msgstr "Monteringspunkt"
-
-#: src/FSPrefs.c:260
-msgid "Dev:"
-msgstr "Enhet:"
-
-#: src/FSPrefs.c:267
-msgid "Device"
-msgstr "Enhet"
-
-#: src/FSPrefs.c:277
-msgid "New"
-msgstr "Ny"
-
-#: src/FSPrefs.c:286
-msgid "Update"
-msgstr "Uppdatera"
-
-#: src/FSPrefs.c:313
-msgid "Mount:"
-msgstr "Montera:"
-
-#: src/FSPrefs.c:320 src/FSPrefs.c:337 src/FSPrefs.c:354 src/FSPrefs.c:437
-#: src/FSPrefs.c:507 src/FSPrefs.c:533
-msgid "App"
-msgstr "Prg"
-
-#: src/FSPrefs.c:330
-msgid "Unmount:"
-msgstr "Avmontera:"
-
-#: src/FSPrefs.c:347
-msgid "Eject:"
-msgstr "Mata ut:"
-
-#: src/FSPrefs.c:364
-msgid "Close:"
-msgstr "Stäng:"
-
-#: src/FSPrefs.c:371
-msgid "close tray"
-msgstr "stäng lucka"
-
-#: src/FSPrefs.c:381
-msgid "Disks"
-msgstr "Diskar"
-
-#: src/FSPrefs.c:404
-msgid " Applications "
-msgstr " Program "
-
-#: src/FSPrefs.c:430
-msgid "Exec:"
-msgstr "Kör:"
-
-#: src/FSPrefs.c:447 src/FSPrefs.c:517 src/FSPrefs.c:543
-msgid "Browse..."
-msgstr "Bläddra..."
-
-#: src/FSPrefs.c:456 src/FSPrefs.c:552 src/FSPrefs.c:653 src/FSPrefs.c:695
-msgid "Set"
-msgstr "Ställ in"
-
-#: src/FSPrefs.c:473
-msgid " File Types "
-msgstr " Filtyper "
-
-#: src/FSPrefs.c:500
-msgid "View:"
-msgstr "Visa:"
-
-#: src/FSPrefs.c:526
-msgid "Edit:"
-msgstr "Redigera:"
-
-#: src/FSPrefs.c:570
-msgid "App/File Types"
-msgstr "Prog/Filtyper"
-
-#: src/FSPrefs.c:594
-msgid " Images "
-msgstr " Bilder "
-
-#: src/FSPrefs.c:620
-msgid " Executables "
-msgstr " Körbara "
-
-#: src/FSPrefs.c:636
-msgid "Exec Str:"
-msgstr "Kör:"
-
-#: src/FSPrefs.c:643
-msgid "Exes:"
-msgstr "Körbara:"
-
-#: src/FSPrefs.c:662
-msgid " Display "
-msgstr " Display "
-
-#: src/FSPrefs.c:678
-msgid "Display:"
-msgstr "Display:"
-
-#: src/FSPrefs.c:685
-msgid "Display"
-msgstr "Display"
-
-#: src/FSPrefs.c:704
-msgid "Variables"
-msgstr "Variabler"
-
-#: src/FSPrefs.c:1041 src/FSPrefs.c:1085 src/FSPrefs.c:1322 src/FSPrefs.c:1401
-msgid "Undelete"
-msgstr "Återhämta"
-
-#: src/FSPrefs.c:1477
-msgid "Browse -> App"
-msgstr "Bläddra -> Program"
-
-#: src/FSPrefs.c:1489
-msgid "Browse -> Viewer"
-msgstr "Bläddra -> Visare"
-
-#: src/FSPrefs.c:1501
-msgid "Browse -> Editor"
-msgstr "Bläddra -> Redigerare"
-
-#: src/FSUtils.c:158 src/FSUtils.c:170 src/FSUtils.c:316
-#, c-format
-msgid "Unavailable"
-msgstr "Ej tillgänglig"
-
-#: src/FSUtils.c:330
-#, c-format
-msgid "%s %d: Can't run df, %s\n"
-msgstr "%s %d: Kan inte köra df, %s\n"
-
-#: src/FSUtils.c:556
-#, c-format
-msgid "Error changing to %s but it's not that serious!"
-msgstr "Fel vid ändring till %s men det är inte så farligt!"
-
-#: src/FSUtils.c:558 src/FSUtils.c:1231
-msgid "Error File Operation"
-msgstr "Fel vid filoperation"
-
-#: src/FSUtils.c:616 src/FSUtils.c:632
-msgid "App Input Window"
-msgstr "Programinmatningsfönster"
-
-#: src/FSUtils.c:667 src/FSUtils.c:690
-#, c-format
-msgid "%s %d: Could not load icon file %s"
-msgstr "%s %d: Kunde inte läsa in ikonfil %s"
-
-#: src/FSUtils.c:712 src/FSUtils.c:726
-#, c-format
-msgid "%s %d: Could not create Pixmap from Data"
-msgstr "%s %d: Kunde inte skapa bild från data"
-
-#: src/FSUtils.c:754
-#, c-format
-msgid "Window Maker domain (%s) is corrupted!"
-msgstr "Window Maker-domän (%s) är skadad!"
-
-#: src/FSUtils.c:756 src/FSUtils.c:764
-msgid "Error"
-msgstr "Fel"
-
-#: src/FSUtils.c:762
-#, c-format
-msgid "Could not load Window Maker defaults (%s)"
-msgstr "Kunde inte läsa in Window Maker-förvalen (%s)"
-
-#: src/FSUtils.c:1230
-#, c-format
-msgid "Error changing to %s, \"%s\" cancelled."
-msgstr "Fel vid ändring till %s, \"%s\" avbruten."
-
-#: src/FSViewer.c:53
-#, c-format
-msgid "User database entry for ICONDIR is not valid: %s. Taking default value."
-msgstr ""
-
-#: src/FSViewer.c:64
-#, fuzzy, c-format
-msgid "Default ICONDIR not found: %s"
-msgstr "ICONDIR hittades inte: %s"
-
-#: src/FSViewer.c:74
-msgid "No valid value for ICONDIR found. Even default directory is broken!"
-msgstr ""
-
-#: src/FSViewer.c:88
-#, c-format
-msgid "No value for ICONDIR found! May be your %s preferences file is broken."
-msgstr ""
-
-#: src/FSViewer.c:106
-#, c-format
-msgid "Usage: %s [options]\n"
-msgstr "Användning: %s [flaggor]\n"
-
-#: src/FSViewer.c:107
-msgid "options:"
-msgstr "flaggor:"
-
-#: src/FSViewer.c:108
-msgid " -p <initial path>  initial path to display"
-msgstr " -p <startsökväg>  startsökväg till display"
-
-#: src/FSViewer.c:109
-msgid " -v                 print version number and exit"
-msgstr " -v                 skriv ut versionsnummer och avsluta"
-
-#: src/FSViewer.c:357
-#, c-format
-msgid "too few arguments for %s"
-msgstr "för få argument för %s"
-
-#: src/FSViewer.c:428
-#, c-format
-msgid "Unable to get RContext: %s %s %d\n"
-msgstr "Kunde inte hämta RContext: %s %s %d\n"
-
 #: src/FSViewer.c:482
 msgid "X server does not support locale"
 msgstr "X-server saknar stöd för lokal"
+
+#: src/exeInspector.c:175
+msgid "associated file to open"
+msgstr "associerad fil att öppna"
 
 #: src/FSViewer.c:485
 msgid "cannot set locale modifiers"
 msgstr "kan inte ställa in lokalmodifierare"
 
-#: src/FSViewer.c:493
+#: src/FSPrefs.c:371
+msgid "close tray"
+msgstr "stäng lucka"
+
+#: src/FSViewer.c:107
+msgid "options:"
+msgstr "flaggor:"
+
+#: src/FSViewer.c:357
 #, c-format
-msgid "Unable to allocate memory for %s %s %d\n"
-msgstr "Kunde inte allokera minne för %s %s %d\n"
-
-#: src/FSViewer.c:500
-msgid "Unable to Open Display!"
-msgstr "Kunde inte öppna display!"
-
-#: src/FSViewer.c:521
-#, c-format
-msgid "Unable to create a FileView instance %s %s %d"
-msgstr "Kunde inte skapa en FileView-instans %s %s %d"
-
-#: src/iconInspector.c:308 src/iconInspector.c:309
-msgid "Icon Inspector"
-msgstr "Ikoninspektör"
-
-#: src/viewInspector.c:351 src/viewInspector.c:352
-msgid "Viewer Inspector"
-msgstr "Visningsinspektör"
+msgid "too few arguments for %s"
+msgstr "för få argument för %s"

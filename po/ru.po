@@ -10,23 +10,59 @@ msgstr ""
 "PO-Revision-Date: 2002-12-01 00:15+0400\n"
 "Last-Translator: Alexey Voinov <voins@voins.program.ru>\n"
 "Language-Team: ru <ru@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/attribsInspector.c:188
-#, c-format
-msgid "%s %d: lstat Error"
-msgstr "Ошибка lstat: %s %d"
+#: src/FSViewer.c:108
+msgid " -p <initial path>  initial path to display"
+msgstr " -p <каталог>       начальный каталог"
 
-#: src/attribsInspector.c:211
-#, c-format
-msgid "%'.1lf MB\n"
-msgstr ""
+#: src/FSViewer.c:109
+msgid " -v                 print version number and exit"
+msgstr " -v                 вывод номера версии и выход"
+
+#: src/FSPrefs.c:404
+msgid " Applications "
+msgstr " Приложения "
+
+#: src/attribsInspector.c:512
+msgid " Changed "
+msgstr " Изменён "
+
+#: src/FSPrefs.c:212
+msgid " Disks "
+msgstr " Диски "
+
+#: src/FSPrefs.c:662
+msgid " Display "
+msgstr " Отображение "
+
+#: src/FSPrefs.c:620
+msgid " Executables "
+msgstr " Исполняемые "
+
+#: src/FSPrefs.c:473
+msgid " File Types "
+msgstr " Типы файлов "
+
+#: src/FSPrefs.c:594
+msgid " Images "
+msgstr " Изображения "
+
+#: src/attribsInspector.c:501
+msgid " Permissions "
+msgstr " Права "
 
 #: src/attribsInspector.c:215
 #, c-format
 msgid "%'.1lf KB\n"
+msgstr ""
+
+#: src/attribsInspector.c:211
+#, c-format
+msgid "%'.1lf MB\n"
 msgstr ""
 
 #: src/attribsInspector.c:219
@@ -34,58 +70,650 @@ msgstr ""
 msgid "%d Bytes\n"
 msgstr "%d байт\n"
 
-#: src/attribsInspector.c:322
-msgid "Link To:"
-msgstr "Ссылка на:"
+#: src/FSUtils.c:330
+#, c-format
+msgid "%s %d: Can't run df, %s\n"
+msgstr "%s %d: Не удалось запустить df, %s\n"
 
-#: src/attribsInspector.c:342
-msgid "Size:"
-msgstr "Размер:"
+#: src/FSUtils.c:712 src/FSUtils.c:726
+#, c-format
+msgid "%s %d: Could not create Pixmap from Data"
+msgstr "%s %d: Не удалось создать изображение"
 
-#: src/attribsInspector.c:357
-msgid "Owner:"
-msgstr "Владелец"
+#: src/FSUtils.c:667 src/FSUtils.c:690
+#, c-format
+msgid "%s %d: Could not load icon file %s"
+msgstr "%s %d: Не удалось загрузить пиктограммe %s"
 
-#: src/attribsInspector.c:372
-msgid "Group:"
-msgstr "Группа:"
+#: src/FSInspector.c:70
+#, c-format
+msgid "%s %d: Stat Error"
+msgstr "%s %d: Ошибка функции stat"
 
-#: src/attribsInspector.c:451
-msgid "Read"
-msgstr "Чтен."
+#: src/FSMenu.c:590
+#, c-format
+msgid "%s %d: Unable to create FSFinder"
+msgstr "%s %d: Не удалось создать FSFinder"
 
-#: src/attribsInspector.c:451
-msgid "Write"
-msgstr "Зап."
+#: src/attribsInspector.c:188
+#, c-format
+msgid "%s %d: lstat Error"
+msgstr "Ошибка lstat: %s %d"
+
+#: src/files.c:261
+#, c-format
+msgid "%s GetFileInfo %d: Stat Error for %s\n"
+msgstr "%s GetFileInfo %d: Ошибка функции stat %s\n"
+
+#: src/extnInspector.c:434
+msgid "Add"
+msgstr "Добавить"
+
+#: src/FSPrefs.c:320 src/FSPrefs.c:337 src/FSPrefs.c:354 src/FSPrefs.c:437
+#: src/FSPrefs.c:507 src/FSPrefs.c:533
+msgid "App"
+msgstr "Команда"
+
+#: src/FSUtils.c:616 src/FSUtils.c:632
+msgid "App Input Window"
+msgstr "Добавить приложение"
+
+#: src/FSPrefs.c:570
+msgid "App/File Types"
+msgstr "Типы файлов"
+
+#: src/FSPrefs.c:161
+msgid "Apply"
+msgstr "Применить"
+
+#: src/FSInspector.c:284
+msgid "Attributes"
+msgstr "Атрибуты"
+
+#: src/attribsInspector.c:582 src/attribsInspector.c:583
+msgid "Attributes Inspector"
+msgstr "Атрибуты"
+
+#: src/FSMenu.c:933
+msgid "Browse"
+msgstr "Просмотр"
+
+#: src/FSPrefs.c:1477
+msgid "Browse -> App"
+msgstr "Выбор -> Прилож."
+
+#: src/FSPrefs.c:1501
+msgid "Browse -> Editor"
+msgstr "Выбор -> Редактор"
+
+#: src/FSPrefs.c:1489
+msgid "Browse -> Viewer"
+msgstr "Выбор -> Просмотр"
+
+#: src/FSPrefs.c:447 src/FSPrefs.c:517 src/FSPrefs.c:543
+msgid "Browse..."
+msgstr "Выбор..."
+
+#: src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285 src/FSMenu.c:339
+#: src/FSMenu.c:416 src/FSPanel.c:621 src/FSPanel.c:866 src/FSPanel.c:1529
+#: src/FSPrefs.c:153 src/FSUtils.c:852
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/files.c:1034
+msgid "Cannot copy a directory to a file"
+msgstr "Невозможно скопировать каталог в файл"
+
+#: src/files.c:1091
+msgid "Cannot delete . or .."
+msgstr "Невозожно удалить . или .."
+
+#: src/files.c:1216
+msgid "Cannot move a directory to a file"
+msgstr "Невозможно переместить каталог в файл"
+
+#: src/extnInspector.c:376
+msgid "Click \"OK\" to update this application's file extension list"
+msgstr "Нажатие на \"Ок\" обновит список расширений файлов"
+
+#: src/editInspector.c:265 src/viewInspector.c:271
+msgid ""
+"Click \"Set Default\" to set default application for all documents with this "
+"extension."
+msgstr "Нажмите \"Установить\" для выбора используемой программы по умолчанию."
+
+#: src/extnInspector.c:448
+msgid "Click To Set Icon"
+msgstr "Сменить пиктограмму"
+
+#: src/editInspector.c:224 src/viewInspector.c:228
+msgid "Click button to edit selected document"
+msgstr "Большая кнопка запускает редактор"
+
+#: src/FSPanel.c:814
+msgid "Click to set icon for the selected file type."
+msgstr "Нажмите на пиктограмму для изменения."
+
+#: src/FSMenu.c:840
+msgid "Close"
+msgstr "Закрыть"
+
+#: src/FSMenu.c:989
+msgid "Close Window"
+msgstr "Закрыть"
+
+#: src/FSPrefs.c:364
+msgid "Close:"
+msgstr "Зактрыть:"
+
+#: src/FSMenu.c:885
+msgid "Compress"
+msgstr "Сжать"
+
+#: src/FSMenu.c:966
+msgid "Console..."
+msgstr "Консоль..."
+
+#: src/FSMenu.c:903
+msgid "Copy"
+msgstr "Скопировать"
+
+#: src/files.c:977 src/files.c:1044 src/files.c:1338
+msgid "Copy: Source and destination are identical"
+msgstr "Исходный и конечный файлы идентичны"
+
+#: src/files.c:1053
+#, c-format
+msgid "Copy: file %s already exists"
+msgstr "Файл %s уже существует"
+
+#: src/files.c:998
+#, c-format
+msgid "Copy: file %s already exists at destination"
+msgstr "Файл %s уже существует"
+
+#: src/FSUtils.c:762
+#, c-format
+msgid "Could not load Window Maker defaults (%s)"
+msgstr "Не удалось загрузть параметры Window Maker (%s)"
+
+#: src/FSMenu.c:336
+msgid "Create a new directory"
+msgstr "Новый каталог"
+
+#: src/FSMenu.c:282
+msgid "Create a new file"
+msgstr "Новый файл"
+
+#: src/FSMenu.c:901
+msgid "Cut"
+msgstr "Вырезать"
+
+#: src/FSMenu.c:912
+msgid "DeSelect All"
+msgstr "Снять выделение"
+
+#: src/FSViewer.c:64
+#, fuzzy, c-format
+msgid "Default ICONDIR not found: %s"
+msgstr "Не найден каталог ICONDIR: %s"
+
+#: src/editInspector.c:239 src/viewInspector.c:243
+msgid "Default:"
+msgstr "Используется:"
+
+#: src/FSMenu.c:907 src/FSPrefs.c:464 src/FSPrefs.c:560 src/FSPrefs.c:1043
+#: src/FSPrefs.c:1089 src/FSPrefs.c:1327 src/FSPrefs.c:1406
+msgid "Delete"
+msgstr "Удалить"
+
+#: src/FSMenu.c:891 src/FSPanel.c:621
+msgid "Destroy"
+msgstr "Уничтожить"
+
+#: src/FSPrefs.c:260
+msgid "Dev:"
+msgstr "Устр."
+
+#: src/FSPrefs.c:267
+msgid "Device"
+msgstr "Устройство"
+
+#: src/FSPanel.c:1490 src/iconInspector.c:256
+msgid "Directories"
+msgstr "Каталоги"
+
+#: src/FSMenu.c:917 src/FSMenu.c:918
+msgid "Disk"
+msgstr "Диск"
+
+#: src/FSPanel.c:193
+#, c-format
+msgid "Disk: %s"
+msgstr "Диск: %s"
+
+#: src/FSPrefs.c:381
+msgid "Disks"
+msgstr "Диски"
+
+#: src/FSPrefs.c:685
+msgid "Display"
+msgstr "Значение"
+
+#: src/FSPrefs.c:678
+msgid "Display:"
+msgstr "Значение:"
+
+#: src/files.c:1102
+#, c-format
+msgid "Do you REALLY wish to delete %s"
+msgstr "Вы ДЕЙСТВИТЕЛЬНО желаете удалить %s"
+
+#: src/FSPanel.c:618
+#, c-format
+msgid "Do you really want to destroy %s?"
+msgstr "Вы действительно хотите удалить %s?"
+
+#: src/FSMenu.c:882
+msgid "Duplicate"
+msgstr "Сдублировать"
+
+#: src/FSMenu.c:899 src/FSMenu.c:900
+msgid "Edit"
+msgstr "Правка"
+
+#: src/FSPrefs.c:526
+msgid "Edit:"
+msgstr "Ред.:"
+
+#: src/FSInspector.c:287
+msgid "Editor"
+msgstr "Редактор"
+
+#: src/editInspector.c:346 src/editInspector.c:347
+msgid "Editor Inspector"
+msgstr "Редактор"
+
+#: src/FSMenu.c:838
+msgid "Eject"
+msgstr "Извлечь"
+
+#: src/FSPrefs.c:347
+msgid "Eject:"
+msgstr "Извлечь:"
+
+#: src/FSMenu.c:894
+msgid "Empty Recycler"
+msgstr "Очистить корзину"
+
+#: src/FSPanel.c:841
+msgid "Enter App Executable String:"
+msgstr "Введите команду для запуска:"
+
+#: src/FSMenu.c:409
+msgid "Enter Filter Value:"
+msgstr "Введите значение фильтра"
+
+#: src/exeInspector.c:101
+msgid "Enter command plus arguments into the textfield below:"
+msgstr "Команда с параметрами:"
+
+#: src/FSUtils.c:756 src/FSUtils.c:764
+msgid "Error"
+msgstr "Ошибка"
+
+#: src/FSUtils.c:558 src/FSUtils.c:1231
+msgid "Error File Operation"
+msgstr "Ошибка"
+
+#: src/FSUtils.c:556
+#, c-format
+msgid "Error changing to %s but it's not that serious!"
+msgstr "Ошибка при смене каталога на %s, но можно продолжить!"
+
+#: src/FSUtils.c:1230
+#, c-format
+msgid "Error changing to %s, \"%s\" cancelled."
+msgstr "Ошибка при смене каталога на %s, команда \"%s\" остановлена"
+
+#: src/files.c:838 src/files.c:1011 src/files.c:1065 src/files.c:1192
+#, c-format
+msgid "Error copying %s:"
+msgstr "Ошибка при копировании: %s"
+
+#: src/FSMenu.c:141
+msgid "Error creating New FileViewer"
+msgstr "Ошибка при создании FileViewer"
+
+#: src/FSMenu.c:293
+#, c-format
+msgid "Error creating file %s"
+msgstr "Ошибка при создании файла %s"
+
+#: src/FSMenu.c:347 src/FSMenu.c:702
+#, c-format
+msgid "Error creating folder %s"
+msgstr "Ошибка при создании каталога %s"
+
+#: src/files.c:932 src/files.c:1114
+#, c-format
+msgid "Error deleting %s:"
+msgstr "Ошибка при удалении %s:"
+
+#: src/files.c:1376 src/files.c:1423
+#, c-format
+msgid "Error linking %s to %s"
+msgstr "Ошибка при создании ссылки %s на %s"
+
+#: src/files.c:1247 src/files.c:1303
+#, c-format
+msgid "Error renaming %s:"
+msgstr "Ошиька при переименовании %s:"
 
 #: src/attribsInspector.c:451
 msgid "Exec"
 msgstr "Исп."
 
-#: src/attribsInspector.c:452 src/FSMCList.c:103
-msgid "Owner"
-msgstr "Влад."
+#: src/FSMenu.c:474 src/FSMenu.c:509 src/FSMenu.c:544 src/FSMenu.c:579
+#: src/FSMenu.c:758
+msgid "Exec Error"
+msgstr "Ошибка исполнения"
+
+#: src/FSPrefs.c:636
+msgid "Exec Str:"
+msgstr "Команда:"
+
+#: src/FSPrefs.c:430
+msgid "Exec:"
+msgstr "Исп.:"
+
+#: src/FSInspector.c:288
+msgid "Executable"
+msgstr "Исполнение"
+
+#: src/exeInspector.c:266 src/exeInspector.c:267
+msgid "Executable Inspector"
+msgstr "Параметры запуска"
+
+#: src/FSPrefs.c:643
+msgid "Exes:"
+msgstr "Команда"
+
+#: src/FSFinder.c:53
+msgid "FSViewer - Finder"
+msgstr "FSViewer - Поиск"
+
+#: src/FSFileView.c:619
+#, c-format
+msgid "FSViewer - we've got a problem!"
+msgstr "FSViewer - у нас проблема!"
+
+#: src/FSInspector.c:264
+msgid "FSViewer Inspector"
+msgstr "Просмор атрибутов"
+
+#: src/FSPanel.c:165
+#, c-format
+msgid "FSViewer Release %s"
+msgstr "Версия FSViewer: %s"
+
+#: src/FSMenu.c:872 src/FSMenu.c:873
+msgid "File"
+msgstr "Файл"
+
+#: src/FSMenu.c:996
+msgid "File Edit..."
+msgstr "Редактировать..."
+
+#: src/extnInspector.c:520 src/extnInspector.c:521
+msgid "File Extensions Inspector"
+msgstr "Расширения файлов"
+
+#: src/FSMenu.c:998
+msgid "File Link..."
+msgstr "Ссылка на файл..."
+
+#: src/FSMenu.c:1000
+msgid "File New..."
+msgstr "Новый файл..."
+
+#: src/files.c:1104
+msgid "File Operation"
+msgstr "Операция с файлом"
+
+#: src/files.c:839 src/files.c:890 src/files.c:933 src/files.c:962
+#: src/files.c:976 src/files.c:1012 src/files.c:1033 src/files.c:1043
+#: src/files.c:1066 src/files.c:1091 src/files.c:1115 src/files.c:1143
+#: src/files.c:1157 src/files.c:1193 src/files.c:1215 src/files.c:1225
+#: src/files.c:1248 src/files.c:1277 src/files.c:1304 src/files.c:1337
+#: src/files.c:1377 src/files.c:1397 src/files.c:1424 src/FSMenu.c:294
+#: src/FSMenu.c:348 src/FSMenu.c:703
+msgid "File Operation Error"
+msgstr "Ошибка"
+
+#: src/FSMenu.c:1002
+msgid "File Rename..."
+msgstr "Переименовать..."
+
+#: src/FSMenu.c:1004
+msgid "File Run..."
+msgstr "Запуск файла..."
+
+#: src/FSFileView.c:308
+msgid "FileView"
+msgstr "FileView"
+
+#: src/FSPanel.c:1508 src/iconInspector.c:274
+msgid "Files"
+msgstr "Файлы"
+
+#: src/FSMenu.c:408
+msgid "Filter Current FileView"
+msgstr "Фильтр текущего окна"
+
+#: src/FSMenu.c:948
+msgid "Filter..."
+msgstr "Фильтр..."
+
+#: src/FSMenu.c:960
+msgid "Finder"
+msgstr "Поиск"
 
 #: src/attribsInspector.c:452 src/FSMCList.c:110
 msgid "Group"
 msgstr "Груп."
 
-#: src/attribsInspector.c:452
-msgid "Other"
-msgstr "Друг."
+#: src/attribsInspector.c:372
+msgid "Group:"
+msgstr "Группа:"
 
-#: src/attribsInspector.c:501
-msgid " Permissions "
-msgstr " Права "
+#: src/FSMenu.c:867
+msgid "Help..."
+msgstr "Помощь..."
 
-#: src/attribsInspector.c:512
-msgid " Changed "
-msgstr " Изменён "
+#: src/FSMenu.c:1013
+msgid "Hide"
+msgstr "Скрыть"
 
-#: src/attribsInspector.c:531 src/editInspector.c:288 src/exeInspector.c:215
-#: src/extnInspector.c:414 src/iconInspector.c:215 src/viewInspector.c:293
-msgid "Revert"
-msgstr "Откат"
+#: src/FSMenu.c:1015
+msgid "Hide Others"
+msgstr "Скрыть другие"
+
+#: src/FSInspector.c:285 src/FSMenu.c:936
+msgid "Icon"
+msgstr "Пиктограмма"
+
+#: src/iconInspector.c:308 src/iconInspector.c:309
+msgid "Icon Inspector"
+msgstr "Пиктограмма"
+
+#: src/FSPanel.c:940 src/FSPrefs.c:1202 src/FSPrefs.c:1426 src/FSPrefs.c:1455
+msgid "Icon Select"
+msgstr "Выбор пиктограммы"
+
+#: src/FSPanel.c:685
+msgid "Icon Selector"
+msgstr "Выбор пиктограммы"
+
+#: src/FSMenu.c:48 src/FSMenu.c:857 src/FSMenu.c:858 src/FSPanel.c:102
+msgid "Info"
+msgstr "Информация"
+
+#: src/FSMenu.c:859
+msgid "Info Panel..."
+msgstr "Информация..."
+
+#: src/exeInspector.c:200 src/iconInspector.c:200
+msgid "Inspector Error"
+msgstr "Ошибка"
+
+#: src/FSMenu.c:958
+msgid "Inspector..."
+msgstr "Атрибуты..."
+
+#: src/FSMCList.c:89
+msgid "Last Changed"
+msgstr "Изменён"
+
+#: src/FSMenu.c:54 src/FSPanel.c:280
+msgid "Legal"
+msgstr "Права"
+
+#: src/FSMenu.c:861
+msgid "Legal..."
+msgstr "Права..."
+
+#: src/FSMenu.c:54
+msgid "License"
+msgstr "Лицензия"
+
+#: src/FSMenu.c:208
+msgid "Link Name"
+msgstr "Имя ссылки"
+
+#: src/attribsInspector.c:322
+msgid "Link To:"
+msgstr "Ссылка на:"
+
+#: src/FSMenu.c:208
+msgid "Link: Enter the link name"
+msgstr "Введите имя для ссылки"
+
+#: src/files.c:1398
+msgid "Link: Source and destination are identical"
+msgstr "Исходный и конечный файлы идентичны"
+
+#: src/files.c:1409
+#, c-format
+msgid "Link: file %s already exists"
+msgstr "Файл %s уже существует"
+
+#: src/files.c:1361
+#, c-format
+msgid "Link: file %s already exists at destination"
+msgstr "Файл %s уже существует"
+
+#: src/FSMenu.c:939
+msgid "List"
+msgstr "Список"
+
+#: src/FSPanel.c:186
+#, c-format
+msgid "Memory: %s"
+msgstr "Память: %s"
+
+#: src/FSMenu.c:431 src/FSMenu.c:439 src/FSMenu.c:614 src/FSMenu.c:654
+#: src/FSMenu.c:769
+msgid "Menu Error"
+msgstr "Ошибка меню"
+
+#: src/FSMenu.c:606
+msgid "Menu Info"
+msgstr "Информация о меню"
+
+#: src/FSPrefs.c:234
+msgid "Menu Name"
+msgstr "Пункт меню"
+
+#: src/FSMenu.c:986
+msgid "Miniaturize Window"
+msgstr "Свернуть"
+
+#: src/FSPrefs.c:243
+msgid "Mnt:"
+msgstr "Монт.:"
+
+#: src/FSMenu.c:834
+msgid "Mount"
+msgstr "Монтировать"
+
+#: src/FSPrefs.c:250
+msgid "Mount Point"
+msgstr "Точка монтир."
+
+#: src/FSPrefs.c:313
+msgid "Mount:"
+msgstr "Монтировать:"
+
+#: src/files.c:1158 src/files.c:1226
+msgid "Move: Source and destination are identical"
+msgstr "Исходный и конечный файлы идентичны"
+
+#: src/files.c:1235
+#, c-format
+msgid "Move: file %s already exists"
+msgstr "Файл %s уже существует"
+
+#: src/files.c:1179
+#, c-format
+msgid "Move: file %s already exists at destination"
+msgstr "Файл %s уже существует"
+
+#: src/FSMCList.c:75
+msgid "Name"
+msgstr "Имя"
+
+#: src/FSPrefs.c:227
+msgid "Name:"
+msgstr "Имя:"
+
+#: src/FSPrefs.c:277
+msgid "New"
+msgstr "Создать"
+
+#: src/FSMenu.c:337
+msgid "New Dir: Enter the new directory name"
+msgstr "Имя нового каталога"
+
+#: src/FSMenu.c:283
+msgid "New File: Enter the new file name"
+msgstr "Имя нового файла"
+
+#: src/FSMenu.c:880
+msgid "New Folder"
+msgstr "Новый каталог"
+
+#: src/FSMenu.c:140
+msgid "New View"
+msgstr "Новое окно"
+
+#: src/FSMenu.c:950
+msgid "New Viewer..."
+msgstr "Новое окно..."
+
+#: src/FSViewer.c:74
+msgid "No valid value for ICONDIR found. Even default directory is broken!"
+msgstr ""
+
+#: src/FSViewer.c:88
+#, c-format
+msgid "No value for ICONDIR found! May be your %s preferences file is broken."
+msgstr ""
+
+#: src/files.c:961 src/files.c:1142
+#, c-format
+msgid "No write access to %s"
+msgstr "Нет прав на запись в %s"
 
 #: src/attribsInspector.c:538 src/exeInspector.c:202 src/extnInspector.c:421
 #: src/FSMenu.c:142 src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285
@@ -98,170 +726,84 @@ msgstr "Откат"
 msgid "OK"
 msgstr " Ок "
 
-#: src/attribsInspector.c:582 src/attribsInspector.c:583
-msgid "Attributes Inspector"
-msgstr "Атрибуты"
+#: src/FSMenu.c:874
+msgid "Open"
+msgstr "Открыть"
 
-#: src/editInspector.c:224 src/viewInspector.c:228
-msgid "Click button to edit selected document"
-msgstr "Большая кнопка запускает редактор"
+#: src/FSMenu.c:877
+msgid "Open as Folder"
+msgstr "Открыть как каталог"
 
-#: src/editInspector.c:239 src/viewInspector.c:243
-msgid "Default:"
-msgstr "Используется:"
-
-#: src/editInspector.c:265 src/viewInspector.c:271
-msgid ""
-"Click \"Set Default\" to set default application for all documents with this "
-"extension."
-msgstr "Нажмите \"Установить\" для выбора используемой программы по умолчанию."
-
-#: src/editInspector.c:295 src/exeInspector.c:222 src/iconInspector.c:222
-#: src/viewInspector.c:300
-msgid "Set Default"
-msgstr "Установить"
-
-#: src/editInspector.c:346 src/editInspector.c:347
-msgid "Editor Inspector"
-msgstr "Редактор"
-
-#: src/exeInspector.c:101
-msgid "Enter command plus arguments into the textfield below:"
-msgstr "Команда с параметрами:"
-
-#: src/exeInspector.c:117
-msgid "Shortcuts:"
-msgstr "Параметры:"
-
-#: src/exeInspector.c:175
-msgid "associated file to open"
-msgstr "имя выбранного файла"
-
-#: src/exeInspector.c:200 src/iconInspector.c:200
-msgid "Inspector Error"
-msgstr "Ошибка"
-
-#: src/exeInspector.c:201 src/iconInspector.c:201
-msgid "This function has not yet been implemented."
-msgstr "Эта функция ещё не реализована."
-
-#: src/exeInspector.c:266 src/exeInspector.c:267
-msgid "Executable Inspector"
-msgstr "Параметры запуска"
-
-#: src/extnInspector.c:376
-msgid "Click \"OK\" to update this application's file extension list"
-msgstr "Нажатие на \"Ок\" обновит список расширений файлов"
-
-#: src/extnInspector.c:434
-msgid "Add"
-msgstr "Добавить"
-
-#: src/extnInspector.c:441 src/FSPrefs.c:295
-msgid "Remove"
-msgstr "Убрать"
-
-#: src/extnInspector.c:448
-msgid "Click To Set Icon"
-msgstr "Сменить пиктограмму"
-
-#: src/extnInspector.c:520 src/extnInspector.c:521
-msgid "File Extensions Inspector"
-msgstr "Расширения файлов"
-
-#: src/files.c:261
-#, c-format
-msgid "%s GetFileInfo %d: Stat Error for %s\n"
-msgstr "%s GetFileInfo %d: Ошибка функции stat %s\n"
-
-#: src/files.c:838 src/files.c:1011 src/files.c:1065 src/files.c:1192
-#, c-format
-msgid "Error copying %s:"
-msgstr "Ошибка при копировании: %s"
-
-#: src/files.c:839 src/files.c:890 src/files.c:933 src/files.c:962
-#: src/files.c:976 src/files.c:1012 src/files.c:1033 src/files.c:1043
-#: src/files.c:1066 src/files.c:1091 src/files.c:1115 src/files.c:1143
-#: src/files.c:1157 src/files.c:1193 src/files.c:1215 src/files.c:1225
-#: src/files.c:1248 src/files.c:1277 src/files.c:1304 src/files.c:1337
-#: src/files.c:1377 src/files.c:1397 src/files.c:1424 src/FSMenu.c:294
-#: src/FSMenu.c:348 src/FSMenu.c:703
-msgid "File Operation Error"
-msgstr "Ошибка"
-
-#: src/files.c:889
-#, c-format
-msgid "Unrecognized File type: %s"
-msgstr "Неопознаный тип файла: %s"
-
-#: src/files.c:932 src/files.c:1114
-#, c-format
-msgid "Error deleting %s:"
-msgstr "Ошибка при удалении %s:"
-
-#: src/files.c:961 src/files.c:1142
-#, c-format
-msgid "No write access to %s"
-msgstr "Нет прав на запись в %s"
-
-#: src/files.c:977 src/files.c:1044 src/files.c:1338
-msgid "Copy: Source and destination are identical"
-msgstr "Исходный и конечный файлы идентичны"
-
-#: src/files.c:998
-#, c-format
-msgid "Copy: file %s already exists at destination"
-msgstr "Файл %s уже существует"
+#: src/attribsInspector.c:452
+msgid "Other"
+msgstr "Друг."
 
 #: src/files.c:1000 src/files.c:1054 src/files.c:1181 src/files.c:1236
 #: src/files.c:1290 src/files.c:1363 src/files.c:1410
 msgid "Overwrite?"
 msgstr "Переписать?"
 
-#: src/files.c:1034
-msgid "Cannot copy a directory to a file"
-msgstr "Невозможно скопировать каталог в файл"
+#: src/attribsInspector.c:452 src/FSMCList.c:103
+msgid "Owner"
+msgstr "Влад."
 
-#: src/files.c:1053
+#: src/attribsInspector.c:357
+msgid "Owner:"
+msgstr "Владелец"
+
+#: src/FSMenu.c:905
+msgid "Paste"
+msgstr "Вставить"
+
+#: src/FSInspector.c:136
+msgid "Path: "
+msgstr "Путь: "
+
+#: src/FSInspector.c:138
 #, c-format
-msgid "Copy: file %s already exists"
-msgstr "Файл %s уже существует"
+msgid "Path: %s"
+msgstr "Путь: %s"
 
-#: src/files.c:1091
-msgid "Cannot delete . or .."
-msgstr "Невозожно удалить . или .."
+#: src/FSMCList.c:96
+msgid "Permissions"
+msgstr "Права"
 
-#: src/files.c:1102
+#: src/FSMenu.c:60 src/FSMenu.c:66
+msgid "Preferences"
+msgstr "Настройки"
+
+#: src/FSMenu.c:863
+msgid "Preferences..."
+msgstr "Настройки..."
+
+#: src/FSMenu.c:963
+msgid "Processes..."
+msgstr "Процессы..."
+
+#: src/FSPanel.c:179
 #, c-format
-msgid "Do you REALLY wish to delete %s"
-msgstr "Вы ДЕЙСТВИТЕЛЬНО желаете удалить %s"
+msgid "Processor: %s"
+msgstr "Процессор: %s"
 
-#: src/files.c:1104
-msgid "File Operation"
-msgstr "Операция с файлом"
+#: src/FSMenu.c:1017
+msgid "Quit"
+msgstr "Выход"
 
-#: src/files.c:1158 src/files.c:1226
-msgid "Move: Source and destination are identical"
-msgstr "Исходный и конечный файлы идентичны"
+#: src/attribsInspector.c:451
+msgid "Read"
+msgstr "Чтен."
 
-#: src/files.c:1179
-#, c-format
-msgid "Move: file %s already exists at destination"
-msgstr "Файл %s уже существует"
+#: src/extnInspector.c:441 src/FSPrefs.c:295
+msgid "Remove"
+msgstr "Убрать"
 
-#: src/files.c:1216
-msgid "Cannot move a directory to a file"
-msgstr "Невозможно переместить каталог в файл"
+#: src/FSMenu.c:235
+msgid "Rename File"
+msgstr "Переименование файла"
 
-#: src/files.c:1235
-#, c-format
-msgid "Move: file %s already exists"
-msgstr "Файл %s уже существует"
-
-#: src/files.c:1247 src/files.c:1303
-#, c-format
-msgid "Error renaming %s:"
-msgstr "Ошиька при переименовании %s:"
+#: src/FSMenu.c:235
+msgid "Rename: Enter the new file name"
+msgstr "Введите новое имя файла"
 
 #: src/files.c:1278
 msgid "Rename: Source and destination are identical"
@@ -272,24 +814,210 @@ msgstr "Исходный и конечный файлы идентичны"
 msgid "Rename: file %s already exists"
 msgstr "Файл %s уже существует"
 
-#: src/files.c:1361
-#, c-format
-msgid "Link: file %s already exists at destination"
-msgstr "Файл %s уже существует"
+#: src/attribsInspector.c:531 src/editInspector.c:288 src/exeInspector.c:215
+#: src/extnInspector.c:414 src/iconInspector.c:215 src/viewInspector.c:293
+msgid "Revert"
+msgstr "Откат"
 
-#: src/files.c:1376 src/files.c:1423
-#, c-format
-msgid "Error linking %s to %s"
-msgstr "Ошибка при создании ссылки %s на %s"
+#: src/FSFinder.c:90
+msgid "Search String:"
+msgstr "Искать строку:"
 
-#: src/files.c:1398
-msgid "Link: Source and destination are identical"
-msgstr "Исходный и конечный файлы идентичны"
+#: src/FSInspector.c:283
+msgid "Select"
+msgstr "Выбери"
 
-#: src/files.c:1409
+#: src/FSMenu.c:909
+msgid "Select All"
+msgstr "Выбрать всё"
+
+#: src/FSMenu.c:994 src/FSMenu.c:995
+msgid "Services"
+msgstr "Сервисы"
+
+#: src/FSPrefs.c:456 src/FSPrefs.c:552 src/FSPrefs.c:653 src/FSPrefs.c:695
+msgid "Set"
+msgstr "Установить"
+
+#: src/FSPanel.c:861
+msgid "Set As Default Editor"
+msgstr "Использовать как редактор"
+
+#: src/FSPanel.c:855
+msgid "Set As Default Viewer"
+msgstr "Использовать для просмотра"
+
+#: src/editInspector.c:295 src/exeInspector.c:222 src/iconInspector.c:222
+#: src/viewInspector.c:300
+msgid "Set Default"
+msgstr "Установить"
+
+#: src/exeInspector.c:117
+msgid "Shortcuts:"
+msgstr "Параметры:"
+
+#: src/FSMenu.c:946
+msgid "Show .files"
+msgstr "Показать скрытые"
+
+#: src/FSMenu.c:1006
+msgid "Show Image"
+msgstr "Показать изображение"
+
+#: src/FSMCList.c:82
+msgid "Size"
+msgstr "Размер"
+
+#: src/attribsInspector.c:342
+msgid "Size:"
+msgstr "Размер:"
+
+#: src/FSMenu.c:941
+msgid "Sort"
+msgstr "Сортировка"
+
+#: src/FSPanel.c:158
 #, c-format
-msgid "Link: file %s already exists"
-msgstr "Файл %s уже существует"
+msgid "System Release %s"
+msgstr "Версия системы: %s"
+
+#: src/exeInspector.c:201 src/iconInspector.c:201
+msgid "This function has not yet been implemented."
+msgstr "Эта функция ещё не реализована."
+
+#: src/FSMenu.c:432 src/FSMenu.c:440 src/FSMenu.c:615 src/FSMenu.c:655
+#: src/FSMenu.c:770
+msgid "This menu option has not yet been implemented"
+msgstr "Эта команда ещё не реализована"
+
+#: src/FSMenu.c:607
+msgid "This option is only available via the window manager."
+msgstr "Эта команда доступна только через диспетчер окон."
+
+#: src/FSMenu.c:956 src/FSMenu.c:957
+msgid "Tools"
+msgstr "Инструменты"
+
+#: src/FSMenu.c:888
+msgid "UnCompress"
+msgstr "Разжать"
+
+#: src/FSViewer.c:500
+msgid "Unable to Open Display!"
+msgstr "Не удалось открыть дисплей!"
+
+#: src/FSViewer.c:493
+#, c-format
+msgid "Unable to allocate memory for %s %s %d\n"
+msgstr "Не удалось выделить память для %s %s %d\n"
+
+#: src/FSInspector.c:340
+#, c-format
+msgid "Unable to allocate memory for FSInspector %s %d\n"
+msgstr "Не удалось создать FSInspector %s %d\n"
+
+#: src/FSMenu.c:757
+#, c-format
+msgid "Unable to compress selection."
+msgstr "Не удалось сжать выбранное"
+
+#: src/FSViewer.c:521
+#, c-format
+msgid "Unable to create a FileView instance %s %s %d"
+msgstr "Не удалось создать экзепляр FileView %s %s %d"
+
+#: src/FSViewer.c:428
+#, c-format
+msgid "Unable to get RContext: %s %s %d\n"
+msgstr "Не удалось создать RContext: %s %s %d\n"
+
+#: src/FSUtils.c:158 src/FSUtils.c:170 src/FSUtils.c:316
+#, c-format
+msgid "Unavailable"
+msgstr "Недоступно"
+
+#: src/FSPrefs.c:1041 src/FSPrefs.c:1085 src/FSPrefs.c:1322 src/FSPrefs.c:1401
+msgid "Undelete"
+msgstr "Вернуть"
+
+#: src/FSMenu.c:836
+msgid "Unmount"
+msgstr "Размонтировать"
+
+#: src/FSPrefs.c:330
+msgid "Unmount:"
+msgstr "Размонтиовать:"
+
+#: src/files.c:889
+#, c-format
+msgid "Unrecognized File type: %s"
+msgstr "Неопознаный тип файла: %s"
+
+#: src/FSPrefs.c:286
+msgid "Update"
+msgstr "Обновить"
+
+#: src/FSMenu.c:952
+msgid "Update View"
+msgstr "Обновить"
+
+#: src/FSViewer.c:106
+#, c-format
+msgid "Usage: %s [options]\n"
+msgstr "Использование: %s [опции]\n"
+
+#: src/FSViewer.c:53
+#, c-format
+msgid "User database entry for ICONDIR is not valid: %s. Taking default value."
+msgstr ""
+
+#: src/FSPrefs.c:704
+msgid "Variables"
+msgstr "Переменные"
+
+#: src/FSMenu.c:931 src/FSMenu.c:932
+msgid "View"
+msgstr "Вид"
+
+#: src/FSPrefs.c:500
+msgid "View:"
+msgstr "Смот.:"
+
+#: src/FSInspector.c:286
+msgid "Viewer"
+msgstr "Просмотр"
+
+#: src/viewInspector.c:351 src/viewInspector.c:352
+msgid "Viewer Inspector"
+msgstr "Программа просмотра"
+
+#: src/FSUtils.c:754
+#, c-format
+msgid "Window Maker domain (%s) is corrupted!"
+msgstr "Домен Window Maker (%s) повреждён!"
+
+#: src/FSPanel.c:172
+#, c-format
+msgid "Window Server %d"
+msgstr "Версия X-сервера: %d"
+
+#: src/FSMenu.c:970 src/FSMenu.c:971
+msgid "Windows"
+msgstr "Окна"
+
+#: src/attribsInspector.c:451
+msgid "Write"
+msgstr "Зап."
+
+#: src/FSFileView.c:300
+#, c-format
+msgid "Wrong HSIZE value: %d. Using default."
+msgstr "Недопустимое значение HSIZE: %d. Используется значение по умолчанию"
+
+#: src/FSFileView.c:294
+#, c-format
+msgid "Wrong WSIZE value: %d. Using default."
+msgstr "Недопустимое значение WSIZE: %d. Используется значение по умолчанию"
 
 #: src/FSFileView.c:282
 #, c-format
@@ -301,754 +1029,27 @@ msgstr "Недопустимое значение XPOS: %d. Используется значение по умолчанию"
 msgid "Wrong YPOS value: %d. Using default."
 msgstr "Недопустимое значение YPOS: %d. Используется значение по умолчанию"
 
-#: src/FSFileView.c:294
-#, c-format
-msgid "Wrong WSIZE value: %d. Using default."
-msgstr "Недопустимое значение WSIZE: %d. Используется значение по умолчанию"
-
-#: src/FSFileView.c:300
-#, c-format
-msgid "Wrong HSIZE value: %d. Using default."
-msgstr "Недопустимое значение HSIZE: %d. Используется значение по умолчанию"
-
-#: src/FSFileView.c:308
-msgid "FileView"
-msgstr "FileView"
-
-#: src/FSFileView.c:619
-#, c-format
-msgid "FSViewer - we've got a problem!"
-msgstr "FSViewer - у нас проблема!"
-
-#: src/FSFinder.c:53
-msgid "FSViewer - Finder"
-msgstr "FSViewer - Поиск"
-
-#: src/FSFinder.c:90
-msgid "Search String:"
-msgstr "Искать строку:"
-
-#: src/FSInspector.c:70
-#, c-format
-msgid "%s %d: Stat Error"
-msgstr "%s %d: Ошибка функции stat"
-
-#: src/FSInspector.c:136
-msgid "Path: "
-msgstr "Путь: "
-
-#: src/FSInspector.c:138
-#, c-format
-msgid "Path: %s"
-msgstr "Путь: %s"
-
-#: src/FSInspector.c:264
-msgid "FSViewer Inspector"
-msgstr "Просмор атрибутов"
-
-#: src/FSInspector.c:283
-msgid "Select"
-msgstr "Выбери"
-
-#: src/FSInspector.c:284
-msgid "Attributes"
-msgstr "Атрибуты"
-
-#: src/FSInspector.c:285 src/FSMenu.c:936
-msgid "Icon"
-msgstr "Пиктограмма"
-
-#: src/FSInspector.c:286
-msgid "Viewer"
-msgstr "Просмотр"
-
-#: src/FSInspector.c:287
-msgid "Editor"
-msgstr "Редактор"
-
-#: src/FSInspector.c:288
-msgid "Executable"
-msgstr "Исполнение"
-
-#: src/FSInspector.c:340
-#, c-format
-msgid "Unable to allocate memory for FSInspector %s %d\n"
-msgstr "Не удалось создать FSInspector %s %d\n"
-
-#: src/FSMCList.c:75
-msgid "Name"
-msgstr "Имя"
-
-#: src/FSMCList.c:82
-msgid "Size"
-msgstr "Размер"
-
-#: src/FSMCList.c:89
-msgid "Last Changed"
-msgstr "Изменён"
-
-#: src/FSMCList.c:96
-msgid "Permissions"
-msgstr "Права"
-
-#: src/FSMenu.c:48 src/FSMenu.c:857 src/FSMenu.c:858 src/FSPanel.c:102
-msgid "Info"
-msgstr "Информация"
-
-#: src/FSMenu.c:54 src/FSPanel.c:280
-msgid "Legal"
-msgstr "Права"
-
-#: src/FSMenu.c:54
-msgid "License"
-msgstr "Лицензия"
-
-#: src/FSMenu.c:60 src/FSMenu.c:66
-msgid "Preferences"
-msgstr "Настройки"
-
-#: src/FSMenu.c:140
-msgid "New View"
-msgstr "Новое окно"
-
-#: src/FSMenu.c:141
-msgid "Error creating New FileViewer"
-msgstr "Ошибка при создании FileViewer"
-
-#: src/FSMenu.c:208
-msgid "Link Name"
-msgstr "Имя ссылки"
-
-#: src/FSMenu.c:208
-msgid "Link: Enter the link name"
-msgstr "Введите имя для ссылки"
-
-#: src/FSMenu.c:209 src/FSMenu.c:236 src/FSMenu.c:285 src/FSMenu.c:339
-#: src/FSMenu.c:416 src/FSPanel.c:621 src/FSPanel.c:866 src/FSPanel.c:1529
-#: src/FSPrefs.c:153 src/FSUtils.c:852
-msgid "Cancel"
-msgstr "Отмена"
-
-#: src/FSMenu.c:235
-msgid "Rename File"
-msgstr "Переименование файла"
-
-#: src/FSMenu.c:235
-msgid "Rename: Enter the new file name"
-msgstr "Введите новое имя файла"
-
-#: src/FSMenu.c:282
-msgid "Create a new file"
-msgstr "Новый файл"
-
-#: src/FSMenu.c:283
-msgid "New File: Enter the new file name"
-msgstr "Имя нового файла"
-
-#: src/FSMenu.c:293
-#, c-format
-msgid "Error creating file %s"
-msgstr "Ошибка при создании файла %s"
-
-#: src/FSMenu.c:336
-msgid "Create a new directory"
-msgstr "Новый каталог"
-
-#: src/FSMenu.c:337
-msgid "New Dir: Enter the new directory name"
-msgstr "Имя нового каталога"
-
-#: src/FSMenu.c:347 src/FSMenu.c:702
-#, c-format
-msgid "Error creating folder %s"
-msgstr "Ошибка при создании каталога %s"
-
-#: src/FSMenu.c:408
-msgid "Filter Current FileView"
-msgstr "Фильтр текущего окна"
-
-#: src/FSMenu.c:409
-msgid "Enter Filter Value:"
-msgstr "Введите значение фильтра"
-
-#: src/FSMenu.c:431 src/FSMenu.c:439 src/FSMenu.c:614 src/FSMenu.c:654
-#: src/FSMenu.c:769
-msgid "Menu Error"
-msgstr "Ошибка меню"
-
-#: src/FSMenu.c:432 src/FSMenu.c:440 src/FSMenu.c:615 src/FSMenu.c:655
-#: src/FSMenu.c:770
-msgid "This menu option has not yet been implemented"
-msgstr "Эта команда ещё не реализована"
-
-#: src/FSMenu.c:474 src/FSMenu.c:509 src/FSMenu.c:544 src/FSMenu.c:579
-#: src/FSMenu.c:758
-msgid "Exec Error"
-msgstr "Ошибка исполнения"
-
-#: src/FSMenu.c:590
-#, c-format
-msgid "%s %d: Unable to create FSFinder"
-msgstr "%s %d: Не удалось создать FSFinder"
-
-#: src/FSMenu.c:606
-msgid "Menu Info"
-msgstr "Информация о меню"
-
-#: src/FSMenu.c:607
-msgid "This option is only available via the window manager."
-msgstr "Эта команда доступна только через диспетчер окон."
-
-#: src/FSMenu.c:757
-#, c-format
-msgid "Unable to compress selection."
-msgstr "Не удалось сжать выбранное"
-
-#: src/FSMenu.c:834
-msgid "Mount"
-msgstr "Монтировать"
-
-#: src/FSMenu.c:836
-msgid "Unmount"
-msgstr "Размонтировать"
-
-#: src/FSMenu.c:838
-msgid "Eject"
-msgstr "Извлечь"
-
-#: src/FSMenu.c:840
-msgid "Close"
-msgstr "Закрыть"
-
-#: src/FSMenu.c:859
-msgid "Info Panel..."
-msgstr "Информация..."
-
-#: src/FSMenu.c:861
-msgid "Legal..."
-msgstr "Права..."
-
-#: src/FSMenu.c:863
-msgid "Preferences..."
-msgstr "Настройки..."
-
-#: src/FSMenu.c:867
-msgid "Help..."
-msgstr "Помощь..."
-
-#: src/FSMenu.c:872 src/FSMenu.c:873
-msgid "File"
-msgstr "Файл"
-
-#: src/FSMenu.c:874
-msgid "Open"
-msgstr "Открыть"
-
-#: src/FSMenu.c:877
-msgid "Open as Folder"
-msgstr "Открыть как каталог"
-
-#: src/FSMenu.c:880
-msgid "New Folder"
-msgstr "Новый каталог"
-
-#: src/FSMenu.c:882
-msgid "Duplicate"
-msgstr "Сдублировать"
-
-#: src/FSMenu.c:885
-msgid "Compress"
-msgstr "Сжать"
-
-#: src/FSMenu.c:888
-msgid "UnCompress"
-msgstr "Разжать"
-
-#: src/FSMenu.c:891 src/FSPanel.c:621
-msgid "Destroy"
-msgstr "Уничтожить"
-
-#: src/FSMenu.c:894
-msgid "Empty Recycler"
-msgstr "Очистить корзину"
-
-#: src/FSMenu.c:899 src/FSMenu.c:900
-msgid "Edit"
-msgstr "Правка"
-
-#: src/FSMenu.c:901
-msgid "Cut"
-msgstr "Вырезать"
-
-#: src/FSMenu.c:903
-msgid "Copy"
-msgstr "Скопировать"
-
-#: src/FSMenu.c:905
-msgid "Paste"
-msgstr "Вставить"
-
-#: src/FSMenu.c:907 src/FSPrefs.c:464 src/FSPrefs.c:560 src/FSPrefs.c:1043
-#: src/FSPrefs.c:1089 src/FSPrefs.c:1327 src/FSPrefs.c:1406
-msgid "Delete"
-msgstr "Удалить"
-
-#: src/FSMenu.c:909
-msgid "Select All"
-msgstr "Выбрать всё"
-
-#: src/FSMenu.c:912
-msgid "DeSelect All"
-msgstr "Снять выделение"
-
-#: src/FSMenu.c:917 src/FSMenu.c:918
-msgid "Disk"
-msgstr "Диск"
-
-#: src/FSMenu.c:931 src/FSMenu.c:932
-msgid "View"
-msgstr "Вид"
-
-#: src/FSMenu.c:933
-msgid "Browse"
-msgstr "Просмотр"
-
-#: src/FSMenu.c:939
-msgid "List"
-msgstr "Список"
-
-#: src/FSMenu.c:941
-msgid "Sort"
-msgstr "Сортировка"
-
-#: src/FSMenu.c:946
-msgid "Show .files"
-msgstr "Показать скрытые"
-
-#: src/FSMenu.c:948
-msgid "Filter..."
-msgstr "Фильтр..."
-
-#: src/FSMenu.c:950
-msgid "New Viewer..."
-msgstr "Новое окно..."
-
-#: src/FSMenu.c:952
-msgid "Update View"
-msgstr "Обновить"
-
-#: src/FSMenu.c:956 src/FSMenu.c:957
-msgid "Tools"
-msgstr "Инструменты"
-
-#: src/FSMenu.c:958
-msgid "Inspector..."
-msgstr "Атрибуты..."
-
-#: src/FSMenu.c:960
-msgid "Finder"
-msgstr "Поиск"
-
-#: src/FSMenu.c:963
-msgid "Processes..."
-msgstr "Процессы..."
-
-#: src/FSMenu.c:966
-msgid "Console..."
-msgstr "Консоль..."
-
-#: src/FSMenu.c:970 src/FSMenu.c:971
-msgid "Windows"
-msgstr "Окна"
-
-#: src/FSMenu.c:986
-msgid "Miniaturize Window"
-msgstr "Свернуть"
-
-#: src/FSMenu.c:989
-msgid "Close Window"
-msgstr "Закрыть"
-
-#: src/FSMenu.c:994 src/FSMenu.c:995
-msgid "Services"
-msgstr "Сервисы"
-
-#: src/FSMenu.c:996
-msgid "File Edit..."
-msgstr "Редактировать..."
-
-#: src/FSMenu.c:998
-msgid "File Link..."
-msgstr "Ссылка на файл..."
-
-#: src/FSMenu.c:1000
-msgid "File New..."
-msgstr "Новый файл..."
-
-#: src/FSMenu.c:1002
-msgid "File Rename..."
-msgstr "Переименовать..."
-
-#: src/FSMenu.c:1004
-msgid "File Run..."
-msgstr "Запуск файла..."
-
-#: src/FSMenu.c:1006
-msgid "Show Image"
-msgstr "Показать изображение"
-
-#: src/FSMenu.c:1013
-msgid "Hide"
-msgstr "Скрыть"
-
-#: src/FSMenu.c:1015
-msgid "Hide Others"
-msgstr "Скрыть другие"
-
-#: src/FSMenu.c:1017
-msgid "Quit"
-msgstr "Выход"
-
-#: src/FSPanel.c:158
-#, c-format
-msgid "System Release %s"
-msgstr "Версия системы: %s"
-
-#: src/FSPanel.c:165
-#, c-format
-msgid "FSViewer Release %s"
-msgstr "Версия FSViewer: %s"
-
-#: src/FSPanel.c:172
-#, c-format
-msgid "Window Server %d"
-msgstr "Версия X-сервера: %d"
-
-#: src/FSPanel.c:179
-#, c-format
-msgid "Processor: %s"
-msgstr "Процессор: %s"
-
-#: src/FSPanel.c:186
-#, c-format
-msgid "Memory: %s"
-msgstr "Память: %s"
-
-#: src/FSPanel.c:193
-#, c-format
-msgid "Disk: %s"
-msgstr "Диск: %s"
-
-#: src/FSPanel.c:618
-#, c-format
-msgid "Do you really want to destroy %s?"
-msgstr "Вы действительно хотите удалить %s?"
-
-#: src/FSPanel.c:685
-msgid "Icon Selector"
-msgstr "Выбор пиктограммы"
-
-#: src/FSPanel.c:814
-msgid "Click to set icon for the selected file type."
-msgstr "Нажмите на пиктограмму для изменения."
-
-#: src/FSPanel.c:841
-msgid "Enter App Executable String:"
-msgstr "Введите команду для запуска:"
-
-#: src/FSPanel.c:855
-msgid "Set As Default Viewer"
-msgstr "Использовать для просмотра"
-
-#: src/FSPanel.c:861
-msgid "Set As Default Editor"
-msgstr "Использовать как редактор"
-
-#: src/FSPanel.c:940 src/FSPrefs.c:1202 src/FSPrefs.c:1426 src/FSPrefs.c:1455
-msgid "Icon Select"
-msgstr "Выбор пиктограммы"
-
-#: src/FSPanel.c:1490 src/iconInspector.c:256
-msgid "Directories"
-msgstr "Каталоги"
-
-#: src/FSPanel.c:1508 src/iconInspector.c:274
-msgid "Files"
-msgstr "Файлы"
-
-#: src/FSPrefs.c:161
-msgid "Apply"
-msgstr "Применить"
-
-#: src/FSPrefs.c:212
-msgid " Disks "
-msgstr " Диски "
-
-#: src/FSPrefs.c:227
-msgid "Name:"
-msgstr "Имя:"
-
-#: src/FSPrefs.c:234
-msgid "Menu Name"
-msgstr "Пункт меню"
-
-#: src/FSPrefs.c:243
-msgid "Mnt:"
-msgstr "Монт.:"
-
-#: src/FSPrefs.c:250
-msgid "Mount Point"
-msgstr "Точка монтир."
-
-#: src/FSPrefs.c:260
-msgid "Dev:"
-msgstr "Устр."
-
-#: src/FSPrefs.c:267
-msgid "Device"
-msgstr "Устройство"
-
-#: src/FSPrefs.c:277
-msgid "New"
-msgstr "Создать"
-
-#: src/FSPrefs.c:286
-msgid "Update"
-msgstr "Обновить"
-
-#: src/FSPrefs.c:313
-msgid "Mount:"
-msgstr "Монтировать:"
-
-#: src/FSPrefs.c:320 src/FSPrefs.c:337 src/FSPrefs.c:354 src/FSPrefs.c:437
-#: src/FSPrefs.c:507 src/FSPrefs.c:533
-msgid "App"
-msgstr "Команда"
-
-#: src/FSPrefs.c:330
-msgid "Unmount:"
-msgstr "Размонтиовать:"
-
-#: src/FSPrefs.c:347
-msgid "Eject:"
-msgstr "Извлечь:"
-
-#: src/FSPrefs.c:364
-msgid "Close:"
-msgstr "Зактрыть:"
-
-#: src/FSPrefs.c:371
-msgid "close tray"
-msgstr "закрыть лоток"
-
-#: src/FSPrefs.c:381
-msgid "Disks"
-msgstr "Диски"
-
-#: src/FSPrefs.c:404
-msgid " Applications "
-msgstr " Приложения "
-
-#: src/FSPrefs.c:430
-msgid "Exec:"
-msgstr "Исп.:"
-
-#: src/FSPrefs.c:447 src/FSPrefs.c:517 src/FSPrefs.c:543
-msgid "Browse..."
-msgstr "Выбор..."
-
-#: src/FSPrefs.c:456 src/FSPrefs.c:552 src/FSPrefs.c:653 src/FSPrefs.c:695
-msgid "Set"
-msgstr "Установить"
-
-#: src/FSPrefs.c:473
-msgid " File Types "
-msgstr " Типы файлов "
-
-#: src/FSPrefs.c:500
-msgid "View:"
-msgstr "Смот.:"
-
-#: src/FSPrefs.c:526
-msgid "Edit:"
-msgstr "Ред.:"
-
-#: src/FSPrefs.c:570
-msgid "App/File Types"
-msgstr "Типы файлов"
-
-#: src/FSPrefs.c:594
-msgid " Images "
-msgstr " Изображения "
-
-#: src/FSPrefs.c:620
-msgid " Executables "
-msgstr " Исполняемые "
-
-#: src/FSPrefs.c:636
-msgid "Exec Str:"
-msgstr "Команда:"
-
-#: src/FSPrefs.c:643
-msgid "Exes:"
-msgstr "Команда"
-
-#: src/FSPrefs.c:662
-msgid " Display "
-msgstr " Отображение "
-
-#: src/FSPrefs.c:678
-msgid "Display:"
-msgstr "Значение:"
-
-#: src/FSPrefs.c:685
-msgid "Display"
-msgstr "Значение"
-
-#: src/FSPrefs.c:704
-msgid "Variables"
-msgstr "Переменные"
-
-#: src/FSPrefs.c:1041 src/FSPrefs.c:1085 src/FSPrefs.c:1322 src/FSPrefs.c:1401
-msgid "Undelete"
-msgstr "Вернуть"
-
-#: src/FSPrefs.c:1477
-msgid "Browse -> App"
-msgstr "Выбор -> Прилож."
-
-#: src/FSPrefs.c:1489
-msgid "Browse -> Viewer"
-msgstr "Выбор -> Просмотр"
-
-#: src/FSPrefs.c:1501
-msgid "Browse -> Editor"
-msgstr "Выбор -> Редактор"
-
-#: src/FSUtils.c:158 src/FSUtils.c:170 src/FSUtils.c:316
-#, c-format
-msgid "Unavailable"
-msgstr "Недоступно"
-
-#: src/FSUtils.c:330
-#, c-format
-msgid "%s %d: Can't run df, %s\n"
-msgstr "%s %d: Не удалось запустить df, %s\n"
-
-#: src/FSUtils.c:556
-#, c-format
-msgid "Error changing to %s but it's not that serious!"
-msgstr "Ошибка при смене каталога на %s, но можно продолжить!"
-
-#: src/FSUtils.c:558 src/FSUtils.c:1231
-msgid "Error File Operation"
-msgstr "Ошибка"
-
-#: src/FSUtils.c:616 src/FSUtils.c:632
-msgid "App Input Window"
-msgstr "Добавить приложение"
-
-#: src/FSUtils.c:667 src/FSUtils.c:690
-#, c-format
-msgid "%s %d: Could not load icon file %s"
-msgstr "%s %d: Не удалось загрузить пиктограммe %s"
-
-#: src/FSUtils.c:712 src/FSUtils.c:726
-#, c-format
-msgid "%s %d: Could not create Pixmap from Data"
-msgstr "%s %d: Не удалось создать изображение"
-
-#: src/FSUtils.c:754
-#, c-format
-msgid "Window Maker domain (%s) is corrupted!"
-msgstr "Домен Window Maker (%s) повреждён!"
-
-#: src/FSUtils.c:756 src/FSUtils.c:764
-msgid "Error"
-msgstr "Ошибка"
-
-#: src/FSUtils.c:762
-#, c-format
-msgid "Could not load Window Maker defaults (%s)"
-msgstr "Не удалось загрузть параметры Window Maker (%s)"
-
-#: src/FSUtils.c:1230
-#, c-format
-msgid "Error changing to %s, \"%s\" cancelled."
-msgstr "Ошибка при смене каталога на %s, команда \"%s\" остановлена"
-
-#: src/FSViewer.c:53
-#, c-format
-msgid "User database entry for ICONDIR is not valid: %s. Taking default value."
-msgstr ""
-
-#: src/FSViewer.c:64
-#, fuzzy, c-format
-msgid "Default ICONDIR not found: %s"
-msgstr "Не найден каталог ICONDIR: %s"
-
-#: src/FSViewer.c:74
-msgid "No valid value for ICONDIR found. Even default directory is broken!"
-msgstr ""
-
-#: src/FSViewer.c:88
-#, c-format
-msgid "No value for ICONDIR found! May be your %s preferences file is broken."
-msgstr ""
-
-#: src/FSViewer.c:106
-#, c-format
-msgid "Usage: %s [options]\n"
-msgstr "Использование: %s [опции]\n"
-
-#: src/FSViewer.c:107
-msgid "options:"
-msgstr "опции:"
-
-#: src/FSViewer.c:108
-msgid " -p <initial path>  initial path to display"
-msgstr " -p <каталог>       начальный каталог"
-
-#: src/FSViewer.c:109
-msgid " -v                 print version number and exit"
-msgstr " -v                 вывод номера версии и выход"
-
-#: src/FSViewer.c:357
-#, c-format
-msgid "too few arguments for %s"
-msgstr "мало параметров для %s"
-
-#: src/FSViewer.c:428
-#, c-format
-msgid "Unable to get RContext: %s %s %d\n"
-msgstr "Не удалось создать RContext: %s %s %d\n"
-
 #: src/FSViewer.c:482
 msgid "X server does not support locale"
 msgstr "X сервер не поддерживает локализацию"
+
+#: src/exeInspector.c:175
+msgid "associated file to open"
+msgstr "имя выбранного файла"
 
 #: src/FSViewer.c:485
 msgid "cannot set locale modifiers"
 msgstr "не удалось установить параметры локализации"
 
-#: src/FSViewer.c:493
+#: src/FSPrefs.c:371
+msgid "close tray"
+msgstr "закрыть лоток"
+
+#: src/FSViewer.c:107
+msgid "options:"
+msgstr "опции:"
+
+#: src/FSViewer.c:357
 #, c-format
-msgid "Unable to allocate memory for %s %s %d\n"
-msgstr "Не удалось выделить память для %s %s %d\n"
-
-#: src/FSViewer.c:500
-msgid "Unable to Open Display!"
-msgstr "Не удалось открыть дисплей!"
-
-#: src/FSViewer.c:521
-#, c-format
-msgid "Unable to create a FileView instance %s %s %d"
-msgstr "Не удалось создать экзепляр FileView %s %s %d"
-
-#: src/iconInspector.c:308 src/iconInspector.c:309
-msgid "Icon Inspector"
-msgstr "Пиктограмма"
-
-#: src/viewInspector.c:351 src/viewInspector.c:352
-msgid "Viewer Inspector"
-msgstr "Программа просмотра"
+msgid "too few arguments for %s"
+msgstr "мало параметров для %s"
