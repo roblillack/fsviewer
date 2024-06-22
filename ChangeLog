@@ -1,4 +1,18 @@
-2007-10-14 Guido Scholz <guido.scholz@bayernline.de>
+## FSViewer 0.2.7 (2024-06-22)
+
+- Switch build system to cmake
+- Fix build to work with modern versions of WINGs & Window Maker
+- Adapt window bottom to more closely resemble NeXT FileViewer
+- Add support for showing available space on filesystem
+- Fix recurring crashes
+- Fix main window not showing title bar
+- Fix building on 64 bit systems
+- Fix building on FreeBSD
+- Fix building on OpenBSD
+
+## FSViewer 0.2.6 (2007-10-14)
+Latest version done by Guido Scholz <guido.scholz@bayernline.de>
+
 	* po/sv.po: Swedish translation added.
 	* man/fsviewer.x1, chdef.x1: Man pages from debian package added.
 	* configure.sub, configure.guess: updated autoconf files
