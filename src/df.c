@@ -13,7 +13,7 @@ static const char* formatk(unsigned long k)
     else if (k >= 1000)
         sprintf(buffer, "%.4g MB", (double)k / 1000);
     else
-        sprintf(buffer, "%ld KB", k);
+        sprintf(buffer, "%ld kB", k);
 
     return buffer;
 }
@@ -22,7 +22,7 @@ const char* DiskFree(const char* dir)
 {
     unsigned long total = 0; /* Total Space */
     char buffer[1024];
-    snprintf(buffer, 1024, "df -k %s", dir);
+    snprintf(buffer, 1024, "BLOCKSIZE=1000 df %s", dir);
 
     FILE* f = popen(buffer, "r");
 
