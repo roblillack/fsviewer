@@ -1115,12 +1115,14 @@ int FSAddBrowserColumn(FSBrowser* bPtr)
     bPtr->columnCount++;
     clist = wmalloc(sizeof(WMList*) * bPtr->columnCount);
     tlist = wmalloc(sizeof(char*) * bPtr->columnCount);
-    memcpy(clist, bPtr->columns, sizeof(WMList*) * (bPtr->columnCount - 1));
-    memcpy(tlist, bPtr->titles, sizeof(char*) * (bPtr->columnCount - 1));
-    if (bPtr->columns)
+    if (bPtr->columns) {
+        memcpy(clist, bPtr->columns, sizeof(WMList*) * (bPtr->columnCount - 1));
         free(bPtr->columns);
-    if (bPtr->titles)
+    }
+    if (bPtr->titles) {
+        memcpy(tlist, bPtr->titles, sizeof(char*) * (bPtr->columnCount - 1));
         free(bPtr->titles);
+    }
     bPtr->columns = clist;
     bPtr->titles = tlist;
 
