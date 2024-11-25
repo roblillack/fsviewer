@@ -1,4 +1,6 @@
-# FSViewer.app
+# FSViewer
+
+![FSViewer screenshot](./docs/fsviewer-screenshot.png)
 
 ## What is this?
 
@@ -9,10 +11,10 @@ WINGs library.
 The tool was originally written by George Clernon (1998-99) and later maintained
 by Guido Scholz (2002-07).
 
-This version is based on a Source Code repository I created in 2006 to keep
-track of some fixes I added to the codebase over the years:
+This version is based on a source code repository I created around the same time
+to keep track of some fixes I added to the codebase over the years:
 
-- Adapt window bottom to more closely resemble NeXt FileViewer
+- Adapt window bottom to more closely resemble NeXT FileViewer
 - Add support for showing available space on filesystem
 - Switch build system to cmake
 - Fix recurring crashes
@@ -21,10 +23,29 @@ track of some fixes I added to the codebase over the years:
 - Fix building on FreeBSD
 - Fix building on OpenBSD
 
-## Building from source
+## Building from sources
 
-TBD
+1. Install prerequisites. This can be as easy as:
+
+   - **Debian:** \
+     `sudo apt install cmake libxpm-dev libwmaker-dev libwraster-dev libwings-dev libxmu-dev libpango1.0-dev`
+   - **FreeBSD:** \
+     `sudo pkg install cmake windowmaker`
+   - **NetBSD:** \
+     `sudo pkgin in cmake pkg-config windowmaker`
+   - **OpenBSD:** \
+     `doas pkg_add cmake windowmaker`
+
+2. Build: `cmake . && make`
+
+3. Install: `sudo make install`
 
 ## More information
+
+- A list of all changes can be found in the [ChangeLog](./ChangeLog)
+- Bugs and new features are tracked using
+  [GitHub issues](https://github.com/roblillack/fsviewer/issues)
+- Feel free to
+  [start a discussion](https://github.com/roblillack/fsviewer/discussions)
 
 For more information, please check the [original README](./README.orig).

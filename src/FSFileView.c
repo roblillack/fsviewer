@@ -427,15 +427,16 @@ FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
             fView->size);
     }
 
-    if ((fView->primary)) {
-        memset((void*)&attributes, 0, sizeof(MyGNUstepWMAttributes));
-        attributes.window_style = (WMTitledWindowMask | WMMiniaturizableWindowMask | WMResizableWindowMask);
-        attributes.window_level = WMNormalWindowLevel;
-        attributes.extra_flags = GSFullKeyboardEventsFlag;
-        attributes.flags = (GSWindowStyleAttr | GSWindowLevelAttr | GSExtraFlagsAttr);
-        MyWMSetWindowAttributes(fView->dpy, WMWidgetXID(fView->fileView),
-            &attributes);
+    memset((void*)&attributes, 0, sizeof(MyGNUstepWMAttributes));
+    attributes.window_style = (WMTitledWindowMask | WMMiniaturizableWindowMask | WMResizableWindowMask);
+    if (!(fView->primary)) {
+        attributes.window_style |= WMClosableWindowMask;
     }
+    attributes.window_level = WMNormalWindowLevel;
+    attributes.extra_flags = GSFullKeyboardEventsFlag;
+    attributes.flags = (GSWindowStyleAttr | GSWindowLevelAttr | GSExtraFlagsAttr);
+    MyWMSetWindowAttributes(fView->dpy, WMWidgetXID(fView->fileView),
+        &attributes);
 
     // WMAppAddWindow(FSGetFSViewerWMContext(fsViewer),
     // WMWidgetXID(fView->fileView));
@@ -485,7 +486,7 @@ FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
     }
 
     FSUpdateFileViewTitles(fView);
-    fView->dfTimer = WMAddPersistentTimerHandler(60000, updateDiskFree, fView);
+    fView->dfTimer = WMAddPersistentTimerHandler(60000, (WMCallback*)updateDiskFree, fView);
     updateDiskFree(fView);
 
     return fView;

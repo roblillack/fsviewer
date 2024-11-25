@@ -687,12 +687,14 @@ int FSAddPathViewColumn(FSPathView* pvPtr)
     pvPtr->columnCount++;
     clist = wmalloc(sizeof(FSFileButton*) * pvPtr->columnCount);
     tlist = wmalloc(sizeof(char*) * pvPtr->columnCount);
-    memcpy(clist, pvPtr->columns, sizeof(FSFileButton*) * (pvPtr->columnCount - 1));
-    memcpy(tlist, pvPtr->titles, sizeof(char*) * (pvPtr->columnCount - 1));
-    if (pvPtr->columns)
+    if (pvPtr->columns) {
+        memcpy(clist, pvPtr->columns, sizeof(FSFileButton*) * (pvPtr->columnCount - 1));
         free(pvPtr->columns);
-    if (pvPtr->titles)
+    }
+    if (pvPtr->titles) {
+        memcpy(tlist, pvPtr->titles, sizeof(char*) * (pvPtr->columnCount - 1));
         free(pvPtr->titles);
+    }
     pvPtr->columns = clist;
     pvPtr->titles = tlist;
 

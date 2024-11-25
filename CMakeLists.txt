@@ -10,9 +10,29 @@ file(GLOB SRC "src/*.c")
 add_executable(${EXECUTABLE} ${SRC} ${REGEXP})
 
 pkg_check_modules(DEPS REQUIRED IMPORTED_TARGET wrlib wmlib WUtil WINGs xpm xmu x11)
-# include_directories(${DEPS_INCLUDE_DIRS})
-#find_library(LIBINTL intl)
+
 find_package(Intl)
+if(Intl_FOUND)
+    add_definitions(-DENABLE_NLS=1)
+
+    file(GLOB GMO_FILES "po/*.gmo")
+    foreach (_gmoFile ${GMO_FILES})
+        get_filename_component(_absFile ${_gmoFile} ABSOLUTE)
+        get_filename_component(_abs_PATH ${_absFile} PATH)
+        get_filename_component(_lang ${_absFile} NAME_WE)
+    
+        install(FILES ${_gmoFile} DESTINATION share/locale/${_lang}/LC_MESSAGES RENAME "FSViewer.mo")
+    endforeach ()
+endif()
+
+# Create a "translations" target to compile translation files,
+# if gettext is found
+#find_package(Gettext)
+#if(GETTEXT_FOUND)
+#    file(GLOB PO_FILES "po/*.po")
+#    GETTEXT_PROCESS_POT_FILE("po/FSViewer.pot" LANGUAGES de sv ru)
+#endif()
+
 target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} -lm)
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
@@ -26,6 +46,6 @@ install(TARGETS ${EXECUTABLE} DESTINATION bin)
 install(DIRECTORY xpm DESTINATION GNUstep/Apps/FSViewer.app)
 install(DIRECTORY tiff DESTINATION GNUstep/Apps/FSViewer.app)
 
-#add_subdirectory(src/regexp)
-#add_subdirectory(src)
-#add_subdirectory(defs)
+# add_subdirectory(src/regexp)
+# add_subdirectory(src)
+# add_subdirectory(defs)
