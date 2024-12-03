@@ -357,7 +357,12 @@ char* LocateImage(char* name)
     else
         return NULL;
 
-    if (FSImageTypeIsSupported("TIFF")) {
+    if (FSImageTypeIsSupported("PNG")) {
+        sprintf(tmp, "%s.png", name);
+        path = WMPathForResourceOfType(tmp, "png");
+    }
+
+    if (!path && FSImageTypeIsSupported("TIFF")) {
         sprintf(tmp, "%s.tiff", name);
         path = WMPathForResourceOfType(tmp, "tiff");
 
@@ -384,6 +389,10 @@ char* LocateImage(char* name)
         sprintf(tmp, "%s.xpm", name);
         path = WMPathForResourceOfType(tmp, "xpm");
     }
+
+        if (path) {
+            printf("Path %s found for %s.\n", tmp, name);
+        }
 
     if (!path)
         path = WMPathForResourceOfType(name, "");
@@ -1099,6 +1108,7 @@ Bool FSImageTypeIsSupported(char* imgType)
         return found;
 
     for (i = 0; info->imgTypes[i]; i++) {
+        printf("Checking %s against %s\n", imgType, info->imgTypes[i]);
         if (strcmp(imgType, info->imgTypes[i]) == 0) {
             found = True;
             break;
