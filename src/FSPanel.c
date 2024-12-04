@@ -104,7 +104,7 @@ FSCreateInfoPanel(FSViewer* app, char* title, char* msg)
     WMSetWindowTitle(info->win, _("Info"));
     WMSetWindowCloseAction(info->win, FSCloseInfoPanel, (void*)info);
 
-    if ((appicon = WMGetApplicationIconPixmap(info->scr))) {
+    if ((appicon = FSCreateBlendedPixmapFromFile(info->scr, LocateImage("FSViewer"), NULL))) {
         WMSize appIconSize;
 
         appIconSize = WMGetPixmapSize(appicon);
@@ -1382,7 +1382,6 @@ FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
     int height, width, offset;
     WMFrame* f;
     WMLabel* l;
-    RColor color;
     WMPixmap* pixmap;
     char* txt = NULL;
     WMFont* aFont;
@@ -1427,13 +1426,8 @@ FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
     l = WMCreateLabel(selIcon->frame);
     WMResizeWidget(l, width - 10, 75);
     WMMoveWidget(l, 10, 10);
-    color.red = 0xae;
-    color.green = 0xaa;
-    color.blue = 0xae;
-    color.alpha = 0;
-    /* FS.. */
-    pixmap = WMCreateBlendedPixmapFromFile(selIcon->scr, LocateImage(str),
-        &color);
+
+    pixmap = FSCreateBlendedPixmapFromFile(selIcon->scr, LocateImage(str), NULL);
     WMSetLabelImage(l, pixmap);
     WMSetLabelText(l, str);
     WMSetLabelImagePosition(l, WIPLeft);
@@ -1553,22 +1547,13 @@ selIconButtonClick(WMWidget* self, void* data)
 static void
 setIconLabel(WMWidget* self, void* data)
 {
-    RColor color;
     WMPixmap* pixmap;
     FSSelectIconPanel* panel = (FSSelectIconPanel*)data;
-
-    color.red = 0xae;
-    color.green = 0xaa;
-    color.blue = 0xae;
-    color.alpha = 0;
 
     if (panel->iconName)
         free(panel->iconName);
     panel->iconName = getSelectedFilename(panel);
-    /* FS.. */
-    pixmap = WMCreateBlendedPixmapFromFile(panel->scr,
-        LocateImage(panel->iconName),
-        &color);
+    pixmap = FSCreateBlendedPixmapFromFile(panel->scr, LocateImage(panel->iconName), NULL);
     WMSetLabelImage(panel->iconLabel, pixmap);
 }
 
@@ -1616,13 +1601,7 @@ char* getSelectedFilename(FSSelectIconPanel* panel)
 
     listItem = WMGetListSelectedItem(panel->fileList);
     if (listItem) {
-        RColor color;
         WMPixmap* pixmap;
-
-        color.red = 0xae;
-        color.green = 0xaa;
-        color.blue = 0xae;
-        color.alpha = 0;
 
         fileInfo = (FileInfo*)listItem->clientData;
 
@@ -1632,9 +1611,7 @@ char* getSelectedFilename(FSSelectIconPanel* panel)
             filename = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
 
         imgName = LocateImage(filename);
-        /*  FS.. */
-        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win),
-            imgName, &color);
+        pixmap = FSCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win), imgName, NULL);
 
         WMSetLabelImage(panel->iconLabel, pixmap);
         WMReleasePixmap(pixmap);
