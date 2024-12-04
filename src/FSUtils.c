@@ -390,10 +390,6 @@ char* LocateImage(char* name)
         path = WMPathForResourceOfType(tmp, "xpm");
     }
 
-        if (path) {
-            printf("Path %s found for %s.\n", tmp, name);
-        }
-
     if (!path)
         path = WMPathForResourceOfType(name, "");
 
@@ -1108,7 +1104,6 @@ Bool FSImageTypeIsSupported(char* imgType)
         return found;
 
     for (i = 0; info->imgTypes[i]; i++) {
-        printf("Checking %s against %s\n", imgType, info->imgTypes[i]);
         if (strcmp(imgType, info->imgTypes[i]) == 0) {
             found = True;
             break;

@@ -1403,9 +1403,9 @@ FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
     strcpy(selIcon->xpmDir, txt);
     strcat(selIcon->xpmDir, "/xpm");
 
-    selIcon->tiffDir = (char*)wmalloc(strlen(txt) + 6);
-    strcpy(selIcon->tiffDir, txt);
-    strcat(selIcon->tiffDir, "/tiff");
+    selIcon->pngDir = (char*)wmalloc(strlen(txt) + 5);
+    strcpy(selIcon->pngDir, txt);
+    strcat(selIcon->pngDir, "/png");
 
     if (txt != ICONDIR)
         free(txt);
@@ -1460,7 +1460,7 @@ FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
     WMSetListAction(selIcon->pathList, fillIconFileList, selIcon);
     FSLoadIconPaths(selIcon->pathList);
     WMAddListItem(selIcon->pathList, selIcon->xpmDir);
-    WMAddListItem(selIcon->pathList, selIcon->tiffDir);
+    WMAddListItem(selIcon->pathList, selIcon->pngDir);
 
     l = WMCreateLabel(f);
     WMMoveWidget(l, 10, 140);
@@ -1626,7 +1626,7 @@ char* getSelectedFilename(FSSelectIconPanel* panel)
 
         fileInfo = (FileInfo*)listItem->clientData;
 
-        if (!strncmp(fileInfo->path, panel->xpmDir, strlen(fileInfo->path) - 1) || !strncmp(fileInfo->path, panel->tiffDir, strlen(fileInfo->path) - 1)) {
+        if (!strncmp(fileInfo->path, panel->xpmDir, strlen(fileInfo->path) - 1) || !strncmp(fileInfo->path, panel->pngDir, strlen(fileInfo->path) - 1)) {
             filename = RemoveFileExtension(fileInfo->name);
         } else
             filename = GetPathnameFromPathName(fileInfo->path, fileInfo->name);

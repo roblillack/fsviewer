@@ -29,7 +29,6 @@ typedef struct _Panel {
     FileInfo* fileInfo;
 
     char* xpmDir;
-    char* tiffDir;
     char* pngDir;
     char* iconName;
 
@@ -119,7 +118,6 @@ getSelectedFilename(_Panel* panel)
         fileInfo = (FileInfo*)listItem->clientData;
 
         if (!strncmp(fileInfo->path, panel->xpmDir, strlen(fileInfo->path) - 1) ||
-            !strncmp(fileInfo->path, panel->tiffDir, strlen(fileInfo->path) - 1) || 
             !strncmp(fileInfo->path, panel->pngDir, strlen(fileInfo->path) - 1)) {
             filename = RemoveFileExtension(fileInfo->name);
         } else
@@ -160,7 +158,6 @@ showData(_Panel* panel)
 
     FSLoadIconPaths(panel->pathList);
     WMAddListItem(panel->pathList, panel->xpmDir);
-    WMAddListItem(panel->pathList, panel->tiffDir);
     WMAddListItem(panel->pathList, panel->pngDir);
     WMSortListItems(panel->pathList);
 
@@ -260,7 +257,6 @@ createPanel(Panel* p)
     WMSetListAction(panel->pathList, fillIconFileList, panel);
     FSLoadIconPaths(panel->pathList);
     WMAddListItem(panel->pathList, panel->xpmDir);
-    WMAddListItem(panel->pathList, panel->tiffDir);
     WMAddListItem(panel->pathList, panel->pngDir);
 
     l = WMCreateLabel(f);
@@ -325,10 +321,6 @@ InitIcon(WMWindow* parent, FSViewer* app, FileInfo* fileInfo, int x, int y)
     panel->xpmDir = (char*)wmalloc(strlen(txt) + 5);
     strcpy(panel->xpmDir, txt);
     strcat(panel->xpmDir, "/xpm");
-
-    panel->tiffDir = (char*)wmalloc(strlen(txt) + 6);
-    strcpy(panel->tiffDir, txt);
-    strcat(panel->tiffDir, "/tiff");
 
     panel->pngDir = (char*)wmalloc(strlen(txt) + 5);
     strcpy(panel->pngDir, txt);

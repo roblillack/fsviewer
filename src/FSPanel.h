@@ -146,7 +146,7 @@ typedef struct _FSSelectIconPanel {
     int done;
     char* iconName;
     char* xpmDir;
-    char* tiffDir;
+    char* pngDir;
     /*     FileInfo   *fileInfo; */
 
 } FSSelectIconPanel;
