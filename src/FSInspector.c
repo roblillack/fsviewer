@@ -100,13 +100,7 @@ static void
 FSUpdateInspectorFileInfoDisplay(FSInspector* fsInspector)
 {
     char* buf;
-    RColor color;
     WMPixmap* pixmap;
-
-    color.red = 0xae;
-    color.green = 0xaa; /* aa ?*/
-    color.blue = 0xae;
-    color.alpha = 0;
 
     if (fsInspector->fileInfo->fileType != ROOT)
         WMSetLabelText(fsInspector->nameLabel, fsInspector->fileInfo->name);
@@ -116,10 +110,8 @@ FSUpdateInspectorFileInfoDisplay(FSInspector* fsInspector)
         tmp = FSNodeName();
         WMSetLabelText(fsInspector->nameLabel, tmp);
     }
-    /* why FS... */
-    pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(fsInspector->win),
-        fsInspector->fileInfo->imgName,
-        &color);
+
+    pixmap = FSCreateBlendedPixmapFromFile(WMWidgetScreen(fsInspector->win), fsInspector->fileInfo->imgName, NULL);
     WMSetLabelImage(fsInspector->nameLabel, pixmap);
 
     buf = (char*)wmalloc(strlen(_("Path: ")) + strlen(fsInspector->fileInfo->path) + 1);
