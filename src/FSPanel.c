@@ -104,7 +104,7 @@ FSCreateInfoPanel(FSViewer* app, char* title, char* msg)
     WMSetWindowTitle(info->win, _("Info"));
     WMSetWindowCloseAction(info->win, FSCloseInfoPanel, (void*)info);
 
-    if ((appicon = WMGetApplicationIconPixmap(info->scr))) {
+    if ((appicon = FSCreateBlendedPixmapFromFile(info->scr, LocateImage("FSViewer"), NULL))) {
         WMSize appIconSize;
 
         appIconSize = WMGetPixmapSize(appicon);
