@@ -357,7 +357,12 @@ char* LocateImage(char* name)
     else
         return NULL;
 
-    if (FSImageTypeIsSupported("TIFF")) {
+    if (FSImageTypeIsSupported("PNG")) {
+        sprintf(tmp, "%s.png", name);
+        path = WMPathForResourceOfType(tmp, "png");
+    }
+
+    if (!path && FSImageTypeIsSupported("TIFF")) {
         sprintf(tmp, "%s.tiff", name);
         path = WMPathForResourceOfType(tmp, "tiff");
 
