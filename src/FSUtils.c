@@ -558,18 +558,13 @@ void LaunchApp(FSViewer* fsViewer, FileInfo* fileInfo, AppEvent event)
 
 void FSSetButtonImageFromFile(WMButton* btn, char* imgName)
 {
-    RColor color;
     WMPixmap* pixmap;
 
-    color.red = 0xae;
-    color.green = 0xaa; /* aa ?*/
-    color.blue = 0xae;
-    color.alpha = 0;
-    if (imgName)
-        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(btn),
-            imgName, &color);
-    else
+    if (imgName) {
+        pixmap = FSCreateBlendedPixmapFromFile(WMWidgetScreen(btn), imgName, NULL);
+    } else {
         pixmap = NULL;
+    }
 
     if (!pixmap) {
         wwarning(_("%s %d: Could not load icon file %s"),
@@ -579,17 +574,13 @@ void FSSetButtonImageFromFile(WMButton* btn, char* imgName)
         WMReleasePixmap(pixmap);
     }
 
-    color.red = 0xff;
-    color.green = 0xff;
-    color.blue = 0xff;
-    color.alpha = 0;
-    if (imgName)
-        /*	pixmap = FSCreatePixmapWithBackingFromFile(WMWidgetScreen(btn),
-                                                           imgName, &color);*/
-        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(btn),
-            imgName, &color);
-    else
+    if (imgName) {
+        WMColor* white = WMWhiteColor(WMWidgetScreen(btn));
+        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(btn), imgName, white);
+        WMReleaseColor(white);
+    } else {
         pixmap = NULL;
+    }
 
     if (!pixmap) {
         wwarning(_("%s %d: Could not load icon file %s"),
@@ -602,13 +593,8 @@ void FSSetButtonImageFromFile(WMButton* btn, char* imgName)
 
 void FSSetButtonImageFromXPMData(WMButton* btn, char** data)
 {
-    RColor color;
     WMPixmap* pixmap;
 
-    color.red = 0xae;
-    color.green = 0xaa;
-    color.blue = 0xae;
-    color.alpha = 0;
     pixmap = WMCreatePixmapFromXPMData(WMWidgetScreen(btn), data);
     if (!pixmap)
         wwarning(_("%s %d: Could not create Pixmap from Data"),
@@ -619,10 +605,6 @@ void FSSetButtonImageFromXPMData(WMButton* btn, char** data)
     if (pixmap)
         WMReleasePixmap(pixmap);
 
-    color.red = 0xff;
-    color.green = 0xff;
-    color.blue = 0xff;
-    color.alpha = 0;
     pixmap = WMCreatePixmapFromXPMData(WMWidgetScreen(btn), data);
     if (!pixmap)
         wwarning(_("%s %d: Could not create Pixmap from Data"),
@@ -814,49 +796,20 @@ int FSStringMatch(char* pattern, char* fn)
             return 1;
     };
 }
-/*
-WMPixmap*
-FSCreateBlendedPixmapFromFile(WMScreen *scr, char *fileName, RColor *color)
-{
-    RImage *image = NULL;
-    RImage *clone = NULL;
-    WMPixmap *pixmap;
-    RColor color1;
-    int x,y;
 
-    if(!rContext)
-    {
-        memset((void *) &attributes, 0, sizeof(RContextAttributes));
-        attributes.flags = (RC_RenderMode | RC_ColorsPerChannel);
-        attributes.render_mode = RM_DITHER;
-        attributes.colors_per_channel = 4;
+WMPixmap *FSCreateBlendedPixmapFromFile(WMScreen *scr, char *fileName, WMColor *color) {
+    RColor bgCol;
 
-        rContext = RCreateContext(WMScreenDisplay(scr),
-                                  DefaultScreen(WMScreenDisplay(scr)),
-                                  &attributes);
+    if (color) {
+        bgCol = WMGetRColorFromColor(color);
+    } else {
+        WMColor *gray = WMGrayColor(scr);
+        bgCol = WMGetRColorFromColor(gray);
+        WMReleaseColor(gray);
     }
-    if(fileName)
-        image = RLoadImage(rContext, fileName, 0);
-    if(!image)
-        image = RGetImageFromXPMData(rContext, file_plain);
 
-    color1.red   = 0xa3;
-    color1.green = 0xa3;
-    color1.blue  = 0xa3;
-    color1.alpha = 255;
-
-    RCombineImageWithColor(image, color);
-
-    / * Resize the width to 64x64 pixels * /
-    clone = RMakeCenteredImage(image, 64, 64, &color1);
-    pixmap = WMCreatePixmapFromRImage(scr, clone, 0);
-
-    RReleaseImage(image);
-    RReleaseImage(clone);
-
-    return pixmap;
+    return WMCreateBlendedPixmapFromFile(scr, fileName, &bgCol);
 }
-*/
 
 WMPixmap*
 FSCreatePixmapWithBackingFromFile(WMScreen* scr, char* fileName, RColor* color)

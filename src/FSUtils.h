@@ -23,8 +23,7 @@ mode_t FSGetUMask();
 void FSUpdateFileView();
 char* FSGetHomeDir();
 int FSStringMatch(char* pattern, char* fn);
-WMPixmap* FSCreateBlendedPixmapFromFile(WMScreen* scr, char* fileName,
-    RColor* color);
+WMPixmap* FSCreateBlendedPixmapFromFile(WMScreen* scr, char* fileName, WMColor* color);
 WMPixmap* FSCreatePixmapWithBackingFromFile(WMScreen* scr, char* fileName,
     RColor* color);
 WMPixmap* FSCreateBlurredPixmapFromFile(WMScreen* scr, char* fileName);

@@ -119,16 +119,9 @@ appListClick(WMWidget* self, void* data)
     exec = FSGetStringForNameKey(selected, "exec");
 
     if (icon) {
-        RColor color;
         WMPixmap* pixmap;
 
-        color.red = 0xae;
-        color.green = 0xaa;
-        color.blue = 0xae;
-        color.alpha = 0;
-        /* FS.. */
-        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win),
-            icon, &color);
+        pixmap = FSCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win), icon, NULL);
         if (pixmap) {
             WMSetButtonImagePosition(panel->appBtn, WIPImageOnly);
             WMSetButtonImage(panel->appBtn, pixmap);

@@ -42,22 +42,13 @@ static char* getSelectedFilename(_Panel* panel);
 static void
 setIconLabel(WMWidget* self, void* data)
 {
-    RColor color;
     WMPixmap* pixmap;
     _Panel* panel = (_Panel*)data;
-
-    color.red = 0xae;
-    color.green = 0xaa;
-    color.blue = 0xae;
-    color.alpha = 0;
 
     if (panel->iconName)
         free(panel->iconName);
     panel->iconName = getSelectedFilename(panel);
-    /* FS.. */
-    pixmap = WMCreateBlendedPixmapFromFile(panel->scr,
-        LocateImage(panel->iconName),
-        &color);
+    pixmap = FSCreateBlendedPixmapFromFile(panel->scr, LocateImage(panel->iconName), NULL);
     WMSetLabelImage(panel->iconLabel, pixmap);
 }
 
@@ -107,13 +98,7 @@ getSelectedFilename(_Panel* panel)
 
     listItem = WMGetListSelectedItem(panel->fileList);
     if (listItem) {
-        RColor color;
         WMPixmap* pixmap;
-
-        color.red = 0xae;
-        color.green = 0xaa;
-        color.blue = 0xae;
-        color.alpha = 0;
 
         fileInfo = (FileInfo*)listItem->clientData;
 
@@ -124,9 +109,7 @@ getSelectedFilename(_Panel* panel)
             filename = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
 
         imgName = LocateImage(filename);
-        /* FS..*/
-        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win),
-            imgName, &color);
+        pixmap = FSCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win), imgName, NULL);
 
         WMSetLabelImage(panel->iconLabel, pixmap);
         WMReleasePixmap(pixmap);
@@ -142,17 +125,9 @@ static void
 showData(_Panel* panel)
 {
     char* file;
-    RColor color;
     WMPixmap* pixmap;
 
-    color.red = 0xae;
-    color.green = 0xaa;
-    color.blue = 0xae;
-    color.alpha = 0;
-    /* FS..*/
-    pixmap = WMCreateBlendedPixmapFromFile(panel->scr,
-        panel->fileInfo->imgName,
-        &color);
+    pixmap = FSCreateBlendedPixmapFromFile(panel->scr, panel->fileInfo->imgName, NULL);
     WMClearList(panel->pathList);
     WMClearList(panel->fileList);
 
