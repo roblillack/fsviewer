@@ -318,6 +318,28 @@ char* GetFileExtn(char* filename)
     return extn;
 }
 
+char* GetFileExtnOrNull(char* filename)
+{
+    if (FSStringMatch("*.tar.gz", filename)) {
+        return ".tar.gz";
+    }
+
+    char* ext = strrchr(filename, '.');
+    if (ext == NULL) {
+        return NULL;
+    }
+
+    for (int i = 0; i < strlen(ext); i++) {
+        if ((uint)ext[i] > 0x7f) {
+            // We don't allow non-ASCII characters in file extensions
+            // see: https://github.com/roblillack/fsviewer/issues/20
+            return NULL;
+        }
+    }
+
+    return ext;
+}
+
 char* GetFileAbbrev(char* fileName)
 {
     char* abbrev;
@@ -353,12 +375,15 @@ char* GetFileImgName(char* fileName, enum FileType fileType)
     if (fileName == NULL)
         return wstrdup(DEFAULT_STR);
 
-    if (fileType == ROOT)
-        extn = wstrdup("ROOT");
-    else
-        extn = wstrdup(GetFileExtn(fileName));
+    if (fileType == ROOT) {
+        extn = "ROOT";
+    } else {
+        extn = GetFileExtnOrNull(fileName);
+    }
 
-    name = FSGetStringForNameKey(extn, "icon");
+    if (extn) {
+        name = FSGetStringForNameKey(extn, "icon");
+    }
 
     if (name == NULL) {
         if (fileType == DIRECTORY)
@@ -374,8 +399,6 @@ char* GetFileImgName(char* fileName, enum FileType fileType)
     icon = LocateImage(name);
     if (name)
         free(name);
-    if (extn)
-        free(extn);
 
     if (icon)
         return icon;
