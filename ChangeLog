@@ -4,6 +4,7 @@
 - Fix showing correct free disk space with SI prefixes. ([#17](https://github.com/roblillack/fsviewer/pull/17))
 - Fix alpha channel blending for icons everywhere. ([#18](https://github.com/roblillack/fsviewer/pull/18))
 - Fix crash when when directory contains Umlaut entries on macOS ([#21](https://github.com/roblillack/fsviewer/pull/21))
+- Add support for PNG icons ([#19](https://github.com/roblillack/fsviewer/pull/19))
 
 ## FSViewer 0.2.7 (2024-06-22)
 
