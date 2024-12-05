@@ -75,7 +75,7 @@ static void destroyFSFileButton(_FSFileButton* bPtr);
 /* static void resizeFSFileButton(WMWidget*, unsigned int, unsigned int); */
 static void paintImageAndText(W_View* view, int x, int y,
     int width, int height,
-    char* imgName, char* text, GC backGC);
+    char* imgName, char* text, WMColor* back);
 static void radioPushObserver(void* observerData, WMNotification* notification);
 static void showTextView(FSFileButton* bPtr);
 static W_View* createTextView(W_Screen* scr, char* text, int width, int len);
@@ -245,7 +245,7 @@ paintFSFileButton(_FSFileButton* bPtr)
 
     if (bPtr->flags.cleared) {
         paintImageAndText(bPtr->view, 0, 0, bPtr->width, bPtr->height,
-            NULL, NULL, WMColorGC(bPtr->view->screen->white));
+            NULL, NULL, bPtr->view->screen->white);
         return;
     }
     if (bPtr->paintTimer)
@@ -270,7 +270,7 @@ paintFSFileButton(_FSFileButton* bPtr)
     if (bPtr->flags.selected || bPtr->flags.extSelected)
         paintImageAndText(bPtr->view, 0, 0, bPtr->width, bPtr->height,
             bPtr->fileInfo->imgName, bPtr->fileInfo->name,
-            WMColorGC(bPtr->view->screen->white));
+            bPtr->view->screen->white);
     else
         paintImageAndText(bPtr->view, 0, 0, bPtr->width, bPtr->height,
             bPtr->fileInfo->imgName, bPtr->fileInfo->name,
@@ -445,7 +445,7 @@ static void roundedRect(Display* dpy, Drawable d, GC backGC, int x, int y, int w
 
 static void
 paintImageAndText(W_View* view, int x, int y, int width, int height,
-    char* imgName, char* text, GC backGC)
+    char* imgName, char* text, WMColor* back)
 {
     int strwidth = 1;
     RColor color;
@@ -454,10 +454,13 @@ paintImageAndText(W_View* view, int x, int y, int width, int height,
     W_Screen* screen = view->screen;
     Drawable d = view->window;
 
-    color.red = 0xae;
-    color.green = 0xaa;
-    color.blue = 0xae;
-    color.alpha = 0;
+    if (back) {
+        color = WMGetRColorFromColor(back);
+    } else {
+        WMColor *gray = WMGrayColor(screen);
+        color = WMGetRColorFromColor(gray);
+        WMReleaseColor(gray);
+    }
 
     /*
      * Clear the area we are painting on
@@ -478,22 +481,20 @@ paintImageAndText(W_View* view, int x, int y, int width, int height,
     // W_DrawRelief(screen, d, x, y, width, height, RRaisedBevel);
 
     /* background */
-    if (backGC) {
+    if (back) {
         // image = FSCreatePixmapWithBackingFromFile(screen, imgName, &color);
-        roundedRect(screen->display, d, backGC,
+        roundedRect(screen->display, d, WMColorGC(back),
             x + (width - BUTTON_WIDTH) / 2, y + (height - BUTTON_HEIGHT - LABEL_HEIGHT) / 2,
             BUTTON_WIDTH, BUTTON_HEIGHT);
         /* text background rectangle */
         if (text)
-            XFillRectangle(screen->display, d, backGC,
+            XFillRectangle(screen->display, d, WMColorGC(back),
                 x + (width - strwidth) / 2, y + (height - BUTTON_HEIGHT - LABEL_HEIGHT) / 2 + BUTTON_HEIGHT,
                 strwidth, LABEL_HEIGHT);
     }
-    // else
-    //{        /* FS.. */
-    image = WMCreateBlendedPixmapFromFile(screen, imgName, &color);
-    //}
-
+    
+    image = FSCreateBlendedPixmapFromFile(screen, imgName, back);
+    
     if (image) {
         WMDrawPixmap(image, d, x + (width - image->width) / 2, y + (height - image->height) / 2 - LABEL_HEIGHT / 2);
         WMReleasePixmap(image);

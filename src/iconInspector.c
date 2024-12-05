@@ -29,7 +29,7 @@ typedef struct _Panel {
     FileInfo* fileInfo;
 
     char* xpmDir;
-    char* tiffDir;
+    char* pngDir;
     char* iconName;
 
     int x;
@@ -42,22 +42,13 @@ static char* getSelectedFilename(_Panel* panel);
 static void
 setIconLabel(WMWidget* self, void* data)
 {
-    RColor color;
     WMPixmap* pixmap;
     _Panel* panel = (_Panel*)data;
-
-    color.red = 0xae;
-    color.green = 0xaa;
-    color.blue = 0xae;
-    color.alpha = 0;
 
     if (panel->iconName)
         free(panel->iconName);
     panel->iconName = getSelectedFilename(panel);
-    /* FS.. */
-    pixmap = WMCreateBlendedPixmapFromFile(panel->scr,
-        LocateImage(panel->iconName),
-        &color);
+    pixmap = FSCreateBlendedPixmapFromFile(panel->scr, LocateImage(panel->iconName), NULL);
     WMSetLabelImage(panel->iconLabel, pixmap);
 }
 
@@ -107,25 +98,18 @@ getSelectedFilename(_Panel* panel)
 
     listItem = WMGetListSelectedItem(panel->fileList);
     if (listItem) {
-        RColor color;
         WMPixmap* pixmap;
-
-        color.red = 0xae;
-        color.green = 0xaa;
-        color.blue = 0xae;
-        color.alpha = 0;
 
         fileInfo = (FileInfo*)listItem->clientData;
 
-        if (!strncmp(fileInfo->path, panel->xpmDir, strlen(fileInfo->path) - 1) || !strncmp(fileInfo->path, panel->tiffDir, strlen(fileInfo->path) - 1)) {
+        if (!strncmp(fileInfo->path, panel->xpmDir, strlen(fileInfo->path) - 1) ||
+            !strncmp(fileInfo->path, panel->pngDir, strlen(fileInfo->path) - 1)) {
             filename = RemoveFileExtension(fileInfo->name);
         } else
             filename = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
 
         imgName = LocateImage(filename);
-        /* FS..*/
-        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win),
-            imgName, &color);
+        pixmap = FSCreateBlendedPixmapFromFile(WMWidgetScreen(panel->win), imgName, NULL);
 
         WMSetLabelImage(panel->iconLabel, pixmap);
         WMReleasePixmap(pixmap);
@@ -141,23 +125,15 @@ static void
 showData(_Panel* panel)
 {
     char* file;
-    RColor color;
     WMPixmap* pixmap;
 
-    color.red = 0xae;
-    color.green = 0xaa;
-    color.blue = 0xae;
-    color.alpha = 0;
-    /* FS..*/
-    pixmap = WMCreateBlendedPixmapFromFile(panel->scr,
-        panel->fileInfo->imgName,
-        &color);
+    pixmap = FSCreateBlendedPixmapFromFile(panel->scr, panel->fileInfo->imgName, NULL);
     WMClearList(panel->pathList);
     WMClearList(panel->fileList);
 
     FSLoadIconPaths(panel->pathList);
     WMAddListItem(panel->pathList, panel->xpmDir);
-    WMAddListItem(panel->pathList, panel->tiffDir);
+    WMAddListItem(panel->pathList, panel->pngDir);
     WMSortListItems(panel->pathList);
 
     WMSetLabelImage(panel->iconLabel, pixmap);
@@ -256,7 +232,7 @@ createPanel(Panel* p)
     WMSetListAction(panel->pathList, fillIconFileList, panel);
     FSLoadIconPaths(panel->pathList);
     WMAddListItem(panel->pathList, panel->xpmDir);
-    WMAddListItem(panel->pathList, panel->tiffDir);
+    WMAddListItem(panel->pathList, panel->pngDir);
 
     l = WMCreateLabel(f);
     WMMoveWidget(l, 10, 114);
@@ -321,9 +297,9 @@ InitIcon(WMWindow* parent, FSViewer* app, FileInfo* fileInfo, int x, int y)
     strcpy(panel->xpmDir, txt);
     strcat(panel->xpmDir, "/xpm");
 
-    panel->tiffDir = (char*)wmalloc(strlen(txt) + 6);
-    strcpy(panel->tiffDir, txt);
-    strcat(panel->tiffDir, "/tiff");
+    panel->pngDir = (char*)wmalloc(strlen(txt) + 5);
+    strcpy(panel->pngDir, txt);
+    strcat(panel->pngDir, "/png");
 
     if (customIconDir) {
         free(txt);

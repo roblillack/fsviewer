@@ -60,7 +60,7 @@ static void
 splitViewConstrainCallback(WMSplitView* sPtr, int divIndex, int* min, int* max)
 {
     *min = 1;
-    *max = WMWidgetHeight(sPtr) - WMGetSplitViewDividerThickness(sPtr) - MIN_UPPER_HEIGHT;
+    *max = WMWidgetHeight(sPtr) - FRAME_PAD_Y - MIN_UPPER_HEIGHT;
 }
 
 static void
@@ -94,7 +94,7 @@ notificationObserver(void* self, WMNotification* notif)
 {
     FSFileView* fView = (FSFileView*)self;
     void* object = WMGetNotificationObject(notif);
-    int divThickness = WMGetSplitViewDividerThickness(fView->split);
+    // int divThickness = WMGetSplitViewDividerThickness(fView->split);
 
     if (WMGetNotificationName(notif) == WMViewSizeDidChangeNotification) {
         if (object == WMWidgetView(fView->fileView)) {
