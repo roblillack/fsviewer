@@ -11,10 +11,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "DnD.h"
 #include "FSFileButton.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
+#include "dnd.h"
 #include "files.h"
 
 /*
@@ -122,6 +122,11 @@ InitFSFileButton(WMScreen* scr)
             W_RegisterUserWidget();
     }
 
+    return fileButtonWidgetClass;
+}
+
+W_Class FileButtonWidgetClass()
+{
     return fileButtonWidgetClass;
 }
 

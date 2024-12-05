@@ -33,7 +33,7 @@ char* FSParseExecString(char* pathname, char* txt, ...);
 void FSUnsetCursor(WMWidget* w);
 void FSSetCursor(WMWidget* w, char* type, char* name);
 void FSSetBusyCursor(WMWidget* w, Bool state);
-int FSGetDNDType(FileInfo* fileInfo);
+// int FSGetDNDType(FileInfo* fileInfo);
 int FSExecCommand(char* path, char* execStr);
 Bool FSImageTypeIsSupported(char* imgType);
 
