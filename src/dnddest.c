@@ -12,13 +12,13 @@
 
 void PrepareForDragOperation(WMView* self)
 {
-    wwarning("DROPZONE: Prepare for drag");
+    //wwarning("DROPZONE: Prepare for drag");
 }
 
 WMArray* RequiredDataTypes(WMView* self, WMDragOperationType request,
     WMArray* sourceDataTypes)
 {
-    wwarning("DROPZONE: supported data types requested");
+    //wwarning("DROPZONE: supported data types requested");
     return SupportedDataTypes();
 }
 
@@ -26,14 +26,14 @@ WMDragOperationType AllowedDropOperation(WMView* self,
     WMDragOperationType request,
     WMArray* sourceDataTypes)
 {
-    wwarning("DROPZONE: allowed op %d? We'll answer with %d", request, WDOperationLink);
+    //wwarning("DROPZONE: allowed op %d? We'll answer with %d", request, WDOperationLink);
 
     return WDOperationLink;
 }
 
 Bool InspectDropData(WMView* self, WMArray* dropData)
 {
-    wwarning("DROPZONE: Inspecting drop data");
+    //wwarning("DROPZONE: Inspecting drop data");
     return True;
 }
 
@@ -106,7 +106,7 @@ char* FindNextPath(WMData* data, int* startPos)
 
 void PerformDragOperation(WMView* self, WMArray* dropData, WMArray* operations, WMPoint* dropLocation)
 {
-    wwarning("DROPZONE: Performing drop operation");
+    //wwarning("DROPZONE: Performing drop operation");
 
     WMWidget* widget = WMWidgetOfView(self);
     FSFileView* fView = WMGetHangedData(widget);
@@ -126,6 +126,7 @@ void PerformDragOperation(WMView* self, WMArray* dropData, WMArray* operations, 
         char* d = NULL;
 
         while ((d = FindNextPath(data, &pos)) != NULL) {
+            //wwarning("Path sent by drag source: '%s'", d);
             FileInfo* fileInfo = FSGetFileInfo(d);
             if (fileInfo) {
                 if (FSAddFileViewShelfItemIntoProplist(fView, fileInfo)) {
@@ -139,7 +140,7 @@ void PerformDragOperation(WMView* self, WMArray* dropData, WMArray* operations, 
 
 void ConcludeDragOperation(WMView* self)
 {
-    wwarning("DROPZONE: Conclude drag");
+    //wwarning("DROPZONE: Conclude drag");
 }
 
 static WMDragDestinationProcs* shelfDragDestinationProcs = NULL;

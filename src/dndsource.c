@@ -12,7 +12,7 @@
 
 void BeganDrag(WMView* self, WMPoint* point)
 {
-    wwarning("Began drag");
+    //wwarning("Began drag");
 }
 
 void EndedFileViewDrag(WMView* self, WMPoint* point, Bool deposited)
@@ -32,12 +32,12 @@ void EndedFileViewDrag(WMView* self, WMPoint* point, Bool deposited)
         return;
     }
 
-    FSFileViewRemoveFileButtonFromShelf(fView, btn);
+    //FSFileViewRemoveFileButtonFromShelf(fView, btn);
 }
 
 WMData* FetchDragData(WMView* self, char* type)
 {
-    wwarning("data type %s requested", type);
+    //wwarning("data type %s requested", type);
 
     if (!self) {
         return NULL;
@@ -83,7 +83,7 @@ WMArray* SupportedDataTypes()
 
 WMArray* DropDataTypes(WMView* self)
 {
-    wwarning("supported data types requested");
+    //wwarning("supported data types requested");
     return SupportedDataTypes();
 }
 
@@ -115,7 +115,7 @@ WMDragSourceProcs* FileViewDragSourceProcs()
 static WMDragSourceProcs pathViewDragSourceProcs = {
     .acceptDropOperation = AcceptDropOperation,
     .askedOperations = NULL,
-    .beganDrag = NULL,
+    .beganDrag = BeganDrag,
     .dropDataTypes = DropDataTypes,
     .endedDrag = NULL,
     .fetchDragData = FetchDragData,
