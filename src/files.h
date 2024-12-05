@@ -80,6 +80,7 @@ char* GetFileImgName(char* fileName, enum FileType fileType);
 void GetFileInfo(char* path, char* name, FileInfo* fileInfo);
 FileInfo* GetDirList(char* path);
 char* GetFileExtn(char* filename);
+char* GetFileExtnOrNull(char* filename);
 Bool isDirectory(enum FileType fileType);
 char* RemoveFileExtension(char* filename);
 /* Bool      DisplayFile(const char *str); */
