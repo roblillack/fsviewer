@@ -46,6 +46,7 @@ add_definitions(-DLOCALEDIR="${CMAKE_INSTALL_PREFIX}/share/locale")
 install(TARGETS ${EXECUTABLE} DESTINATION bin)
 install(DIRECTORY xpm DESTINATION GNUstep/Apps/FSViewer.app)
 install(DIRECTORY png DESTINATION GNUstep/Apps/FSViewer.app)
+install(DIRECTORY man/man1 DESTINATION man)
 
 # add_subdirectory(src/regexp)
 # add_subdirectory(src)

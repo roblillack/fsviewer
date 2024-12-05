@@ -492,15 +492,15 @@ void LaunchApp(FSViewer* fsViewer, FileInfo* fileInfo, AppEvent event)
         }
 
         pathname = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
-        extn = GetFileExtn(fileInfo->name);
+        extn = GetFileExtnOrNull(fileInfo->name);
 
         if (event == AppExec) {
-            if ((exec = FSGetStringForNameKey(extn, "exec")) != NULL)
+            if (extn && (exec = FSGetStringForNameKey(extn, "exec")) != NULL)
                 execStr = FSParseExecString("", exec);
             else
                 execStr = FSParseExecString("", fileInfo->name);
         } else if (event == AppView) {
-            if ((exec = FSGetStringForNameKey(extn, "viewer")) != NULL)
+            if (extn && (exec = FSGetStringForNameKey(extn, "viewer")) != NULL)
                 execStr = FSParseExecString(pathname, exec);
             else {
                 char buf[MAX_LEN];
@@ -533,7 +533,7 @@ void LaunchApp(FSViewer* fsViewer, FileInfo* fileInfo, AppEvent event)
                 }
             }
         } else if (event == AppEdit) {
-            if ((exec = FSGetStringForNameKey(extn, "editor")) != NULL)
+            if (extn && (exec = FSGetStringForNameKey(extn, "editor")) != NULL)
                 execStr = FSParseExecString(pathname, exec);
 
             if (execStr == NULL) {
