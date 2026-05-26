@@ -26,6 +26,7 @@
 #define MAXLIN 1024
 #define ASCLEN 512
 #define REGLEN 256
+#define BUFSIZE 512 /* Size of caller-supplied result buffer (MAX_LEN). */
 
 static char linebuf[MAXLIN];
 static hmagic* mtypes = 0; /* Array of file-types. */
@@ -104,7 +105,7 @@ void magic_parse_file(char* name)
 
             sptr = parse_string(&cptr);
             mtypes[count].mask = strlen(sptr);
-            mtypes[count].value.string = strcpy((char*)malloc(mtypes[count].mask + 1), sptr);
+            mtypes[count].value.string = strdup(sptr);
 
             hsiz = mtypes[count].offset + mtypes[count].mask;
             if (hsiz > maxhdr)
@@ -114,7 +115,7 @@ void magic_parse_file(char* name)
             cptr += cnt;
 
             sptr = parse_string(&cptr);
-            mtypes[count].value.string = strcpy((char*)malloc(strlen(sptr) + 1), sptr);
+            mtypes[count].value.string = strdup(sptr);
         } else if (!strncmp("regexp", cptr, cnt)) {
             mtypes[count].flags = M_REGEXP;
             cptr += cnt;
@@ -199,7 +200,7 @@ void magic_parse_file(char* name)
         while (*cptr != '\n' && *cptr != '\r' && *cptr != '\0')
             cptr++;
         *cptr = '\0';
-        mtypes[count].message = strcpy((char*)malloc(strlen(sptr) + 1), sptr);
+        mtypes[count].message = strdup(sptr);
         count++;
     }
     fclose(fh);
@@ -252,12 +253,12 @@ void magic_get_type(char* name, char* buf)
                 int n;
 
                 if (buf[0] != '\0')
-                    strcat(buf, " ");
+                    strlcat(buf, " ", BUFSIZE);
                 nbuf = buf + strlen(buf);
                 n = i + mtypes[i].subtypes + 1;
                 for (++i; i < n; i++) {
                     if (mmatch(i, nbuf) && nbuf[0] != '\0') {
-                        strcat(nbuf, " ");
+                        strlcat(nbuf, " ", BUFSIZE - (nbuf - buf));
                         nbuf = nbuf + strlen(nbuf);
                     }
                 }
@@ -269,7 +270,7 @@ void magic_get_type(char* name, char* buf)
         } else
             i += mtypes[i].subtypes;
     }
-    strcpy(buf, builtin_test());
+    strlcpy(buf, builtin_test(), BUFSIZE);
 }
 
 static int mmatch(int i, char* buf)
@@ -285,14 +286,14 @@ static int mmatch(int i, char* buf)
     switch (t) {
     case M_STRING:
         if (bytes >= mtypes[i].offset + mtypes[i].mask && !strncmp(hdrbuf + mtypes[i].offset, mtypes[i].value.string, mtypes[i].mask)) {
-            strcpy(buf, mtypes[i].message);
+            strlcpy(buf, mtypes[i].message, BUFSIZE);
             return 1;
         }
         return 0;
 
     case M_BUILTIN:
         if (!strcmp(mtypes[i].value.string, builtin_test())) {
-            strcpy(buf, mtypes[i].message);
+            strlcpy(buf, mtypes[i].message, BUFSIZE);
             return 1;
         }
         return 0;
@@ -363,36 +364,36 @@ static int mmatch(int i, char* buf)
     switch (o) {
     case M_EQ:
         if (v == mtypes[i].value.number) {
-            sprintf(buf, mtypes[i].message, v);
+            snprintf(buf, BUFSIZE, mtypes[i].message, v);
             return 1;
         } else
             return 0;
     case M_LT:
         if (v < mtypes[i].value.number) {
-            sprintf(buf, mtypes[i].message, v);
+            snprintf(buf, BUFSIZE, mtypes[i].message, v);
             return 1;
         } else
             return 0;
     case M_GT:
         if (v > mtypes[i].value.number) {
-            sprintf(buf, mtypes[i].message, v);
+            snprintf(buf, BUFSIZE, mtypes[i].message, v);
             return 1;
         } else
             return 0;
     case M_SET:
         if ((v & mtypes[i].value.number) == mtypes[i].value.number) {
-            sprintf(buf, mtypes[i].message, v);
+            snprintf(buf, BUFSIZE, mtypes[i].message, v);
             return 1;
         } else
             return 0;
     case M_OR:
         if ((v & mtypes[i].value.number) != 0) {
-            sprintf(buf, mtypes[i].message, v);
+            snprintf(buf, BUFSIZE, mtypes[i].message, v);
             return 1;
         } else
             return 0;
     case M_ANY:
-        sprintf(buf, mtypes[i].message, v);
+        snprintf(buf, BUFSIZE, mtypes[i].message, v);
         return 1;
     }
     return 0;

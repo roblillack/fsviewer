@@ -71,9 +71,10 @@ handleScrollViewDoubleClick(WMWidget* self, void* clientData)
     if ((fileInfo = FSGetFileBrowserSelectedFileInfo(bPtr)) == NULL)
         return;
 
-    pathname = (char*)wmalloc(strlen(fileInfo->path) + strlen(fileInfo->name) + 1);
-    strcpy(pathname, fileInfo->path);
-    strcat(pathname, fileInfo->name);
+    size_t pathnameSize = strlen(fileInfo->path) + strlen(fileInfo->name) + 1;
+    pathname = (char*)wmalloc(pathnameSize);
+    strlcpy(pathname, fileInfo->path, pathnameSize);
+    strlcat(pathname, fileInfo->name, pathnameSize);
 
     if (access(pathname, X_OK) == 0)
         LaunchApp(fView->fsViewer, fileInfo, AppExec);
@@ -695,9 +696,10 @@ handleShelfButtonActions(WMWidget* self, void* data)
             if (fileInfo == NULL)
                 return;
 
-            pathname = (char*)malloc(strlen(fileInfo->path) + strlen(fileInfo->name) + 1);
-            strcpy(pathname, fileInfo->path);
-            strcat(pathname, fileInfo->name);
+            size_t pathnameSize = strlen(fileInfo->path) + strlen(fileInfo->name) + 1;
+            pathname = (char*)malloc(pathnameSize);
+            strlcpy(pathname, fileInfo->path, pathnameSize);
+            strlcat(pathname, fileInfo->name, pathnameSize);
 
             if (isDirectory(fileInfo->fileType))
                 FSSetFileBrowserPath(fView->fileBrowser, pathname);

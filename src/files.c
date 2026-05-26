@@ -228,9 +228,10 @@ void GetFileInfo(char* path, char* name, FileInfo* fileInfo)
     st = (struct stat*)wmalloc(sizeof(struct stat));
 
     /* make abosolute pathname */
-    pathname = (char*)wmalloc(strlen(path) + strlen(name) + 1);
-    strcpy(pathname, path);
-    pathname = strcat(pathname, name);
+    size_t pathname_size = strlen(path) + strlen(name) + 1;
+    pathname = (char*)wmalloc(pathname_size);
+    strlcpy(pathname, path, pathname_size);
+    strlcat(pathname, name, pathname_size);
 
     /* get  information of a file represented by pathname */
     if (stat(pathname, st) == -1)
@@ -242,20 +243,23 @@ void GetFileInfo(char* path, char* name, FileInfo* fileInfo)
         fileName = FSNodeName();
     } else if (strcmp(FSGetHomeDir(), pathname) == 0) {
         fileInfo->fileType = HOME;
-        fileName = (char*)wmalloc(strlen(name) + 1);
-        strcpy(fileName, name);
+        size_t fileName_size = strlen(name) + 1;
+        fileName = (char*)wmalloc(fileName_size);
+        strlcpy(fileName, name, fileName_size);
     } else {
         if (S_ISDIR(st->st_mode))
             fileInfo->fileType = DIRECTORY;
         else
             fileInfo->fileType = NORMAL;
 
-        fileName = (char*)wmalloc(strlen(name) + 1);
-        strcpy(fileName, name);
+        size_t fileName_size = strlen(name) + 1;
+        fileName = (char*)wmalloc(fileName_size);
+        strlcpy(fileName, name, fileName_size);
     }
 
-    dirPath = (char*)wmalloc(strlen(path) + 1);
-    strcpy(dirPath, path);
+    size_t dirPath_size = strlen(path) + 1;
+    dirPath = (char*)wmalloc(dirPath_size);
+    strlcpy(dirPath, path, dirPath_size);
 
     fileInfo->name = fileName;
     fileInfo->path = dirPath;
@@ -345,15 +349,16 @@ char* GetFileAbbrev(char* fileName)
     char* abbrev;
     /*     int i; */
 
-    abbrev = (char*)wmalloc(strlen(fileName) + 1);
+    size_t abbrev_size = strlen(fileName) + 1;
+    abbrev = (char*)wmalloc(abbrev_size);
 
     if (strlen(fileName) > 19) {
         strncpy(abbrev, fileName, 16);
         abbrev[16] = '\0';
-        strcat(abbrev, "...");
+        strlcat(abbrev, "...", abbrev_size);
 
     } else {
-        strcpy(abbrev, fileName);
+        strlcpy(abbrev, fileName, abbrev_size);
     }
 
     return abbrev;
@@ -472,14 +477,16 @@ char* GetPathnameFromPathName(char* path, char* name)
 
     len = strlen(GetNameFromPathname(path));
     if (len) {
-        pathname = (char*)wmalloc(strlen(path) + strlen(name) + 2);
-        strcpy(pathname, path);
-        strcat(pathname, "/");
-        strcat(pathname, name);
+        size_t pathname_size = strlen(path) + strlen(name) + 2;
+        pathname = (char*)wmalloc(pathname_size);
+        strlcpy(pathname, path, pathname_size);
+        strlcat(pathname, "/", pathname_size);
+        strlcat(pathname, name, pathname_size);
     } else {
-        pathname = (char*)wmalloc(strlen(path) + strlen(name) + 1);
-        strcpy(pathname, path);
-        strcat(pathname, name);
+        size_t pathname_size = strlen(path) + strlen(name) + 1;
+        pathname = (char*)wmalloc(pathname_size);
+        strlcpy(pathname, path, pathname_size);
+        strlcat(pathname, name, pathname_size);
     }
 
     return pathname;
@@ -570,32 +577,37 @@ void FSCopyFileInfo(FileInfo* src, FileInfo* dest)
         return;
 
     if (src->name) {
-        dest->name = (char*)wrealloc(dest->name, strlen(src->name) + 1);
-        strcpy(dest->name, src->name);
+        size_t name_size = strlen(src->name) + 1;
+        dest->name = (char*)wrealloc(dest->name, name_size);
+        strlcpy(dest->name, src->name, name_size);
     } else
         dest->name = NULL;
 
     if (src->path) {
-        dest->path = (char*)wrealloc(dest->path, strlen(src->path) + 1);
-        strcpy(dest->path, src->path);
+        size_t path_size = strlen(src->path) + 1;
+        dest->path = (char*)wrealloc(dest->path, path_size);
+        strlcpy(dest->path, src->path, path_size);
     } else
         dest->path = NULL;
 
     if (src->extn) {
-        dest->extn = (char*)wrealloc(dest->extn, strlen(src->extn) + 1);
-        strcpy(dest->extn, src->extn);
+        size_t extn_size = strlen(src->extn) + 1;
+        dest->extn = (char*)wrealloc(dest->extn, extn_size);
+        strlcpy(dest->extn, src->extn, extn_size);
     } else
         dest->extn = NULL;
 
     if (src->abbrev) {
-        dest->abbrev = (char*)wrealloc(dest->abbrev, strlen(src->abbrev) + 1);
-        strcpy(dest->abbrev, src->abbrev);
+        size_t abbrev_size = strlen(src->abbrev) + 1;
+        dest->abbrev = (char*)wrealloc(dest->abbrev, abbrev_size);
+        strlcpy(dest->abbrev, src->abbrev, abbrev_size);
     } else
         dest->abbrev = NULL;
 
     if (src->imgName) {
-        dest->imgName = (char*)wrealloc(dest->imgName, strlen(src->imgName) + 1);
-        strcpy(dest->imgName, src->imgName);
+        size_t imgName_size = strlen(src->imgName) + 1;
+        dest->imgName = (char*)wrealloc(dest->imgName, imgName_size);
+        strlcpy(dest->imgName, src->imgName, imgName_size);
     } else
         dest->imgName = NULL;
 
@@ -763,21 +775,23 @@ copydir(ino_t* inodes, int n_inodes, struct stat* oldstats,
     for (i = 0; (entry = readdir(dir)); i++)
         if (entry->d_name[0] != '.' || (entry->d_name[1] != '\0' && (entry->d_name[1] != '.' || entry->d_name[2] != '\0'))) {
             int ol1 = ol, nl1 = nl, l = strlen(entry->d_name);
-            char* oldpath1 = (char*)alloca(ol1 + l + 2);
-            char* newpath1 = (char*)alloca(nl1 + l + 2);
+            size_t oldpath1_size = ol1 + l + 2;
+            size_t newpath1_size = nl1 + l + 2;
+            char* oldpath1 = (char*)alloca(oldpath1_size);
+            char* newpath1 = (char*)alloca(newpath1_size);
 
-            strcpy(oldpath1, oldpath);
-            strcpy(newpath1, newpath);
+            strlcpy(oldpath1, oldpath, oldpath1_size);
+            strlcpy(newpath1, newpath, newpath1_size);
             if (oldpath1[ol1 - 1] != '/')
                 oldpath1[ol1++] = '/';
             if (newpath1[nl1 - 1] != '/')
                 newpath1[nl1++] = '/';
-            strcpy(oldpath1 + ol1, entry->d_name);
-            strcpy(newpath1 + nl1, entry->d_name);
+            strlcpy(oldpath1 + ol1, entry->d_name, oldpath1_size - ol1);
+            strlcpy(newpath1 + nl1, entry->d_name, newpath1_size - nl1);
             if (copy(inodes, n_inodes, oldpath1, newpath1)) {
                 /* take care of recursive errors */
                 char s[0xff];
-                sprintf(s, _("Error copying %s:"), oldpath1);
+                snprintf(s, sizeof(s), _("Error copying %s:"), oldpath1);
                 FSErrorDialog(_("File Operation Error"), s);
             }
         }
@@ -825,7 +839,7 @@ copy(ino_t* inodes, int n_inodes, char* oldpath, char* newpath)
     /* This shouldn't happen */
     else {
         char s[0xff];
-        sprintf(s, _("Unrecognized File type: %s"), oldpath);
+        snprintf(s, sizeof(s), _("Unrecognized File type: %s"), oldpath);
         FSErrorDialog(_("File Operation Error"), s);
 
         return 0;
@@ -854,16 +868,17 @@ int FSRDel(char* path)
         for (i = 0; (entry = readdir(dir)); i++)
             if (entry->d_name[0] != '.' || (entry->d_name[1] != '\0' && (entry->d_name[1] != '.' || entry->d_name[2] != '\0'))) {
                 int pl1 = pl, l = strlen(entry->d_name);
-                char* path1 = (char*)alloca(pl1 + l + 2);
+                size_t path1_size = pl1 + l + 2;
+                char* path1 = (char*)alloca(path1_size);
 
-                strcpy(path1, path);
+                strlcpy(path1, path, path1_size);
                 if (path1[pl1 - 1] != '/')
                     path1[pl1++] = '/';
-                strcpy(path1 + pl1, entry->d_name);
+                strlcpy(path1 + pl1, entry->d_name, path1_size - pl1);
                 if (FSRDel(path1)) {
                     /* take care of recursive errors */
                     char s[0xff];
-                    sprintf(s, _("Error deleting %s:"), path);
+                    snprintf(s, sizeof(s), _("Error deleting %s:"), path);
                     FSErrorDialog(_("File Operation Error"), s);
                 }
             }
@@ -884,12 +899,12 @@ void FSCopy(FileInfo* src, FileInfo* dest)
     char to[MAX_LEN];
 
     from = GetPathnameFromPathName(src->path, src->name);
-    strcpy(to, GetPathnameFromPathName(dest->path, dest->name));
+    strlcpy(to, GetPathnameFromPathName(dest->path, dest->name), sizeof(to));
 
     if (access(to, W_OK) && isDirectory(dest->fileType)) {
         char s[0xff];
 
-        sprintf(s, _("No write access to %s"), to);
+        snprintf(s, sizeof(s), _("No write access to %s"), to);
         FSErrorDialog(_("File Operation Error"), s);
         if (from)
             free(from);
@@ -919,10 +934,10 @@ void FSCopy(FileInfo* src, FileInfo* dest)
           Should do a loop here that goes through each element
           of the FileInfo list, checks and copies it
         */
-        strcpy(to + toi, src->name);
+        strlcpy(to + toi, src->name, sizeof(to) - toi);
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
-            sprintf(s, _("Copy: file %s already exists at destination"),
+            snprintf(s, sizeof(s), _("Copy: file %s already exists at destination"),
                 src->name);
             if (FSConfirmationDialog(_("Overwrite?"), s)) {
                 if (from)
@@ -933,7 +948,7 @@ void FSCopy(FileInfo* src, FileInfo* dest)
 
         if (FSRCopy(from, to)) {
             char s[0xff];
-            sprintf(s, _("Error copying %s:"), from);
+            snprintf(s, sizeof(s), _("Error copying %s:"), from);
             FSErrorDialog(_("File Operation Error"), s);
         } else
             n_copied++;
@@ -969,7 +984,7 @@ void FSCopy(FileInfo* src, FileInfo* dest)
 
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
-            sprintf(s, _("Copy: file %s already exists"), to);
+            snprintf(s, sizeof(s), _("Copy: file %s already exists"), to);
             if (FSConfirmationDialog(_("Overwrite?"), s)) {
                 if (from)
                     free(from);
@@ -979,7 +994,7 @@ void FSCopy(FileInfo* src, FileInfo* dest)
 
         if (FSRCopy(from, to)) {
             char s[0xff];
-            sprintf(s, _("Error copying %s:"), from);
+            snprintf(s, sizeof(s), _("Error copying %s:"), from);
             FSErrorDialog(_("File Operation Error"), s);
         } else
             n_copied = 1;
@@ -1012,7 +1027,7 @@ void FSDelete(FileInfo* item)
     /*     sprintf(s, "Do you REALLY wish to delete folder %s"\ */
     /* 	    "and ALL items contained in it?", itemName); */
 
-    sprintf(s, _("Do you REALLY wish to delete %s"), itemName);
+    snprintf(s, sizeof(s), _("Do you REALLY wish to delete %s"), itemName);
 
     if (FSConfirmationDialog(_("File Operation"), s)) {
         if (itemName)
@@ -1022,7 +1037,7 @@ void FSDelete(FileInfo* item)
     /*       } */
 
     if (FSRDel(itemName)) {
-        sprintf(s, _("Error deleting %s:"), itemName);
+        snprintf(s, sizeof(s), _("Error deleting %s:"), itemName);
         FSErrorDialog(_("File Operation Error"), s);
     } else
         n_deleted++;
@@ -1042,12 +1057,12 @@ void FSMove(FileInfo* src, FileInfo* dest)
     char to[MAX_LEN];
 
     from = GetPathnameFromPathName(src->path, src->name);
-    strcpy(to, GetPathnameFromPathName(dest->path, dest->name));
+    strlcpy(to, GetPathnameFromPathName(dest->path, dest->name), sizeof(to));
 
     if (access(to, W_OK) && isDirectory(dest->fileType)) {
         char s[0xff];
 
-        sprintf(s, _("No write access to %s"), to);
+        snprintf(s, sizeof(s), _("No write access to %s"), to);
         FSErrorDialog(_("File Operation Error"), s);
         if (from)
             free(from);
@@ -1077,10 +1092,10 @@ void FSMove(FileInfo* src, FileInfo* dest)
           Should do a loop here that goes through each element
           of the FileInfo list, checks and moves it
         */
-        strcpy(to + toi, src->name);
+        strlcpy(to + toi, src->name, sizeof(to) - toi);
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
-            sprintf(s, _("Move: file %s already exists at destination"),
+            snprintf(s, sizeof(s), _("Move: file %s already exists at destination"),
                 src->name);
             if (FSConfirmationDialog(_("Overwrite?"), s)) {
                 if (from)
@@ -1091,7 +1106,7 @@ void FSMove(FileInfo* src, FileInfo* dest)
 
         if (rename(from, to)) {
             char s[0xff];
-            sprintf(s, _("Error copying %s:"), from);
+            snprintf(s, sizeof(s), _("Error copying %s:"), from);
             FSErrorDialog(_("File Operation Error"), s);
             if (from)
                 free(from);
@@ -1128,7 +1143,7 @@ void FSMove(FileInfo* src, FileInfo* dest)
 
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
-            sprintf(s, _("Move: file %s already exists"), to);
+            snprintf(s, sizeof(s), _("Move: file %s already exists"), to);
             if (FSConfirmationDialog(_("Overwrite?"), s)) {
                 if (from)
                     free(from);
@@ -1138,7 +1153,7 @@ void FSMove(FileInfo* src, FileInfo* dest)
 
         if (rename(from, to)) {
             char s[0xff];
-            sprintf(s, _("Error renaming %s:"), from);
+            snprintf(s, sizeof(s), _("Error renaming %s:"), from);
             FSErrorDialog(_("File Operation Error"), s);
         } else
             n_moved = 1;
@@ -1174,7 +1189,7 @@ void FSRename(FileInfo* src, FileInfo* dest)
 
     if (FSFileExists(to) /* && resources.confirm_overwrite */) {
         char s[0xff];
-        sprintf(s, _("Rename: file %s already exists"), to);
+        snprintf(s, sizeof(s), _("Rename: file %s already exists"), to);
         if (FSConfirmationDialog(_("Overwrite?"), s)) {
             if (from)
                 free(from);
@@ -1186,7 +1201,7 @@ void FSRename(FileInfo* src, FileInfo* dest)
 
     if (rename(from, to)) {
         char s[0xff];
-        sprintf(s, _("Error renaming %s:"), from);
+        snprintf(s, sizeof(s), _("Error renaming %s:"), from);
         FSErrorDialog(_("File Operation Error"), s);
     } else
         n_renamed = 1;
@@ -1209,6 +1224,7 @@ void FSLink(FileInfo* src, FileInfo* dest)
 
     from = GetPathnameFromPathName(src->path, src->name);
     to = GetPathnameFromPathName(dest->path, dest->name);
+    size_t to_size = strlen(dest->path) + strlen(dest->name) + 2;
 
     /*
        if target exists and is a directory,
@@ -1235,10 +1251,10 @@ void FSLink(FileInfo* src, FileInfo* dest)
           Should do a loop here that goes through each element
           of the FileInfo list, checks and copies it
         */
-        strcpy(to + toi, src->name);
+        strlcpy(to + toi, src->name, to_size - toi);
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
-            sprintf(s, _("Link: file %s already exists at destination"),
+            snprintf(s, sizeof(s), _("Link: file %s already exists at destination"),
                 src->name);
             if (FSConfirmationDialog(_("Overwrite?"), s)) {
                 if (from)
@@ -1251,7 +1267,7 @@ void FSLink(FileInfo* src, FileInfo* dest)
 
         if (symlink(from, to)) {
             char s[0xff];
-            sprintf(s, _("Error linking %s to %s"), from, to);
+            snprintf(s, sizeof(s), _("Error linking %s to %s"), from, to);
             FSErrorDialog(_("File Operation Error"), s);
         } else
             n_linked++;
@@ -1279,7 +1295,7 @@ void FSLink(FileInfo* src, FileInfo* dest)
 
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
-            sprintf(s, _("Link: file %s already exists"), to);
+            snprintf(s, sizeof(s), _("Link: file %s already exists"), to);
             if (FSConfirmationDialog(_("Overwrite?"), s)) {
                 if (from)
                     free(from);
@@ -1291,7 +1307,7 @@ void FSLink(FileInfo* src, FileInfo* dest)
 
         if (symlink(from, to)) {
             char s[0xff];
-            sprintf(s, _("Error linking %s to %s"), from, to);
+            snprintf(s, sizeof(s), _("Error linking %s to %s"), from, to);
             FSErrorDialog(_("File Operation Error"), s);
         } else
             n_linked = 1;

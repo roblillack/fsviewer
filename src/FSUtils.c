@@ -325,7 +325,7 @@ char* FSDisk()
     }
     pclose(f);
 
-    sprintf(buf, "%s", formatk(total));
+    snprintf(buf, MAX_LEN, "%s", formatk(total));
 
     return wstrdup(buf);
 }
@@ -337,11 +337,11 @@ formatk(ulong k)
     static char buffer[10];
 
     if (k >= 1024 * 1024)
-        sprintf(buffer, "%.4gG", (double)k / (1024 * 1024));
+        snprintf(buffer, sizeof(buffer), "%.4gG", (double)k / (1024 * 1024));
     else if (k >= 1024)
-        sprintf(buffer, "%.4gM", (double)k / 1024);
+        snprintf(buffer, sizeof(buffer), "%.4gM", (double)k / 1024);
     else
-        sprintf(buffer, "%ldK", k);
+        snprintf(buffer, sizeof(buffer), "%ldK", k);
 
     return buffer;
 }
@@ -351,23 +351,25 @@ char* LocateImage(char* name)
     char* path = NULL;
     char* tmp = NULL;
     char** types;
+    size_t tmpSize;
 
-    if (name)
-        tmp = (char*)wmalloc(strlen(name) + 8);
-    else
+    if (name) {
+        tmpSize = strlen(name) + 8;
+        tmp = (char*)wmalloc(tmpSize);
+    } else
         return NULL;
 
     if (FSImageTypeIsSupported("PNG")) {
-        sprintf(tmp, "%s.png", name);
+        snprintf(tmp, tmpSize, "%s.png", name);
         path = WMPathForResourceOfType(tmp, "png");
     }
 
     if (!path && FSImageTypeIsSupported("TIFF")) {
-        sprintf(tmp, "%s.tiff", name);
+        snprintf(tmp, tmpSize, "%s.tiff", name);
         path = WMPathForResourceOfType(tmp, "tiff");
 
         if (!path) {
-            sprintf(tmp, "%s.tif", name);
+            snprintf(tmp, tmpSize, "%s.tif", name);
             path = WMPathForResourceOfType(tmp, "tiff");
         }
     }
@@ -386,7 +388,7 @@ char* LocateImage(char* name)
     /*     } */
 
     if (!path) {
-        sprintf(tmp, "%s.xpm", name);
+        snprintf(tmp, tmpSize, "%s.xpm", name);
         path = WMPathForResourceOfType(tmp, "xpm");
     }
 
@@ -486,7 +488,7 @@ void LaunchApp(FSViewer* fsViewer, FileInfo* fileInfo, AppEvent event)
         if (chdir(fileInfo->path)) {
             char s[0xff];
 
-            sprintf(s, _("Error changing to %s but it's not that serious!"),
+            snprintf(s, sizeof(s), _("Error changing to %s but it's not that serious!"),
                 fileInfo->path);
             FSErrorDialog(_("Error File Operation"), s);
         }
@@ -918,11 +920,11 @@ char* FSParseCmdField(FileInfo* fileInfo, char* txt, ...)
     cnt = 0;
     fileLen = strlen(fileInfo->name);
     file = (char*)wmalloc(fileLen + 1);
-    strcpy(file, fileInfo->name);
+    strlcpy(file, fileInfo->name, fileLen + 1);
 
     pathLen = strlen(fileInfo->path);
     path = (char*)wmalloc(pathLen + 1);
-    strcpy(path, fileInfo->path);
+    strlcpy(path, fileInfo->path, pathLen + 1);
 
     initBufferSize = strlen(txt) + 1;
     /* This is an inefficient way of doing things */
@@ -1000,7 +1002,7 @@ int FSExecCommand(char* path, char* execStr)
     if (chdir(path)) {
         char s[0xff];
 
-        sprintf(s, _("Error changing to %s, \"%s\" cancelled."), path, execStr);
+        snprintf(s, sizeof(s), _("Error changing to %s, \"%s\" cancelled."), path, execStr);
         FSErrorDialog(_("Error File Operation"), s);
 
         return 1;

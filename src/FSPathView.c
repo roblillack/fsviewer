@@ -752,23 +752,24 @@ static char*
 createTruncatedString(WMFont* font, char* text, int* textLen, int width)
 {
     int dLen = WMWidthOfString(font, ".", 1);
-    char* textBuf = (char*)wmalloc((*textLen) + 4);
+    size_t textBufSize = (*textLen) + 4;
+    char* textBuf = (char*)wmalloc(textBufSize);
 
     if (width >= 3 * dLen) {
         int dddLen = 3 * dLen;
         int tmpTextLen = *textLen;
 
-        strcpy(textBuf, text);
+        strlcpy(textBuf, text, textBufSize);
         while (tmpTextLen
             && (WMWidthOfString(font, textBuf, tmpTextLen) + dddLen > width))
             tmpTextLen--;
-        strcpy(textBuf + tmpTextLen, "...");
+        strlcpy(textBuf + tmpTextLen, "...", textBufSize - tmpTextLen);
         *textLen = tmpTextLen + 3;
     } else if (width >= 2 * dLen) {
-        strcpy(textBuf, "..");
+        strlcpy(textBuf, "..", textBufSize);
         *textLen = 2;
     } else if (width >= dLen) {
-        strcpy(textBuf, ".");
+        strlcpy(textBuf, ".", textBufSize);
         *textLen = 1;
     } else {
         *textBuf = '\0';

@@ -288,14 +288,14 @@ static int GetXPM(TimeStamp* timestamp)
     }
 
     /* Replace the 'bright' colour in the LED pixmap with our new one. */
-    sprintf(brightLED, ".      c #%04X%04X%04X", col.red, col.green, col.blue);
+    snprintf(brightLED, sizeof(brightLED), ".      c #%04X%04X%04X", col.red, col.green, col.blue);
     led_xpm[2] = brightLED;
 
     /* Now make a darker version and do the same. */
     col.red = (col.red / 10) * 3;
     col.green = (col.green / 10) * 3;
     col.blue = (col.blue / 10) * 3;
-    sprintf(darkLED, "X      c #%04X%04X%04X", col.red, col.green, col.blue);
+    snprintf(darkLED, sizeof(darkLED), "X      c #%04X%04X%04X", col.red, col.green, col.blue);
     led_xpm[3] = darkLED;
 
     /* Perform a bit of colour surgery on the clk.xpm and year.xpm to replace */
@@ -309,7 +309,7 @@ static int GetXPM(TimeStamp* timestamp)
     greyG >>= 8;
     greyB >>= 8;
 
-    sprintf(greyStr, ".      c #%02X%02X%02X", greyR, greyG, greyB);
+    snprintf(greyStr, sizeof(greyStr), ".      c #%02X%02X%02X", greyR, greyG, greyB);
     clk_xpm[1] = greyStr;
     year_xpm[1] = greyStr;
 
@@ -1028,7 +1028,7 @@ static void RenderASClock(TimeStamp* timestamp)
         wwarning("Year field out of range for TimeStamp widget - %d.\n", year);
     } else {
         /* Create a string of the year. */
-        sprintf(yearStr, "%04d", year);
+        snprintf(yearStr, sizeof(yearStr), "%04d", year);
 
         /* Calculate the width of the year label in pixels. */
         yearWidth = 0;

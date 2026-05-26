@@ -9,11 +9,11 @@ static const char* formatk(unsigned long k)
     static char buffer[10];
 
     if (k >= 1000 * 1000)
-        sprintf(buffer, "%.4g GB", (double)k / (1000 * 1000));
+        snprintf(buffer, sizeof(buffer), "%.4g GB", (double)k / (1000 * 1000));
     else if (k >= 1000)
-        sprintf(buffer, "%.4g MB", (double)k / 1000);
+        snprintf(buffer, sizeof(buffer), "%.4g MB", (double)k / 1000);
     else
-        sprintf(buffer, "%ld kB", k);
+        snprintf(buffer, sizeof(buffer), "%ld kB", k);
 
     return buffer;
 }
