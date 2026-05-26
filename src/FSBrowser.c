@@ -1,6 +1,7 @@
 #include <WINGs/WINGsP.h>
 #include <WMaker.h>
 #include <math.h> /* for : double rint (double) */
+#include <stdint.h>
 
 #include "FSBrowser.h"
 
@@ -174,7 +175,7 @@ void FSSetBrowserMaxVisibleColumns(FSBrowser* bPtr, int columns)
     int curMaxVisibleColumns;
     int newFirstVisibleColumn = 0;
 
-    assert((int)bPtr);
+    assert(bPtr);
 
     columns = (columns < MIN_VISIBLE_COLUMNS) ? MIN_VISIBLE_COLUMNS : columns;
     columns = (columns > MAX_VISIBLE_COLUMNS) ? MAX_VISIBLE_COLUMNS : columns;
@@ -320,7 +321,7 @@ removeColumn(FSBrowser* bPtr, int column)
     WMList** clist;
     char** tlist;
 
-    assert((int)bPtr);
+    assert(bPtr);
 
     column = (column < 0) ? 0 : column;
     if (column >= bPtr->columnCount) {
@@ -690,6 +691,8 @@ scrollCallback(WMWidget* scroller, void* self)
 
     } break;
 
+    case WSDecrementWheel:
+    case WSIncrementWheel:
     case WSKnobSlot:
     case WSNoPart:
         /* do nothing */
@@ -833,18 +836,19 @@ char* FSGetBrowserPathToColumn(FSBrowser* bPtr, int column)
     }
 
     /* get the path */
-    path = wmalloc(size + (column + 1) * strlen(bPtr->pathSeparator) + 1);
+    size_t pathSize = size + (column + 1) * strlen(bPtr->pathSeparator) + 1;
+    path = wmalloc(pathSize);
     /* ignore first / */
     *path = 0;
     for (i = 0; i <= column; i++) {
-        strcat(path, bPtr->pathSeparator);
+        strlcat(path, bPtr->pathSeparator, pathSize);
         item = WMGetListSelectedItem(bPtr->columns[i]);
         if (!item)
             break;
         /* 	if(bPtr->parseItem) */
-        /* 	    strcat(path, (*bPtr->parseItem)(item)); */
+        /* 	    strlcat(path, (*bPtr->parseItem)(item), pathSize); */
         /* 	else */
-        strcat(path, item->text);
+        strlcat(path, item->text, pathSize);
     }
 
     return path;
@@ -1072,7 +1076,7 @@ static void
 listSelectionObserver(void* observerData, WMNotification* notification)
 {
     FSBrowser* bPtr = (FSBrowser*)observerData;
-    int column, item = (int)WMGetNotificationClientData(notification);
+    int column, item = (int)(intptr_t)WMGetNotificationClientData(notification);
     WMList* lPtr = (WMList*)WMGetNotificationObject(notification);
 
     for (column = 0; column < bPtr->usedColumnCount; column++)
@@ -1177,23 +1181,24 @@ static char*
 createTruncatedString(WMFont* font, char* text, int* textLen, int width)
 {
     int dLen = WMWidthOfString(font, ".", 1);
-    char* textBuf = (char*)wmalloc((*textLen) + 4);
+    size_t bufSize = (*textLen) + 4;
+    char* textBuf = (char*)wmalloc(bufSize);
 
     if (width >= 3 * dLen) {
         int dddLen = 3 * dLen;
         int tmpTextLen = *textLen;
 
-        strcpy(textBuf, text);
+        strlcpy(textBuf, text, bufSize);
         while (tmpTextLen
             && (WMWidthOfString(font, textBuf, tmpTextLen) + dddLen > width))
             tmpTextLen--;
-        strcpy(textBuf + tmpTextLen, "...");
+        strlcpy(textBuf + tmpTextLen, "...", bufSize - tmpTextLen);
         *textLen = tmpTextLen + 3;
     } else if (width >= 2 * dLen) {
-        strcpy(textBuf, "..");
+        strlcpy(textBuf, "..", bufSize);
         *textLen = 2;
     } else if (width >= dLen) {
-        strcpy(textBuf, ".");
+        strlcpy(textBuf, ".", bufSize);
         *textLen = 1;
     } else {
         *textBuf = '\0';

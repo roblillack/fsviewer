@@ -32,10 +32,7 @@
  - regsub - perform substitutions after a regexp match
  */
 void
-    regsub(prog, source, dest)
-        regexp* prog;
-char* source;
-char* dest;
+regsub(regexp* prog, char* source, char* dest)
 {
     register char* src;
     register char* dst;

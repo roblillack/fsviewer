@@ -1,6 +1,7 @@
 #include "FSPanel.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
+#include <stdint.h>
 
 #define WIDTH 272
 #define HEIGHT 272
@@ -342,7 +343,7 @@ endedEditingObserver(void* observerData, WMNotification* notification)
 {
     Panel* panel = (Panel*)observerData;
 
-    if ((int)WMGetNotificationClientData(notification) == WMReturnTextMovement) {
+    if ((int)(intptr_t)WMGetNotificationClientData(notification) == WMReturnTextMovement) {
         WMPerformButtonClick(panel->addBtn);
     }
 }

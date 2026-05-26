@@ -6,6 +6,7 @@
 #include <WINGs/WINGsP.h>
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
+#include <stdint.h>
 
 static FSSelectIconPanel* FSCreateSelectIconPanel(WMWindow*,
     char*, char*);
@@ -1125,7 +1126,7 @@ endedEditingObserver(void* observerData, WMNotification* notification)
     FSAppInputPanel* appInput = (FSAppInputPanel*)observerData;
     WMTextField* tPtr = (WMTextField*)WMGetNotificationObject(notification);
 
-    if ((int)WMGetNotificationClientData(notification) == WMReturnTextMovement
+    if ((int)(intptr_t)WMGetNotificationClientData(notification) == WMReturnTextMovement
         && tPtr == appInput->nameField) {
         char* txt = WMGetTextFieldText(appInput->nameField);
         if (strcmp("", txt)) {
@@ -1384,6 +1385,7 @@ FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
     WMLabel* l;
     WMPixmap* pixmap;
     char* txt = NULL;
+    int txtAllocated = 0;
     WMFont* aFont;
 
     if (!(selIcon = (FSSelectIconPanel*)wmalloc(sizeof(FSSelectIconPanel))))
@@ -1397,6 +1399,8 @@ FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
     txt = FSGetStringForName("ICONDIR");
     if (!txt)
         txt = ICONDIR;
+    else
+        txtAllocated = 1;
 
     selIcon->xpmDir = (char*)wmalloc(strlen(txt) + 5);
     strcpy(selIcon->xpmDir, txt);
@@ -1406,7 +1410,7 @@ FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
     strcpy(selIcon->pngDir, txt);
     strcat(selIcon->pngDir, "/png");
 
-    if (txt != ICONDIR)
+    if (txtAllocated)
         free(txt);
 
     height = 422;

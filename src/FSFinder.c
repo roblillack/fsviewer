@@ -6,6 +6,7 @@
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
 #include <limits.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -207,7 +208,7 @@ notificationObserver(void* self, WMNotification* notif)
             WMResizeWidget(finder->list,
                 finder->w - (PADY * 2), finder->h - LISTX - (PADY * 2));
         }
-    } else if ((int)WMGetNotificationClientData(notif) == WMReturnTextMovement) {
+    } else if ((int)(intptr_t)WMGetNotificationClientData(notif) == WMReturnTextMovement) {
         populateList(finder);
     }
 }
@@ -231,15 +232,18 @@ populateList(FSFinder* finder)
      * and the second should be 0, maybe it's LIFO
      */
     if (WMGetButtonSelected(finder->findRadioBtns[0]) == 1) {
-        cmd = (char*)wmalloc(strlen(str) + 10);
-        sprintf(cmd, "locate \"%s\"", str);
+        size_t cmdLen = strlen(str) + 10;
+        cmd = (char*)wmalloc(cmdLen);
+        snprintf(cmd, cmdLen, "locate \"%s\"", str);
     } else {
         char* path;
+        size_t cmdLen;
 
         path = FSGetFSViewerPath(finder->fsViewer);
-        cmd = (char*)wmalloc(strlen(str) + strlen(path) + 24);
+        cmdLen = strlen(str) + strlen(path) + 24;
+        cmd = (char*)wmalloc(cmdLen);
 
-        sprintf(cmd, "find \"%s\" -name \"%s\" -print", path, str);
+        snprintf(cmd, cmdLen, "find \"%s\" -name \"%s\" -print", path, str);
     }
 
     if ((f = popen(cmd, "r")) == NULL)

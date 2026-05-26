@@ -31,6 +31,7 @@ along with XEmacs; see the file COPYING.  If not, write to
 the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 Boston, MA 02111-1307, USA.  */
 
+#include <X11/XKBlib.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <string.h>
@@ -170,7 +171,7 @@ x_reset_modifier_mapping(Display* display)
             for (column = 0; column < 4; column += 2) {
                 KeyCode code = x_modifier_keymap->modifiermap[modifier_index * mkpm
                     + modifier_key];
-                KeySym sym = (code ? XKeycodeToKeysym(display, code, column) : 0);
+                KeySym sym = (code ? XkbKeycodeToKeysym(display, code, 0, column) : 0);
                 if (sym == last_sym)
                     continue;
                 last_sym = sym;
