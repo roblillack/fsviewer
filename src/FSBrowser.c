@@ -781,8 +781,8 @@ char* FSSetBrowserPath(FSBrowser* bPtr, char* path)
     free(str);
 
     for (i = bPtr->usedColumnCount - 1;
-         (i > -1) && !WMGetListSelectedItem(bPtr->columns[i]);
-         i--)
+        (i > -1) && !WMGetListSelectedItem(bPtr->columns[i]);
+        i--)
         ;
 
     bPtr->selectedColumn = i;

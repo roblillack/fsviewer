@@ -102,8 +102,7 @@ getSelectedFilename(_Panel* panel)
 
         fileInfo = (FileInfo*)listItem->clientData;
 
-        if (!strncmp(fileInfo->path, panel->xpmDir, strlen(fileInfo->path) - 1) ||
-            !strncmp(fileInfo->path, panel->pngDir, strlen(fileInfo->path) - 1)) {
+        if (!strncmp(fileInfo->path, panel->xpmDir, strlen(fileInfo->path) - 1) || !strncmp(fileInfo->path, panel->pngDir, strlen(fileInfo->path) - 1)) {
             filename = RemoveFileExtension(fileInfo->name);
         } else
             filename = GetPathnameFromPathName(fileInfo->path, fileInfo->name);

@@ -603,7 +603,7 @@ void FSDuplicateCB(FSViewer* fsViewer, int item, Time time)
         mode_t umask = FSGetUMask();
 
         new = GetPathnameFromPathName(dest->path, dest->name);
-        if (new&& FSCreateNewDirectory(new, umask & 0777)) {
+        if (new && FSCreateNewDirectory(new, umask & 0777)) {
             char s[0xff];
 
             sprintf(s, _("Error creating folder %s"), new);
