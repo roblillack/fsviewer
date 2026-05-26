@@ -26,7 +26,7 @@ jobs:
             libwings-dev \
             libxmu-dev \
             libpango1.0-dev \
-            libsysprof-4-dev
+            libsysprof-capture-4-dev
 
       - name: Configure
         run: cmake .
