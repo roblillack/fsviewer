@@ -897,8 +897,8 @@ void FSFileViewRemoveFileButtonFromShelf(FSFileView* fView, FSFileButton* btn)
     FSFileIcon* tmp = fView->fileIcons;
 
     for (FSFileIcon* tmp = fView->fileIcons;
-         tmp != NULL;
-         tmp = tmp->next) {
+        tmp != NULL;
+        tmp = tmp->next) {
         if (tmp->btn == btn) {
             FSRemoveFileViewItemFromShelf(fView, tmp);
             return;

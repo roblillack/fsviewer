@@ -12,7 +12,7 @@
 
 WMData* FetchDragData(WMView* self, char* type)
 {
-    //wwarning("data type %s requested", type);
+    // wwarning("data type %s requested", type);
 
     if (!self) {
         return NULL;
@@ -58,7 +58,7 @@ WMArray* SupportedDataTypes()
 
 WMArray* DropDataTypes(WMView* self)
 {
-    //wwarning("supported data types requested");
+    // wwarning("supported data types requested");
     return SupportedDataTypes();
 }
 
