@@ -48,6 +48,22 @@ install(DIRECTORY xpm DESTINATION GNUstep/Apps/FSViewer.app)
 install(DIRECTORY png DESTINATION GNUstep/Apps/FSViewer.app)
 install(DIRECTORY man/man1 DESTINATION man)
 
+find_program(CLANG_FORMAT NAMES
+    clang-format
+    clang-format-21 clang-format-20 clang-format-19 clang-format-18
+    clang-format-17 clang-format-16 clang-format-15 clang-format-14)
+file(GLOB FORMAT_SOURCES "src/*.c" "src/*.h")
+add_custom_target(format
+    COMMAND ${CLANG_FORMAT} -i ${FORMAT_SOURCES}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "Formatting source files with clang-format"
+    VERBATIM)
+add_custom_target(format-check
+    COMMAND ${CLANG_FORMAT} --dry-run --Werror ${FORMAT_SOURCES}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "Checking source file formatting with clang-format"
+    VERBATIM)
+
 # add_subdirectory(src/regexp)
 # add_subdirectory(src)
 # add_subdirectory(defs)

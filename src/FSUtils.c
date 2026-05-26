@@ -797,13 +797,14 @@ int FSStringMatch(char* pattern, char* fn)
     };
 }
 
-WMPixmap *FSCreateBlendedPixmapFromFile(WMScreen *scr, char *fileName, WMColor *color) {
+WMPixmap* FSCreateBlendedPixmapFromFile(WMScreen* scr, char* fileName, WMColor* color)
+{
     RColor bgCol;
 
     if (color) {
         bgCol = WMGetRColorFromColor(color);
     } else {
-        WMColor *gray = WMGrayColor(scr);
+        WMColor* gray = WMGrayColor(scr);
         bgCol = WMGetRColorFromColor(gray);
         WMReleaseColor(gray);
     }
