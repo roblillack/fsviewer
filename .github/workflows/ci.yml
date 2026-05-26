@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -25,7 +25,8 @@ jobs:
             libwraster-dev \
             libwings-dev \
             libxmu-dev \
-            libpango1.0-dev
+            libpango1.0-dev \
+            libsysprof-4-dev
 
       - name: Configure
         run: cmake .
@@ -35,7 +36,7 @@ jobs:
 
   format:
     name: Format check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
