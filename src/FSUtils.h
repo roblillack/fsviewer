@@ -20,7 +20,7 @@ WMPixmap* FSMakePixmap(WMScreen* sPtr, char** data, int width, int height);
 void FSErrorDialog(char* title, char* msg);
 int FSConfirmationDialog(char* title, char* msg);
 mode_t FSGetUMask();
-void FSUpdateFileView();
+void FSUpdateFileView(FileAction action, FileInfo* src, FileInfo* dest);
 char* FSGetHomeDir();
 int FSStringMatch(char* pattern, char* fn);
 WMPixmap* FSCreateBlendedPixmapFromFile(WMScreen* scr, char* fileName, WMColor* color);

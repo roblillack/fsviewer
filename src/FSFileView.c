@@ -313,7 +313,7 @@ FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
 
     fView->fileView = WMCreateWindow(fView->scr, "fileView");
     WMSetWindowTitle(fView->fileView, _("FileView"));
-    if ((fView->primary == False)) {
+    if (fView->primary == False) {
         WMSetWindowCloseAction(fView->fileView, FSDestroyFileView,
             (void*)fView);
     }
@@ -415,7 +415,7 @@ FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
         fView->size->width_inc = cw + COLUMN_PADDING;
         fView->size->height_inc = 1;
         fView->size->flags = (USSize | PSize | PMinSize | PMaxSize | PResizeInc);
-        if ((fView->primary == True)) {
+        if (fView->primary == True) {
             fView->size->x = fView->x;
             fView->size->y = fView->y;
             fView->size->flags |= (USPosition | PPosition);
@@ -563,6 +563,7 @@ void FSUpdateFileViewPath(FSFileView* fileView, FileAction action,
 
     switch (action) {
     case FileCopy:
+    case FileLink:
         FSUpdateFileBrowser(fileView->fileBrowser, action, src, dest);
         break;
     case FileMove:

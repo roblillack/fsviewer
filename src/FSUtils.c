@@ -575,9 +575,8 @@ void FSSetButtonImageFromFile(WMButton* btn, char* imgName)
     }
 
     if (imgName) {
-        WMColor* white = WMWhiteColor(WMWidgetScreen(btn));
-        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(btn), imgName, white);
-        WMReleaseColor(white);
+        RColor white = { 0xff, 0xff, 0xff, 0xff };
+        pixmap = WMCreateBlendedPixmapFromFile(WMWidgetScreen(btn), imgName, &white);
     } else {
         pixmap = NULL;
     }

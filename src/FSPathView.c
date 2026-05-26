@@ -179,7 +179,7 @@ void FSSetPathViewMaxVisibleColumns(FSPathView* pvPtr, int columns)
     int curMaxVisibleColumns;
     int newFirstVisibleColumn = 0;
 
-    assert((int)pvPtr);
+    assert(pvPtr);
 
     columns = (columns < MIN_VISIBLE_COLUMNS) ? MIN_VISIBLE_COLUMNS : columns;
     columns = (columns > MAX_VISIBLE_COLUMNS) ? MAX_VISIBLE_COLUMNS : columns;
@@ -262,7 +262,7 @@ removeColumn(FSPathView* pvPtr, int column)
     FSFileButton** clist;
     char** tlist;
 
-    assert((int)pvPtr);
+    assert(pvPtr);
 
     column = (column < 0) ? 0 : column;
     if (column >= pvPtr->columnCount) {
@@ -452,6 +452,8 @@ scrollCallback(WMWidget* scroller, void* self)
 
     } break;
 
+    case WSDecrementWheel:
+    case WSIncrementWheel:
     case WSKnobSlot:
     case WSNoPart:
         /* do nothing */
