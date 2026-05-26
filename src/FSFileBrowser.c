@@ -6,12 +6,12 @@
 
 #include "files.h"
 /* #include "FSFileButton.h" */
-#include "DnD.h"
 #include "FSBrowser.h"
 #include "FSMCList.h"
 #include "FSPathView.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
+#include "dnd.h"
 #include "filebrowser.h"
 
 #define LIST_WIDTH 170

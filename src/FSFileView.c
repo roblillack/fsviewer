@@ -11,13 +11,13 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "DnD.h"
 #include "FSFileButton.h"
 #include "FSFileView.h"
 #include "FSMenu.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
 #include "df.h"
+#include "dnd.h"
 #include "filebrowser.h"
 #include "files.h"
 #include "windowmanager.h"
@@ -42,20 +42,12 @@
 #define COLUMN_PADDING 4 // only used for increment calc here, needs to go
 
 static void notificationObserver(void* self, WMNotification* notif);
-static void FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo);
 static void handleShelfButtonActions(WMWidget* self, void* data);
 static void handleShelfEventActions(XEvent* event, void* data);
-static void FSAddFileViewItemIntoShelf(FSViewer* fView);
-static void FSRemoveFileViewItemFromShelf(FSFileView* fView,
-    FSFileIcon* fileIcon);
+static void FSRemoveFileViewItemFromShelf(FSFileView* fView, FSFileIcon* fileIcon);
 static void FSSetupFileViewShelfItems(FSFileView* fView);
 static void FSReorganiseShelf(FSFileView* fView);
 static void handleScrollViewDoubleClick(WMWidget* self, void* clientData);
-static Bool FSAddFileViewShelfItemIntoProplist(FSFileView* fView,
-    FileInfo* fileInfo);
-static void handleShelfDrop(XEvent* ev, void* clientData);
-static void handleBtnDrop(XEvent* ev, void* clientData);
-static void handleBtnDrag(XEvent* ev, void* clientData);
 static void updateDiskFree(FSFileView* fView);
 
 static FSFileIcon* FSFindFileIconWithFileInfo(FSFileView* fView,
@@ -340,9 +332,6 @@ FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
     /* Initialise the FileButton Widget */
     InitFSFileButton(fView->scr);
 
-    /* Initialize drag'n'drop */
-    DndInitialize(fView->fileView);
-
     // fView->fileBrowserF = WMCreateFrame(fView->fileView);
     // WMSetViewNotifySizeChanges(WMWidgetView(fView->fileBrowserF), True);
     // WMSetFrameRelief(fView->fileBrowserF, WRFlat);
@@ -455,7 +444,9 @@ FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
         (void*)fView);
 
     /* Drag'n'Drop handles */
-    DndRegisterDropWidget(fView->shelfF, handleShelfDrop, fView);
+    WMHangData(fView->shelfF, (void*)fView);
+    WMRegisterViewForDraggedTypes(W_VIEW(fView->shelfF), SupportedDataTypes());
+    WMSetViewDragDestinationProcs(W_VIEW(fView->shelfF), ShelfDragDestinationProcs());
 
     WMMapSubwidgets(fView->fileView);
     WMMapWidget(fView->shelfF);
@@ -666,32 +657,6 @@ char* FSGetFileViewFilter(FSFileView* fView)
  ****************************************************************************/
 
 static void
-handleShelfDrop(XEvent* ev, void* clientData)
-{
-    FSFileView* fView = (FSFileView*)clientData;
-    FileInfo* fileInfo = NULL;
-    unsigned char* data = NULL;
-    unsigned long Size;
-    unsigned int Type;
-
-    Type = DndDataType(ev);
-    if ((Type != DndFile) && (Type != DndDir) && (Type != DndLink) && (Type != DndExe)) {
-        return;
-    }
-    DndGetData(&data, &Size);
-
-    fileInfo = FSGetFileInfo(data);
-    if (fileInfo) {
-        /*
-         * If fileInfo was successfully entered into the
-         * array, place it on the shelf
-         */
-        if (FSAddFileViewShelfItemIntoProplist(fView, fileInfo))
-            FSAddFileViewShelfItem(fView, fileInfo);
-    }
-}
-
-static void
 handleShelfEventActions(XEvent* event, void* data)
 {
     FSFileView* fView = (FSFileView*)data;
@@ -743,91 +708,6 @@ handleShelfButtonActions(WMWidget* self, void* data)
                 LaunchApp(fView->fsViewer, fileInfo, AppEdit);
         }
     }
-}
-
-/* Drag'n'Drop */
-/* Drop handle for Shelf icon */
-static void
-handleShelfButtonDrop(XEvent* ev, void* clientData)
-{
-    unsigned long Size;
-    unsigned int Type, Keys;
-    unsigned char* data = NULL;
-    FSFileIcon* fileIcon = (FSFileIcon*)clientData;
-    FileInfo* src = NULL;
-    FileInfo* dest = FSGetFileButtonFileInfo(fileIcon->btn);
-    FSFileView* fView = WMGetHangedData(fileIcon->btn);
-
-    Type = DndDataType(ev);
-    if ((Type != DndFile) && (Type != DndFiles) && (Type != DndExe) && (Type != DndDir) && (Type != DndLink)) {
-        return;
-    }
-
-    Keys = DndDragButtons(ev);
-
-    DndGetData(&data, &Size);
-    if (!data)
-        return;
-
-    if (Type != DndFiles) {
-        char* srcPath = NULL;
-        char* destPath = NULL;
-
-        src = FSGetFileInfo(data);
-
-        srcPath = GetPathnameFromPathName(src->path, src->name);
-        destPath = GetPathnameFromPathName(dest->path, dest->name);
-
-        if (strcmp(srcPath, destPath) != 0) {
-            if (Keys & ShiftMask) /* Copy */
-            {
-                wwarning("%s %d", __FILE__, __LINE__);
-                FSCopy(src, dest);
-            } else {
-                /* 		FSFileIcon *fileIcon = NULL; */
-
-                FSMove(src, dest);
-                /* 		fileIcon = FSFindFileIconWithFileInfo(fView, src); */
-                /* 		if(fileIcon) */
-                /* 		    FSRemoveFileViewItemFromShelf(fView, fileIcon);	     */
-            }
-        }
-        if (srcPath)
-            free(srcPath);
-        if (destPath)
-            free(destPath);
-    }
-}
-
-/* Drag handle for Shelf icon */
-static void
-handleShelfButtonDrag(XEvent* ev, void* clientData)
-{
-    int type;
-    char* path = NULL;
-    WMPixmap* pixmap = NULL;
-    FSFileIcon* fileIcon = (FSFileIcon*)clientData;
-    FileInfo* fileInfo = FSGetFileButtonFileInfo(fileIcon->btn);
-
-    if (!DragStarted)
-        return;
-
-    if (!fileInfo)
-        return;
-
-    path = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
-    type = FSGetDNDType(fileInfo);
-
-    DndSetData(type, path, (unsigned long)(strlen(path) + 1));
-
-    pixmap = FSCreateBlurredPixmapFromFile(WMWidgetScreen(fileIcon->btn),
-        fileInfo->imgName);
-    DndHandleDragging(fileIcon->btn, ev, pixmap);
-
-    if (path)
-        free(path);
-    if (pixmap)
-        WMReleasePixmap(pixmap);
 }
 
 /*
@@ -886,8 +766,7 @@ FSReorganiseShelf(FSFileView* fView)
  * Create a fileIcon, add it to FileView->fileIcons
  *  and add it to the shelf after the last fileIcon
  */
-static void
-FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
+void FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
 {
     char* pathname;
     FSFileIcon* fileIcon;
@@ -902,6 +781,7 @@ FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
 
     /* Create a FileButton */
     fileIcon->btn = FSCreateFileButton(fView->shelfF);
+    assert(WMWidgetClass(fileIcon->btn) == FileButtonWidgetClass());
     pathname = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
     FSSetFileButtonPathname(fileIcon->btn, pathname, 0);
     FSSetFileButtonAction(fileIcon->btn, handleShelfButtonActions, fView);
@@ -910,8 +790,12 @@ FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
     WMMapWidget(fileIcon->btn);
 
     /* Drag'n'Drop */
-    DndRegisterDropWidget(fileIcon->btn, handleShelfButtonDrop, fileIcon);
-    DndRegisterDragWidget(fileIcon->btn, handleShelfButtonDrag, fileIcon);
+    WMPixmap* dragImg = FSCreateBlurredPixmapFromFile(WMWidgetScreen(fileIcon->btn), fileInfo->imgName);
+    WMSetViewDraggable(WMWidgetView(fileIcon->btn), FileViewDragSourceProcs(), dragImg);
+    WMReleasePixmap(dragImg);
+
+    WMRegisterViewForDraggedTypes(WMWidgetView(fileIcon->btn), SupportedDataTypes());
+    WMSetViewDragDestinationProcs(WMWidgetView(fileIcon->btn), FolderDragDestinationProcs());
 
     /* Add the new Btn to the fileIcon linked list */
     if (fView->fileIcons == NULL)
@@ -943,8 +827,7 @@ FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
  * Add the selected path to the shelf and
  * update the SHELF entry in the user defaults DB
  */
-static void
-FSAddFileViewItemIntoShelf(FSViewer* fsViewer)
+void FSAddFileViewItemIntoShelf(FSViewer* fsViewer)
 {
     FSFileView* fView = NULL;
     FileInfo* fileInfo = NULL;
@@ -971,8 +854,7 @@ FSAddFileViewItemIntoShelf(FSViewer* fsViewer)
  * entered return False, if the fileInfo is already in there
  * return true.
  */
-static Bool
-FSAddFileViewShelfItemIntoProplist(FSFileView* fView, FileInfo* fileInfo)
+Bool FSAddFileViewShelfItemIntoProplist(FSFileView* fView, FileInfo* fileInfo)
 {
     Bool notFound;
     char* pathname = NULL;
@@ -1010,36 +892,49 @@ FSAddFileViewShelfItemIntoProplist(FSFileView* fView, FileInfo* fileInfo)
     return notFound;
 }
 
+void FSFileViewRemoveFileButtonFromShelf(FSFileView* fView, FSFileButton* btn)
+{
+    FSFileIcon* tmp = fView->fileIcons;
+
+    for (FSFileIcon* tmp = fView->fileIcons;
+        tmp != NULL;
+        tmp = tmp->next) {
+        if (tmp->btn == btn) {
+            FSRemoveFileViewItemFromShelf(fView, tmp);
+            return;
+        }
+    }
+
+    return;
+}
+
 /*
  * Remove the fileIcon from the shelf and the proplist entry
  */
 static void
 FSRemoveFileViewItemFromShelf(FSFileView* fView, FSFileIcon* fileIcon)
 {
-    char* pathname = NULL;
     WMPropList* key = NULL;
     WMPropList* val = NULL;
     WMPropList* array = NULL;
-    FileInfo* fileInfo = NULL;
     FSFileIcon* tmp = fView->fileIcons;
 
-    if (fileIcon == NULL)
+    if (fileIcon == NULL) {
         return;
-    /*
-      The following code is needed to remove the btn to
-      prevent a seg fault when the btn widget is destroyed
-      and the calling function exits. The procedure is as follows:
-      a) unmap the btn and remove it from the list
-      b) Remove the shelf item from the proplist entry
-      c) Reorganise the shelf with the updated list.
-      d) Set dirtyFileIcon so that it will be removed on the next
-         reorganise shelf call or when the FileViewer is destroyed.
+    }
 
-      To check that it seg faults at the end of this function insert
-      WMWidgetDestroy(fileIcon->btn);
-    */
-    /* Required by dirtyIcon...*/
+    FileInfo* fileInfo = FSGetFileButtonFileInfo(fileIcon->btn);
+    char* pathname = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
+
+    // We cannot destroy the widget right away, as there might be
+    // more events lined up for its view, so we free the resources
+    // next time to not leak it.
+    if (fView->dirtyFileIcon) {
+        WMDestroyWidget(fView->dirtyFileIcon->btn);
+        fView->dirtyFileIcon = NULL;
+    }
     WMUnmapWidget(fileIcon->btn);
+
     if (tmp != fileIcon) {
         while (tmp->next != fileIcon)
             tmp = tmp->next;
@@ -1049,10 +944,7 @@ FSRemoveFileViewItemFromShelf(FSFileView* fView, FSFileIcon* fileIcon)
         fView->fileIcons = tmp;
     }
     fView->fileIconCnt--;
-    /*...dirtyIcon*/
 
-    fileInfo = FSGetFileButtonFileInfo(fileIcon->btn);
-    pathname = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
     val = WMCreatePLString(pathname);
     array = FSGetUDObjectForKey(defaultsDB, "SHELF");
 

@@ -3,12 +3,12 @@
 #include <math.h> /* for : double rint (double) */
 
 #include "FSFileButton.h"
+#include "FSFileView.h"
 #include "FSPathView.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
+#include "dnd.h"
 #include "files.h"
-
-#include "DnD.h"
 
 #include "xpm/arrow.xpm"
 
@@ -703,10 +703,10 @@ int FSAddPathViewColumn(FSPathView* pvPtr)
     list = FSCreateFileButton(pvPtr);
     FSSetFileButtonAction(list, btnCallback, pvPtr);
     FSSetFileButtonDoubleAction(list, btnDoubleCallback, pvPtr);
-    /* Drag'n'Drop */
-    DndRegisterDropWidget(list, handlePVButtonDrop, list);
-    DndRegisterDragWidget(list, handlePVButtonDrag, list);
     WMHangData(list, pvPtr);
+
+    WMRegisterViewForDraggedTypes(W_VIEW(list), SupportedDataTypes());
+    WMSetViewDragDestinationProcs(W_VIEW(list), FolderDragDestinationProcs());
 
     pvPtr->columns[index] = list;
 
@@ -824,91 +824,13 @@ void FSSetPathViewColumnContents(FSPathView* pvPtr, int column,
         if (backlight)
             FSSetFileButtonSelected(pvPtr->columns[column], 1);
         FSSetFileButtonSelected(pvPtr->columns[column - 1], 0);
+
+        FSFileButton* btn = pvPtr->columns[column];
+        FileInfo* fileInfo = FSGetFileInfo(FSGetFileButtonPathname(btn));
+        WMPixmap* dragImg = FSCreateBlurredPixmapFromFile(WMWidgetScreen(btn), fileInfo->imgName);
+        WMSetViewDraggable(W_VIEW(btn), PathViewDragSourceProcs(), dragImg);
+        WMReleasePixmap(dragImg);
     }
-}
-
-static void
-handlePVButtonDrop(XEvent* ev, void* clientData)
-{
-    unsigned long Size;
-    unsigned int Type, Keys;
-    unsigned char* data = NULL;
-    FileInfo* src = NULL;
-    FileInfo* dest = NULL;
-    FSFileButton* btn = (FSFileButton*)clientData;
-    FSPathView* pvPtr = WMGetHangedData(btn);
-
-    Type = DndDataType(ev);
-    if ((Type != DndFile) && (Type != DndFiles) && (Type != DndExe) && (Type != DndDir) && (Type != DndLink)) {
-        return;
-    }
-
-    Keys = DndDragButtons(ev);
-
-    DndGetData(&data, &Size);
-    if (!data)
-        return;
-
-    if (Type != DndFiles) {
-        char* srcPath = NULL;
-        char* destPath = NULL;
-
-        src = FSGetFileInfo(data);
-        dest = FSGetFileInfo(FSGetFileButtonPathname(btn));
-
-        srcPath = GetPathnameFromPathName(src->path, src->name);
-        destPath = GetPathnameFromPathName(dest->path, dest->name);
-
-        if (strcmp(srcPath, destPath) != 0) {
-            if (Keys & ShiftMask) /* Copy */
-            {
-                FSCopy(src, dest);
-                /* 		insertIntoColumn(bPtr, destPath, src->name); */
-            } else {
-                FSMove(src, dest);
-                /* 		removeFromColumn(bPtr, src->path); */
-                /* 		insertIntoColumn(bPtr, destPath, src->name); */
-                /* Check if it was on the shelf??? */
-                /* 		fileIcon = FSFindFileIconWithFileInfo(fView, src); */
-                /* 		if(fileIcon) */
-                /* 		    FSRemoveFileViewItemFromShelf(fView, fileIcon);	     */
-            }
-        }
-
-        if (srcPath)
-            free(srcPath);
-        if (destPath)
-            free(destPath);
-    }
-}
-
-/* Drag handle for Shelf icon */
-static void
-handlePVButtonDrag(XEvent* ev, void* clientData)
-{
-    int type;
-    char* path = NULL;
-    WMPixmap* pixmap = NULL;
-    FileInfo* fileInfo = NULL;
-    FSFileButton* btn = (FSFileButton*)clientData;
-
-    if (!DragStarted)
-        return;
-
-    path = FSGetFileButtonPathname(btn);
-    fileInfo = FSGetFileInfo(path);
-    type = FSGetDNDType(fileInfo);
-
-    DndSetData(type, path, (unsigned long)(strlen(path) + 1));
-
-    pixmap = FSCreateBlurredPixmapFromFile(WMWidgetScreen(btn),
-        fileInfo->imgName);
-    DndHandleDragging(btn, ev, pixmap);
-
-    if (pixmap)
-        WMReleasePixmap(pixmap);
-    if (path)
-        free(path);
 }
 
 short FSGetPathViewLastClicked(FSPathView* pvPtr)
