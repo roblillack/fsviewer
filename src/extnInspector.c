@@ -316,7 +316,7 @@ createInfoLabel(Panel* panel)
     //    WMResizeWidget(l, WIDTH-20, LABEL_HEIGHT*2);
     //    WMMoveWidget(l, 10, 0);
     //    WMSetLabelText(l, "Add: enter ext'n into the textfield, click \"Add\".\n"\
-//		   "Remove: select ext'n in the list, click \"Remove\"");
+    //		   "Remove: select ext'n in the list, click \"Remove\"");
     //    WMSetLabelTextAlignment(l, WALeft);
     //    WMSetLabelRelief(l, WRFlat);
     //    WMSetLabelTextColor(l, WMDarkGrayColor(panel->scr));

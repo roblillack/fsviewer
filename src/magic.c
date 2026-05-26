@@ -487,7 +487,7 @@ char** s;
         case '6':
         case '7':
             for (i = 0; i < 3 && *cptr >= '0' && *cptr <= '7';
-                 i++, cptr++)
+                i++, cptr++)
                 cbuf[i] = *cptr;
             cbuf[i] = '\0';
             *vptr++ = (char)strtol(cbuf, 0, 8);

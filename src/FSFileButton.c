@@ -452,7 +452,7 @@ paintImageAndText(W_View* view, int x, int y, int width, int height,
     if (back) {
         color = WMGetRColorFromColor(back);
     } else {
-        WMColor *gray = WMGrayColor(screen);
+        WMColor* gray = WMGrayColor(screen);
         color = WMGetRColorFromColor(gray);
         WMReleaseColor(gray);
     }
@@ -487,9 +487,9 @@ paintImageAndText(W_View* view, int x, int y, int width, int height,
                 x + (width - strwidth) / 2, y + (height - BUTTON_HEIGHT - LABEL_HEIGHT) / 2 + BUTTON_HEIGHT,
                 strwidth, LABEL_HEIGHT);
     }
-    
+
     image = FSCreateBlendedPixmapFromFile(screen, imgName, back);
-    
+
     if (image) {
         WMDrawPixmap(image, d, x + (width - image->width) / 2, y + (height - image->height) / 2 - LABEL_HEIGHT / 2);
         WMReleasePixmap(image);
