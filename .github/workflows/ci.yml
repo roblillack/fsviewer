@@ -43,7 +43,7 @@ jobs:
       - name: Install clang-format
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang-format
+          sudo apt-get install -y clang-format-19
 
       - name: Check formatting
-        run: clang-format --dry-run --Werror src/*.c src/*.h
+        run: clang-format-19 --dry-run --Werror src/*.c src/*.h
