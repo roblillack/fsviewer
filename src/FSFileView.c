@@ -48,9 +48,6 @@ static void FSRemoveFileViewItemFromShelf(FSFileView* fView, FSFileIcon* fileIco
 static void FSSetupFileViewShelfItems(FSFileView* fView);
 static void FSReorganiseShelf(FSFileView* fView);
 static void handleScrollViewDoubleClick(WMWidget* self, void* clientData);
-static void handleShelfDrop(XEvent* ev, void* clientData);
-static void handleBtnDrop(XEvent* ev, void* clientData);
-static void handleBtnDrag(XEvent* ev, void* clientData);
 static void updateDiskFree(FSFileView* fView);
 
 static FSFileIcon* FSFindFileIconWithFileInfo(FSFileView* fView,
@@ -660,32 +657,6 @@ char* FSGetFileViewFilter(FSFileView* fView)
  ****************************************************************************/
 
 static void
-handleShelfDrop(XEvent* ev, void* clientData)
-{
-    FSFileView* fView = (FSFileView*)clientData;
-    FileInfo* fileInfo = NULL;
-    unsigned char* data = NULL;
-    unsigned long Size;
-    unsigned int Type;
-
-    // Type = DndDataType(ev);
-    // if ((Type != DndFile) && (Type != DndDir) && (Type != DndLink) && (Type != DndExe)) {
-    //     return;
-    // }
-    // DndGetData(&data, &Size);
-
-    fileInfo = FSGetFileInfo(data);
-    if (fileInfo) {
-        /*
-         * If fileInfo was successfully entered into the
-         * array, place it on the shelf
-         */
-        if (FSAddFileViewShelfItemIntoProplist(fView, fileInfo))
-            FSAddFileViewShelfItem(fView, fileInfo);
-    }
-}
-
-static void
 handleShelfEventActions(XEvent* event, void* data)
 {
     FSFileView* fView = (FSFileView*)data;
@@ -737,60 +708,6 @@ handleShelfButtonActions(WMWidget* self, void* data)
                 LaunchApp(fView->fsViewer, fileInfo, AppEdit);
         }
     }
-}
-
-/* Drag'n'Drop */
-/* Drop handle for Shelf icon */
-static void
-handleShelfButtonDrop(XEvent* ev, void* clientData)
-{
-    unsigned long Size;
-    unsigned int Type, Keys;
-    unsigned char* data = NULL;
-    FSFileIcon* fileIcon = (FSFileIcon*)clientData;
-    FileInfo* src = NULL;
-    FileInfo* dest = FSGetFileButtonFileInfo(fileIcon->btn);
-    FSFileView* fView = WMGetHangedData(fileIcon->btn);
-
-    // Type = DndDataType(ev);
-    // if ((Type != DndFile) && (Type != DndFiles) && (Type != DndExe) && (Type != DndDir) && (Type != DndLink)) {
-    //     return;
-    // }
-
-    // Keys = DndDragButtons(ev);
-
-    // DndGetData(&data, &Size);
-    if (!data)
-        return;
-
-    // if (Type != DndFiles) {
-    //     char* srcPath = NULL;
-    //     char* destPath = NULL;
-
-    //     src = FSGetFileInfo(data);
-
-    //     srcPath = GetPathnameFromPathName(src->path, src->name);
-    //     destPath = GetPathnameFromPathName(dest->path, dest->name);
-
-    //     if (strcmp(srcPath, destPath) != 0) {
-    //         if (Keys & ShiftMask) /* Copy */
-    //         {
-    //             wwarning("%s %d", __FILE__, __LINE__);
-    //             FSCopy(src, dest);
-    //         } else {
-    //             /* 		FSFileIcon *fileIcon = NULL; */
-
-    //             FSMove(src, dest);
-    //             /* 		fileIcon = FSFindFileIconWithFileInfo(fView, src); */
-    //             /* 		if(fileIcon) */
-    //             /* 		    FSRemoveFileViewItemFromShelf(fView, fileIcon);	     */
-    //         }
-    //     }
-    //     if (srcPath)
-    //         free(srcPath);
-    //     if (destPath)
-    //         free(destPath);
-    // }
 }
 
 /*
@@ -874,10 +791,11 @@ void FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
 
     /* Drag'n'Drop */
     WMPixmap* dragImg = FSCreateBlurredPixmapFromFile(WMWidgetScreen(fileIcon->btn), fileInfo->imgName);
-    WMSetViewDraggable(WMWidgetView(fileIcon->btn), FileViewDragSourceProcs(fileInfo), dragImg);
+    WMSetViewDraggable(WMWidgetView(fileIcon->btn), FileViewDragSourceProcs(), dragImg);
     WMReleasePixmap(dragImg);
 
-    // TODO: Implement handleShelfButtonDrop for XDND, too.
+    WMRegisterViewForDraggedTypes(WMWidgetView(fileIcon->btn), SupportedDataTypes());
+    WMSetViewDragDestinationProcs(WMWidgetView(fileIcon->btn), FolderDragDestinationProcs());
 
     /* Add the new Btn to the fileIcon linked list */
     if (fView->fileIcons == NULL)

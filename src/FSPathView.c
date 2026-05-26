@@ -703,10 +703,10 @@ int FSAddPathViewColumn(FSPathView* pvPtr)
     list = FSCreateFileButton(pvPtr);
     FSSetFileButtonAction(list, btnCallback, pvPtr);
     FSSetFileButtonDoubleAction(list, btnDoubleCallback, pvPtr);
-    /* Drag'n'Drop */
-    // DndRegisterDropWidget(list, handlePVButtonDrop, list);
-    // DndRegisterDragWidget(list, handlePVButtonDrag, list);
     WMHangData(list, pvPtr);
+
+    WMRegisterViewForDraggedTypes(W_VIEW(list), SupportedDataTypes());
+    WMSetViewDragDestinationProcs(W_VIEW(list), FolderDragDestinationProcs());
 
     pvPtr->columns[index] = list;
 
@@ -831,61 +831,6 @@ void FSSetPathViewColumnContents(FSPathView* pvPtr, int column,
         WMSetViewDraggable(W_VIEW(btn), PathViewDragSourceProcs(), dragImg);
         WMReleasePixmap(dragImg);
     }
-}
-
-static void
-handlePVButtonDrop(XEvent* ev, void* clientData)
-{
-    unsigned long Size;
-    unsigned int Type, Keys;
-    unsigned char* data = NULL;
-    FileInfo* src = NULL;
-    FileInfo* dest = NULL;
-    FSFileButton* btn = (FSFileButton*)clientData;
-    FSPathView* pvPtr = WMGetHangedData(btn);
-
-    // Type = DndDataType(ev);
-    // if ((Type != DndFile) && (Type != DndFiles) && (Type != DndExe) && (Type != DndDir) && (Type != DndLink)) {
-    //     return;
-    // }
-
-    // Keys = DndDragButtons(ev);
-
-    // DndGetData(&data, &Size);
-    if (!data)
-        return;
-
-    // if (Type != DndFiles) {
-    //     char* srcPath = NULL;
-    //     char* destPath = NULL;
-
-    //     src = FSGetFileInfo(data);
-    //     dest = FSGetFileInfo(FSGetFileButtonPathname(btn));
-
-    //     srcPath = GetPathnameFromPathName(src->path, src->name);
-    //     destPath = GetPathnameFromPathName(dest->path, dest->name);
-
-    //     if (strcmp(srcPath, destPath) != 0) {
-    //         if (Keys & ShiftMask) /* Copy */
-    //         {
-    //             FSCopy(src, dest);
-    //             /* 		insertIntoColumn(bPtr, destPath, src->name); */
-    //         } else {
-    //             FSMove(src, dest);
-    //             /* 		removeFromColumn(bPtr, src->path); */
-    //             /* 		insertIntoColumn(bPtr, destPath, src->name); */
-    //             /* Check if it was on the shelf??? */
-    //             /* 		fileIcon = FSFindFileIconWithFileInfo(fView, src); */
-    //             /* 		if(fileIcon) */
-    //             /* 		    FSRemoveFileViewItemFromShelf(fView, fileIcon);	     */
-    //         }
-    //     }
-
-    //     if (srcPath)
-    //         free(srcPath);
-    //     if (destPath)
-    //         free(destPath);
-    // }
 }
 
 short FSGetPathViewLastClicked(FSPathView* pvPtr)

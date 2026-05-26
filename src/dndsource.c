@@ -10,31 +10,6 @@
 #include "dnd.h"
 #include "files.h"
 
-void BeganDrag(WMView* self, WMPoint* point)
-{
-    //wwarning("Began drag");
-}
-
-void EndedFileViewDrag(WMView* self, WMPoint* point, Bool deposited)
-{
-    if (deposited) {
-        // Ok, successful drag. Receiver will take care.
-        return;
-    }
-
-    FSFileButton* btn = (FSFileButton*)WMWidgetOfView(self);
-    if (WMWidgetClass(btn) != FileButtonWidgetClass()) {
-        return;
-    }
-
-    FSFileView* fView = (FSFileView*)WMGetHangedData(btn);
-    if (!fView) {
-        return;
-    }
-
-    //FSFileViewRemoveFileButtonFromShelf(fView, btn);
-}
-
 WMData* FetchDragData(WMView* self, char* type)
 {
     //wwarning("data type %s requested", type);
@@ -102,7 +77,7 @@ static WMDragSourceProcs fileViewDragSourceProcs = {
     .askedOperations = NULL,
     .beganDrag = NULL,
     .dropDataTypes = DropDataTypes,
-    .endedDrag = EndedFileViewDrag,
+    .endedDrag = NULL,
     .fetchDragData = FetchDragData,
     .wantedDropOperation = WantedDropOperation,
 };
@@ -115,7 +90,7 @@ WMDragSourceProcs* FileViewDragSourceProcs()
 static WMDragSourceProcs pathViewDragSourceProcs = {
     .acceptDropOperation = AcceptDropOperation,
     .askedOperations = NULL,
-    .beganDrag = BeganDrag,
+    .beganDrag = NULL,
     .dropDataTypes = DropDataTypes,
     .endedDrag = NULL,
     .fetchDragData = FetchDragData,

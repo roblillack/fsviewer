@@ -143,6 +143,97 @@ void ConcludeDragOperation(WMView* self)
     //wwarning("DROPZONE: Conclude drag");
 }
 
+static Bool IsCtrlPressed(WMView* view)
+{
+    Display* dpy = W_VIEW_DISPLAY(view);
+    Window root, child;
+    int root_x, root_y, win_x, win_y;
+    unsigned int mask;
+
+    if (!XQueryPointer(dpy, DefaultRootWindow(dpy),
+            &root, &child, &root_x, &root_y, &win_x, &win_y, &mask)) {
+        return False;
+    }
+    return (mask & ControlMask) != 0;
+}
+
+static FileInfo* FolderDropDestination(WMView* self)
+{
+    WMWidget* widget = WMWidgetOfView(self);
+    if (!widget || WMWidgetClass(widget) != FileButtonWidgetClass()) {
+        return NULL;
+    }
+    return FSGetFileButtonFileInfo(widget);
+}
+
+WMDragOperationType FolderAllowedDropOperation(WMView* self,
+    WMDragOperationType request, WMArray* sourceDataTypes)
+{
+    FileInfo* dest = FolderDropDestination(self);
+    if (!dest || !isDirectory(dest->fileType)) {
+        return WDOperationNone;
+    }
+    return IsCtrlPressed(self) ? WDOperationCopy : WDOperationMove;
+}
+
+typedef struct DeferredFileOp {
+    Bool copy;
+    char* srcPath;
+    char* destPath;
+} DeferredFileOp;
+
+static void runDeferredFileOp(void* clientData)
+{
+    DeferredFileOp* op = (DeferredFileOp*)clientData;
+    FileInfo* src = FSGetFileInfo(op->srcPath);
+    FileInfo* dest = FSGetFileInfo(op->destPath);
+
+    if (src && dest) {
+        if (op->copy) {
+            FSCopy(src, dest);
+        } else {
+            FSMove(src, dest);
+        }
+    }
+
+    wfree(op->srcPath);
+    wfree(op->destPath);
+    wfree(op);
+}
+
+void FolderPerformDragOperation(WMView* self, WMArray* dropData,
+    WMArray* operations, WMPoint* dropLocation)
+{
+    FileInfo* dest = FolderDropDestination(self);
+    if (!dest || !isDirectory(dest->fileType)) {
+        return;
+    }
+
+    WMData* data = FirstNonNullDataItem(dropData);
+    if (!data) {
+        return;
+    }
+
+    Bool copy = IsCtrlPressed(self);
+    char* destPath = GetPathnameFromPathName(dest->path, dest->name);
+
+    int pos = 0;
+    char* path = NULL;
+    while ((path = FindNextPath(data, &pos)) != NULL) {
+        if (strcmp(path, destPath) != 0) {
+            DeferredFileOp* op = wmalloc(sizeof(DeferredFileOp));
+            op->copy = copy;
+            op->srcPath = wstrdup(path);
+            op->destPath = wstrdup(destPath);
+            WMAddIdleHandler(runDeferredFileOp, op);
+        }
+        wfree(path);
+    }
+
+    if (destPath)
+        free(destPath);
+}
+
 static WMDragDestinationProcs* shelfDragDestinationProcs = NULL;
 
 WMDragDestinationProcs* ShelfDragDestinationProcs()
@@ -162,4 +253,25 @@ WMDragDestinationProcs* ShelfDragDestinationProcs()
     r->concludeDragOperation = ConcludeDragOperation;
 
     return (shelfDragDestinationProcs = r);
+}
+
+static WMDragDestinationProcs* folderDragDestinationProcs = NULL;
+
+WMDragDestinationProcs* FolderDragDestinationProcs()
+{
+    if (folderDragDestinationProcs) {
+        return folderDragDestinationProcs;
+    }
+
+    WMDragDestinationProcs* r = wmalloc(sizeof(WMDragDestinationProcs));
+    memset((void*)r, 0, sizeof(WMDragDestinationProcs));
+
+    r->prepareForDragOperation = PrepareForDragOperation;
+    r->requiredDataTypes = RequiredDataTypes;
+    r->allowedOperation = FolderAllowedDropOperation;
+    r->inspectDropData = InspectDropData;
+    r->performDragOperation = FolderPerformDragOperation;
+    r->concludeDragOperation = ConcludeDragOperation;
+
+    return (folderDragDestinationProcs = r);
 }
