@@ -224,22 +224,23 @@ formatFileInfo(WMScreen* scr, FileInfo* fileInfo)
     else
         owner = wstrdup("ownerless");
 
-    text = (char*)wmalloc(strlen(img) + strlen(name) + strlen(size) + strlen(time) + strlen(mode) + strlen(group) + strlen(owner) + 13);
+    size_t text_size = strlen(img) + strlen(name) + strlen(size) + strlen(time) + strlen(mode) + strlen(group) + strlen(owner) + 13;
+    text = (char*)wmalloc(text_size);
     /*     strcpy(text, sep); */
     /*     strcat(text, img); */
-    strcpy(text, img);
-    strcat(text, sep);
-    strcat(text, name);
-    strcat(text, sep);
-    strcat(text, size);
-    strcat(text, sep);
-    strcat(text, time);
-    strcat(text, sep);
-    strcat(text, mode);
-    strcat(text, sep);
-    strcat(text, owner);
-    strcat(text, sep);
-    strcat(text, group);
+    strlcpy(text, img, text_size);
+    strlcat(text, sep, text_size);
+    strlcat(text, name, text_size);
+    strlcat(text, sep, text_size);
+    strlcat(text, size, text_size);
+    strlcat(text, sep, text_size);
+    strlcat(text, time, text_size);
+    strlcat(text, sep, text_size);
+    strlcat(text, mode, text_size);
+    strlcat(text, sep, text_size);
+    strlcat(text, owner, text_size);
+    strlcat(text, sep, text_size);
+    strlcat(text, group, text_size);
     /*     strcat(text, sep); */
 
     return text;
@@ -379,23 +380,24 @@ static char*
 createTruncatedString(WMFont* font, char* text, int* textLen, int width)
 {
     int dLen = WMWidthOfString(font, ".", 1);
-    char* textBuf = (char*)wmalloc((*textLen) + 4);
+    size_t textBuf_size = (*textLen) + 4;
+    char* textBuf = (char*)wmalloc(textBuf_size);
 
     if (width >= 3 * dLen) {
         int dddLen = 3 * dLen;
         int tmpTextLen = *textLen;
 
-        strcpy(textBuf, text);
+        strlcpy(textBuf, text, textBuf_size);
         while (tmpTextLen
             && (WMWidthOfString(font, textBuf, tmpTextLen) + dddLen > width))
             tmpTextLen--;
-        strcpy(textBuf + tmpTextLen, "...");
+        strlcpy(textBuf + tmpTextLen, "...", textBuf_size - tmpTextLen);
         *textLen = tmpTextLen + 3;
     } else if (width >= 2 * dLen) {
-        strcpy(textBuf, "..");
+        strlcpy(textBuf, "..", textBuf_size);
         *textLen = 2;
     } else if (width >= dLen) {
-        strcpy(textBuf, ".");
+        strlcpy(textBuf, ".", textBuf_size);
         *textLen = 1;
     } else {
         *textBuf = '\0';

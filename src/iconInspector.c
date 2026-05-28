@@ -64,9 +64,10 @@ fillIconFileList(WMWidget* self, void* data)
     WMSetLabelImage(panel->iconLabel, NULL);
 
     listItem = WMGetListSelectedItem(panel->pathList);
-    pathname = (char*)wmalloc(strlen(listItem->text) + 1);
-    strcpy(pathname, listItem->text);
-    strcat(pathname, "/");
+    size_t pathnameSize = strlen(listItem->text) + 1;
+    pathname = (char*)wmalloc(pathnameSize);
+    strlcpy(pathname, listItem->text, pathnameSize);
+    strlcat(pathname, "/", pathnameSize);
 
     fileList = GetDirList(pathname);
     while (fileList != NULL) {
@@ -270,8 +271,9 @@ InitIcon(WMWindow* parent, FSViewer* app, FileInfo* fileInfo, int x, int y)
     panel = wmalloc(sizeof(_Panel));
     memset(panel, 0, sizeof(_Panel));
 
-    panel->sectionName = (char*)wmalloc(strlen(_("Icon Inspector")) + 1);
-    strcpy(panel->sectionName, _("Icon Inspector"));
+    size_t sectionNameSize = strlen(_("Icon Inspector")) + 1;
+    panel->sectionName = (char*)wmalloc(sectionNameSize);
+    strlcpy(panel->sectionName, _("Icon Inspector"), sectionNameSize);
 
     panel->win = parent;
     panel->app = app;
@@ -292,13 +294,15 @@ InitIcon(WMWindow* parent, FSViewer* app, FileInfo* fileInfo, int x, int y)
         customIconDir = False;
     }
 
-    panel->xpmDir = (char*)wmalloc(strlen(txt) + 5);
-    strcpy(panel->xpmDir, txt);
-    strcat(panel->xpmDir, "/xpm");
+    size_t xpmDirSize = strlen(txt) + 5;
+    panel->xpmDir = (char*)wmalloc(xpmDirSize);
+    strlcpy(panel->xpmDir, txt, xpmDirSize);
+    strlcat(panel->xpmDir, "/xpm", xpmDirSize);
 
-    panel->pngDir = (char*)wmalloc(strlen(txt) + 5);
-    strcpy(panel->pngDir, txt);
-    strcat(panel->pngDir, "/png");
+    size_t pngDirSize = strlen(txt) + 5;
+    panel->pngDir = (char*)wmalloc(pngDirSize);
+    strlcpy(panel->pngDir, txt, pngDirSize);
+    strlcat(panel->pngDir, "/png", pngDirSize);
 
     if (customIconDir) {
         free(txt);

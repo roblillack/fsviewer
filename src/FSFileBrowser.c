@@ -496,7 +496,7 @@ char* FSGetFileBrowserPath(FileBrowser* bPtr)
             strncpy(npath, path, len - 1);
             npath[len - 1] = '\0';
         } else
-            strcpy(npath, path);
+            strlcpy(npath, path, len);
         if (path)
             free(path);
         break;

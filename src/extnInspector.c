@@ -62,7 +62,7 @@ showData(_Panel* panel)
 
     if (panel->fileInfo->fileType == ROOT) {
         extn = (char*)wmalloc(5);
-        strcpy(extn, "ROOT");
+        strlcpy(extn, "ROOT", 5);
     } else
         extn = wstrdup(GetFileExtn(panel->fileInfo->name));
 
@@ -131,7 +131,7 @@ storeData(_Panel* panel)
 
     if (panel->fileInfo->fileType == ROOT) {
         extn = (char*)wmalloc(5);
-        strcpy(extn, "ROOT");
+        strlcpy(extn, "ROOT", 5);
     } else
         extn = wstrdup(GetFileExtn(panel->fileInfo->name));
     dictKey = WMCreatePLString(extn);
@@ -469,9 +469,9 @@ InitExtn(WMWindow* win, FSViewer* app, FileInfo* fileInfo)
     panel = wmalloc(sizeof(_Panel));
     memset(panel, 0, sizeof(_Panel));
 
-    panel->sectionName = (char*)wmalloc(
-        strlen(_("File Extensions Inspector")) + 1);
-    strcpy(panel->sectionName, _("File Extensions Inspector"));
+    size_t sectionNameSize = strlen(_("File Extensions Inspector")) + 1;
+    panel->sectionName = (char*)wmalloc(sectionNameSize);
+    strlcpy(panel->sectionName, _("File Extensions Inspector"), sectionNameSize);
 
     panel->win = win;
     panel->app = app;

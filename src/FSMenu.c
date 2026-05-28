@@ -258,7 +258,7 @@ void FSNewFileCB(FSViewer* fsViewer, int item, Time time)
         if (FSCreateNewFile(new, umask & 0777)) {
             char s[0xff];
 
-            sprintf(s, _("Error creating file %s"), new);
+            snprintf(s, sizeof(s), _("Error creating file %s"), new);
             FSErrorDialog(_("File Operation Error"), s);
         } else {
             FileInfo* src = FSCreateFileInfo();
@@ -303,7 +303,7 @@ void FSNewDirCB(FSViewer* fsViewer, int item, Time time)
         if (FSCreateNewDirectory(new, umask & 0777)) {
             char s[0xff];
 
-            sprintf(s, _("Error creating folder %s"), new);
+            snprintf(s, sizeof(s), _("Error creating folder %s"), new);
             FSErrorDialog(_("File Operation Error"), s);
         } else {
             FileInfo* src = FSCreateFileInfo();
@@ -333,7 +333,7 @@ void FSConsoleCB(FSViewer* fsViewer, int item, Time time)
     fileInfo = FSCreateFileInfo();
 
     fileInfo->name = (char*)wmalloc(8);
-    strcpy(fileInfo->name, "CONSOLE");
+    strlcpy(fileInfo->name, "CONSOLE", 8);
 
     pathInfo = fsGetFSViewerCurrentFileInfo(fsViewer);
 
@@ -413,7 +413,7 @@ void FSMountCB(Disk* disk, int item, Time time)
     if (!noerror) {
         char s[0xff];
 
-        sprintf(s, "Unable to mount \"%s\"", disk->name);
+        snprintf(s, sizeof(s), "Unable to mount \"%s\"", disk->name);
         WMRunAlertPanel(FSGetFSViewerScreen(disk->app), NULL, _("Exec Error"),
             s, _("OK"), NULL, NULL);
     }
@@ -442,7 +442,7 @@ void FSUnmountCB(Disk* disk, int item, Time time)
     if (!noerror) {
         char s[0xff];
 
-        sprintf(s, "Unable to unmount \"%s\"", disk->name);
+        snprintf(s, sizeof(s), "Unable to unmount \"%s\"", disk->name);
         WMRunAlertPanel(FSGetFSViewerScreen(disk->app), NULL, _("Exec Error"),
             s, _("OK"), NULL, NULL);
     }
@@ -471,7 +471,7 @@ void FSEjectCB(Disk* disk, int item, Time time)
     if (!noerror) {
         char s[0xff];
 
-        sprintf(s, "Unable to eject \"%s\"", disk->name);
+        snprintf(s, sizeof(s), "Unable to eject \"%s\"", disk->name);
         WMRunAlertPanel(FSGetFSViewerScreen(disk->app), NULL, _("Exec Error"),
             s, _("OK"), NULL, NULL);
     }
@@ -500,7 +500,7 @@ void FSCloseDiskCB(Disk* disk, int item, Time time)
     if (!noerror) {
         char s[0xff];
 
-        sprintf(s, "Unable to close \"%s\"", disk->name);
+        snprintf(s, sizeof(s), "Unable to close \"%s\"", disk->name);
         WMRunAlertPanel(FSGetFSViewerScreen(disk->app), NULL, _("Exec Error"),
             s, _("OK"), NULL, NULL);
     }
@@ -542,7 +542,7 @@ void FSProcessCB(FSViewer* fsViewer, int item, Time time)
     fileInfo = FSCreateFileInfo();
 
     fileInfo->name = (char*)wmalloc(8);
-    strcpy(fileInfo->name, "PROCESS");
+    strlcpy(fileInfo->name, "PROCESS", 8);
 
     pathInfo = fsGetFSViewerCurrentFileInfo(fsViewer);
 
@@ -594,9 +594,10 @@ void FSDuplicateCB(FSViewer* fsViewer, int item, Time time)
     src = fsGetFSViewerCurrentFileInfo(fsViewer);
     FSCopyFileInfo(src, dest);
 
-    dest->name = (char*)wrealloc(dest->name, strlen(src->name) + 7);
-    strcpy(dest->name, "copyof");
-    strcat(dest->name, src->name);
+    size_t destNameSize = strlen(src->name) + 7;
+    dest->name = (char*)wrealloc(dest->name, destNameSize);
+    strlcpy(dest->name, "copyof", destNameSize);
+    strlcat(dest->name, src->name, destNameSize);
 
     if (isDirectory(src->fileType)) {
         char* new = NULL;
@@ -606,7 +607,7 @@ void FSDuplicateCB(FSViewer* fsViewer, int item, Time time)
         if (new && FSCreateNewDirectory(new, umask & 0777)) {
             char s[0xff];
 
-            sprintf(s, _("Error creating folder %s"), new);
+            snprintf(s, sizeof(s), _("Error creating folder %s"), new);
             FSErrorDialog(_("File Operation Error"), s);
         }
         if (new)
@@ -633,14 +634,16 @@ void FSCompressCB(FSViewer* fsViewer, int item, Time time)
 
         src = fsGetFSViewerCurrentFileInfo(fsViewer);
         pathname = GetPathnameFromPathName(src->path, src->name);
-        targz = (char*)wmalloc(strlen(src->name) + strlen(extn) + 1);
+        size_t targzSize = strlen(src->name) + strlen(extn) + 1;
+        targz = (char*)wmalloc(targzSize);
 
-        strcpy(targz, src->name);
-        strcat(targz, extn);
+        strlcpy(targz, src->name, targzSize);
+        strlcat(targz, extn, targzSize);
 
-        execStr = (char*)wmalloc(strlen(cmd) + strlen(src->name) + strlen(targz) + 1);
+        size_t execStrSize = strlen(cmd) + strlen(src->name) + strlen(targz) + 1;
+        execStr = (char*)wmalloc(execStrSize);
 
-        sprintf(execStr, cmd, targz, src->name);
+        snprintf(execStr, execStrSize, cmd, targz, src->name);
 
         if (execStr) {
             error = FSExecCommand(src->path, execStr);
@@ -654,7 +657,7 @@ void FSCompressCB(FSViewer* fsViewer, int item, Time time)
     if (error) {
         char s[0xff];
 
-        sprintf(s, _("Unable to compress selection."));
+        snprintf(s, sizeof(s), _("Unable to compress selection."));
         WMRunAlertPanel(FSGetFSViewerScreen(fsViewer), NULL, _("Exec Error"),
             s, _("OK"), NULL, NULL);
     }

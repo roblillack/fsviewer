@@ -58,10 +58,11 @@ FSEnableInspectorPanels(FSInspector* fsInspector)
 
     st = (struct stat*)wmalloc(sizeof(struct stat));
 
-    pathname = (char*)wmalloc(strlen(fsInspector->fileInfo->path) + strlen(fsInspector->fileInfo->name) + 1);
-    strcpy(pathname, fsInspector->fileInfo->path);
+    size_t pathname_size = strlen(fsInspector->fileInfo->path) + strlen(fsInspector->fileInfo->name) + 1;
+    pathname = (char*)wmalloc(pathname_size);
+    strlcpy(pathname, fsInspector->fileInfo->path, pathname_size);
     if (fsInspector->fileInfo->fileType != ROOT)
-        strcat(pathname, fsInspector->fileInfo->name);
+        strlcat(pathname, fsInspector->fileInfo->name, pathname_size);
 
     /* get  information of a file represented by pathname */
     if (stat(pathname, st) == -1)
@@ -114,8 +115,9 @@ FSUpdateInspectorFileInfoDisplay(FSInspector* fsInspector)
     pixmap = FSCreateBlendedPixmapFromFile(WMWidgetScreen(fsInspector->win), fsInspector->fileInfo->imgName, NULL);
     WMSetLabelImage(fsInspector->nameLabel, pixmap);
 
-    buf = (char*)wmalloc(strlen(_("Path: ")) + strlen(fsInspector->fileInfo->path) + 1);
-    sprintf(buf, _("Path: %s"), fsInspector->fileInfo->path);
+    size_t buf_size = strlen(_("Path: ")) + strlen(fsInspector->fileInfo->path) + 1;
+    buf = (char*)wmalloc(buf_size);
+    snprintf(buf, buf_size, _("Path: %s"), fsInspector->fileInfo->path);
     WMSetLabelText(fsInspector->pathLabel, buf);
 
     if (buf)
@@ -125,25 +127,30 @@ FSUpdateInspectorFileInfoDisplay(FSInspector* fsInspector)
 static void
 FSCopyInspectorFileInfo(FileInfo* fileInfo)
 {
+    size_t name_size = strlen(fileInfo->name) + 1;
     fsInspector->fileInfo->name = (char*)wrealloc(fsInspector->fileInfo->name,
-        strlen(fileInfo->name) + 1);
-    strcpy(fsInspector->fileInfo->name, fileInfo->name);
+        name_size);
+    strlcpy(fsInspector->fileInfo->name, fileInfo->name, name_size);
 
+    size_t path_size = strlen(fileInfo->path) + 1;
     fsInspector->fileInfo->path = (char*)wrealloc(fsInspector->fileInfo->path,
-        strlen(fileInfo->path) + 1);
-    strcpy(fsInspector->fileInfo->path, fileInfo->path);
+        path_size);
+    strlcpy(fsInspector->fileInfo->path, fileInfo->path, path_size);
 
+    size_t extn_size = strlen(fileInfo->extn) + 1;
     fsInspector->fileInfo->extn = (char*)wrealloc(fsInspector->fileInfo->extn,
-        strlen(fileInfo->extn) + 1);
-    strcpy(fsInspector->fileInfo->extn, fileInfo->extn);
+        extn_size);
+    strlcpy(fsInspector->fileInfo->extn, fileInfo->extn, extn_size);
 
+    size_t abbrev_size = strlen(fileInfo->abbrev) + 1;
     fsInspector->fileInfo->abbrev = (char*)wrealloc(fsInspector->fileInfo->abbrev,
-        strlen(fileInfo->abbrev) + 1);
-    strcpy(fsInspector->fileInfo->abbrev, fileInfo->abbrev);
+        abbrev_size);
+    strlcpy(fsInspector->fileInfo->abbrev, fileInfo->abbrev, abbrev_size);
 
+    size_t imgName_size = strlen(fileInfo->imgName) + 1;
     fsInspector->fileInfo->imgName = (char*)wrealloc(fsInspector->fileInfo->imgName,
-        strlen(fileInfo->imgName) + 1);
-    strcpy(fsInspector->fileInfo->imgName, fileInfo->imgName);
+        imgName_size);
+    strlcpy(fsInspector->fileInfo->imgName, fileInfo->imgName, imgName_size);
 
     fsInspector->fileInfo->fileType = fileInfo->fileType;
 }

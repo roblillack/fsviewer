@@ -714,7 +714,7 @@ static void populateVarsTab(FSPreferencesPanel* prefs)
     if (item) {
         char buf[10];
 
-        sprintf(buf, "%d", FSGetIntegerForName("ColumnWidth"));
+        snprintf(buf, sizeof(buf), "%d", FSGetIntegerForName("ColumnWidth"));
         item->clientData = wstrdup(buf);
     }
 
@@ -735,7 +735,7 @@ static void populateVarsTab(FSPreferencesPanel* prefs)
     if (item) {
         char buf[10];
 
-        sprintf(buf, "%d", FSGetIntegerForName("SortDisplay"));
+        snprintf(buf, sizeof(buf), "%d", FSGetIntegerForName("SortDisplay"));
         item->clientData = wstrdup(buf);
     }
 
@@ -743,7 +743,7 @@ static void populateVarsTab(FSPreferencesPanel* prefs)
     if (item) {
         char buf[10];
 
-        sprintf(buf, "%d", FSGetIntegerForName("SortOrder"));
+        snprintf(buf, sizeof(buf), "%d", FSGetIntegerForName("SortOrder"));
         item->clientData = wstrdup(buf);
     }
 
@@ -751,7 +751,7 @@ static void populateVarsTab(FSPreferencesPanel* prefs)
     if (item) {
         char buf[10];
 
-        sprintf(buf, "%d", FSGetIntegerForName("DisplaySVBG"));
+        snprintf(buf, sizeof(buf), "%d", FSGetIntegerForName("DisplaySVBG"));
         item->clientData = wstrdup(buf);
     }
 
@@ -759,7 +759,7 @@ static void populateVarsTab(FSPreferencesPanel* prefs)
     if (item) {
         char buf[10];
 
-        sprintf(buf, "%d", FSGetIntegerForName("DisplayMCListPixmap"));
+        snprintf(buf, sizeof(buf), "%d", FSGetIntegerForName("DisplayMCListPixmap"));
         item->clientData = wstrdup(buf);
     }
     WMSortListItems(prefs->imgList);

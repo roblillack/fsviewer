@@ -250,8 +250,9 @@ InitExecutable(WMWindow* win, FileInfo* fileInfo)
     panel = wmalloc(sizeof(_Panel));
     memset(panel, 0, sizeof(_Panel));
 
-    panel->sectionName = (char*)wmalloc(strlen(_("Executable Inspector")) + 1);
-    strcpy(panel->sectionName, _("Executable Inspector"));
+    size_t sectionNameSize = strlen(_("Executable Inspector")) + 1;
+    panel->sectionName = (char*)wmalloc(sectionNameSize);
+    strlcpy(panel->sectionName, _("Executable Inspector"), sectionNameSize);
 
     panel->win = win;
 

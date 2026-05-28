@@ -177,10 +177,11 @@ showData(_Panel* panel)
 
     st = (struct stat*)wmalloc(sizeof(struct stat));
 
-    pathname = (char*)wmalloc(strlen(panel->fileInfo->path) + strlen(panel->fileInfo->name) + 1);
-    strcpy(pathname, panel->fileInfo->path);
+    size_t pathnameSize = strlen(panel->fileInfo->path) + strlen(panel->fileInfo->name) + 1;
+    pathname = (char*)wmalloc(pathnameSize);
+    strlcpy(pathname, panel->fileInfo->path, pathnameSize);
     if (panel->fileInfo->fileType != ROOT)
-        strcat(pathname, panel->fileInfo->name);
+        strlcat(pathname, panel->fileInfo->name, pathnameSize);
 
     /* get  information of a file represented by pathname */
     /* lstat shows the link information (was: stat)*/
@@ -208,13 +209,13 @@ showData(_Panel* panel)
     if (st->st_size >= 10240) { /* 10240 Bytes -> 10.0 KB */
         if (st->st_size > (1024 * 1024)) {
             double fsize = st->st_size / (1024.0 * 1024.0);
-            sprintf(buf, _("%'.1lf MB\n"), fsize);
+            snprintf(buf, sizeof(buf), _("%'.1lf MB\n"), fsize);
         } else {
             double fsize = st->st_size / 1024.0;
-            sprintf(buf, _("%'.1lf KB\n"), fsize);
+            snprintf(buf, sizeof(buf), _("%'.1lf KB\n"), fsize);
         }
     } else
-        sprintf(buf, _("%d Bytes\n"), (int)st->st_size);
+        snprintf(buf, sizeof(buf), _("%d Bytes\n"), (int)st->st_size);
     WMSetLabelText(panel->sizeLabel, buf);
     /* } */
 
@@ -258,11 +259,12 @@ storeData(_Panel* panel)
     int seterror;
 
     st = (struct stat*)wmalloc(sizeof(struct stat));
-    pathname = (char*)wmalloc(strlen(panel->fileInfo->path) + strlen(panel->fileInfo->name) + 1);
+    size_t pathnameSize = strlen(panel->fileInfo->path) + strlen(panel->fileInfo->name) + 1;
+    pathname = (char*)wmalloc(pathnameSize);
 
-    strcpy(pathname, panel->fileInfo->path);
+    strlcpy(pathname, panel->fileInfo->path, pathnameSize);
     if (panel->fileInfo->fileType != ROOT)
-        strcat(pathname, panel->fileInfo->name);
+        strlcat(pathname, panel->fileInfo->name, pathnameSize);
     permissions = 0;
 
     /* User Permission */
@@ -563,8 +565,9 @@ InitAttribs(WMWindow* win, FileInfo* fileInfo)
     panel = wmalloc(sizeof(_Panel));
     memset(panel, 0, sizeof(_Panel));
 
-    panel->sectionName = (char*)wmalloc(strlen(_("Attributes Inspector")) + 1);
-    strcpy(panel->sectionName, _("Attributes Inspector"));
+    size_t sectionNameSize = strlen(_("Attributes Inspector")) + 1;
+    panel->sectionName = (char*)wmalloc(sectionNameSize);
+    strlcpy(panel->sectionName, _("Attributes Inspector"), sectionNameSize);
 
     panel->win = win;
 

@@ -1402,13 +1402,14 @@ FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
     else
         txtAllocated = 1;
 
-    selIcon->xpmDir = (char*)wmalloc(strlen(txt) + 5);
-    strcpy(selIcon->xpmDir, txt);
-    strcat(selIcon->xpmDir, "/xpm");
+    size_t iconDirSize = strlen(txt) + 5;
+    selIcon->xpmDir = (char*)wmalloc(iconDirSize);
+    strlcpy(selIcon->xpmDir, txt, iconDirSize);
+    strlcat(selIcon->xpmDir, "/xpm", iconDirSize);
 
-    selIcon->pngDir = (char*)wmalloc(strlen(txt) + 5);
-    strcpy(selIcon->pngDir, txt);
-    strcat(selIcon->pngDir, "/png");
+    selIcon->pngDir = (char*)wmalloc(iconDirSize);
+    strlcpy(selIcon->pngDir, txt, iconDirSize);
+    strlcat(selIcon->pngDir, "/png", iconDirSize);
 
     if (txtAllocated)
         free(txt);
@@ -1573,9 +1574,10 @@ fillIconFileList(WMWidget* self, void* data)
     WMSetLabelImage(panel->iconLabel, NULL);
 
     listItem = WMGetListSelectedItem(panel->pathList);
-    pathname = (char*)wmalloc(strlen(listItem->text) + 2);
-    strcpy(pathname, listItem->text);
-    strcat(pathname, "/");
+    size_t pathnameSize = strlen(listItem->text) + 2;
+    pathname = (char*)wmalloc(pathnameSize);
+    strlcpy(pathname, listItem->text, pathnameSize);
+    strlcat(pathname, "/", pathnameSize);
 
     fileList = GetDirList(pathname);
     while (fileList != NULL) {
