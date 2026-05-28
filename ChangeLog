@@ -1,10 +1,19 @@
-## NEXT
+## FSViewer 0.3.0 (2026-05-28)
 
-- Fix secondary windows to being resizable. ([#15](https://github.com/roblillack/fsviewer/pull/15))
+- Add XDND drag-and-drop support. ([#2](https://github.com/roblillack/fsviewer/pull/2))
+- Add support for PNG icons. ([#19](https://github.com/roblillack/fsviewer/pull/19))
+- Fix secondary windows to be resizable. ([#15](https://github.com/roblillack/fsviewer/pull/15))
+- Fix crash while resizing the file view.
 - Fix showing correct free disk space with SI prefixes. ([#17](https://github.com/roblillack/fsviewer/pull/17))
 - Fix alpha channel blending for icons everywhere. ([#18](https://github.com/roblillack/fsviewer/pull/18))
-- Fix crash when when directory contains Umlaut entries on macOS ([#21](https://github.com/roblillack/fsviewer/pull/21))
-- Add support for PNG icons ([#19](https://github.com/roblillack/fsviewer/pull/19))
+- Fix crash when directory contains Umlaut entries on macOS, also when clicking such entries on the shelf. ([#21](https://github.com/roblillack/fsviewer/pull/21))
+- Fix transparent background of default folder icon.
+- Fix reading uninitialized data in Browser/PathView when setting up window.
+- Fix OpenBSD linker advisories. ([#24](https://github.com/roblillack/fsviewer/pull/24))
+- Fix compiler warnings. ([#23](https://github.com/roblillack/fsviewer/pull/23))
+- Install manpage as part of `make install`.
+- Remove the obsolete `chdef` tool.
+- Add CI pipeline to build code and check formatting. ([#22](https://github.com/roblillack/fsviewer/pull/22))
 
 ## FSViewer 0.2.7 (2024-06-22)
 
