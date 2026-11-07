@@ -132,6 +132,7 @@ void PerformDragOperation(WMView* self, WMArray* dropData, WMArray* operations, 
                 if (FSAddFileViewShelfItemIntoProplist(fView, fileInfo)) {
                     FSAddFileViewShelfItem(fView, fileInfo);
                 }
+                FSFreeFileInfo(fileInfo);
             }
             wfree(d);
         }
@@ -216,6 +217,9 @@ void FSRunPendingDropOperations(void)
                 FSMove(src, dest);
             }
         }
+
+        FSFreeFileInfo(src);
+        FSFreeFileInfo(dest);
 
         wfree(op->srcPath);
         wfree(op->destPath);
