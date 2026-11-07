@@ -246,6 +246,11 @@ formatFileInfo(WMScreen* scr, FileInfo* fileInfo)
     strlcat(text, group, text_size);
     /*     strcat(text, sep); */
 
+    free(img);
+    free(name);
+    free(owner);
+    free(group);
+
     return text;
 }
 
