@@ -475,6 +475,11 @@ void FSLaunchApp(FSViewer* fsViewer, AppEvent event)
     GetFileInfo(path, name, fileInfo);
 
     LaunchApp(fsViewer, fileInfo, event);
+
+    FSFreeFileInfo(fileInfo);
+    free(pathname);
+    free(path);
+    free(name);
 }
 
 void LaunchApp(FSViewer* fsViewer, FileInfo* fileInfo, AppEvent event)

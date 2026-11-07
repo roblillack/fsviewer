@@ -552,7 +552,12 @@ char* FSGetFileViewPath(FSFileView* fileView)
 FileInfo*
 FSGetFileViewFileInfo(FSFileView* fileView)
 {
-    return FSGetFileInfo(FSGetFileViewPath(fileView));
+    char* path = FSGetFileViewPath(fileView);
+    FileInfo* fileInfo = FSGetFileInfo(path);
+
+    free(path);
+
+    return fileInfo;
 }
 
 void FSUpdateFileViewPath(FSFileView* fileView, FileAction action,

@@ -81,6 +81,7 @@ void FSInspectorCB(FSViewer* fsViewer, int item, Time time)
 
     fileInfo = fsGetFSViewerCurrentFileInfo(fsViewer);
     FSShowInspectorWindow(FSGetFSViewerScreen(fsViewer), fileInfo);
+    FSFreeFileInfo(fileInfo);
 }
 
 void FSBrowseCB(FSViewer* fsViewer, int item, Time time)
@@ -139,6 +140,7 @@ void FSCopyCB(FSViewer* fsViewer, int item, Time time)
     FileInfo* fileInfo;
 
     fileInfo = fsGetFSViewerCurrentFileInfo(fsViewer);
+    FSFreeFileInfo(FSGetFSViewerClip(fsViewer));
     FSSetFSViewerClip(fsViewer, fileInfo);
     FSSetFSViewerClipAction(fsViewer, ClipCopy);
 }
@@ -148,6 +150,7 @@ void FSCutCB(FSViewer* fsViewer, int item, Time time)
     FileInfo* fileInfo;
 
     fileInfo = fsGetFSViewerCurrentFileInfo(fsViewer);
+    FSFreeFileInfo(FSGetFSViewerClip(fsViewer));
     FSSetFSViewerClip(fsViewer, fileInfo);
     FSSetFSViewerClipAction(fsViewer, ClipCut);
 }
@@ -158,12 +161,14 @@ void FSPasteCB(FSViewer* fsViewer, int item, Time time)
     FileInfo* dest = NULL;
     FileInfo* src = NULL;
 
-    dest = fsGetFSViewerCurrentFileInfo(fsViewer);
     src = FSGetFSViewerClip(fsViewer);
 
     if (src == NULL)
         return;
 
+    /* the clip is used up, take it before any dialog can show up */
+    FSSetFSViewerClip(fsViewer, NULL);
+    dest = fsGetFSViewerCurrentFileInfo(fsViewer);
     clipAction = FSGetFSViewerClipAction(fsViewer);
 
     if (clipAction == ClipCopy)
@@ -171,7 +176,8 @@ void FSPasteCB(FSViewer* fsViewer, int item, Time time)
     else if (clipAction == ClipCut)
         FSMove(src, dest);
 
-    FSSetFSViewerClip(fsViewer, NULL);
+    FSFreeFileInfo(src);
+    FSFreeFileInfo(dest);
 }
 
 void FSLinkCB(FSViewer* fsViewer, int item, Time time)
@@ -197,6 +203,8 @@ void FSLinkCB(FSViewer* fsViewer, int item, Time time)
         free(new);
     if (old != NULL)
         free(old);
+    FSFreeFileInfo(src);
+    FSFreeFileInfo(dest);
 }
 
 void FSRenameCB(FSViewer* fsViewer, int item, Time time)
@@ -222,6 +230,8 @@ void FSRenameCB(FSViewer* fsViewer, int item, Time time)
         free(new);
     if (old != NULL)
         free(old);
+    FSFreeFileInfo(src);
+    FSFreeFileInfo(dest);
 }
 
 void FSDeleteCB(FSViewer* fsViewer, int item, Time time)
@@ -231,12 +241,14 @@ void FSDeleteCB(FSViewer* fsViewer, int item, Time time)
     fileInfo = fsGetFSViewerCurrentFileInfo(fsViewer);
 
     FSDelete(fileInfo);
+    FSFreeFileInfo(fileInfo);
 }
 
 void FSNewFileCB(FSViewer* fsViewer, int item, Time time)
 {
     char* new = NULL;
     char* initPath = NULL;
+    char* initDir = NULL;
     FileInfo* fileInfo;
     mode_t umask = FSGetUMask();
 
@@ -247,12 +259,13 @@ void FSNewFileCB(FSViewer* fsViewer, int item, Time time)
     } else {
         initPath = wstrdup(fileInfo->path);
     }
+    FSFreeFileInfo(fileInfo);
+    initDir = GetPathnameFromPathName(initPath, "");
 
     new = WMRunInputPanel(FSGetFSViewerScreen(fsViewer), NULL,
         _("Create a new file"),
         _("New File: Enter the new file name"),
-        GetPathnameFromPathName(initPath, ""),
-        _("OK"), _("Cancel"));
+        initDir, _("OK"), _("Cancel"));
 
     if (new) {
         if (FSCreateNewFile(new, umask & 0777)) {
@@ -276,12 +289,14 @@ void FSNewFileCB(FSViewer* fsViewer, int item, Time time)
         free(new);
     if (initPath)
         free(initPath);
+    free(initDir);
 }
 
 void FSNewDirCB(FSViewer* fsViewer, int item, Time time)
 {
     char* new = NULL;
     char* initPath = NULL;
+    char* initDir = NULL;
     FileInfo* fileInfo;
     mode_t umask = FSGetUMask();
 
@@ -292,12 +307,13 @@ void FSNewDirCB(FSViewer* fsViewer, int item, Time time)
     } else {
         initPath = wstrdup(fileInfo->path);
     }
+    FSFreeFileInfo(fileInfo);
+    initDir = GetPathnameFromPathName(initPath, "");
 
     new = WMRunInputPanel(FSGetFSViewerScreen(fsViewer), NULL,
         _("Create a new directory"),
         _("New Dir: Enter the new directory name"),
-        GetPathnameFromPathName(initPath, ""),
-        _("OK"), _("Cancel"));
+        initDir, _("OK"), _("Cancel"));
 
     if (new) {
         if (FSCreateNewDirectory(new, umask & 0777)) {
@@ -323,6 +339,7 @@ void FSNewDirCB(FSViewer* fsViewer, int item, Time time)
         free(new);
     if (initPath)
         free(initPath);
+    free(initDir);
 }
 
 void FSConsoleCB(FSViewer* fsViewer, int item, Time time)
@@ -366,8 +383,10 @@ void FSFilterViewCB(FSViewer* fsViewer, int item, Time time)
              FSGetFileViewWindow(fView),
              title, prompt, init, _("OK"), _("Cancel")))
         != NULL) {
-        if (strcmp("", filter) == 0)
+        if (strcmp("", filter) == 0) {
+            free(filter);
             filter = NULL;
+        }
 
         FSSetFileViewFilter(fView, filter);
 
@@ -615,6 +634,9 @@ void FSDuplicateCB(FSViewer* fsViewer, int item, Time time)
     }
 
     FSCopy(src, dest);
+
+    FSFreeFileInfo(src);
+    FSFreeFileInfo(dest);
 }
 
 void FSCompressCB(FSViewer* fsViewer, int item, Time time)
@@ -629,11 +651,9 @@ void FSCompressCB(FSViewer* fsViewer, int item, Time time)
     if (cmd) {
         char* targz = NULL;
         char* execStr = NULL;
-        char* pathname = NULL;
         FileInfo* src = NULL;
 
         src = fsGetFSViewerCurrentFileInfo(fsViewer);
-        pathname = GetPathnameFromPathName(src->path, src->name);
         size_t targzSize = strlen(src->name) + strlen(extn) + 1;
         targz = (char*)wmalloc(targzSize);
 
@@ -650,7 +670,9 @@ void FSCompressCB(FSViewer* fsViewer, int item, Time time)
             free(execStr);
         } else
             error = 1;
+        free(targz);
         free(cmd);
+        FSFreeFileInfo(src);
     } else
         error = 1;
 
