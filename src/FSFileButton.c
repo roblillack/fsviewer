@@ -51,7 +51,10 @@ typedef struct W_FSFileButton {
     int groupIndex;
 
     WMHandlerID timer;
-    WMHandlerID paintTimer;
+
+    /* Icon images cached for iconName: [0] normal, [1] selected background */
+    WMPixmap* icon[2];
+    char* iconName;
 
     unsigned int width;
     unsigned int height;
@@ -73,14 +76,12 @@ static void handleActionEvents(XEvent* event, void* data);
 static void paintFSFileButton(_FSFileButton* bPtr);
 static void destroyFSFileButton(_FSFileButton* bPtr);
 /* static void resizeFSFileButton(WMWidget*, unsigned int, unsigned int); */
-static void paintImageAndText(W_View* view, int x, int y,
-    int width, int height,
-    char* imgName, char* text, WMColor* back);
+static void paintImageAndText(_FSFileButton* bPtr, Drawable d, Bool selected);
 static void radioPushObserver(void* observerData, WMNotification* notification);
 static void showTextView(FSFileButton* bPtr);
 static W_View* createTextView(W_Screen* scr, char* text, int width, int len);
 static void destroyTextView(FSFileButton* bPtr);
-static void disablePaintTimer(FSFileButton* bPtr);
+static void releaseIcons(_FSFileButton* bPtr);
 
 static void willResizeFSFileButton(W_ViewDelegate*, WMView*,
     unsigned int*, unsigned int*);
@@ -240,56 +241,48 @@ willResizeFSFileButton(W_ViewDelegate* self, WMView* view,
 static void
 paintFSFileButton(_FSFileButton* bPtr)
 {
-    if (!bPtr->view->flags.mapped)
-        return;
+    W_Screen* scr = bPtr->view->screen;
+    Pixmap buf;
 
-    if (bPtr->flags.cleared) {
-        paintImageAndText(bPtr->view, 0, 0, bPtr->width, bPtr->height,
-            NULL, NULL, bPtr->view->screen->white);
-        return;
-    }
-    if (bPtr->paintTimer)
+    if (!bPtr->view->flags.mapped || !bPtr->width || !bPtr->height)
         return;
 
     /*
-     * add a timer such that on a double click the button doesn't flash
-     * It makes it more pleasing to the eye, IMO. I don't what kind of
-     * over head it adds. I will make the delay customiseable.
-     * To make it work properly, it needs to be greater than the double
-     * click timeout.
+     * Paint into an off-screen pixmap and copy it over in one go, so the
+     * button never shows up blank or half drawn.
      */
-    if (bPtr->flags.selected) {
-        bPtr->paintTimer = WMAddTimerHandler(500,
-            (WMCallback*)disablePaintTimer,
-            bPtr);
-    }
-    /*
-     * If selected , draw the image and text with a white shaped
-     * background else draw with no background
-     */
-    if (bPtr->flags.selected || bPtr->flags.extSelected)
-        paintImageAndText(bPtr->view, 0, 0, bPtr->width, bPtr->height,
-            bPtr->fileInfo->imgName, bPtr->fileInfo->name,
-            bPtr->view->screen->white);
-    else
-        paintImageAndText(bPtr->view, 0, 0, bPtr->width, bPtr->height,
-            bPtr->fileInfo->imgName, bPtr->fileInfo->name,
-            NULL);
+    buf = XCreatePixmap(scr->display, bPtr->view->window,
+        bPtr->width, bPtr->height, scr->depth);
 
-    if (isDirectory(bPtr->fileInfo->fileType) && bPtr->flags.isBranch) {
-        W_Screen* scr = bPtr->view->screen;
-        Drawable d = bPtr->view->window;
+    XSetForeground(scr->display, scr->copyGC,
+        bPtr->view->attribs.background_pixel);
+    XFillRectangle(scr->display, buf, scr->copyGC,
+        0, 0, bPtr->width, bPtr->height);
 
-        XDrawLine(scr->display, d, WMColorGC(scr->darkGray),
-            bPtr->width - 11, ((bPtr->height - 8) / 2),
-            bPtr->width - 6, bPtr->height / 2);
-        XDrawLine(scr->display, d, WMColorGC(scr->white),
-            bPtr->width - 11, ((bPtr->height + 8) / 2),
-            bPtr->width - 6, bPtr->height / 2);
-        XDrawLine(scr->display, d, WMColorGC(scr->black),
-            bPtr->width - 12, (bPtr->height - 8) / 2,
-            bPtr->width - 12, (bPtr->height + 8) / 2);
+    if (!bPtr->flags.cleared && bPtr->fileInfo) {
+        /*
+         * If selected, draw the image and text with a white shaped
+         * background else draw with no background
+         */
+        paintImageAndText(bPtr, buf,
+            bPtr->flags.selected || bPtr->flags.extSelected);
+
+        if (isDirectory(bPtr->fileInfo->fileType) && bPtr->flags.isBranch) {
+            XDrawLine(scr->display, buf, WMColorGC(scr->darkGray),
+                bPtr->width - 11, ((bPtr->height - 8) / 2),
+                bPtr->width - 6, bPtr->height / 2);
+            XDrawLine(scr->display, buf, WMColorGC(scr->white),
+                bPtr->width - 11, ((bPtr->height + 8) / 2),
+                bPtr->width - 6, bPtr->height / 2);
+            XDrawLine(scr->display, buf, WMColorGC(scr->black),
+                bPtr->width - 12, (bPtr->height - 8) / 2,
+                bPtr->width - 12, (bPtr->height + 8) / 2);
+        }
     }
+
+    XCopyArea(scr->display, buf, bPtr->view->window, scr->copyGC,
+        0, 0, bPtr->width, bPtr->height, 0, 0);
+    XFreePixmap(scr->display, buf);
 }
 
 static void
@@ -302,7 +295,7 @@ destroyFSFileButton(_FSFileButton* bPtr)
     if (bPtr->pathname)
         free(bPtr->pathname);
     destroyTextView(bPtr);
-    disablePaintTimer(bPtr);
+    releaseIcons(bPtr);
 
     free(bPtr);
 }
@@ -314,7 +307,9 @@ handleEvents(XEvent* event, void* data)
 
     switch (event->type) {
     case Expose:
-        paintFSFileButton(bPtr);
+        /* the whole button is repainted, so wait for the last event */
+        if (event->xexpose.count == 0)
+            paintFSFileButton(bPtr);
         break;
 
     case DestroyNotify:
@@ -444,32 +439,53 @@ static void roundedRect(Display* dpy, Drawable d, GC backGC, int x, int y, int w
 }
 
 static void
-paintImageAndText(W_View* view, int x, int y, int width, int height,
-    char* imgName, char* text, WMColor* back)
+releaseIcons(_FSFileButton* bPtr)
+{
+    for (int i = 0; i < 2; i++) {
+        if (bPtr->icon[i]) {
+            WMReleasePixmap(bPtr->icon[i]);
+            bPtr->icon[i] = NULL;
+        }
+    }
+    if (bPtr->iconName) {
+        wfree(bPtr->iconName);
+        bPtr->iconName = NULL;
+    }
+}
+
+/*
+ * Returns the button's icon blended onto the normal or selected background.
+ * Loading and blending the image file is expensive, so the result is cached.
+ */
+static WMPixmap*
+getIcon(_FSFileButton* bPtr, Bool selected)
+{
+    char* imgName = bPtr->fileInfo->imgName;
+
+    if (!bPtr->iconName || strcmp(bPtr->iconName, imgName) != 0) {
+        releaseIcons(bPtr);
+        bPtr->iconName = wstrdup(imgName);
+    }
+    if (!bPtr->icon[selected]) {
+        bPtr->icon[selected] = FSCreateBlendedPixmapFromFile(bPtr->view->screen,
+            imgName, selected ? bPtr->view->screen->white : NULL);
+    }
+    return bPtr->icon[selected];
+}
+
+static void
+paintImageAndText(_FSFileButton* bPtr, Drawable d, Bool selected)
 {
     int strwidth = 1;
-    RColor color;
     WMFont* aFont;
     WMPixmap* image;
+    W_View* view = bPtr->view;
     W_Screen* screen = view->screen;
-    Drawable d = view->window;
+    int width = bPtr->width;
+    int height = bPtr->height;
+    char* text = bPtr->fileInfo->name;
 
-    if (back) {
-        color = WMGetRColorFromColor(back);
-    } else {
-        WMColor* gray = WMGrayColor(screen);
-        color = WMGetRColorFromColor(gray);
-        WMReleaseColor(gray);
-    }
-
-    /*
-     * Clear the area we are painting on
-     */
-    XSetForeground(screen->display, screen->copyGC,
-        view->attribs.background_pixel);
-    XFillRectangle(screen->display, d, screen->copyGC, x, y, width, height);
-
-    if (imgName == NULL)
+    if (bPtr->fileInfo->imgName == NULL)
         return;
 
     if (text) {
@@ -478,31 +494,27 @@ paintImageAndText(W_View* view, int x, int y, int width, int height,
         WMReleaseFont(aFont);
     }
 
-    // W_DrawRelief(screen, d, x, y, width, height, RRaisedBevel);
-
     /* background */
-    if (back) {
-        // image = FSCreatePixmapWithBackingFromFile(screen, imgName, &color);
-        roundedRect(screen->display, d, WMColorGC(back),
-            x + (width - BUTTON_WIDTH) / 2, y + (height - BUTTON_HEIGHT - LABEL_HEIGHT) / 2,
+    if (selected) {
+        roundedRect(screen->display, d, WMColorGC(screen->white),
+            (width - BUTTON_WIDTH) / 2, (height - BUTTON_HEIGHT - LABEL_HEIGHT) / 2,
             BUTTON_WIDTH, BUTTON_HEIGHT);
         /* text background rectangle */
         if (text)
-            XFillRectangle(screen->display, d, WMColorGC(back),
-                x + (width - strwidth) / 2, y + (height - BUTTON_HEIGHT - LABEL_HEIGHT) / 2 + BUTTON_HEIGHT,
+            XFillRectangle(screen->display, d, WMColorGC(screen->white),
+                (width - strwidth) / 2, (height - BUTTON_HEIGHT - LABEL_HEIGHT) / 2 + BUTTON_HEIGHT,
                 strwidth, LABEL_HEIGHT);
     }
 
-    image = FSCreateBlendedPixmapFromFile(screen, imgName, back);
+    image = getIcon(bPtr, selected ? 1 : 0);
 
     if (image) {
-        WMDrawPixmap(image, d, x + (width - image->width) / 2, y + (height - image->height) / 2 - LABEL_HEIGHT / 2);
-        WMReleasePixmap(image);
+        WMDrawPixmap(image, d, (width - image->width) / 2, (height - image->height) / 2 - LABEL_HEIGHT / 2);
     }
 
     if (text) {
-        W_PaintText(view, d, screen->normalFont, x + (width - strwidth) / 2, y + (height - BUTTON_HEIGHT - LABEL_HEIGHT) / 2 + BUTTON_HEIGHT,
-            strwidth, WACenter, WMBlackColor(screen),
+        W_PaintText(view, d, screen->normalFont, (width - strwidth) / 2, (height - BUTTON_HEIGHT - LABEL_HEIGHT) / 2 + BUTTON_HEIGHT,
+            strwidth, WACenter, screen->black,
             True, text, strlen(text));
     }
 }
@@ -692,16 +704,6 @@ destroyTextView(FSFileButton* bPtr)
     if (bPtr->timer) {
         WMDeleteTimerHandler(bPtr->timer);
         bPtr->timer = NULL;
-    }
-}
-
-static void
-disablePaintTimer(FSFileButton* bPtr)
-{
-    if (bPtr->paintTimer) {
-        WMDeleteTimerHandler(bPtr->paintTimer);
-        bPtr->paintTimer = NULL;
-        paintFSFileButton(bPtr);
     }
 }
 
