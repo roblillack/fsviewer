@@ -769,7 +769,14 @@ copydir(ino_t* inodes, int n_inodes, struct stat* oldstats,
     if ((mkdir(newpath, umask & 0777) < 0 && errno != EEXIST) || lstat(newpath, &newstats) || !(dir = opendir(oldpath)))
         return -1;
 
-    inodes = (ino_t*)wrealloc(inodes, (n_inodes + 1) * sizeof(ino_t));
+    /*
+     * Copy the inode stack instead of growing the caller's array in place:
+     * reallocating it here would leave the caller with a dangling pointer.
+     */
+    ino_t* parentInodes = inodes;
+    inodes = (ino_t*)wmalloc((n_inodes + 1) * sizeof(ino_t));
+    if (n_inodes > 0)
+        memcpy(inodes, parentInodes, n_inodes * sizeof(ino_t));
     inodes[n_inodes++] = newstats.st_ino;
 
     for (i = 0; (entry = readdir(dir)); i++)
@@ -796,7 +803,7 @@ copydir(ino_t* inodes, int n_inodes, struct stat* oldstats,
             }
         }
 
-    inodes = (ino_t*)wrealloc(inodes, (n_inodes - 1) * sizeof(ino_t));
+    wfree(inodes);
     return closedir(dir);
 }
 
