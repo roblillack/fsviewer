@@ -484,21 +484,15 @@ Bool FSSetFileBrowserPath(FileBrowser* bPtr, char* path)
 char* FSGetFileBrowserPath(FileBrowser* bPtr)
 {
     int len;
-    char* path = NULL;
     char* npath = NULL;
 
     switch (bPtr->currentMode) {
     case BROWSE:
-        path = FSGetBrowserPath(bPtr->browser);
-        len = strlen(path);
-        npath = (char*)wmalloc(len);
-        if (len > 1) {
-            strncpy(npath, path, len - 1);
+        /* strip the trailing slash, but keep "/" for the root folder */
+        npath = FSGetBrowserPath(bPtr->browser);
+        len = strlen(npath);
+        if (len > 1 && npath[len - 1] == '/')
             npath[len - 1] = '\0';
-        } else
-            strlcpy(npath, path, len);
-        if (path)
-            free(path);
         break;
     case ICON:
         npath = NULL;

@@ -447,9 +447,10 @@ char* GetNameFromPathname(char* pathname)
     char* str;
 
     str = strrchr(pathname, '/');
-    str++;
+    if (str == NULL)
+        return wstrdup(pathname);
 
-    return wstrdup(str);
+    return wstrdup(str + 1);
 }
 
 char* GetPathFromPathname(char* pathname)
