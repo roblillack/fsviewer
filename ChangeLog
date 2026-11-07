@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Fix endless dialog loop when dropping a file onto its own folder. ([#25](https://github.com/roblillack/fsviewer/issues/25))
+- Fix icons flickering and leaving blank traces while dragging. ([#25](https://github.com/roblillack/fsviewer/issues/25))
 
 ## FSViewer 0.3.0 (2026-05-28)
 

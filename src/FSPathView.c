@@ -829,9 +829,14 @@ void FSSetPathViewColumnContents(FSPathView* pvPtr, int column,
         FSSetFileButtonSelected(pvPtr->columns[column - 1], 0);
 
         FSFileButton* btn = pvPtr->columns[column];
-        FileInfo* fileInfo = FSGetFileInfo(FSGetFileButtonPathname(btn));
+        FileInfo* fileInfo = FSGetFileButtonFileInfo(btn);
         WMPixmap* dragImg = FSCreateBlurredPixmapFromFile(WMWidgetScreen(btn), fileInfo->imgName);
-        WMSetViewDraggable(W_VIEW(btn), PathViewDragSourceProcs(), dragImg);
+        if (W_VIEW(btn)->dragSourceProcs) {
+            /* already draggable, just replace (and release) the old image */
+            WMSetViewDragImage(W_VIEW(btn), dragImg);
+        } else {
+            WMSetViewDraggable(W_VIEW(btn), PathViewDragSourceProcs(), dragImg);
+        }
         WMReleasePixmap(dragImg);
     }
 }
