@@ -213,6 +213,36 @@ notificationObserver(void* self, WMNotification* notif)
     }
 }
 
+/* Return a newly allocated copy of str wrapped in single quotes for /bin/sh */
+static char*
+shellQuote(const char* str)
+{
+    size_t len = 3;
+    const char* p;
+    char* quoted;
+    char* q;
+
+    for (p = str; *p; p++)
+        len += (*p == '\'') ? 4 : 1;
+
+    quoted = (char*)wmalloc(len);
+    q = quoted;
+    *q++ = '\'';
+    for (p = str; *p; p++) {
+        if (*p == '\'') {
+            /* close quote, escaped quote, reopen quote */
+            *q++ = '\'';
+            *q++ = '\\';
+            *q++ = '\'';
+        }
+        *q++ = *p;
+    }
+    *q++ = '\'';
+    *q = '\0';
+
+    return quoted;
+}
+
 static void
 populateList(FSFinder* finder)
 {
@@ -220,40 +250,52 @@ populateList(FSFinder* finder)
     char buffer[1024];
     FILE* f = NULL;
     char* str;
+    char* qstr;
     char* cmd;
 
     str = WMGetTextFieldText(finder->searchField);
 
-    if (!str || (strlen(str) == 0))
+    if (!str || (strlen(str) == 0)) {
+        if (str)
+            wfree(str);
         return;
+    }
+
+    qstr = shellQuote(str);
+    wfree(str);
 
     /*
      * It seems a bit weird that the first button should be 1
      * and the second should be 0, maybe it's LIFO
      */
     if (WMGetButtonSelected(finder->findRadioBtns[0]) == 1) {
-        size_t cmdLen = strlen(str) + 10;
-        cmd = (char*)wmalloc(cmdLen);
-        snprintf(cmd, cmdLen, "locate \"%s\"", str);
+        cmd = wstrconcat("locate -- ", qstr);
     } else {
         char* path;
+        char* qpath;
         size_t cmdLen;
 
         path = FSGetFSViewerPath(finder->fsViewer);
-        cmdLen = strlen(str) + strlen(path) + 24;
+        qpath = shellQuote(path);
+        wfree(path);
+
+        cmdLen = strlen(qpath) + strlen(qstr) + 24;
         cmd = (char*)wmalloc(cmdLen);
-
-        snprintf(cmd, cmdLen, "find \"%s\" -name \"%s\" -print", path, str);
+        snprintf(cmd, cmdLen, "find %s -name %s -print", qpath, qstr);
+        wfree(qpath);
     }
+    wfree(qstr);
 
-    if ((f = popen(cmd, "r")) == NULL)
+    f = popen(cmd, "r");
+    wfree(cmd);
+    if (f == NULL)
         return;
 
     WMClearList(finder->list);
     while (fgets(buffer, 1024, f)) {
         len = strlen(buffer);
         /* Need to fix this!! */
-        if (buffer[len - 1] == '\n')
+        if (len > 0 && buffer[len - 1] == '\n')
             buffer[len - 1] = '\0';
         WMAddListItem(finder->list, buffer);
     }
