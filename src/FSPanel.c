@@ -915,6 +915,7 @@ buttonClick(WMWidget* self, void* data)
         FSCloseAppInputPanel(self, appInput);
     } else if ((WMButton*)self == appInput->iconBtn) {
         char* tmp = NULL;
+        char* extn = NULL;
         /*
           Could lead to a core dump if the button is
           pressed again.
@@ -926,8 +927,9 @@ buttonClick(WMWidget* self, void* data)
 
         /* 	GetFileInfo(appInput->fileInfo->path, appInput->fileInfo->name, tmp); */
 
-        tmp = FSRunSelectIconPanel(appInput->win, _("Icon Select"),
-            GetFileExtn(appInput->fileInfo->name));
+        extn = GetFileExtn(appInput->fileInfo->name);
+        tmp = FSRunSelectIconPanel(appInput->win, _("Icon Select"), extn);
+        free(extn);
         if (tmp == NULL)
             return;
 
@@ -1131,8 +1133,10 @@ endedEditingObserver(void* observerData, WMNotification* notification)
         char* txt = WMGetTextFieldText(appInput->nameField);
         if (strcmp("", txt)) {
             char* execStr = NULL;
+            char* extn = GetFileExtn(txt);
 
-            execStr = GetExecStringForExtn(GetFileExtn(txt));
+            execStr = GetExecStringForExtn(extn);
+            free(extn);
             if (execStr) {
                 WMSetTextFieldText(appInput->execField, execStr);
                 free(execStr);

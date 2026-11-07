@@ -224,6 +224,7 @@ void GetFileInfo(char* path, char* name, FileInfo* fileInfo)
     char* pathname;
     char* fileName;
     char* dirPath;
+    char* extn;
 
     st = (struct stat*)wmalloc(sizeof(struct stat));
 
@@ -264,13 +265,17 @@ void GetFileInfo(char* path, char* name, FileInfo* fileInfo)
     fileInfo->name = fileName;
     fileInfo->path = dirPath;
 
-    if (fileInfo->fileType == ROOT)
-        fileInfo->extn = wstrdup("ROOT");
-    else
-        fileInfo->extn = wstrdup(GetFileExtn(fileInfo->name));
+    extn = GetFileExtn(fileName);
 
-    fileInfo->imgName = GetFileImgName(GetFileExtn(fileName),
-        fileInfo->fileType);
+    free(fileInfo->imgName);
+    fileInfo->imgName = GetFileImgName(extn, fileInfo->fileType);
+
+    if (fileInfo->fileType == ROOT) {
+        fileInfo->extn = wstrdup("ROOT");
+        free(extn);
+    } else
+        fileInfo->extn = extn;
+
     fileInfo->abbrev = GetFileAbbrev(fileName);
 
     fileInfo->st = st;
@@ -313,13 +318,7 @@ char* GetFileExtn(char* filename)
 
     extn = strrchr(filename, '.');
 
-    if (extn == NULL) {
-        /* 	extn = (char *) wmalloc(strlen(filename)+1); */
-        /* 	strcpy(extn, filename); */
-        extn = wstrdup(filename);
-    }
-
-    return extn;
+    return wstrdup(extn ? extn : filename);
 }
 
 char* GetFileExtnOrNull(char* filename)

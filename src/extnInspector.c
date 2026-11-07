@@ -64,7 +64,7 @@ showData(_Panel* panel)
         extn = (char*)wmalloc(5);
         strlcpy(extn, "ROOT", 5);
     } else
-        extn = wstrdup(GetFileExtn(panel->fileInfo->name));
+        extn = GetFileExtn(panel->fileInfo->name);
 
     dict = WMGetFromPLDictionary(filesDB, WMCreatePLString(extn));
     if (dict && WMIsPLDictionary(dict)) {
@@ -133,7 +133,7 @@ storeData(_Panel* panel)
         extn = (char*)wmalloc(5);
         strlcpy(extn, "ROOT", 5);
     } else
-        extn = wstrdup(GetFileExtn(panel->fileInfo->name));
+        extn = GetFileExtn(panel->fileInfo->name);
     dictKey = WMCreatePLString(extn);
 
     dict = WMGetFromPLDictionary(filesDB, dictKey);
