@@ -140,7 +140,7 @@ char* FSGetStringForNameKey(char* name, char* key)
     WMPropList* val = NULL;
     WMPropList* dict = NULL;
 
-    dict = FSGetUDObjectForKey(defaultsDB, name);
+    dict = WMGetUDObjectForKey(defaultsDB, name);
     val = FSGetDBObjectForKey(dict, key);
 
     if (!val)
