@@ -1238,13 +1238,12 @@ void FSRename(FileInfo* src, FileInfo* dest)
 void FSLink(FileInfo* src, FileInfo* dest)
 {
     struct stat stats;
-    int i, toi, n_linked = 0;
+    int n_linked = 0;
     char* from = NULL;
     char* to = NULL;
 
     from = GetPathnameFromPathName(src->path, src->name);
     to = GetPathnameFromPathName(dest->path, dest->name);
-    size_t to_size = strlen(dest->path) + strlen(dest->name) + 2;
 
     /*
        if target exists and is a directory,
@@ -1261,17 +1260,20 @@ void FSLink(FileInfo* src, FileInfo* dest)
             return;
         }
 
-        toi = strlen(to);
-        if (to[toi - 1] != '/') {
-            to[toi++] = '/';
-            to[toi] = '\0';
-        }
+        char* dir = to;
+        size_t dirLen = strlen(dir);
+        size_t toSize = dirLen + strlen(src->name) + 2;
 
         /*
           Should do a loop here that goes through each element
           of the FileInfo list, checks and copies it
         */
-        strlcpy(to + toi, src->name, to_size - toi);
+        to = (char*)wmalloc(toSize);
+        strlcpy(to, dir, toSize);
+        if (dirLen == 0 || dir[dirLen - 1] != '/')
+            strlcat(to, "/", toSize);
+        strlcat(to, src->name, toSize);
+        free(dir);
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
             snprintf(s, sizeof(s), _("Link: file %s already exists at destination"),
