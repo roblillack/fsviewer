@@ -19,6 +19,9 @@
 #define DEFAULT_SEPARATOR "/"
 #define LISTITEM_HEIGHT 20
 
+/* Number of fields in a row created by formatFileInfo() */
+#define MCLIST_FIELDS 7
+
 typedef struct _FSMCList {
 
     WMFrame* parent;
@@ -406,21 +409,61 @@ createTruncatedString(WMFont* font, char* text, int* textLen, int width)
     return textBuf;
 }
 
+/*
+ * Split a row created by formatFileInfo() into its fields, in place.
+ * Fields are separated by "||". The file name (field 1) is the only field
+ * that may itself contain '|', so field 0 is split off from the left and
+ * the remaining fields from the right.
+ */
+static int
+splitRow(char* str, char** items)
+{
+    char* fields[MCLIST_FIELDS - 2];
+    char* name;
+    char* p;
+    int n = 0;
+    int i;
+
+    p = strstr(str, "||");
+    if (!p) {
+        items[0] = str;
+        return 1;
+    }
+    *p = '\0';
+    items[0] = str;
+    name = p + 2;
+
+    p = name + strlen(name);
+    while (n < MCLIST_FIELDS - 2) {
+        p -= 2;
+        while (p >= name && !(p[0] == '|' && p[1] == '|'))
+            p--;
+        if (p < name)
+            break;
+        *p = '\0';
+        fields[n++] = p + 2;
+    }
+
+    items[1] = name;
+    for (i = 0; i < n; i++)
+        items[2 + i] = fields[n - 1 - i];
+
+    return 2 + n;
+}
+
 static void
 paintItem(WMList* lPtr, int index, Drawable d,
     char* text, int state, WMRect* rect)
 {
     int i = 0;
     int j = 0;
-    int k = 0;
     int img = 1;
     int fontHeight = 14;
-    char tmp[512];
-    char* items[7];
+    char* items[MCLIST_FIELDS];
     char* str = NULL;
     WMView* view = W_VIEW(lPtr);
     W_Screen* scr = view->screen;
-    int width, height, x, y, len;
+    int width, height, x, y;
     WMListItem* item = WMGetListItem(lPtr, index);
 
     width = rect->size.width;
@@ -437,28 +480,8 @@ paintItem(WMList* lPtr, int index, Drawable d,
         WMPaintColorSwatch(WMGetWidgetBackgroundColor(lPtr), d, x, y,
             width, height);
 
-    if (item->clientData) {
-        str = wstrdup(item->clientData);
-        len = strlen(str);
-    } else {
-        str = NULL;
-        len = 0;
-    }
-
-    /* simple parse of the clientdata */
-    for (i = 0; i < len; i++) {
-        if (/*  str[i-1] != '=' &&  */ str[i] != '|') {
-            tmp[k] = str[i];
-            k++;
-        } else {
-            tmp[k] = '\0';
-            i += 1;
-            k = 0;
-            items[j++] = wstrdup(tmp);
-        }
-    }
-    tmp[k] = '\0';
-    items[j++] = wstrdup(tmp);
+    str = wstrdup(item->clientData ? (char*)item->clientData : "");
+    j = splitRow(str, items);
 
     /* iterate through items and draw each one */
     for (i = 0; i < j; i++) {
@@ -531,8 +554,6 @@ paintItem(WMList* lPtr, int index, Drawable d,
                 strlen(items[i]));
             x += 82;
         }
-        free(items[i]);
-        items[i] = NULL;
     }
     free(str);
 }
