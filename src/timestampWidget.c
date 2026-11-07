@@ -436,6 +436,13 @@ static void destroyTimeStamp(TimeStamp* timestamp)
     Display* dpy = timestamp->view->screen->display;
 
     DEBUG_PRINT("Inside destroyTimeStamp()");
+    if (timestamp->image) {
+        /* This also frees asvisible's pixmap and mask, which it wraps. */
+        WMReleasePixmap(timestamp->image);
+        timestamp->asvisible.pixmap = None;
+        timestamp->asvisible.mask = None;
+    }
+
     if (timestamp->asclock.pixmap != (Pixmap)None) {
         XFreePixmap(dpy, timestamp->asclock.pixmap);
         DEBUG_PRINT("Released asclock.pixmap");
@@ -571,8 +578,12 @@ static void paintTimeStamp(TimeStamp* timestamp)
         /* Yes - So re-create it now. */
         RenderASClock(timestamp);
 
-        /* Now turn new image into a WMPixmap ready for us to paint. */
-        if (!(timestamp->image = WMCreatePixmapFromXPixmaps(scr,
+        /*
+         * Now turn new image into a WMPixmap ready for us to paint.
+         * It wraps the X pixmaps we render into, so it only needs to
+         * be created once.
+         */
+        if (!timestamp->image && !(timestamp->image = WMCreatePixmapFromXPixmaps(scr,
                   timestamp->result->pixmap,
                   timestamp->result->mask,
                   TIMESTAMP_MIN_WIDTH,
