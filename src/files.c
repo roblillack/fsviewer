@@ -1282,6 +1282,16 @@ void FSLink(FileInfo* src, FileInfo* dest)
             strlcat(to, "/", toSize);
         strlcat(to, src->name, toSize);
         free(dir);
+        if (isSameFile(from, to)) {
+            /* Overwriting would delete the source itself. */
+            FSErrorDialog(_("File Operation Error"),
+                _("Link: Source and destination are identical"));
+            if (from)
+                free(from);
+            if (to)
+                free(to);
+            return;
+        }
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
             snprintf(s, sizeof(s), _("Link: file %s already exists at destination"),
@@ -1293,6 +1303,8 @@ void FSLink(FileInfo* src, FileInfo* dest)
                     free(to);
                 return;
             }
+            /* Make room for the link; symlink() reports any failure. */
+            unlink(to);
         }
 
         if (symlink(from, to)) {
@@ -1311,9 +1323,7 @@ void FSLink(FileInfo* src, FileInfo* dest)
 
     /*     } */
     else {
-        struct stat stats1;
-
-        if (!lstat(to, &stats) && !lstat(from, &stats1) && stats.st_ino == stats1.st_ino) {
+        if (isSameFile(from, to)) {
             FSErrorDialog(_("File Operation Error"),
                 _("Link: Source and destination are identical"));
             if (from)
@@ -1333,6 +1343,8 @@ void FSLink(FileInfo* src, FileInfo* dest)
                     free(to);
                 return;
             }
+            /* Make room for the link; symlink() reports any failure. */
+            unlink(to);
         }
 
         if (symlink(from, to)) {
