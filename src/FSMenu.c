@@ -341,7 +341,7 @@ void FSConsoleCB(FSViewer* fsViewer, int item, Time time)
         fileInfo->path = GetPathnameFromPathName(pathInfo->path,
             pathInfo->name);
     } else {
-        fileInfo->path = pathInfo->path;
+        fileInfo->path = wstrdup(pathInfo->path);
     }
 
     LaunchApp(fsViewer, fileInfo, AppExec);
@@ -550,7 +550,7 @@ void FSProcessCB(FSViewer* fsViewer, int item, Time time)
         fileInfo->path = GetPathnameFromPathName(pathInfo->path,
             pathInfo->name);
     } else {
-        fileInfo->path = pathInfo->path;
+        fileInfo->path = wstrdup(pathInfo->path);
     }
 
     LaunchApp(fsViewer, fileInfo, AppExec);
