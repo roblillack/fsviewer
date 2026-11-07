@@ -182,6 +182,10 @@ void FSSetStringForNameKey(char* name, char* dictKey, char* str)
         dict = WMCreatePLDictionary(key, val, NULL);
 
     WMSetUDObjectForKey(defaultsDB, dict, name);
+
+    WMReleasePropList(dict);
+    WMReleasePropList(key);
+    WMReleasePropList(val);
 }
 
 WMPropList*

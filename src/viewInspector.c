@@ -69,10 +69,15 @@ showData(_Panel* panel)
         int numElem, i;
 
         numElem = WMGetPropListItemCount(array);
-        for (i = 0; i < numElem; i++)
-            WMAddListItem(panel->appList,
-                WMGetPropListDescription(WMGetFromPLArray(array, i), False));
+        for (i = 0; i < numElem; i++) {
+            char* desc = WMGetPropListDescription(WMGetFromPLArray(array, i), False);
+
+            WMAddListItem(panel->appList, desc);
+            free(desc);
+        }
     }
+    if (array)
+        WMReleasePropList(array);
     WMSortListItems(panel->appList);
 
     displayDefault(panel);
@@ -90,8 +95,14 @@ storeData(_Panel* panel)
 
         FSSetStringForNameKey(panel->fileInfo->extn, "viewer", exec);
         array = FSGetUDObjectForKey(defaultsDB, "EXTN");
-        if (array && WMIsPLArray(array))
-            InsertArrayElement(array, WMCreatePLString(panel->fileInfo->extn));
+        if (array && WMIsPLArray(array)) {
+            WMPropList* extn = WMCreatePLString(panel->fileInfo->extn);
+
+            InsertArrayElement(array, extn);
+            WMReleasePropList(extn);
+        }
+        if (array)
+            WMReleasePropList(array);
         free(exec);
     }
 }
