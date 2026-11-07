@@ -17,6 +17,7 @@
 #include "FSMenu.h"
 #include "FSUtils.h"
 #include "FSViewer.h"
+#include "dnd.h"
 #include "filebrowser.h"
 #include "windowmanager.h"
 #include "xpm/FSViewer.xpm"
@@ -505,5 +506,7 @@ int main(int argc, char** argv)
             // printf("arrgggg!\n");
             break;
         }
+
+        FSRunPendingDropOperations();
     }
 }

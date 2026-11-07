@@ -8,5 +8,6 @@ WMDragDestinationProcs* FolderDragDestinationProcs();
 WMArray* SupportedDataTypes();
 WMDragSourceProcs* FileViewDragSourceProcs();
 WMDragSourceProcs* PathViewDragSourceProcs();
+void FSRunPendingDropOperations(void);
 
 #endif

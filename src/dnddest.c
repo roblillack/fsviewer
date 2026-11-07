@@ -182,23 +182,47 @@ typedef struct DeferredFileOp {
     char* destPath;
 } DeferredFileOp;
 
-static void runDeferredFileOp(void* clientData)
-{
-    DeferredFileOp* op = (DeferredFileOp*)clientData;
-    FileInfo* src = FSGetFileInfo(op->srcPath);
-    FileInfo* dest = FSGetFileInfo(op->destPath);
+/*
+ * File operations triggered by a drop can pop up modal dialogs (e.g.
+ * "Overwrite?"). They must not run inside the XDND handling, nor inside a
+ * WINGs idle or timer handler: WINGs only removes an idle handler after its
+ * callback returns, so the dialog's modal loop would invoke the same handler
+ * again, recursing endlessly and flooding the screen with dialogs.
+ * Instead, drops are queued here and run from the application's main loop
+ * via FSRunPendingDropOperations().
+ */
+static WMArray* pendingFileOps = NULL;
 
-    if (src && dest) {
-        if (op->copy) {
-            FSCopy(src, dest);
-        } else {
-            FSMove(src, dest);
+void FSRunPendingDropOperations(void)
+{
+    static Bool running = False;
+
+    if (running || !pendingFileOps) {
+        return;
+    }
+    running = True;
+
+    while (WMGetArrayItemCount(pendingFileOps) > 0) {
+        DeferredFileOp* op = WMGetFromArray(pendingFileOps, 0);
+        WMDeleteFromArray(pendingFileOps, 0);
+
+        FileInfo* src = FSGetFileInfo(op->srcPath);
+        FileInfo* dest = FSGetFileInfo(op->destPath);
+
+        if (src && dest) {
+            if (op->copy) {
+                FSCopy(src, dest);
+            } else {
+                FSMove(src, dest);
+            }
         }
+
+        wfree(op->srcPath);
+        wfree(op->destPath);
+        wfree(op);
     }
 
-    wfree(op->srcPath);
-    wfree(op->destPath);
-    wfree(op);
+    running = False;
 }
 
 void FolderPerformDragOperation(WMView* self, WMArray* dropData,
@@ -225,7 +249,10 @@ void FolderPerformDragOperation(WMView* self, WMArray* dropData,
             op->copy = copy;
             op->srcPath = wstrdup(path);
             op->destPath = wstrdup(destPath);
-            WMAddIdleHandler(runDeferredFileOp, op);
+            if (!pendingFileOps) {
+                pendingFileOps = WMCreateArray(4);
+            }
+            WMAddToArray(pendingFileOps, op);
         }
         wfree(path);
     }

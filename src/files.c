@@ -891,6 +891,15 @@ int FSRDel(char* path)
         return unlink(path);
 }
 
+/* True if both paths refer to the same file (symlinks are not followed). */
+static Bool isSameFile(const char* a, const char* b)
+{
+    struct stat sa, sb;
+
+    return !lstat(a, &sa) && !lstat(b, &sb)
+        && sa.st_dev == sb.st_dev && sa.st_ino == sb.st_ino;
+}
+
 void FSCopy(FileInfo* src, FileInfo* dest)
 {
     struct stat stats;
@@ -935,6 +944,13 @@ void FSCopy(FileInfo* src, FileInfo* dest)
           of the FileInfo list, checks and copies it
         */
         strlcpy(to + toi, src->name, sizeof(to) - toi);
+        if (isSameFile(from, to)) {
+            FSErrorDialog(_("File Operation Error"),
+                _("Copy: Source and destination are identical"));
+            if (from)
+                free(from);
+            return;
+        }
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
             snprintf(s, sizeof(s), _("Copy: file %s already exists at destination"),
@@ -1093,6 +1109,12 @@ void FSMove(FileInfo* src, FileInfo* dest)
           of the FileInfo list, checks and moves it
         */
         strlcpy(to + toi, src->name, sizeof(to) - toi);
+        if (isSameFile(from, to)) {
+            /* Already in that folder: nothing to do. */
+            if (from)
+                free(from);
+            return;
+        }
         if (FSFileExists(to) /* && resources.confirm_overwrite */) {
             char s[0xff];
             snprintf(s, sizeof(s), _("Move: file %s already exists at destination"),
@@ -1100,16 +1122,14 @@ void FSMove(FileInfo* src, FileInfo* dest)
             if (FSConfirmationDialog(_("Overwrite?"), s)) {
                 if (from)
                     free(from);
+                return;
             }
-            return;
         }
 
         if (rename(from, to)) {
             char s[0xff];
-            snprintf(s, sizeof(s), _("Error copying %s:"), from);
+            snprintf(s, sizeof(s), _("Error renaming %s:"), from);
             FSErrorDialog(_("File Operation Error"), s);
-            if (from)
-                free(from);
         } else
             n_moved++;
     }
