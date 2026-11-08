@@ -637,7 +637,7 @@ void FSLoadIconPaths(WMList* list)
     if (WindowMakerDB) {
         if (!WMIsPLDictionary(WindowMakerDB)) {
             WMReleasePropList(WindowMakerDB);
-            pathList = NULL;
+            WindowMakerDB = NULL;
             snprintf(mbuf, MAX_LEN, _("Window Maker domain (%s) is corrupted!"),
                 path);
             WMRunAlertPanel(WMWidgetScreen(list), NULL, _("Error"),
@@ -650,12 +650,18 @@ void FSLoadIconPaths(WMList* list)
             mbuf, _("OK"), NULL, NULL);
     }
 
-    pathList = WMGetFromPLDictionary(WindowMakerDB, WMCreatePLString("IconPath"));
-    if (pathList && WMIsPLArray(pathList)) {
-        for (i = 0; i < WMGetPropListItemCount(pathList); i++) {
-            val = WMGetFromPLArray(pathList, i);
-            WMAddListItem(list, WMGetFromPLString(val));
+    if (WindowMakerDB) {
+        WMPropList* key = WMCreatePLString("IconPath");
+
+        pathList = WMGetFromPLDictionary(WindowMakerDB, key);
+        if (pathList && WMIsPLArray(pathList)) {
+            for (i = 0; i < WMGetPropListItemCount(pathList); i++) {
+                val = WMGetFromPLArray(pathList, i);
+                WMAddListItem(list, WMGetFromPLString(val));
+            }
         }
+        WMReleasePropList(key);
+        WMReleasePropList(WindowMakerDB);
     }
 
     if (path)
