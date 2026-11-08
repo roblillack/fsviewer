@@ -109,7 +109,6 @@ static int GetXPM(TimeStamp* timestamp);
 static void destroyTimeStamp(TimeStamp* timestamp);
 static void handleEvents(XEvent* event, void* data);
 static void paintTimeStamp(TimeStamp* timestamp);
-static void setBackgroundColor(WMWidget* widget, WMColor* color);
 /* static void resizeTimeStamp(WMWidget *widget, unsigned int width, unsigned int height); */
 static void ASTwelve(TimeStamp* timestamp, struct tm* clk);
 static void ASTwentyFour(TimeStamp* timestamp, struct tm* clk);
@@ -615,29 +614,6 @@ static void paintTimeStamp(TimeStamp* timestamp)
 
     /* Reset 'damaged' flag back to 0. */
     timestamp->flags.damaged = 0;
-}
-
-/***********************************************************************
-Name:		setBackgroundColor
-Purpose:        Sets the background colour of the widget.
-Inputs:		widget - A pointer to the TimeStamp.
-                color  - The new colour.
-Outputs:	None.
-Returns:	Nothing.
-Status:		Finished.
-Errors: 	None known.
-***********************************************************************/
-static void setBackgroundColor(WMWidget* widget, WMColor* color)
-{
-    TimeStamp* timestamp = (TimeStamp*)widget;
-
-    WMSetColorInGC(color, timestamp->gc);
-
-    W_SetViewBackgroundColor(timestamp->view, color);
-
-    if (timestamp->view->flags.realized) {
-        paintTimeStamp(timestamp);
-    }
 }
 
 /***********************************************************************

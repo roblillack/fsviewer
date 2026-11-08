@@ -88,10 +88,6 @@ static void scrollToColumn(FSPathView* pvPtr, int column,
     Bool updateScroller);
 static void loadColumn(FSPathView* pvPtr, int column);
 static void removeColumn(FSPathView* pvPtr, int column);
-static void handlePVButtonDrop(XEvent* ev, void* clientData);
-static void handlePVButtonDrag(XEvent* ev, void* clientData);
-static char* createTruncatedString(WMFont* font, char* text, int* textLen,
-    int width);
 /* static void resizeFSPathView(WMWidget*, unsigned int, unsigned int); */
 static void willResizeFSPathView(W_ViewDelegate*, WMView*,
     unsigned int*, unsigned int*);
@@ -742,36 +738,6 @@ destroyPathView(FSPathView* pvPtr)
     /*     WMRemoveNotificationObserver(pvPtr); */
 
     free(pvPtr);
-}
-
-static char*
-createTruncatedString(WMFont* font, char* text, int* textLen, int width)
-{
-    int dLen = WMWidthOfString(font, ".", 1);
-    size_t textBufSize = (*textLen) + 4;
-    char* textBuf = (char*)wmalloc(textBufSize);
-
-    if (width >= 3 * dLen) {
-        int dddLen = 3 * dLen;
-        int tmpTextLen = *textLen;
-
-        strlcpy(textBuf, text, textBufSize);
-        while (tmpTextLen
-            && (WMWidthOfString(font, textBuf, tmpTextLen) + dddLen > width))
-            tmpTextLen--;
-        strlcpy(textBuf + tmpTextLen, "...", textBufSize - tmpTextLen);
-        *textLen = tmpTextLen + 3;
-    } else if (width >= 2 * dLen) {
-        strlcpy(textBuf, "..", textBufSize);
-        *textLen = 2;
-    } else if (width >= dLen) {
-        strlcpy(textBuf, ".", textBufSize);
-        *textLen = 1;
-    } else {
-        *textBuf = '\0';
-        *textLen = 0;
-    }
-    return textBuf;
 }
 
 void FSSetPathViewToColumn(FSPathView* pvPtr, int column)

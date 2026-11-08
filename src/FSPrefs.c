@@ -48,7 +48,6 @@ static void createDiskTab(FSPreferencesPanel* prefs);
 static void createTypesTab(FSPreferencesPanel* prefs);
 static void genericListClick(WMWidget* self, void* data);
 static void genericButtonActionHandler(WMWidget* self, void* clientData);
-static void setVarsImage(WMWidget* self, void* data);
 static void populateVarsTab(FSPreferencesPanel* prefs);
 static void populateTypesTab(FSPreferencesPanel* prefs);
 static void populateDisksTab(FSPreferencesPanel* prefs);
@@ -1415,10 +1414,6 @@ static void genericButtonActionHandler(WMWidget* self, void* clientData)
         WMSetButtonEnabled(prefs->applyBtn, True);
         WMSetButtonEnabled(prefs->okBtn, True);
     }
-}
-
-static void setVarsImage(WMWidget* self, void* data)
-{
 }
 
 static void FSClosePreferencesPanel(WMWidget* self, void* client)

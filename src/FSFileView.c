@@ -54,13 +54,6 @@ static FSFileIcon* FSFindFileIconWithFileInfo(FSFileView* fView,
     FileInfo* fileInfo);
 
 static void
-splitViewConstrainCallback(WMSplitView* sPtr, int divIndex, int* min, int* max)
-{
-    *min = 1;
-    *max = WMWidgetHeight(sPtr) - FRAME_PAD_Y - MIN_UPPER_HEIGHT;
-}
-
-static void
 handleScrollViewDoubleClick(WMWidget* self, void* clientData)
 {
     char* pathname;

@@ -405,30 +405,6 @@ createButtons(Panel* panel)
 }
 
 static void
-createSView(Panel* panel)
-{
-    /* creates a scrollable view inside the top-level window */
-    panel->sview = WMCreateScrollView(panel->frame);
-    WMResizeWidget(panel->sview, 180, 140);
-    WMMoveWidget(panel->sview, 8, 0);
-    WMSetScrollViewRelief(panel->sview, WRSunken);
-    WMSetScrollViewHasVerticalScroller(panel->sview, True);
-    WMSetScrollViewHasHorizontalScroller(panel->sview, False);
-
-    /* create a frame with a bunch of labels */
-    panel->sviewF = WMCreateFrame(panel->frame);
-    WMResizeWidget(panel->sviewF, 165, 200);
-    WMSetFrameRelief(panel->sviewF, WRFlat);
-
-    panel->sviewV = WMWidgetView(panel->sviewF);
-    WMSetScrollViewContentView(panel->sview, panel->sviewV);
-
-    panel->sviewS = WMGetScrollViewVerticalScroller(panel->sview);
-    /*     WMSetScrollerAction(panel->sviewS, scrollCallback, panel); */
-    WMSetScrollViewLineScroll(panel->sview, LABEL_HEIGHT);
-}
-
-static void
 createExtnList(Panel* panel)
 {
     panel->extnList = WMCreateList(panel->frame);

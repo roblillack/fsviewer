@@ -42,9 +42,6 @@ static void FSCloseAppInputPanel(WMWidget*, void*);
 static void FSDestroyAppInputPanel(FSAppInputPanel*);
 static void buttonClick(WMWidget* self, void* data);
 static char* FSStoreAppInputData(FSAppInputPanel* appInput);
-static void FSStoreAppInputPropListData(FSAppInputPanel* appInput);
-static void endedEditingObserver(void* observerData,
-    WMNotification* notification);
 static FSAlertPanel* FSCreateAlertPanel(FSViewer* app,
     char* title, char* msg,
     char* defaultButton,
@@ -1118,34 +1115,6 @@ FSStoreAppInputData(FSAppInputPanel* appInput)
 /*     if(txt) */
 /* 	free(txt); */
 /* } */
-
-static void
-endedEditingObserver(void* observerData, WMNotification* notification)
-{
-    FSAppInputPanel* appInput = (FSAppInputPanel*)observerData;
-    WMTextField* tPtr = (WMTextField*)WMGetNotificationObject(notification);
-
-    if ((int)(intptr_t)WMGetNotificationClientData(notification) == WMReturnTextMovement
-        && tPtr == appInput->nameField) {
-        char* txt = WMGetTextFieldText(appInput->nameField);
-        if (strcmp("", txt)) {
-            char* execStr = NULL;
-            char* extn = GetFileExtn(txt);
-
-            execStr = GetExecStringForExtn(extn);
-            free(extn);
-            if (execStr) {
-                WMSetTextFieldText(appInput->execField, execStr);
-                free(execStr);
-                execStr = NULL;
-            } else {
-                WMSetTextFieldText(appInput->execField, txt);
-                WMInsertTextFieldText(appInput->execField, " %s", -1);
-            }
-            free(txt);
-        }
-    }
-}
 
 static void
 alertPanelOnClick(WMWidget* self, void* clientData)
