@@ -10,8 +10,6 @@
 #include "dnd.h"
 #include "files.h"
 
-#include "xpm/arrow.xpm"
-
 /* typedef struct PVIcon */
 /* { */
 /*     FSFileButton *btn; */
@@ -515,7 +513,6 @@ loadColumn(FSPathView* pvPtr, int column)
 static void
 paintPathView(FSPathView* pvPtr)
 {
-    int i;
 
     if (!pvPtr->view->flags.mapped)
         return;
@@ -605,7 +602,6 @@ btnCallback(void* self, void* clientData)
 {
     FSPathView* pvPtr = (FSPathView*)clientData;
     FSFileButton* bPtr = (FSFileButton*)self;
-    static FSFileButton* oldBtn = NULL;
     int i;
 
     for (i = 0; i < pvPtr->columnCount; i++) {

@@ -141,7 +141,6 @@ FileBrowser*
 FSCreateFileBrowser(WMWidget* parent)
 {
     FileBrowser* bPtr;
-    int i;
 
     bPtr = wmalloc(sizeof(FileBrowser));
     memset(bPtr, 0, sizeof(FileBrowser));
@@ -288,10 +287,8 @@ static void
 handleItemSelection(WMWidget* self, void* clientData)
 {
     int col;
-    char* path;
     FileBrowser* bPtr = (FileBrowser*)clientData;
     static int lastCol = 0;
-    WMListItem* item = NULL;
     FileInfo* fileInfo = NULL;
 
     col = FSGetFileBrowserColumnCount(bPtr);
@@ -447,7 +444,7 @@ setupListMode(FileBrowser* bPtr, int x, int y, int width, int height)
 Bool FSSetFileBrowserPath(FileBrowser* bPtr, char* path)
 {
     Bool ok = True;
-    int i, col;
+    int col;
 
     switch (bPtr->currentMode) {
     case BROWSE:
@@ -537,7 +534,6 @@ destroyFileBrowser(FileBrowser* bPtr)
 
 char* FSGetFileBrowserPathToColumn(FileBrowser* bPtr, int column)
 {
-    int len;
     char* path = NULL;
 
     switch (bPtr->currentMode) {

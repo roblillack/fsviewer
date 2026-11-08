@@ -215,7 +215,6 @@ static void
 listClick(WMWidget* self, void* clientData)
 {
     WMListItem* item;
-    WMPixmap* pixmap;
     WMList* lPtr = (WMList*)self;
     Panel* panel = (Panel*)clientData;
 
@@ -311,7 +310,6 @@ buttonClick(WMWidget* self, void* data)
 static void
 createInfoLabel(Panel* panel)
 {
-    WMLabel* l;
 
     //    l = WMCreateLabel(panel->frame);
     //    WMResizeWidget(l, WIDTH-20, LABEL_HEIGHT*2);

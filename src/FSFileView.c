@@ -132,7 +132,6 @@ handleKeyPressEvents(XEvent* event, void* data)
     int count;
     Bool meta_pressed = False;
     FSViewer* fsViewer = (FSViewer*)data;
-    FSFileView* fView = FSGetFSViewerCurrentView(fsViewer);
 
     if (event->xkey.state & FSGetFSViewerMetaMask(fsViewer))
         meta_pressed = True;
@@ -251,7 +250,6 @@ handleKeyPressEvents(XEvent* event, void* data)
 FSFileView*
 FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
 {
-    int divThickness;
     WMPropList* array = NULL;
     FSFileView* fView;
     MyGNUstepWMAttributes attributes;
@@ -676,7 +674,6 @@ handleShelfEventActions(XEvent* event, void* data)
 static void
 handleShelfButtonActions(WMWidget* self, void* data)
 {
-    int i;
     Bool found = False;
     FSFileButton* btn = (FSFileButton*)self;
     FSFileView* fView = (FSFileView*)data;
@@ -730,7 +727,6 @@ FSPositionItemInShelf(FSFileView* fView, FSFileIcon* fileIcon, int num)
     int w, h;
     int row, col;
     int numCol = 0;
-    int width = 0;
 
     w = WMWidgetWidth(fView->shelfF) - PADX;
     h = WMWidgetHeight(fView->shelfF);
@@ -907,7 +903,6 @@ Bool FSAddFileViewShelfItemIntoProplist(FSFileView* fView, FileInfo* fileInfo)
 
 void FSFileViewRemoveFileButtonFromShelf(FSFileView* fView, FSFileButton* btn)
 {
-    FSFileIcon* tmp = fView->fileIcons;
 
     for (FSFileIcon* tmp = fView->fileIcons;
         tmp != NULL;
@@ -985,7 +980,6 @@ FSRemoveFileViewItemFromShelf(FSFileView* fView, FSFileIcon* fileIcon)
 static void
 FSSetupFileViewShelfItems(FSFileView* fView)
 {
-    WMPropList* key = NULL;
     WMPropList* array = NULL;
 
     array = FSGetUDObjectForKey(defaultsDB, "SHELF");
@@ -1012,7 +1006,6 @@ FSSetupFileViewShelfItems(FSFileView* fView)
 */
 void FSUpdateFileViewShelf(FSFileView* fView)
 {
-    WMPropList* key = NULL;
     WMPropList* array = NULL;
     FSFileIcon* tmp = fView->fileIcons;
 

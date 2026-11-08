@@ -93,7 +93,6 @@ WMPropList*
 FSRemoveArrayElement(WMPropList* array, WMPropList* val)
 {
     int i;
-    Bool notFound = True;
 
     if (array && WMIsPLArray(array)) {
         for (i = 0; i < WMGetPropListItemCount(array); i++) {

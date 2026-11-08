@@ -608,7 +608,6 @@ void FSInvokeHelpBrowser(WMWidget* app)
 short FSRunDestroyConfirm(FSViewer* app, char* file)
 {
     WMScreen* scr = FSGetFSViewerScreen(app);
-    Display* dpy = FSGetFSViewerDisplay(app);
     WMAlertPanel* confirm;
     short result;
     char msg[MAX_LEN + MAX_LEN + 2];
@@ -767,9 +766,7 @@ static FSAppInputPanel*
 FSCreateAppInputPanel(FSViewer* app, FileInfo* fileInfo, char* title)
 {
     FSAppInputPanel* appInput;
-    WMPixmap* appicon;
-    int height, width, offset;
-    char buf[MAX_LEN + 1];
+    int height, width;
     WMLabel* l;
 
     if (!(appInput = (FSAppInputPanel*)malloc(sizeof(FSAppInputPanel)))) {
@@ -1384,7 +1381,7 @@ static FSSelectIconPanel*
 FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
 {
     FSSelectIconPanel* selIcon;
-    int height, width, offset;
+    int height, width;
     WMFrame* f;
     WMLabel* l;
     WMPixmap* pixmap;

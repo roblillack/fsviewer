@@ -93,11 +93,7 @@ void FSRunPreferencesPanel(FSViewer* app, char* title)
 static FSPreferencesPanel* FSCreatePreferencesPanel(FSViewer* app, char* title)
 {
     FSPreferencesPanel* prefs;
-    int height, width, offset;
-    WMPixmap* appicon;
-    WMFrame* f;
-    WMLabel* l;
-    WMTabViewItem* tab;
+    int height, width;
 
     /* allocate memory for the prefernces panel */
     if (!(prefs = (FSPreferencesPanel*)malloc(sizeof(FSPreferencesPanel)))) {
@@ -194,7 +190,6 @@ static void createDiskTab(FSPreferencesPanel* prefs)
     int frame_width = 255;
     int frame_height = 220;
     int padx = (TABVIEW_WIDTH - PADX * 8 - frame_width * 2);
-    WMTextFieldDelegate* delegate = NULL;
     f = WMCreateFrame(prefs->frame);
     WMSetFrameRelief(f, WRFlat);
 
@@ -979,7 +974,6 @@ static void populateDisksFields(FSPreferencesPanel* prefs)
 
 static void populateAppsFields(FSPreferencesPanel* prefs)
 {
-    char* str = NULL;
     WMPropList* val = NULL;
     WMListItem* item = WMGetListSelectedItem(prefs->appsList);
 
@@ -1014,7 +1008,6 @@ static void populateAppsFields(FSPreferencesPanel* prefs)
 
 static void populateTypesFields(FSPreferencesPanel* prefs)
 {
-    char* str = NULL;
     WMPropList* val = NULL;
     WMListItem* item = WMGetListSelectedItem(prefs->typesList);
 

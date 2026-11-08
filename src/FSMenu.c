@@ -606,7 +606,6 @@ void FSUpdateViewCB(FSViewer* fsViewer, int item, Time time)
 
 void FSDuplicateCB(FSViewer* fsViewer, int item, Time time)
 {
-    ClipAction clipAction;
     FileInfo* dest = FSCreateFileInfo();
     FileInfo* src = NULL;
 
@@ -699,7 +698,6 @@ static void
 FSAddDisksMenu(FSViewer* fsViewer, WMMenu* menu)
 {
     WMMenu* submenu = NULL;
-    char* cmd = NULL;
     WMPropList* devArray = NULL;
     WMPropList* array = NULL;
 

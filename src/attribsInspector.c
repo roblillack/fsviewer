@@ -256,10 +256,8 @@ showData(_Panel* panel)
 static void
 storeData(_Panel* panel)
 {
-    char buf[100];
     char* pathname;
     mode_t permissions;
-    int seterror;
 
     size_t pathnameSize = strlen(panel->fileInfo->path) + strlen(panel->fileInfo->name) + 1;
     pathname = (char*)wmalloc(pathnameSize);

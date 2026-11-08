@@ -307,9 +307,6 @@ FSCreateInspectorWindow()
 void FSInitInspector(FSViewer* fsViewer)
 {
 
-    XWMHints* hints;
-    MyGNUstepWMAttributes attributes;
-
     if (!(fsInspector = (FSInspector*)malloc(sizeof(FSInspector)))) {
         wfatal(_("Unable to allocate memory for FSInspector %s %d\n"),
             __FILE__, __LINE__);

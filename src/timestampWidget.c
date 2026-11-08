@@ -95,7 +95,6 @@ typedef struct W_TimeStamp {
 
 /* Globals ************************************************************/
 
-static char rcsid[] = "$Id: timestampWidget.c,v 1.2 1999/01/13 22:46:22 gambcl Exp $";
 #ifdef DEBUG_WIDGET_CODE
 static char debug_msg[1024];
 #endif

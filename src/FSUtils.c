@@ -60,7 +60,6 @@ typedef unsigned long ulong;
 #include "misc.h"
 #include "xpm/backing2.xpm"
 #include "xpm/file_plain.xpm"
-#include "xpm/transparent.xpm"
 
 #if defined(__FreeBSD__)
 #define DF_COMMAND "df"
@@ -105,12 +104,9 @@ typedef struct _FSSystem FSSystem;
 static FSSystem* info;
 static FSViewer* fsViewer;
 static char buf[MAX_LEN];
-static Cursor cursor;
 
 void FSInitSystemInfo(FSViewer* fsV)
 {
-
-    struct passwd* pwp;
 
     info = (FSSystem*)malloc(sizeof(FSSystem));
     memset(info, 0, sizeof(FSSystem));
@@ -198,7 +194,6 @@ char* FSMemory()
     /*     return buf; */
 
     ulong total = 0;
-    unsigned long buffers;
 
 #ifdef __Linux__
     FILE* fp_meminfo;
@@ -350,7 +345,6 @@ char* LocateImage(char* name)
 {
     char* path = NULL;
     char* tmp = NULL;
-    char** types;
     size_t tmpSize;
 
     if (name) {
@@ -876,11 +870,9 @@ FSCreatePixmapWithBackingFromFile(WMScreen* scr, char* fileName, RColor* color)
 WMPixmap*
 FSCreateBlurredPixmapFromFile(WMScreen* scr, char* fileName)
 {
-    int x, y;
     RColor color;
     WMPixmap* pixmap;
     RImage* image = NULL;
-    RImage* clone = NULL;
 
     if (!rContext) {
         memset((void*)&attributes, 0, sizeof(RContextAttributes));
