@@ -123,12 +123,9 @@ handleKeyPressEvents(XEvent* event, void* data)
     char buffer[64];
     KeySym ksym;
     int count;
-    Bool meta_pressed = False;
     FSViewer* fsViewer = (FSViewer*)data;
 
-    if (event->xkey.state & FSGetFSViewerMetaMask(fsViewer))
-        meta_pressed = True;
-    else
+    if (!(event->xkey.state & FSGetFSViewerMetaMask(fsViewer)))
         return;
 
     /* 	FSFileBrowserKeyPress(fView->fileBrowser, event); */
@@ -717,12 +714,11 @@ handleShelfButtonActions(WMWidget* self, void* data)
 static void
 FSPositionItemInShelf(FSFileView* fView, FSFileIcon* fileIcon, int num)
 {
-    int w, h;
+    int w;
     int row, col;
     int numCol = 0;
 
     w = WMWidgetWidth(fView->shelfF) - PADX;
-    h = WMWidgetHeight(fView->shelfF);
 
     numCol = (int)(w / PADDED_WIDTH);
     row = (int)(num / numCol);

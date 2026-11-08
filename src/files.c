@@ -865,12 +865,12 @@ int FSRDel(char* path)
     if (S_ISDIR(stats.st_mode)) {
         DIR* dir;
         struct dirent* entry;
-        int i, pl = strlen(path);
+        int pl = strlen(path);
 
         if (!(dir = opendir(path)))
             return -1;
 
-        for (i = 0; (entry = readdir(dir)); i++)
+        while ((entry = readdir(dir)))
             if (entry->d_name[0] != '.' || (entry->d_name[1] != '\0' && (entry->d_name[1] != '.' || entry->d_name[2] != '\0'))) {
                 int pl1 = pl, l = strlen(entry->d_name);
                 size_t path1_size = pl1 + l + 2;

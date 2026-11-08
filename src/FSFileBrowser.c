@@ -245,7 +245,6 @@ fillBrowserColumn(FSBrowser* bPtr, int column)
     char* path;
     FileInfo* fileList;
     FileInfo* start;
-    WMListItem* listItem;
     FileBrowser* fB = (FileBrowser*)(WMGetHangedData(bPtr));
 
     FSSetBusyCursor(bPtr, True);
@@ -257,7 +256,7 @@ fillBrowserColumn(FSBrowser* bPtr, int column)
 
         while (fileList != NULL) {
             if (DisplayFile(fileList->name, fB->filter, fileList->fileType)) {
-                listItem = FSInsertBrowserItem(bPtr, column, -1,
+                FSInsertBrowserItem(bPtr, column, -1,
                     fileList->name,
                     isDirectory(fileList->fileType));
                 /* 		listItem->clientData = fileList; */
