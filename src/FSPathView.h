@@ -13,7 +13,6 @@ void FSSetPathViewPathSeparator(FSPathView* bPtr, char* separator);
 void FSLoadPathViewColumnZero(FSPathView* bPtr);
 int FSAddPathViewColumn(FSPathView* bPtr);
 void FSSetPathViewMaxVisibleColumns(FSPathView* bPtr, int columns);
-;
 /* Don't free the returned string. */
 char* FSSetPathViewPath(FSPathView* bPtr, char* path);
 /* you can free the returned string */
