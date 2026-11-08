@@ -273,10 +273,14 @@ char* FSGetFSViewerPath(FSViewer* fsViewer)
     FileInfo* fileInfo = NULL;
     FSFileView* fView;
 
+    char* pathname;
+
     fView = FSGetFSViewerCurrentView(fsViewer);
     fileInfo = FSGetFileViewFileInfo(fView);
+    pathname = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
+    FSFreeFileInfo(fileInfo);
 
-    return GetPathnameFromPathName(fileInfo->path, fileInfo->name);
+    return pathname;
 }
 
 FSFileView*

@@ -224,6 +224,7 @@ void GetFileInfo(char* path, char* name, FileInfo* fileInfo)
     char* pathname;
     char* fileName;
     char* dirPath;
+    char* extn;
 
     st = (struct stat*)wmalloc(sizeof(struct stat));
 
@@ -264,13 +265,17 @@ void GetFileInfo(char* path, char* name, FileInfo* fileInfo)
     fileInfo->name = fileName;
     fileInfo->path = dirPath;
 
-    if (fileInfo->fileType == ROOT)
-        fileInfo->extn = wstrdup("ROOT");
-    else
-        fileInfo->extn = wstrdup(GetFileExtn(fileInfo->name));
+    extn = GetFileExtn(fileName);
 
-    fileInfo->imgName = GetFileImgName(GetFileExtn(fileName),
-        fileInfo->fileType);
+    free(fileInfo->imgName);
+    fileInfo->imgName = GetFileImgName(extn, fileInfo->fileType);
+
+    if (fileInfo->fileType == ROOT) {
+        fileInfo->extn = wstrdup("ROOT");
+        free(extn);
+    } else
+        fileInfo->extn = extn;
+
     fileInfo->abbrev = GetFileAbbrev(fileName);
 
     fileInfo->st = st;
@@ -313,13 +318,7 @@ char* GetFileExtn(char* filename)
 
     extn = strrchr(filename, '.');
 
-    if (extn == NULL) {
-        /* 	extn = (char *) wmalloc(strlen(filename)+1); */
-        /* 	strcpy(extn, filename); */
-        extn = wstrdup(filename);
-    }
-
-    return extn;
+    return wstrdup(extn ? extn : filename);
 }
 
 char* GetFileExtnOrNull(char* filename)
@@ -455,14 +454,12 @@ char* GetNameFromPathname(char* pathname)
 
 char* GetPathFromPathname(char* pathname)
 {
-    int lenTot;
-    int lenName;
+    char* slash;
     int lenPath;
     char* path;
 
-    lenTot = strlen(pathname);
-    lenName = strlen(GetNameFromPathname(pathname));
-    lenPath = lenTot - lenName;
+    slash = strrchr(pathname, '/');
+    lenPath = slash ? slash - pathname + 1 : 0;
 
     path = (char*)wmalloc(lenPath + 1);
     strncpy(path, pathname, lenPath);
@@ -473,11 +470,11 @@ char* GetPathFromPathname(char* pathname)
 
 char* GetPathnameFromPathName(char* path, char* name)
 {
-    int len;
+    size_t len;
     char* pathname;
 
-    len = strlen(GetNameFromPathname(path));
-    if (len) {
+    len = strlen(path);
+    if (len && path[len - 1] != '/') {
         size_t pathname_size = strlen(path) + strlen(name) + 2;
         pathname = (char*)wmalloc(pathname_size);
         strlcpy(pathname, path, pathname_size);
@@ -681,6 +678,9 @@ FSGetFileInfo(char* pathname)
     path = GetPathFromPathname(pathname);
 
     GetFileInfo(path, name, fileInfo);
+
+    free(name);
+    free(path);
 
     return fileInfo;
 }

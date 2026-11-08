@@ -321,6 +321,8 @@ handleItemSelection(WMWidget* self, void* clientData)
         break;
     }
 
+    FSFreeFileInfo(fileInfo);
+
     if (bPtr->text) {
         wwarning("%s %d: %s", __FILE__, __LINE__, bPtr->text);
         free(bPtr->text);
@@ -616,6 +618,7 @@ FSGetFileBrowserFileInfoAt(FileBrowser* bPtr, int col)
     case BROWSE:
         pathname = FSGetFileBrowserPathToColumn(bPtr, col);
         fileInfo = FSGetFileInfo(pathname);
+        free(pathname);
         break;
     case ICON:
         fileInfo = NULL;
@@ -623,6 +626,7 @@ FSGetFileBrowserFileInfoAt(FileBrowser* bPtr, int col)
     case LIST:
         pathname = FSGetFileBrowserPathToColumn(bPtr, col + 1);
         fileInfo = FSGetFileInfo(pathname);
+        free(pathname);
         break;
     default:
         fileInfo = NULL;
@@ -698,6 +702,19 @@ insertIntoColumn(FileBrowser* bPtr, char* pathname)
 }
 
 static void
+removeListItem(WMList* list, int row)
+{
+    WMListItem* item = WMGetListItem(list, row);
+
+    /* List mode rows carry an allocated string */
+    if (item && item->clientData) {
+        free(item->clientData);
+        item->clientData = NULL;
+    }
+    WMRemoveListItem(list, row);
+}
+
+static void
 removeFromColumn(FileBrowser* bPtr, char* path, char* name)
 {
     int col, row;
@@ -706,7 +723,7 @@ removeFromColumn(FileBrowser* bPtr, char* path, char* name)
     col = findColumnFromPath(path);
     list = FSGetBrowserListInColumn(bPtr->browser, col);
     row = WMFindRowOfListItemWithTitle(list, name);
-    WMRemoveListItem(list, row);
+    removeListItem(list, row);
 }
 
 static int
@@ -876,7 +893,7 @@ removeFromView(FileBrowser* bPtr, char* path, char* name)
 
     if (list) {
         row = WMFindRowOfListItemWithTitle(list, name);
-        WMRemoveListItem(list, row);
+        removeListItem(list, row);
     }
 }
 

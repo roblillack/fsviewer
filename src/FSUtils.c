@@ -475,6 +475,11 @@ void FSLaunchApp(FSViewer* fsViewer, AppEvent event)
     GetFileInfo(path, name, fileInfo);
 
     LaunchApp(fsViewer, fileInfo, event);
+
+    FSFreeFileInfo(fileInfo);
+    free(pathname);
+    free(path);
+    free(name);
 }
 
 void LaunchApp(FSViewer* fsViewer, FileInfo* fileInfo, AppEvent event)
@@ -989,9 +994,10 @@ void FSSetBusyCursor(WMWidget* w, Bool state)
     Display* dpy = WMScreenDisplay(scr);
 
     if (state) {
-        Cursor cursor;
+        static Cursor cursor = None;
 
-        cursor = XCreateFontCursor(dpy, XC_watch);
+        if (cursor == None)
+            cursor = XCreateFontCursor(dpy, XC_watch);
         XDefineCursor(dpy, wnd, cursor);
     } else
         XUndefineCursor(dpy, wnd);

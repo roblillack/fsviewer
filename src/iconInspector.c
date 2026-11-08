@@ -43,13 +43,18 @@ static void
 setIconLabel(WMWidget* self, void* data)
 {
     WMPixmap* pixmap;
+    char* imgName;
     _Panel* panel = (_Panel*)data;
 
     if (panel->iconName)
         free(panel->iconName);
     panel->iconName = getSelectedFilename(panel);
-    pixmap = FSCreateBlendedPixmapFromFile(panel->scr, LocateImage(panel->iconName), NULL);
+    imgName = LocateImage(panel->iconName);
+    pixmap = FSCreateBlendedPixmapFromFile(panel->scr, imgName, NULL);
     WMSetLabelImage(panel->iconLabel, pixmap);
+    if (pixmap)
+        WMReleasePixmap(pixmap);
+    free(imgName);
 }
 
 static void
@@ -137,6 +142,8 @@ showData(_Panel* panel)
     WMSortListItems(panel->pathList);
 
     WMSetLabelImage(panel->iconLabel, pixmap);
+    if (pixmap)
+        WMReleasePixmap(pixmap);
 }
 
 static void

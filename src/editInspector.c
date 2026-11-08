@@ -125,6 +125,7 @@ appListClick(WMWidget* self, void* data)
         if (pixmap) {
             WMSetButtonImagePosition(panel->appBtn, WIPImageOnly);
             WMSetButtonImage(panel->appBtn, pixmap);
+            WMReleasePixmap(pixmap);
         } else
             WMSetButtonImagePosition(panel->appBtn, WIPNoImage);
     } else

@@ -314,6 +314,29 @@ int FSGetBrowserFirstVisibleColumn(FSBrowser* bPtr)
     return bPtr->firstVisibleColumn;
 }
 
+/*
+ * List mode stores an allocated string as each row's clientData, which
+ * WMList does not free when rows are removed.
+ */
+static void
+freeItemClientData(WMListItem* item)
+{
+    if (item && item->clientData) {
+        free(item->clientData);
+        item->clientData = NULL;
+    }
+}
+
+static void
+freeListClientData(WMList* list)
+{
+    int i;
+    int numRows = WMGetListNumberOfRows(list);
+
+    for (i = 0; i < numRows; i++)
+        freeItemClientData(WMGetListItem(list, i));
+}
+
 static void
 removeColumn(FSBrowser* bPtr, int column)
 {
@@ -344,13 +367,10 @@ removeColumn(FSBrowser* bPtr, int column)
             free(bPtr->titles[i]);
             bPtr->titles[i] = NULL;
         }
+        freeListClientData(bPtr->columns[i]);
         WMClearList(bPtr->columns[i]);
     }
     for (; i < destroyEnd; i++) {
-        int j = 0;
-        int numRows = 0;
-        WMListItem* item = NULL;
-
         if (bPtr->titles[i]) {
             free(bPtr->titles[i]);
             bPtr->titles[i] = NULL;
@@ -359,24 +379,7 @@ removeColumn(FSBrowser* bPtr, int column)
             WMListSelectionDidChangeNotification,
             bPtr->columns[i]);
 
-        /*
-         * Free the client data.
-         * This assumes is it a string or the like.
-         * Hopefully it won't slow things down too much.
-         * Should use a callback to allow for more complicated
-         * clientData structures.
-         */
-        /* 	numRows = WMGetListNumberOfRows(bPtr->columns[i]); */
-        /* 	for(j = 0; j < numRows; j++) */
-        /* 	{ */
-
-        /* 	    item = WMGetListItem(bPtr->columns[i], j); */
-        /* 	    if(item->clientData) */
-        /* 	    { */
-        /* 		free(item->clientData); */
-        /* 		item->clientData = NULL; */
-        /* 	    } */
-        /* 	} */
+        freeListClientData(bPtr->columns[i]);
         WMDestroyWidget(bPtr->columns[i]);
         bPtr->columns[i] = NULL;
     }
@@ -1069,6 +1072,7 @@ void FSRemoveBrowserItem(FSBrowser* bPtr, int column, int row)
         scrollToColumn(bPtr, bPtr->usedColumnCount - bPtr->maxVisibleColumns,
             True);
 
+    freeItemClientData(WMGetListItem(list, row));
     WMRemoveListItem(list, row);
 }
 

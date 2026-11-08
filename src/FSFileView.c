@@ -83,8 +83,8 @@ handleScrollViewDoubleClick(WMWidget* self, void* clientData)
     else if (access(pathname, W_OK) == 0)
         LaunchApp(fView->fsViewer, fileInfo, AppEdit);
 
-    if (pathname)
-        free(pathname);
+    free(pathname);
+    FSFreeFileInfo(fileInfo);
 }
 
 static void
@@ -552,7 +552,12 @@ char* FSGetFileViewPath(FSFileView* fileView)
 FileInfo*
 FSGetFileViewFileInfo(FSFileView* fileView)
 {
-    return FSGetFileInfo(FSGetFileViewPath(fileView));
+    char* path = FSGetFileViewPath(fileView);
+    FileInfo* fileInfo = FSGetFileInfo(path);
+
+    free(path);
+
+    return fileInfo;
 }
 
 void FSUpdateFileViewPath(FSFileView* fileView, FileAction action,
@@ -709,6 +714,8 @@ handleShelfButtonActions(WMWidget* self, void* data)
                 LaunchApp(fView->fsViewer, fileInfo, AppView);
             else if (access(pathname, W_OK) == 0)
                 LaunchApp(fView->fsViewer, fileInfo, AppEdit);
+
+            free(pathname);
         }
     }
 }
@@ -787,6 +794,7 @@ void FSAddFileViewShelfItem(FSFileView* fView, FileInfo* fileInfo)
     assert(WMWidgetClass(fileIcon->btn) == FileButtonWidgetClass());
     pathname = GetPathnameFromPathName(fileInfo->path, fileInfo->name);
     FSSetFileButtonPathname(fileIcon->btn, pathname, 0);
+    free(pathname);
     FSSetFileButtonAction(fileIcon->btn, handleShelfButtonActions, fView);
     WMHangData(fileIcon->btn, fView);
     WMRealizeWidget(fileIcon->btn);
@@ -849,6 +857,8 @@ void FSAddFileViewItemIntoShelf(FSViewer* fsViewer)
          */
         FSAddFileViewShelfItem(fView, fileInfo);
     }
+
+    FSFreeFileInfo(fileInfo);
 }
 
 /*
