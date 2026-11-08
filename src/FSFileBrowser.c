@@ -276,14 +276,10 @@ fillBrowserColumn(FSBrowser* bPtr, int column)
 
             fileList = fileList->next;
         }
-    }
 
-    if (path) {
+        FSFreeFileInfo(start);
         free(path);
     }
-
-    if (start)
-        FSFreeFileInfo(start);
 
     FSSetBusyCursor(bPtr, False);
 }
