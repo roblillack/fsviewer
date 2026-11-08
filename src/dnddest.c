@@ -68,7 +68,7 @@ int Index(WMData* data, char ch, int startPos)
 
 char* FindNextPath(WMData* data, int* startPos)
 {
-    const char* bytes = WMDataBytes(data) + *startPos;
+    const char* bytes = (const char*)WMDataBytes(data) + *startPos;
     int len = (int)WMGetDataLength(data) - *startPos;
 
     if (len < 7) {
