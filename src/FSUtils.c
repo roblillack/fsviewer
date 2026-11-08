@@ -994,9 +994,10 @@ void FSSetBusyCursor(WMWidget* w, Bool state)
     Display* dpy = WMScreenDisplay(scr);
 
     if (state) {
-        Cursor cursor;
+        static Cursor cursor = None;
 
-        cursor = XCreateFontCursor(dpy, XC_watch);
+        if (cursor == None)
+            cursor = XCreateFontCursor(dpy, XC_watch);
         XDefineCursor(dpy, wnd, cursor);
     } else
         XUndefineCursor(dpy, wnd);
