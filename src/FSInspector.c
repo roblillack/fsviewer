@@ -114,6 +114,8 @@ FSUpdateInspectorFileInfoDisplay(FSInspector* fsInspector)
 
     pixmap = FSCreateBlendedPixmapFromFile(WMWidgetScreen(fsInspector->win), fsInspector->fileInfo->imgName, NULL);
     WMSetLabelImage(fsInspector->nameLabel, pixmap);
+    if (pixmap)
+        WMReleasePixmap(pixmap);
 
     size_t buf_size = strlen(_("Path: ")) + strlen(fsInspector->fileInfo->path) + 1;
     buf = (char*)wmalloc(buf_size);
