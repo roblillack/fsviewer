@@ -180,7 +180,7 @@ handleKeyPressEvents(XEvent* event, void* data)
         FSViewCB(fsViewer, 0, 0);
         break;
     case XK_q:
-        FSQuitCB(NULL, NULL);
+        FSQuitCB(fsViewer, 0, 0);
         break;
     case XK_r:
         /* Should be Destroy */

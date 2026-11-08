@@ -25,7 +25,7 @@ fsGetFSViewerCurrentFileInfo(FSViewer* fsViewer)
     return FSGetFileViewFileInfo(fView);
 }
 
-void FSQuitCB(WMWidget* w, void* data)
+void FSQuitCB(FSViewer* fsViewer, int item, Time time)
 {
     exit(0);
 }
