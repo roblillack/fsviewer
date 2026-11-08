@@ -670,6 +670,40 @@ static void createVarsTab(FSPreferencesPanel* prefs)
     WMSetTabViewItemLabel(tab, _("Variables"));
 }
 
+static void releasePropList(void* data)
+{
+    WMReleasePropList(data);
+}
+
+static void freeDisc(void* data)
+{
+    Disc* disk = (Disc*)data;
+
+    free(disk->name);
+    free(disk->point);
+    free(disk->device);
+    free(disk->mnt);
+    free(disk->umnt);
+    free(disk->eject);
+    free(disk->close);
+    free(disk);
+}
+
+static void freeListClientData(WMList* list, void (*freeData)(void*))
+{
+    int i;
+    int numRows = WMGetListNumberOfRows(list);
+
+    for (i = 0; i < numRows; i++) {
+        WMListItem* item = WMGetListItem(list, i);
+
+        if (item->clientData) {
+            freeData(item->clientData);
+            item->clientData = NULL;
+        }
+    }
+}
+
 static void populateVarsTab(FSPreferencesPanel* prefs)
 {
     WMListItem* item;
@@ -774,10 +808,12 @@ static void populateTypesTab(FSPreferencesPanel* prefs)
     WMPropList* array = NULL;
     WMPropList* element = NULL;
 
+    freeListClientData(prefs->typesList, releasePropList);
     WMClearList(prefs->typesList);
     WMSetTextFieldText(prefs->appsExecTF, "");
     WMSetButtonImage(prefs->appsIconBtn, NULL);
 
+    freeListClientData(prefs->appsList, releasePropList);
     WMClearList(prefs->appsList);
     WMSetTextFieldText(prefs->typesViewTF, "");
     WMSetTextFieldText(prefs->typesEditTF, "");
@@ -798,18 +834,15 @@ static void populateTypesTab(FSPreferencesPanel* prefs)
                 else
                     continue;
 
-                if (item) {
-                    WMPropList* tmp = NULL;
-
-                    tmp = FSGetUDObjectForKey(defaultsDB, str);
-                    if (tmp)
-                        item->clientData = WMDeepCopyPropList(tmp);
-                }
+                if (item)
+                    item->clientData = FSGetUDObjectForKey(defaultsDB, str);
                 if (str)
                     free(str);
             }
         }
     }
+    if (array)
+        WMReleasePropList(array);
 
     array = FSGetUDObjectForKey(defaultsDB, "EXE");
     if (array && WMIsPLArray(array)) {
@@ -825,18 +858,15 @@ static void populateTypesTab(FSPreferencesPanel* prefs)
                 else
                     continue;
 
-                if (item) {
-                    WMPropList* tmp = NULL;
-
-                    tmp = FSGetUDObjectForKey(defaultsDB, str);
-                    if (tmp)
-                        item->clientData = WMDeepCopyPropList(tmp);
-                }
+                if (item)
+                    item->clientData = FSGetUDObjectForKey(defaultsDB, str);
                 if (str)
                     free(str);
             }
         }
     }
+    if (array)
+        WMReleasePropList(array);
     /* new in 0.2.5 */
     WMSortListItems(prefs->appsList);
     WMSortListItems(prefs->typesList);
@@ -868,6 +898,7 @@ static void populateDisksTab(FSPreferencesPanel* prefs)
                     disk->name = wstrdup(WMGetFromPLString(tmp));
                     item = WMAddListItem(prefs->disksList, disk->name);
                 } else {
+                    free(disk);
                     continue;
                 }
 
@@ -900,6 +931,8 @@ static void populateDisksTab(FSPreferencesPanel* prefs)
             }
         }
     }
+    if (devArray)
+        WMReleasePropList(devArray);
     WMSortListItems(prefs->disksList);
 }
 
@@ -1461,6 +1494,13 @@ static void saveTab(FSPreferencesPanel* prefs, int tabID)
 
 static void FSDestroyPreferencesPanel(FSPreferencesPanel* preferences)
 {
+    freeListClientData(preferences->imgList, free);
+    freeListClientData(preferences->execList, free);
+    freeListClientData(preferences->dpyList, free);
+    freeListClientData(preferences->typesList, releasePropList);
+    freeListClientData(preferences->appsList, releasePropList);
+    freeListClientData(preferences->disksList, freeDisc);
+
     WMUnmapWidget(preferences->win);
     WMDestroyWidget(preferences->win);
     free((void*)preferences);
@@ -1713,6 +1753,11 @@ static void saveAppsTab(FSPreferencesPanel* prefs)
             }
         }
     }
+    if (exeArray)
+        WMReleasePropList(exeArray);
+    if (extnArray)
+        WMReleasePropList(extnArray);
+
     populateTypesTab(prefs);
 }
 
@@ -1733,18 +1778,28 @@ static void saveDiscsTab(FSPreferencesPanel* prefs)
         disk = (Disc*)item->clientData;
 
         if (item) {
-            array = WMCreatePLArray(WMCreatePLString(disk->name),
-                WMCreatePLString(disk->point),
-                WMCreatePLString(disk->device),
-                WMCreatePLString(disk->mnt),
-                WMCreatePLString(disk->umnt),
-                WMCreatePLString(disk->eject),
-                WMCreatePLString(disk->close),
-                NULL);
+            char* fields[] = { disk->name, disk->point, disk->device,
+                disk->mnt, disk->umnt, disk->eject, disk->close };
+            size_t i;
+
+            array = WMCreatePLArray(NULL, NULL);
+            for (i = 0; i < sizeof(fields) / sizeof(fields[0]); i++) {
+                WMPropList* str;
+
+                /* like the WMCreatePLArray() varargs, stop at a gap */
+                if (!fields[i])
+                    break;
+                str = WMCreatePLString(fields[i]);
+
+                WMAddToPLArray(array, str);
+                WMReleasePropList(str);
+            }
             WMAddToPLArray(diskArray, array);
+            WMReleasePropList(array);
         }
     }
     WMSetUDObjectForKey(defaultsDB, diskArray, "DISCS");
+    WMReleasePropList(diskArray);
 }
 
 static void genericListDrawProc(WMList* lPtr, int index, Drawable d, char* text, int state, WMRect* rect)
