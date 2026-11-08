@@ -583,16 +583,19 @@ static void paintTimeStamp(TimeStamp* timestamp)
          * It wraps the X pixmaps we render into, so it only needs to
          * be created once.
          */
-        if (!timestamp->image && !(timestamp->image = WMCreatePixmapFromXPixmaps(scr,
-                  timestamp->result->pixmap,
-                  timestamp->result->mask,
-                  TIMESTAMP_MIN_WIDTH,
-                  TIMESTAMP_MIN_HEIGHT,
-                  DefaultDepth(dpy, DefaultScreen(dpy))))) {
-            /* Error whilst trying to convert. */
-            wfatal("Unable to Create Clock Image");
+        if (!timestamp->image) {
+            timestamp->image = WMCreatePixmapFromXPixmaps(scr,
+                timestamp->result->pixmap,
+                timestamp->result->mask,
+                TIMESTAMP_MIN_WIDTH,
+                TIMESTAMP_MIN_HEIGHT,
+                DefaultDepth(dpy, DefaultScreen(dpy)));
+            if (!timestamp->image) {
+                /* Error whilst trying to convert. */
+                wfatal("Unable to Create Clock Image");
+            }
+            DEBUG_PRINT("Created new image");
         }
-        DEBUG_PRINT("Created new image");
     }
 
     /* Paint the image. */
