@@ -313,7 +313,7 @@ static int mmatch(int i, char* buf)
         } else
             len = -1;
 
-        if (regexec(prog, h)) {
+        if (regexec(prog, (char*)h)) {
             regsub(prog, mtypes[i].message, buf);
             if (len >= 0)
                 h[len] = sav;

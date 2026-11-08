@@ -129,7 +129,6 @@ getSelectedFilename(_Panel* panel)
 static void
 showData(_Panel* panel)
 {
-    char* file;
     WMPixmap* pixmap;
 
     pixmap = FSCreateBlendedPixmapFromFile(panel->scr, panel->fileInfo->imgName, NULL);

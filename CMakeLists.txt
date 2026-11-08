@@ -5,6 +5,12 @@ set(EXECUTABLE ${PROJECT_NAME})
 
 find_package(PkgConfig REQUIRED)
 
+option(FSVIEWER_WERROR "Treat compiler warnings as errors" ON)
+add_compile_options(-Wall -Wextra -pedantic -Wno-unused-parameter)
+if(FSVIEWER_WERROR)
+    add_compile_options(-Werror)
+endif()
+
 file(GLOB REGEXP "src/regexp/*.c")
 file(GLOB SRC "src/*.c")
 add_executable(${EXECUTABLE} ${SRC} ${REGEXP})
@@ -36,7 +42,6 @@ endif()
 # endif()
 target_link_libraries(${EXECUTABLE} PUBLIC PkgConfig::DEPS ${Intl_LIBRARIES} -lm)
 
-add_compile_options(-Wall -Wextra -pedantic -Werror)
 add_definitions(-DCLK=1)
 add_definitions(-DPACKAGE_NAME="${PROJECT_NAME}")
 add_definitions(-DVERSION="${PROJECT_VERSION}")

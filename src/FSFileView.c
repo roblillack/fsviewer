@@ -54,13 +54,6 @@ static FSFileIcon* FSFindFileIconWithFileInfo(FSFileView* fView,
     FileInfo* fileInfo);
 
 static void
-splitViewConstrainCallback(WMSplitView* sPtr, int divIndex, int* min, int* max)
-{
-    *min = 1;
-    *max = WMWidgetHeight(sPtr) - FRAME_PAD_Y - MIN_UPPER_HEIGHT;
-}
-
-static void
 handleScrollViewDoubleClick(WMWidget* self, void* clientData)
 {
     char* pathname;
@@ -130,13 +123,9 @@ handleKeyPressEvents(XEvent* event, void* data)
     char buffer[64];
     KeySym ksym;
     int count;
-    Bool meta_pressed = False;
     FSViewer* fsViewer = (FSViewer*)data;
-    FSFileView* fView = FSGetFSViewerCurrentView(fsViewer);
 
-    if (event->xkey.state & FSGetFSViewerMetaMask(fsViewer))
-        meta_pressed = True;
-    else
+    if (!(event->xkey.state & FSGetFSViewerMetaMask(fsViewer)))
         return;
 
     /* 	FSFileBrowserKeyPress(fView->fileBrowser, event); */
@@ -180,7 +169,7 @@ handleKeyPressEvents(XEvent* event, void* data)
         FSViewCB(fsViewer, 0, 0);
         break;
     case XK_q:
-        FSQuitCB(NULL, NULL);
+        FSQuitCB(fsViewer, 0, 0);
         break;
     case XK_r:
         /* Should be Destroy */
@@ -251,7 +240,6 @@ handleKeyPressEvents(XEvent* event, void* data)
 FSFileView*
 FSCreateFileView(FSViewer* fsViewer, char* path, Bool primary)
 {
-    int divThickness;
     WMPropList* array = NULL;
     FSFileView* fView;
     MyGNUstepWMAttributes attributes;
@@ -676,7 +664,6 @@ handleShelfEventActions(XEvent* event, void* data)
 static void
 handleShelfButtonActions(WMWidget* self, void* data)
 {
-    int i;
     Bool found = False;
     FSFileButton* btn = (FSFileButton*)self;
     FSFileView* fView = (FSFileView*)data;
@@ -727,13 +714,11 @@ handleShelfButtonActions(WMWidget* self, void* data)
 static void
 FSPositionItemInShelf(FSFileView* fView, FSFileIcon* fileIcon, int num)
 {
-    int w, h;
+    int w;
     int row, col;
     int numCol = 0;
-    int width = 0;
 
     w = WMWidgetWidth(fView->shelfF) - PADX;
-    h = WMWidgetHeight(fView->shelfF);
 
     numCol = (int)(w / PADDED_WIDTH);
     row = (int)(num / numCol);
@@ -907,7 +892,6 @@ Bool FSAddFileViewShelfItemIntoProplist(FSFileView* fView, FileInfo* fileInfo)
 
 void FSFileViewRemoveFileButtonFromShelf(FSFileView* fView, FSFileButton* btn)
 {
-    FSFileIcon* tmp = fView->fileIcons;
 
     for (FSFileIcon* tmp = fView->fileIcons;
         tmp != NULL;
@@ -985,7 +969,6 @@ FSRemoveFileViewItemFromShelf(FSFileView* fView, FSFileIcon* fileIcon)
 static void
 FSSetupFileViewShelfItems(FSFileView* fView)
 {
-    WMPropList* key = NULL;
     WMPropList* array = NULL;
 
     array = FSGetUDObjectForKey(defaultsDB, "SHELF");
@@ -1012,7 +995,6 @@ FSSetupFileViewShelfItems(FSFileView* fView)
 */
 void FSUpdateFileViewShelf(FSFileView* fView)
 {
-    WMPropList* key = NULL;
     WMPropList* array = NULL;
     FSFileIcon* tmp = fView->fileIcons;
 

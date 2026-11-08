@@ -85,23 +85,13 @@ static void setupBrowserMode(FileBrowser* bPtr, int x, int y,
     int width, int height);
 static void setupListMode(FileBrowser* bPtr, int x, int y,
     int width, int height);
-static void setupIconMode(FileBrowser* bPtr);
 /* static void resizeFileBrowser(WMWidget*, unsigned int, unsigned int); */
-static void resizePathView(FileBrowser* bPtr, unsigned int, unsigned int);
-static void scrollPathView(FileBrowser* bPtr, int col);
-static void scrolledBrowser(void* observerData, WMNotification* notification);
 static void scrolledPathView(void* observerData, WMNotification* notification);
-static void scrollCallback(WMWidget* self, void* clientData);
 /* static void fillPathView(FileBrowser *bPtr, int column); */
-static void handleDoubleActions(WMWidget* self, void* data);
 static void handleItemSelection(WMWidget* self, void* clientData);
-static int FSGetFileBrowserFirstVisibleColumn(FileBrowser* bPtr);
 static int FSGetFileBrowserColumnCount(FileBrowser* bPtr);
 static FileInfo* FSGetFileBrowserFileInfoAt(FileBrowser* bPtr, int col);
-static void insertIntoColumn(FileBrowser* bPtr, char* pathname);
-static void removeFromColumn(FileBrowser* bPtr, char* path, char* name);
 static int findColumnFromPath(char* path);
-static void notificationObserver(void* self, WMNotification* notif);
 static void removeFromView(FileBrowser* bPtr, char* path, char* name);
 static void insertIntoView(FileBrowser* bPtr, char* pathname);
 
@@ -141,7 +131,6 @@ FileBrowser*
 FSCreateFileBrowser(WMWidget* parent)
 {
     FileBrowser* bPtr;
-    int i;
 
     bPtr = wmalloc(sizeof(FileBrowser));
     memset(bPtr, 0, sizeof(FileBrowser));
@@ -256,7 +245,6 @@ fillBrowserColumn(FSBrowser* bPtr, int column)
     char* path;
     FileInfo* fileList;
     FileInfo* start;
-    WMListItem* listItem;
     FileBrowser* fB = (FileBrowser*)(WMGetHangedData(bPtr));
 
     FSSetBusyCursor(bPtr, True);
@@ -268,7 +256,7 @@ fillBrowserColumn(FSBrowser* bPtr, int column)
 
         while (fileList != NULL) {
             if (DisplayFile(fileList->name, fB->filter, fileList->fileType)) {
-                listItem = FSInsertBrowserItem(bPtr, column, -1,
+                FSInsertBrowserItem(bPtr, column, -1,
                     fileList->name,
                     isDirectory(fileList->fileType));
                 /* 		listItem->clientData = fileList; */
@@ -276,14 +264,10 @@ fillBrowserColumn(FSBrowser* bPtr, int column)
 
             fileList = fileList->next;
         }
-    }
 
-    if (path) {
+        FSFreeFileInfo(start);
         free(path);
     }
-
-    if (start)
-        FSFreeFileInfo(start);
 
     FSSetBusyCursor(bPtr, False);
 }
@@ -292,10 +276,8 @@ static void
 handleItemSelection(WMWidget* self, void* clientData)
 {
     int col;
-    char* path;
     FileBrowser* bPtr = (FileBrowser*)clientData;
     static int lastCol = 0;
-    WMListItem* item = NULL;
     FileInfo* fileInfo = NULL;
 
     col = FSGetFileBrowserColumnCount(bPtr);
@@ -431,11 +413,6 @@ scrolledPathView(void* observerData, WMNotification* notification)
 }
 
 static void
-setupIconMode(FileBrowser* bPtr)
-{
-}
-
-static void
 setupListMode(FileBrowser* bPtr, int x, int y, int width, int height)
 {
     bPtr->listF = WMCreateFrame(bPtr->displayFrame);
@@ -451,7 +428,7 @@ setupListMode(FileBrowser* bPtr, int x, int y, int width, int height)
 Bool FSSetFileBrowserPath(FileBrowser* bPtr, char* path)
 {
     Bool ok = True;
-    int i, col;
+    int col;
 
     switch (bPtr->currentMode) {
     case BROWSE:
@@ -541,7 +518,6 @@ destroyFileBrowser(FileBrowser* bPtr)
 
 char* FSGetFileBrowserPathToColumn(FileBrowser* bPtr, int column)
 {
-    int len;
     char* path = NULL;
 
     switch (bPtr->currentMode) {
@@ -583,29 +559,6 @@ FSGetFileBrowserColumnCount(FileBrowser* bPtr)
     }
 
     return num;
-}
-
-static int
-FSGetFileBrowserFirstVisibleColumn(FileBrowser* bPtr)
-{
-    int first = -1;
-
-    switch (bPtr->currentMode) {
-    case BROWSE:
-        first = FSGetBrowserFirstVisibleColumn(bPtr->browser);
-        break;
-    case ICON:
-        first = -1;
-        break;
-    case LIST:
-        first = -1;
-        break;
-    default:
-        first = -1;
-        break;
-    }
-
-    return first;
 }
 
 static FileInfo*
@@ -677,31 +630,6 @@ void FSSetFileBrowserDoubleAction(FileBrowser* bPtr,
 }
 
 static void
-insertIntoColumn(FileBrowser* bPtr, char* pathname)
-{
-    int col;
-    WMList* list;
-    FileInfo* new;
-
-    col = findColumnFromPath(GetPathFromPathname(pathname));
-    new = FSGetFileInfo(pathname);
-
-    list = FSGetBrowserListInColumn(bPtr->browser, col);
-
-    if (DisplayFile(new->name, bPtr->filter, new->fileType) && list) {
-        WMListItem* item;
-        item = WMInsertListItem(list, -1, new->name);
-        item->isBranch = isDirectory(new->fileType);
-
-        /*         listItem =  FSInsertBrowserItem(bPtr->browser, col, -1, new->name, */
-        /* 					isDirectory(new->fileType)); */
-        /* 	listItem->clientData = new; */
-    }
-    if (new)
-        FSFreeFileInfo(new);
-}
-
-static void
 removeListItem(WMList* list, int row)
 {
     WMListItem* item = WMGetListItem(list, row);
@@ -712,18 +640,6 @@ removeListItem(WMList* list, int row)
         item->clientData = NULL;
     }
     WMRemoveListItem(list, row);
-}
-
-static void
-removeFromColumn(FileBrowser* bPtr, char* path, char* name)
-{
-    int col, row;
-    WMList* list;
-
-    col = findColumnFromPath(path);
-    list = FSGetBrowserListInColumn(bPtr->browser, col);
-    row = WMFindRowOfListItemWithTitle(list, name);
-    removeListItem(list, row);
 }
 
 static int

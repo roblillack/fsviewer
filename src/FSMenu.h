@@ -3,7 +3,7 @@
 
 #include "FSViewer.h"
 
-void FSQuitCB(WMWidget* w, void* data);
+void FSQuitCB(FSViewer* fsViewer, int item, Time time);
 void FSHideCB(FSViewer* fsViewer, int item, Time time);
 void FSLaunchApp(FSViewer* fsViewer, AppEvent event);
 void FSInfoPanelCB(FSViewer* fsViewer, int item, Time time);

@@ -197,8 +197,6 @@ static void
 willResizeFSFileButton(W_ViewDelegate* self, WMView* view,
     unsigned int* width, unsigned int* height)
 {
-    int x = 0;
-    int y = 0;
     FSFileButton* bPtr = (FSFileButton*)view->self;
 
     /*
@@ -596,7 +594,6 @@ void FSSetFileButtonPathname(FSFileButton* bPtr, char* pathname, int isBranch)
     if (pathname) {
         int textLen;
         int textWidth;
-        FileInfo* fileInfo = NULL;
         WMScreen* scr = WMWidgetScreen(bPtr);
 
         if (bPtr->pathname)
@@ -612,7 +609,7 @@ void FSSetFileButtonPathname(FSFileButton* bPtr, char* pathname, int isBranch)
         textLen = strlen(bPtr->fileInfo->name);
         textWidth = WMWidthOfString(scr->normalFont, bPtr->fileInfo->name,
             textLen);
-        if (textWidth > bPtr->width) {
+        if (textWidth > (int)bPtr->width) {
             if (bPtr->textView)
                 destroyTextView(bPtr);
             bPtr->textView = createTextView(scr, bPtr->fileInfo->name,

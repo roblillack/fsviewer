@@ -121,7 +121,7 @@ createNameLabel(Panel* panel)
     l = WMCreateLabel(panel->frame);
     WMResizeWidget(l, LABEL_WIDTH, LABEL_HEIGHT);
     WMMoveWidget(l, 10, 110);
-    WMSetLabelText(l, "\%f:");
+    WMSetLabelText(l, "%f:");
     WMSetLabelTextAlignment(l, WARight);
     WMSetLabelRelief(l, WRFlat);
 
@@ -139,7 +139,7 @@ createPathLabel(Panel* panel)
     l = WMCreateLabel(panel->frame);
     WMResizeWidget(l, LABEL_WIDTH, LABEL_HEIGHT * 2);
     WMMoveWidget(l, 10, 136);
-    WMSetLabelText(l, "\%p:");
+    WMSetLabelText(l, "%p:");
     WMSetLabelTextAlignment(l, WARight);
     WMSetLabelRelief(l, WRFlat);
 
@@ -157,7 +157,7 @@ createFileStringLabel(Panel* panel)
     l = WMCreateLabel(panel->frame);
     WMResizeWidget(l, LABEL_WIDTH, LABEL_HEIGHT);
     WMMoveWidget(l, 10, 178);
-    WMSetLabelText(l, "\%s:");
+    WMSetLabelText(l, "%s:");
     WMSetLabelTextAlignment(l, WARight);
     WMSetLabelRelief(l, WRFlat);
 

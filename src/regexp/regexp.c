@@ -113,7 +113,7 @@
  * but allows patterns to get big without disasters.
  */
 #define OP(p) (*(p))
-#define NEXT(p) (((*((p) + 1) & 0377) << 8) + *((p) + 2) & 0377)
+#define NEXT(p) (((*((p) + 1) & 0377) << 8) + (*((p) + 2) & 0377))
 #define OPERAND(p) ((p) + 3)
 
 /*
@@ -195,7 +195,7 @@ regcomp(char* exp)
     register regexp* r;
     register char* scan;
     register char* longest;
-    register int len;
+    register size_t len;
     int flags;
     /* 	extern char *malloc(); */
 
@@ -207,7 +207,7 @@ regcomp(char* exp)
     regnpar = 1;
     regsize = 0L;
     regcode = &regdummy;
-    regc(MAGIC);
+    regc((char)MAGIC);
     if (reg(0, &flags) == NULL)
         return (NULL);
 
@@ -224,7 +224,7 @@ regcomp(char* exp)
     regparse = exp;
     regnpar = 1;
     regcode = r->program;
-    regc(MAGIC);
+    regc((char)MAGIC);
     if (reg(0, &flags) == NULL)
         return (NULL);
 
@@ -282,7 +282,7 @@ reg(int paren, int* flagp)
     register char* ret;
     register char* br;
     register char* ender;
-    register int parno;
+    register int parno = 0;
     int flags;
 
     *flagp = HASWIDTH; /* Tentatively. */

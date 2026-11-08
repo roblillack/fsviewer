@@ -25,7 +25,7 @@ fsGetFSViewerCurrentFileInfo(FSViewer* fsViewer)
     return FSGetFileViewFileInfo(fView);
 }
 
-void FSQuitCB(WMWidget* w, void* data)
+void FSQuitCB(FSViewer* fsViewer, int item, Time time)
 {
     exit(0);
 }
@@ -606,7 +606,6 @@ void FSUpdateViewCB(FSViewer* fsViewer, int item, Time time)
 
 void FSDuplicateCB(FSViewer* fsViewer, int item, Time time)
 {
-    ClipAction clipAction;
     FileInfo* dest = FSCreateFileInfo();
     FileInfo* src = NULL;
 
@@ -699,7 +698,6 @@ static void
 FSAddDisksMenu(FSViewer* fsViewer, WMMenu* menu)
 {
     WMMenu* submenu = NULL;
-    char* cmd = NULL;
     WMPropList* devArray = NULL;
     WMPropList* array = NULL;
 
@@ -767,7 +765,6 @@ FSAddDisksMenu(FSViewer* fsViewer, WMMenu* menu)
 
 void FSCreateMenu(FSViewer* fsViewer)
 {
-    int i;
     WMMenu* submenu;
 
     fsViewer->menu = WMMenuCreate(fsViewer->wmContext, "FSViewer");
@@ -783,34 +780,34 @@ void FSCreateMenu(FSViewer* fsViewer)
         (WMMenuAction)FSPrefCB, fsViewer, NULL, NULL);
     /*     WMMenuAddItem(submenu, _("WM Preferences..."),   */
     /* 		  (WMMenuAction)FSWMPrefCB, fsViewer, NULL, NULL);  */
-    i = WMMenuAddItem(submenu, _("Help..."),
+    WMMenuAddItem(submenu, _("Help..."),
         (WMMenuAction)FSHelpCB, fsViewer, NULL, "?");
     /*     WMMenuSetEnabled(submenu, i, 0); */
 
     /* File Menu */
     submenu = WMMenuCreate(fsViewer->wmContext, _("File"));
     WMMenuAddSubmenu(fsViewer->menu, _("File"), submenu);
-    i = WMMenuAddItem(submenu, _("Open"),
+    WMMenuAddItem(submenu, _("Open"),
         (WMMenuAction)FSViewCB, fsViewer, NULL, "o");
     /*     WMMenuSetEnabled(submenu, i, 0); */
-    i = WMMenuAddItem(submenu, _("Open as Folder"),
+    WMMenuAddItem(submenu, _("Open as Folder"),
         (WMMenuAction)FSOpenAsFolderCB, fsViewer, NULL, "O");
     /*     WMMenuSetEnabled(submenu, i, 0); */
     WMMenuAddItem(submenu, _("New Folder"),
         (WMMenuAction)FSNewDirCB, fsViewer, NULL, "n");
-    i = WMMenuAddItem(submenu, _("Duplicate"),
+    WMMenuAddItem(submenu, _("Duplicate"),
         (WMMenuAction)FSDuplicateCB, fsViewer, NULL, "d");
     /*     WMMenuSetEnabled(submenu, i, 0); */
-    i = WMMenuAddItem(submenu, _("Compress"),
+    WMMenuAddItem(submenu, _("Compress"),
         (WMMenuAction)FSCompressCB, fsViewer, NULL, NULL);
     /*     WMMenuSetEnabled(submenu, i, 0); */
-    i = WMMenuAddItem(submenu, _("UnCompress"),
+    WMMenuAddItem(submenu, _("UnCompress"),
         (WMMenuAction)FSViewCB, fsViewer, NULL, NULL);
     /*     WMMenuSetEnabled(submenu, i, 0); */
-    i = WMMenuAddItem(submenu, _("Destroy"),
+    WMMenuAddItem(submenu, _("Destroy"),
         (WMMenuAction)FSDeleteCB, fsViewer, NULL, "r");
     /*     WMMenuSetEnabled(submenu, i, 0); */
-    i = WMMenuAddItem(submenu, _("Empty Recycler"),
+    WMMenuAddItem(submenu, _("Empty Recycler"),
         (WMMenuAction)FSEmptyRecyclerCB, fsViewer, NULL, NULL);
     /*     WMMenuSetEnabled(submenu, i, 0); */
 
@@ -825,10 +822,10 @@ void FSCreateMenu(FSViewer* fsViewer)
         (WMMenuAction)FSPasteCB, fsViewer, NULL, "v");
     WMMenuAddItem(submenu, _("Delete"),
         (WMMenuAction)FSDeleteCB, fsViewer, NULL, NULL);
-    i = WMMenuAddItem(submenu, _("Select All"),
+    WMMenuAddItem(submenu, _("Select All"),
         (WMMenuAction)FSSelectAllCB, fsViewer, NULL, "a");
     /*     WMMenuSetEnabled(submenu, i, 0); */
-    i = WMMenuAddItem(submenu, _("DeSelect All"),
+    WMMenuAddItem(submenu, _("DeSelect All"),
         (WMMenuAction)FSDeselectAllCB, fsViewer, NULL, NULL);
     /*     WMMenuSetEnabled(submenu, i, 0); */
 
@@ -852,7 +849,7 @@ void FSCreateMenu(FSViewer* fsViewer)
     WMMenuAddItem(submenu, _("Browse"),
         (WMMenuAction)FSBrowseCB, fsViewer, NULL, "B");
     /* Diabled Icon Menu, because it does nothing then being present */
-    i = WMMenuAddItem(submenu, _("Icon"),
+    WMMenuAddItem(submenu, _("Icon"),
         (WMMenuAction)FSIconCB, fsViewer, NULL, "I");
     /*    WMMenuSetEnabled(submenu, i, 0);  */
     WMMenuAddItem(submenu, _("List"),
@@ -876,10 +873,10 @@ void FSCreateMenu(FSViewer* fsViewer)
     WMMenuAddSubmenu(fsViewer->menu, _("Tools"), submenu);
     WMMenuAddItem(submenu, _("Inspector..."),
         (WMMenuAction)FSInspectorCB, fsViewer, NULL, "i");
-    i = WMMenuAddItem(submenu, _("Finder"),
+    WMMenuAddItem(submenu, _("Finder"),
         (WMMenuAction)FSFinderCB, fsViewer, NULL, "F");
     /*     WMMenuSetEnabled(submenu, i, 0); */
-    i = WMMenuAddItem(submenu, _("Processes..."),
+    WMMenuAddItem(submenu, _("Processes..."),
         (WMMenuAction)FSProcessCB, fsViewer, NULL, "P");
     /*     WMMenuSetEnabled(submenu, i, 0); */
     WMMenuAddItem(submenu, _("Console..."),
@@ -902,10 +899,10 @@ void FSCreateMenu(FSViewer* fsViewer)
      * under window maker. At this moment I can find a wmlib function
      * to do this though I should put one together from the X functions
      */
-    i = WMMenuAddItem(submenu, _("Miniaturize Window"),
+    WMMenuAddItem(submenu, _("Miniaturize Window"),
         (WMMenuAction)FSMiniaturizeCB, fsViewer, NULL, "m");
     /*     WMMenuSetEnabled(submenu, i, 0); */
-    i = WMMenuAddItem(submenu, _("Close Window"),
+    WMMenuAddItem(submenu, _("Close Window"),
         (WMMenuAction)FSCloseWindowCB, fsViewer, NULL, "w");
     /*     WMMenuSetEnabled(submenu, i, 0); */
 

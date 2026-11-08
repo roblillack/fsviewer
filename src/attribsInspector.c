@@ -207,6 +207,9 @@ showData(_Panel* panel)
     else {
     */
     if (st->st_size >= 10240) { /* 10240 Bytes -> 10.0 KB */
+        /* The ' (thousands grouping) flag is POSIX, not ISO C. */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat"
         if (st->st_size > (1024 * 1024)) {
             double fsize = st->st_size / (1024.0 * 1024.0);
             snprintf(buf, sizeof(buf), _("%'.1lf MB\n"), fsize);
@@ -214,6 +217,7 @@ showData(_Panel* panel)
             double fsize = st->st_size / 1024.0;
             snprintf(buf, sizeof(buf), _("%'.1lf KB\n"), fsize);
         }
+#pragma GCC diagnostic pop
     } else
         snprintf(buf, sizeof(buf), _("%d Bytes\n"), (int)st->st_size);
     WMSetLabelText(panel->sizeLabel, buf);
@@ -252,13 +256,9 @@ showData(_Panel* panel)
 static void
 storeData(_Panel* panel)
 {
-    char buf[100];
     char* pathname;
-    struct stat* st;
     mode_t permissions;
-    int seterror;
 
-    st = (struct stat*)wmalloc(sizeof(struct stat));
     size_t pathnameSize = strlen(panel->fileInfo->path) + strlen(panel->fileInfo->name) + 1;
     pathname = (char*)wmalloc(pathnameSize);
 

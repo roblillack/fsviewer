@@ -17,9 +17,6 @@
 #include "FSViewer.h"
 #include "misc.h"
 
-static Bool DISPLAY_HIDDEN_FILES = False;
-static Bool SORT_TOGGLE = True;
-
 static int copy(ino_t* inodes, int n_inodes, char* oldpath, char* newpath);
 static int copyfile(char* oldpath, char* newpath);
 static int copydir(ino_t* inodes, int n_inodes, struct stat* oldstats,
@@ -332,7 +329,7 @@ char* GetFileExtnOrNull(char* filename)
         return NULL;
     }
 
-    for (int i = 0; i < strlen(ext); i++) {
+    for (size_t i = 0; ext[i] != '\0'; i++) {
         if ((uint)ext[i] > 0x7f) {
             // We don't allow non-ASCII characters in file extensions
             // see: https://github.com/roblillack/fsviewer/issues/20
@@ -868,12 +865,12 @@ int FSRDel(char* path)
     if (S_ISDIR(stats.st_mode)) {
         DIR* dir;
         struct dirent* entry;
-        int i, pl = strlen(path);
+        int pl = strlen(path);
 
         if (!(dir = opendir(path)))
             return -1;
 
-        for (i = 0; (entry = readdir(dir)); i++)
+        while ((entry = readdir(dir)))
             if (entry->d_name[0] != '.' || (entry->d_name[1] != '\0' && (entry->d_name[1] != '.' || entry->d_name[2] != '\0'))) {
                 int pl1 = pl, l = strlen(entry->d_name);
                 size_t path1_size = pl1 + l + 2;
@@ -911,7 +908,7 @@ static Bool isSameFile(const char* a, const char* b)
 void FSCopy(FileInfo* src, FileInfo* dest)
 {
     struct stat stats;
-    int i, toi, n_copied = 0;
+    int toi, n_copied = 0;
     char* from = NULL;
     char to[MAX_LEN];
 
@@ -1034,7 +1031,7 @@ void FSDelete(FileInfo* item)
 {
     char s[0xff];
     char* itemName;
-    int i, n_deleted = 0;
+    int n_deleted = 0;
 
     itemName = GetPathnameFromPathName(item->path, item->name);
 
@@ -1076,7 +1073,7 @@ void FSDelete(FileInfo* item)
 void FSMove(FileInfo* src, FileInfo* dest)
 {
     struct stat stats;
-    int i, toi, n_moved = 0;
+    int toi, n_moved = 0;
     char* from = NULL;
     char to[MAX_LEN];
 
@@ -1198,7 +1195,7 @@ void FSRename(FileInfo* src, FileInfo* dest)
 {
     struct stat stats;
     struct stat stats1;
-    int i, toi, n_renamed = 0;
+    int n_renamed = 0;
     char* from = NULL;
     char* to = NULL;
 

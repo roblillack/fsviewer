@@ -42,9 +42,6 @@ static void FSCloseAppInputPanel(WMWidget*, void*);
 static void FSDestroyAppInputPanel(FSAppInputPanel*);
 static void buttonClick(WMWidget* self, void* data);
 static char* FSStoreAppInputData(FSAppInputPanel* appInput);
-static void FSStoreAppInputPropListData(FSAppInputPanel* appInput);
-static void endedEditingObserver(void* observerData,
-    WMNotification* notification);
 static FSAlertPanel* FSCreateAlertPanel(FSViewer* app,
     char* title, char* msg,
     char* defaultButton,
@@ -608,7 +605,6 @@ void FSInvokeHelpBrowser(WMWidget* app)
 short FSRunDestroyConfirm(FSViewer* app, char* file)
 {
     WMScreen* scr = FSGetFSViewerScreen(app);
-    Display* dpy = FSGetFSViewerDisplay(app);
     WMAlertPanel* confirm;
     short result;
     char msg[MAX_LEN + MAX_LEN + 2];
@@ -767,9 +763,7 @@ static FSAppInputPanel*
 FSCreateAppInputPanel(FSViewer* app, FileInfo* fileInfo, char* title)
 {
     FSAppInputPanel* appInput;
-    WMPixmap* appicon;
-    int height, width, offset;
-    char buf[MAX_LEN + 1];
+    int height, width;
     WMLabel* l;
 
     if (!(appInput = (FSAppInputPanel*)malloc(sizeof(FSAppInputPanel)))) {
@@ -1123,34 +1117,6 @@ FSStoreAppInputData(FSAppInputPanel* appInput)
 /* } */
 
 static void
-endedEditingObserver(void* observerData, WMNotification* notification)
-{
-    FSAppInputPanel* appInput = (FSAppInputPanel*)observerData;
-    WMTextField* tPtr = (WMTextField*)WMGetNotificationObject(notification);
-
-    if ((int)(intptr_t)WMGetNotificationClientData(notification) == WMReturnTextMovement
-        && tPtr == appInput->nameField) {
-        char* txt = WMGetTextFieldText(appInput->nameField);
-        if (strcmp("", txt)) {
-            char* execStr = NULL;
-            char* extn = GetFileExtn(txt);
-
-            execStr = GetExecStringForExtn(extn);
-            free(extn);
-            if (execStr) {
-                WMSetTextFieldText(appInput->execField, execStr);
-                free(execStr);
-                execStr = NULL;
-            } else {
-                WMSetTextFieldText(appInput->execField, txt);
-                WMInsertTextFieldText(appInput->execField, " %s", -1);
-            }
-            free(txt);
-        }
-    }
-}
-
-static void
 alertPanelOnClick(WMWidget* self, void* clientData)
 {
     FSAlertPanel* alertPanel = clientData;
@@ -1384,7 +1350,7 @@ static FSSelectIconPanel*
 FSCreateSelectIconPanel(WMWindow* owner, char* title, char* str)
 {
     FSSelectIconPanel* selIcon;
-    int height, width, offset;
+    int height, width;
     WMFrame* f;
     WMLabel* l;
     WMPixmap* pixmap;

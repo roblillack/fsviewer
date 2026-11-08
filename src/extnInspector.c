@@ -215,7 +215,6 @@ static void
 listClick(WMWidget* self, void* clientData)
 {
     WMListItem* item;
-    WMPixmap* pixmap;
     WMList* lPtr = (WMList*)self;
     Panel* panel = (Panel*)clientData;
 
@@ -311,12 +310,11 @@ buttonClick(WMWidget* self, void* data)
 static void
 createInfoLabel(Panel* panel)
 {
-    WMLabel* l;
 
     //    l = WMCreateLabel(panel->frame);
     //    WMResizeWidget(l, WIDTH-20, LABEL_HEIGHT*2);
     //    WMMoveWidget(l, 10, 0);
-    //    WMSetLabelText(l, "Add: enter ext'n into the textfield, click \"Add\".\n"\
+    //    WMSetLabelText(l, "Add: enter ext'n into the textfield, click \"Add\".\n"
     //		   "Remove: select ext'n in the list, click \"Remove\"");
     //    WMSetLabelTextAlignment(l, WALeft);
     //    WMSetLabelRelief(l, WRFlat);
@@ -404,30 +402,6 @@ createButtons(Panel* panel)
     WMSetButtonText(panel->iconBtn, _("Click To Set Icon"));
     WMSetButtonAction(panel->iconBtn, buttonClick, panel);
     WMSetButtonImagePosition(panel->iconBtn, WIPNoImage);
-}
-
-static void
-createSView(Panel* panel)
-{
-    /* creates a scrollable view inside the top-level window */
-    panel->sview = WMCreateScrollView(panel->frame);
-    WMResizeWidget(panel->sview, 180, 140);
-    WMMoveWidget(panel->sview, 8, 0);
-    WMSetScrollViewRelief(panel->sview, WRSunken);
-    WMSetScrollViewHasVerticalScroller(panel->sview, True);
-    WMSetScrollViewHasHorizontalScroller(panel->sview, False);
-
-    /* create a frame with a bunch of labels */
-    panel->sviewF = WMCreateFrame(panel->frame);
-    WMResizeWidget(panel->sviewF, 165, 200);
-    WMSetFrameRelief(panel->sviewF, WRFlat);
-
-    panel->sviewV = WMWidgetView(panel->sviewF);
-    WMSetScrollViewContentView(panel->sview, panel->sviewV);
-
-    panel->sviewS = WMGetScrollViewVerticalScroller(panel->sview);
-    /*     WMSetScrollerAction(panel->sviewS, scrollCallback, panel); */
-    WMSetScrollViewLineScroll(panel->sview, LABEL_HEIGHT);
 }
 
 static void
