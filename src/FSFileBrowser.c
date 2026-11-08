@@ -321,6 +321,8 @@ handleItemSelection(WMWidget* self, void* clientData)
         break;
     }
 
+    FSFreeFileInfo(fileInfo);
+
     if (bPtr->text) {
         wwarning("%s %d: %s", __FILE__, __LINE__, bPtr->text);
         free(bPtr->text);
@@ -616,6 +618,7 @@ FSGetFileBrowserFileInfoAt(FileBrowser* bPtr, int col)
     case BROWSE:
         pathname = FSGetFileBrowserPathToColumn(bPtr, col);
         fileInfo = FSGetFileInfo(pathname);
+        free(pathname);
         break;
     case ICON:
         fileInfo = NULL;
@@ -623,6 +626,7 @@ FSGetFileBrowserFileInfoAt(FileBrowser* bPtr, int col)
     case LIST:
         pathname = FSGetFileBrowserPathToColumn(bPtr, col + 1);
         fileInfo = FSGetFileInfo(pathname);
+        free(pathname);
         break;
     default:
         fileInfo = NULL;
