@@ -207,7 +207,7 @@ regcomp(char* exp)
     regnpar = 1;
     regsize = 0L;
     regcode = &regdummy;
-    regc(MAGIC);
+    regc((char)MAGIC);
     if (reg(0, &flags) == NULL)
         return (NULL);
 
@@ -224,7 +224,7 @@ regcomp(char* exp)
     regparse = exp;
     regnpar = 1;
     regcode = r->program;
-    regc(MAGIC);
+    regc((char)MAGIC);
     if (reg(0, &flags) == NULL)
         return (NULL);
 
