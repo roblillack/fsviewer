@@ -38,10 +38,10 @@ WMData* FetchDragData(WMView* self, char* type)
     if (!buf) {
         return NULL;
     }
-    strncpy(buf, "file://", 7);
-    strncpy(buf + 7, fileInfo->path, pathLen);
-    strncpy(buf + 7 + pathLen, fileInfo->name, nameLen);
-    strncpy(buf + 7 + pathLen + nameLen, "\r\n", 3);
+    memcpy(buf, "file://", 7);
+    memcpy(buf + 7, fileInfo->path, pathLen);
+    memcpy(buf + 7 + pathLen, fileInfo->name, nameLen);
+    memcpy(buf + 7 + pathLen + nameLen, "\r\n", 3);
 
     return WMCreateDataWithBytesNoCopy(buf, strlen(buf), wfree);
 }
