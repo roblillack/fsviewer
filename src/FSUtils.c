@@ -334,14 +334,14 @@ char* FSDisk()
 const char*
 formatk(ulong k)
 {
-    static char buffer[10];
+    static char buffer[32];
 
     if (k >= 1024 * 1024)
         snprintf(buffer, sizeof(buffer), "%.4gG", (double)k / (1024 * 1024));
     else if (k >= 1024)
         snprintf(buffer, sizeof(buffer), "%.4gM", (double)k / 1024);
     else
-        snprintf(buffer, sizeof(buffer), "%ldK", k);
+        snprintf(buffer, sizeof(buffer), "%luK", k);
 
     return buffer;
 }
