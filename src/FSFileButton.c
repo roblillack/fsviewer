@@ -612,7 +612,7 @@ void FSSetFileButtonPathname(FSFileButton* bPtr, char* pathname, int isBranch)
         textLen = strlen(bPtr->fileInfo->name);
         textWidth = WMWidthOfString(scr->normalFont, bPtr->fileInfo->name,
             textLen);
-        if (textWidth > bPtr->width) {
+        if (textWidth > (int)bPtr->width) {
             if (bPtr->textView)
                 destroyTextView(bPtr);
             bPtr->textView = createTextView(scr, bPtr->fileInfo->name,

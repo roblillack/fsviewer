@@ -332,7 +332,7 @@ char* GetFileExtnOrNull(char* filename)
         return NULL;
     }
 
-    for (int i = 0; i < strlen(ext); i++) {
+    for (size_t i = 0; ext[i] != '\0'; i++) {
         if ((uint)ext[i] > 0x7f) {
             // We don't allow non-ASCII characters in file extensions
             // see: https://github.com/roblillack/fsviewer/issues/20
