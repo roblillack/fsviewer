@@ -454,14 +454,12 @@ char* GetNameFromPathname(char* pathname)
 
 char* GetPathFromPathname(char* pathname)
 {
-    int lenTot;
-    int lenName;
+    char* slash;
     int lenPath;
     char* path;
 
-    lenTot = strlen(pathname);
-    lenName = strlen(GetNameFromPathname(pathname));
-    lenPath = lenTot - lenName;
+    slash = strrchr(pathname, '/');
+    lenPath = slash ? slash - pathname + 1 : 0;
 
     path = (char*)wmalloc(lenPath + 1);
     strncpy(path, pathname, lenPath);
@@ -472,11 +470,11 @@ char* GetPathFromPathname(char* pathname)
 
 char* GetPathnameFromPathName(char* path, char* name)
 {
-    int len;
+    size_t len;
     char* pathname;
 
-    len = strlen(GetNameFromPathname(path));
-    if (len) {
+    len = strlen(path);
+    if (len && path[len - 1] != '/') {
         size_t pathname_size = strlen(path) + strlen(name) + 2;
         pathname = (char*)wmalloc(pathname_size);
         strlcpy(pathname, path, pathname_size);
@@ -680,6 +678,9 @@ FSGetFileInfo(char* pathname)
     path = GetPathFromPathname(pathname);
 
     GetFileInfo(path, name, fileInfo);
+
+    free(name);
+    free(path);
 
     return fileInfo;
 }
