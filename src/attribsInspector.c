@@ -254,11 +254,9 @@ storeData(_Panel* panel)
 {
     char buf[100];
     char* pathname;
-    struct stat* st;
     mode_t permissions;
     int seterror;
 
-    st = (struct stat*)wmalloc(sizeof(struct stat));
     size_t pathnameSize = strlen(panel->fileInfo->path) + strlen(panel->fileInfo->name) + 1;
     pathname = (char*)wmalloc(pathnameSize);
 
