@@ -698,6 +698,19 @@ insertIntoColumn(FileBrowser* bPtr, char* pathname)
 }
 
 static void
+removeListItem(WMList* list, int row)
+{
+    WMListItem* item = WMGetListItem(list, row);
+
+    /* List mode rows carry an allocated string */
+    if (item && item->clientData) {
+        free(item->clientData);
+        item->clientData = NULL;
+    }
+    WMRemoveListItem(list, row);
+}
+
+static void
 removeFromColumn(FileBrowser* bPtr, char* path, char* name)
 {
     int col, row;
@@ -706,7 +719,7 @@ removeFromColumn(FileBrowser* bPtr, char* path, char* name)
     col = findColumnFromPath(path);
     list = FSGetBrowserListInColumn(bPtr->browser, col);
     row = WMFindRowOfListItemWithTitle(list, name);
-    WMRemoveListItem(list, row);
+    removeListItem(list, row);
 }
 
 static int
@@ -876,7 +889,7 @@ removeFromView(FileBrowser* bPtr, char* path, char* name)
 
     if (list) {
         row = WMFindRowOfListItemWithTitle(list, name);
-        WMRemoveListItem(list, row);
+        removeListItem(list, row);
     }
 }
 
