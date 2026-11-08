@@ -6,7 +6,7 @@ set(EXECUTABLE ${PROJECT_NAME})
 find_package(PkgConfig REQUIRED)
 
 option(FSVIEWER_WERROR "Treat compiler warnings as errors" OFF)
-add_compile_options(-Wall -Wextra -pedantic)
+add_compile_options(-Wall -Wextra -pedantic -Wno-unused-parameter)
 if(FSVIEWER_WERROR)
     add_compile_options(-Werror)
 endif()
