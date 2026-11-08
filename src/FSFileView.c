@@ -162,7 +162,7 @@ handleKeyPressEvents(XEvent* event, void* data)
         FSFilterViewCB(fsViewer, 0, 0);
         break;
     case XK_h:
-        FSHideCB(NULL, 0, 0);
+        FSHideCB(fsViewer, 0, 0);
         break;
     case XK_i:
         FSInspectorCB(fsViewer, 0, 0);
